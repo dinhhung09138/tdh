@@ -1,0 +1,47 @@
+﻿@using TDH.ViewModel;
+@model IEnumerable<NavigationViewModel>
+<div class="header" id="home">
+    <div class="content white">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/"> <h1>Mr<span> Hưng</span></h1></a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/gioi-thieu">Giới thiệu</a></li>
+                        @{
+                            foreach (var item in Model)
+                            {
+                                if (item.Categories.Count() == 0)
+                                {
+                                    <li><a href="@item.Alias">@item.Title</a></li>
+                                }
+                                else
+                                {
+                                    <li class="dropdown">
+                                        <a href="@item.Alias" class="dropdown-toggle" data-toggle="dropdown">@item.Title<b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            @{
+                                                foreach (var c in item.Categories)
+                                                {
+                                                    <li><a href="@c.Alias">@c.Title</a></li>
+                                                }
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>

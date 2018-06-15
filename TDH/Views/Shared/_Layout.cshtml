@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="@ViewBag.Description" />
+    <meta name="keywords" content="@ViewBag.Keywords" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="publisher_handle">
+    <meta name="twitter:title" content="@ViewBag.Title">
+    <meta name="twitter:description" content="@ViewBag.Description">
+    <meta name="twitter:creator" content="author_handle">
+    <meta name="twitter:image" content="@ViewBag.TwImage">
+    <meta property="og:title" content="@ViewBag.Title" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="@ViewBag.Url" />
+    <meta property="og:image" content="@ViewBag.OgImage" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <link href="/trandinhhung.ico" rel="shortcut icon" type="image/x-icon" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <link href="/Content/css/bootstrap-3.1.1.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    @Html.Action("Navigation", "Home")
+    @Html.Action("Banner", "Home")
+    <div class="main-content">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </div>
+    <div class="footer-section">
+        <div class="container">
+            <div class="footer-grids">
+                @Html.Action("FooterPostByNavigation", "Home")
+                @Html.Action("PopuplarCategory", "Home")
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        <p>&copy;2018 <a href="/"> Trần Đình Hưng</a>. All Rights Reserved | Design by <a href="http://w3layouts.com/" rel="nofollow" target="_blank" style="opacity: .4;">W3layouts</a> </p>
+    </div>
+    <script src="/Content/js/jquery.min.js"> </script>
+</body>
+</html>
+

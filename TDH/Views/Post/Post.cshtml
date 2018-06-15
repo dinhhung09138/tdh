@@ -1,0 +1,71 @@
+﻿@using Utils;
+@using TDH.ViewModel;
+@model PostViewModel
+@{
+    ViewBag.Title = Model.MetaTitle;
+    ViewBag.Description = Model.MetaDescription;
+    ViewBag.Keywords = Model.MetaKeywords;
+    ViewBag.Url = ViewBag.Url;
+    ViewBag.OgImage = Model.MetaOgImage;
+    ViewBag.TwImage = Model.MetaTwitterImage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int _count = 0;
+    string _lost = "";
+    List<PostViewModel> _lSameCatePost = ViewBag.related as List<PostViewModel>;
+}
+<div class="mag-inner">
+    <div class="col-md-8 mag-innert-left">
+        <div class="banner-bottom-left-grids">
+            <div class="single-left-grid" style="text-align: justify">
+                @Html.Raw(Model.Content)
+                <div class="single-bottom">
+                    <ul>
+                        <li>@Model.CreateDate.DateToString()</li>
+                        <li><a href="#">0 Comments</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="latest-articles" style="margin-top: 10px;">
+                <h3 class="tittle"><a>Cùng chuyên mục</a></h3>
+                @foreach (var item in _lSameCatePost)
+                {
+                    if (_count == 0)
+                    {
+                        @Html.Raw("<div class='world-news-grids'>");
+                    }
+                    _lost = "";
+                    if (_count == 2)
+                    {
+                        _lost = "lost";
+                    }
+                    <div class="world-news-grid @_lost">
+                        <img src="@item.Image" alt="@item.Title" />
+                        <a href="@item.Alias" class="wd">@item.Title</a>
+                        <p>@item.Description</p>
+                        <a class="read" href="@item.Alias">Xem thêm</a>
+                    </div>
+                    if (_count == 2)
+                    {
+                        @Html.Raw("<div class='clearfix'></div></div>");
+                    }
+                    _count++;
+                    if (_count == 3)
+                    {
+                        _count = 0;
+                    }
+                }
+                @if (_count == 1 || _count == 2)
+                {
+                    @Html.Raw("<div class='clearfix'></div></div>");
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mag-inner-right">
+        @Html.Action("ConnectedToMe", "Home")
+        @Html.Action("NewsLetter", "Home")
+        @Html.Action("LastedNews", "Home")
+        @Html.Action("TopView", "Home")
+    </div>
+    <div class="clearfix"></div>
+</div>

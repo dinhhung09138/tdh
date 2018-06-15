@@ -1,0 +1,120 @@
+﻿@model TDH.Areas.Administrator.Models.RoleModel
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.Insert)
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Tên nhóm <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @maxlength = 100, @required = true, @focus = true, @tabindex = "1" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Mô tả
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @row = 2, @maxlength = 300, @required = true, @tabindex = "2" })
+        @Html.ValidationMessageFor(m => m.Description)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hiển thị <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "4" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">Quyền</div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        <table id="tbList" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Tên</th>
+                    <th>Xem</th>
+                    <th>Thêm</th>
+                    <th>Cập nhật</th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item in Model.Detail)
+                    {
+                        <tr>
+                            <td>
+                                @item.FunctionName
+                                <input type="hidden" name="functionCode" value="@item.FunctionCode" />
+                            </td>
+                            <td class="ctn-center">
+                                @{
+                                    if (item.View == true)
+                                    {
+                                        <input type="checkbox" name="View_@item.FunctionCode" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="View_@item.FunctionCode" />
+                                    }
+                                }
+                            </td>
+                            <td class="ctn-center">
+                                @{
+                                    if (item.Add == true)
+                                    {
+                                        <input type="checkbox" name="Add_@item.FunctionCode" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="Add_@item.FunctionCode" />
+                                    }
+                                }
+                            </td>
+                            <td class="ctn-center">
+                                @{
+                                    if (item.Edit == true)
+                                    {
+                                        <input type="checkbox" name="Edit_@item.FunctionCode" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="Edit_@item.FunctionCode" />
+                                    }
+                                }
+                            </td>
+                            <td class="ctn-center">
+                                @{
+                                    if (item.Delete == true)
+                                    {
+                                        <input type="checkbox" name="Delete_@item.FunctionCode" checked="checked" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="Delete_@item.FunctionCode" />
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (ViewBag.Add == true || ViewBag.Edit == true)
+            {
+                <a href="/administrator/admsystem/role" class="btn btn-default" tabindex="5">Quay lại</a>
+                <button type="submit" class="btn btn-primary" tabindex="6">Lưu</button>
+            }
+        }
+    </div>
+</div>

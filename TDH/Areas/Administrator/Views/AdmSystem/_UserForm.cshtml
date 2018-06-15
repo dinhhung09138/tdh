@@ -1,0 +1,106 @@
+﻿@model TDH.Areas.Administrator.Models.UserModel
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.Insert)
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Quyền <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.DropDownListFor(m => m.RoleID, new SelectList(ViewBag.Role, "ID", "Name"), "Chọn nhóm quyền", new { @class = "form-control",  @required = true, @focus = true, @tabindex = "1" })
+        @Html.ValidationMessageFor(m => m.RoleID)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Họ tên <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @maxlength = 60, @required = true, @tabindex = "2" })
+        @Html.ValidationMessageFor(m => m.UserName)
+    </div>
+</div>
+
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Tên đăng nhập <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (Model.Insert == true)
+            {
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = 50, @required = true,  @tabindex = "3" })
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = 50, @required = true, @readonly = true, @tabindex = "3" })
+            }
+            @Html.ValidationMessageFor(m => m.UserName)
+        }
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Mật khẩu <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (Model.Insert == true)
+            {
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @maxlength = 50, @required = true, @tabindex = "4" })
+                @Html.ValidationMessageFor(m => m.Password)
+            }
+            else
+            {
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @maxlength = 50, @tabindex = "4" })
+            }
+        }
+        
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Khóa <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (Model.Insert == true)
+            {
+                @Html.CheckBoxFor(m => m.Locked, new { @class = "form-control", @tabindex = "5" })
+            }
+            else
+            {
+                if (Model.ID == ViewBag.currentID)
+                {
+                    @Html.HiddenFor(m => m.Locked);
+                }
+                else
+                {
+                    @Html.CheckBoxFor(m => m.Locked, new { @class = "form-control", @tabindex = "5" })
+                }
+            }
+        }        
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Ghi chú
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextAreaFor(m => m.Notes, new { @class = "form-control", @row = 3, @maxlength = 250, @tabindex = "6" })
+        @Html.ValidationMessageFor(m => m.Notes)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (ViewBag.Add == true || ViewBag.Edit == true)
+            {
+                <a href="/administrator/admsystem/user" class="btn btn-default" tabindex="7">Quay lại</a>
+                <button type="submit" class="btn btn-primary" tabindex="8">Lưu</button>
+            }
+        }
+    </div>
+</div>

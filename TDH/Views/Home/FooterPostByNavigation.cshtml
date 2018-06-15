@@ -1,0 +1,24 @@
+﻿@using Utils;
+@using TDH.ViewModel;
+@model IEnumerable<NavigationViewModel>
+@{
+    foreach (var item in Model)
+    {
+        <div class="col-md-4 footer-grid">
+            <h4>@item.Title.ToUpper()</h4>
+            @foreach (var p in item.Posts)
+            {
+                <div class="editor-pics">
+                    <div class="col-md-3 item-pic">
+                        <img src="@p.Image" class="img-responsive" alt="@p.Title" />
+                    </div>
+                    <div class="col-md-9 item-details">
+                        <h5 class="inner"><a href="@p.Alias">@p.Title</a></h5>
+                        <div class="td-post-date">@p.CreateDate.DateToString()</div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            }
+        </div>
+    }
+}

@@ -1,0 +1,27 @@
+﻿@model TDH.Areas.Administrator.Models.UserModel
+@{
+    ViewBag.Title = "Cập nhật tài khoản";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section header{
+}
+@section action{
+}
+@section script{
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Areas/Administrator/Content/custom/system.user.action.js"></script>
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                @using (Html.BeginForm("EditUser", "AdmSystem", FormMethod.Post, new { @class = "form" }))
+                {
+                    @Html.Partial("_UserForm", Model)
+                }
+            </div>
+        </div>
+    </div>
+</div>

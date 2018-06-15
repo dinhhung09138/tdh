@@ -1,0 +1,206 @@
+﻿@using Utils;
+@using TDH.ViewModel;
+@model MetaViewModel
+@{
+    ViewBag.Title = Model.MetaTitle;
+    ViewBag.Description = Model.MetaDescription;
+    ViewBag.Keywords = Model.MetaKeywords;
+    ViewBag.Url = ViewBag.Url;
+    ViewBag.OgImage = Model.MetaOgImage;
+    ViewBag.TwImage = Model.MetaTwitterImage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<CategoryViewModel> _lcategory = ViewBag.category as List<CategoryViewModel>;
+    List<NavigationViewModel> _lNavigation = ViewBag.navigation as List<NavigationViewModel>;
+    int _max = _lcategory.Count();
+    if (_lNavigation.Count() > _lcategory.Count())
+    {
+        _max = _lNavigation.Count();
+    }
+}
+<div class="mag-inner">
+    <div class="col-md-8 mag-innert-left">
+        @for (int i = 0; i < _max; i++)
+        {
+            if (i < _lcategory.Count() && _lcategory[i].Posts.Count() > 0)
+            {
+                <div class="technology">
+                    <h2 class="tittle"><a href="@_lcategory[i].Alias">@_lcategory[i].Title</a></h2>
+                    @if (_lcategory[i].Posts.Count() > 0)
+                    {
+                        <div class="col-md-6 tech-img">
+                            <a href="@_lcategory[i].Posts[0].Alias"><img src="@_lcategory[i].Posts[0].Image" class="img-responsive" alt="@_lcategory[i].Posts[0].Title" /></a>
+                            <h5 class="inner two">
+                                <a href="@_lcategory[i].Posts[0].Alias">@_lcategory[i].Posts[0].Title</a>
+                            </h5>
+                            <p>@_lcategory[i].Posts[0].Description</p>
+                        </div>
+                        <div class="col-md-6 tech-text">
+                            @if (_lcategory[i].Posts.Count() > 1)
+                            {
+                                for (int j = 1; j < _lcategory[i].Posts.Count(); j++)
+                                {
+                                    <div class="editor-pics">
+                                        <div class="col-md-3 item-pic">
+                                            <img src="@_lcategory[i].Posts[j].Image" class="img-responsive" alt="@_lcategory[i].Posts[j].Title" />
+                                        </div>
+                                        <div class="col-md-9 item-details">
+                                            <h5 class="inner two"><a href="@_lcategory[i].Posts[j].Alias">@_lcategory[i].Posts[j].Title</a></h5>
+                                            <div class="td-post-date two">@_lcategory[i].Posts[j].CreateDate.DateToString()</div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                    <div class="clearfix"></div>
+                </div>
+            }
+            if (i < _lNavigation.Count() && _lNavigation[i].Posts.Count() > 0)
+            {
+                <div class="business">
+                    <h3 class="tittle"><a href="@_lNavigation[i].Alias">@_lNavigation[i].Title</a></h3>
+                    @if (_lNavigation[i].Posts.Count() > 0)
+                    {
+                        <div class="business-inner">
+                            <div class="col-md-6 b-img"><a href="@_lNavigation[i].Posts[0].Alias"><img class="img-responsive" src="@_lNavigation[i].Posts[0].Image" alt="@_lNavigation[i].Posts[0].Title" /></a></div>
+                            <div class="col-md-6 b-text">
+                                <h5><a href="@_lNavigation[i].Posts[0].Alias">@_lNavigation[i].Posts[0].Title</a></h5>
+                                <h6><i class="glyphicon glyphicon-time"></i>@_lNavigation[i].Posts[0].CreateDate.DateToString()</h6>
+                                <div class="icons">
+                                    <a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a>
+                                    <a href="#"><i class="glyphicon glyphicon-comment"></i>0</a>
+                                    <a href="#"><i class="glyphicon glyphicon-thumbs-up"></i>0</a>
+                                    <a href="#"><i class="glyphicon glyphicon-thumbs-down"></i> 0</a>
+                                </div>
+                                <div class="clearfix"></div>
+                                <p>@_lNavigation[i].Posts[0].Description</p>
+                                <a class="read" href="@_lNavigation[i].Posts[0].Alias">Chi tiết</a>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="business-bottom-content">
+                            @{
+                                if (_lNavigation[i].Posts.Count() > 1)
+                                {
+                                    <div class="col-md-6 business-bottom">
+                                        <div class="col-md-3 b-bottom-pic">
+                                            <a href="@_lNavigation[i].Posts[1].Alias"><img class="img-responsive" src="@_lNavigation[i].Posts[1].Image" alt="@_lNavigation[i].Posts[1].Title" /></a>
+                                        </div>
+                                        <div class="col-md-9 b-bottom-text">
+                                            <h5><a href="@_lNavigation[i].Posts[1].Alias"> @_lNavigation[i].Posts[1].Title</a></h5>
+                                            <h6><i class="glyphicon glyphicon-time"></i>@_lNavigation[i].Posts[1].CreateDate.DateToString()</h6>
+                                            <div class="icons">
+                                                <a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a>
+                                                <a href="#"><i class="glyphicon glyphicon-comment"></i>0</a>
+                                                <a href="#"><i class="glyphicon glyphicon-thumbs-up"></i>0</a>
+                                                <a href="#"><i class="glyphicon glyphicon-thumbs-down"></i> 0</a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                }
+                                if (_lNavigation[i].Posts.Count() > 2)
+                                {
+                                    <div class="col-md-6 business-bottom">
+                                        <div class="col-md-3 b-bottom-pic">
+                                            <a href="@_lNavigation[i].Posts[2].Alias">
+                                                <img class="img-responsive" src="@_lNavigation[i].Posts[2].Image" alt="@_lNavigation[i].Posts[2].Title" />
+                                            </a>
+                                        </div>
+                                        <div class="col-md-9 b-bottom-text">
+                                            <h5><a href="@_lNavigation[i].Posts[2].Alias"> @_lNavigation[i].Posts[2].Title</a></h5>
+                                            <h6><i class="glyphicon glyphicon-time"></i>@_lNavigation[i].Posts[2].CreateDate.DateToString()</h6> 
+                                            <div class="icons">
+                                                <a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a>
+                                                <a href="#"><i class="glyphicon glyphicon-comment"></i>0</a>
+                                                <a href="#"><i class="glyphicon glyphicon-thumbs-up"></i>0</a>
+                                                <a href="#"><i class="glyphicon glyphicon-thumbs-down"></i> 0</a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    }
+                    @if (_lNavigation[i].Posts.Count > 3)
+                    {
+                        <div class="business-inner two">
+                            <div class="col-md-6 b-img">
+                                <a href="@_lNavigation[i].Posts[3].Alias"><img class="img-responsive" src="@_lNavigation[i].Posts[3].Image" alt="@_lNavigation[i].Posts[3].Title" /></a>
+                            </div>
+                            <div class="col-md-6 b-text">
+                                <h5><a href="@_lNavigation[i].Posts[3].Alias">@_lNavigation[i].Posts[3].Title</a></h5>
+                                <h6><i class="glyphicon glyphicon-time"></i>@_lNavigation[i].Posts[3].CreateDate.DateToString()</h6>
+                                <div class="icons">
+                                    <a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a>
+                                    <a href="#"><i class="glyphicon glyphicon-comment"></i>0</a>
+                                    <a href="#"><i class="glyphicon glyphicon-thumbs-up"></i>0</a>
+                                    <a href="#"><i class="glyphicon glyphicon-thumbs-down"></i> 0</a>
+                                </div>
+                                <div class="clearfix"></div>
+                                <p>@_lNavigation[i].Posts[3].Description</p>
+                                <a class="read" href="@_lNavigation[i].Posts[3].Alias">Chi tiết</a>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="business-bottom-content">
+                                @if (_lNavigation[i].Posts.Count() > 4)
+                                {
+                                    <div class="col-md-6 business-bottom">
+                                        <div class="col-md-3 b-bottom-pic">
+                                            <a href="@_lNavigation[i].Posts[4].Alias"><img class="img-responsive" src="@_lNavigation[i].Posts[4].Image" alt="@_lNavigation[i].Posts[4].Title"/></a>
+                                        </div>
+                                        <div class="col-md-9 b-bottom-text">
+                                            <h5><a href="@_lNavigation[i].Posts[4].Alias"> @_lNavigation[i].Posts[4].Title</a></h5>
+                                            <h6><i class="glyphicon glyphicon-time"></i>@_lNavigation[i].Posts[4].CreateDate.DateToString()</h6>
+                                            <div class="icons">
+                                                <a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a>
+                                                <a href="#"><i class="glyphicon glyphicon-comment"></i>0</a>
+                                                <a href="#"><i class="glyphicon glyphicon-thumbs-up"></i>0</a>
+                                                <a href="#"><i class="glyphicon glyphicon-thumbs-down"></i> 0</a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                }
+                                @if (_lNavigation[i].Posts.Count() > 5)
+                                {
+                                    <div class="col-md-6 business-bottom">
+                                        <div class="col-md-3 b-bottom-pic">
+                                            <a href="@_lNavigation[i].Posts[5].Alias"><img class="img-responsive" src="@_lNavigation[i].Posts[5].Image" alt="@_lNavigation[i].Posts[5].Title" /></a>
+                                        </div>
+                                        <div class="col-md-9 b-bottom-text">
+                                            <h5><a href="@_lNavigation[i].Posts[5].Alias"> @_lNavigation[i].Posts[5].Title</a></h5>
+                                            <h6><i class="glyphicon glyphicon-time"></i>@_lNavigation[i].Posts[5].CreateDate.DateToString()</h6>
+                                            <div class="icons">
+                                                <a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a>
+                                                <a href="#"><i class="glyphicon glyphicon-comment"></i>0</a>
+                                                <a href="#"><i class="glyphicon glyphicon-thumbs-up"></i>0</a>
+                                                <a href="#"><i class="glyphicon glyphicon-thumbs-down"></i> 0</a>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                }
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    </div>
+    <div class="col-md-4 mag-inner-right">
+        @Html.Action("ConnectedToMe", "Home")
+        @Html.Action("NewsLetter", "Home")
+        @Html.Action("LastedNews", "Home")
+        @Html.Action("TopView", "Home")
+    </div>
+    <div class="clearfix"></div>
+</div>

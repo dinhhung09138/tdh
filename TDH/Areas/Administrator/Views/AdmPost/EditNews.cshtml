@@ -1,0 +1,29 @@
+﻿@model TDH.Areas.Administrator.Models.PostModel
+@{
+    ViewBag.Title = "Cập nhật bài viết";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section header{
+}
+@section action{
+}
+@section script{
+    <script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
+    <script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Areas/Administrator/Content/custom/post.news.action.js"></script>
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                @using (Html.BeginForm("EditNews", "admpost", FormMethod.Post, new { @class = "form" }))
+                {
+                    @Html.Partial("_NewsForm", Model)
+                }
+            </div>
+        </div>
+    </div>
+</div>

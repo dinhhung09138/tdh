@@ -1,0 +1,17 @@
+﻿@*<script>
+    $(function () {
+        // Reference the auto-generated proxy for the hub.
+        var chat = $.connection.signalrHub;
+        // Create a function that the hub can call back to display messages.
+        chat.client.client.signalRTestNotification = function (userID) {
+            if (userID == '@ViewBag.userID') {
+                alert(userID);
+            }
+        }
+    });
+    // This optional function html-encodes messages for display in the page.
+    function htmlEncode(value) {
+        var encodedValue = $('<div />').text(value).html();
+        return encodedValue;
+    }
+</script>*@

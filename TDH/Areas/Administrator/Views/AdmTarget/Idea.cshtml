@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "Khu vườn ý tưởng";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section header{
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+}
+@section action{
+    @{
+        if (ViewBag.Add == true)
+        {
+            <li class="breadcrumb-item"><a href="/administrator/admtarget/createidea">Thêm mới</a></li>
+        }
+    }
+}
+@section script{
+    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/Areas/Administrator/Content/Custom/target.idea.js"></script>
+}
+<input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
+<input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="tbList" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tiêu đề</th>
+                            <th>Triển khai</th>
+                            <th>Người tạo</th>
+                            <th>Ngày tạo</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")

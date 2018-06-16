@@ -1,0 +1,18 @@
+﻿@using TDH.ViewModel;
+@model PostViewModel
+@{
+    ViewBag.Title = Model.MetaTitle;
+    ViewBag.Description = Model.MetaDescription;
+    ViewBag.Keywords = Model.MetaKeywords;
+    ViewBag.Url = ViewBag.Url;
+    ViewBag.OgImage = Model.MetaOgImage;
+    ViewBag.TwImage = Model.MetaTwitterImage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mag-inner">
+    <div class="col-12 mag-innert-left">
+        @Html.Raw(Model.Content)
+    </div>
+    <div class="clearfix"></div>
+</div>

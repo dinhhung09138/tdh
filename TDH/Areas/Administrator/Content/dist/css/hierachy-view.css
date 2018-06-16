@@ -1,0 +1,183 @@
+﻿.hv-wrapper {
+    display: flex;
+}
+
+.hv-wrapper .hv-item {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.hv-wrapper .hv-item .hv-item-parent {
+    margin-bottom: 50px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.hv-wrapper .hv-item .hv-item-parent:after {
+    position: absolute;
+    content: '';
+    width: 2px;
+    height: 25px;
+    bottom: 0;
+    left: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    transform: translateY(100%);
+}
+
+.hv-wrapper .hv-item .hv-item-children {
+    display: flex;
+    justify-content: center;
+}
+
+.hv-wrapper .hv-item .hv-item-children .hv-item-child {
+    padding: 0 15px;
+    position: relative;
+}
+
+.hv-wrapper .hv-item .hv-item-children .hv-item-child:before, .hv-wrapper .hv-item .hv-item-children .hv-item-child:not(:only-child):after {
+    content: '';
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.7);
+    left: 0;
+}
+
+.hv-wrapper .hv-item .hv-item-children .hv-item-child:before {
+    left: 50%;
+    top: 0;
+    transform: translateY(-100%);
+    width: 2px;
+    height: 25px;
+}
+
+.hv-wrapper .hv-item .hv-item-children .hv-item-child:after {
+    top: -25px;
+    transform: translateY(-100%);
+    height: 2px;
+    width: 100%;
+}
+
+.hv-wrapper .hv-item .hv-item-children .hv-item-child:first-child:after {
+    left: 50%;
+    width: 50%;
+}
+
+.hv-wrapper .hv-item .hv-item-children .hv-item-child:last-child:after {
+    width: calc(50% + 1px);
+}
+
+div.control {
+    margin-top:10px;
+}
+
+div.control > a >i {
+    font-size: 20px;
+    color: #17a2b8;
+    padding: 5px;
+}
+
+div.control > input[type="checkbox"]  {
+    float: left;
+}
+
+div.control > a {
+    float: right;
+}
+
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.simple-card:hover {
+    background-color: antiquewhite;
+}
+
+.hv-container {
+    flex-grow: 1;
+    overflow: auto;
+    justify-content: center; 
+    background-color:rgba(59, 170, 157, 0.5);
+    padding: 20px;
+}
+
+div.simple-card {
+    margin: 0;
+    background-color: #fff;
+    color: #DE5454;
+    padding:5px;
+    border-radius: 7px;
+    min-width: 250px;
+    text-align: center;
+    box-shadow: 0 3px 6px rgba(204, 131, 103, 0.22);
+}
+
+div.simple-card > h1 {
+    color: red;
+}
+
+div.simple-card > h2 {
+    color: #de640a;
+}
+
+div.simple-card > h3 {
+    color: #0fad15;
+}
+
+div.simple-card > h4 {
+    color: #0e81af;
+}
+
+div.simple-card > h5 {
+    color: #a322b9;
+}
+
+.hv-item-parent p {
+    font-weight: bold;
+    color: #DE5454;
+}
+
+.management-hierarchy {
+    background-color: #303840;
+}
+
+.management-hierarchy > h1 {
+    color: #FFF;
+}
+
+.management-hierarchy .person {
+    text-align: center;
+}
+
+.management-hierarchy .person > img {
+    height: 110px;
+    border: 5px solid #FFF;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.management-hierarchy .person > p.name {
+    background-color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    color: #3BAA9D;
+    margin: 0;
+    position: relative;
+}
+
+.management-hierarchy .person > p.name b {
+    color: rgba(59, 170, 157, 0.5);
+}
+
+.management-hierarchy .person > p.name:before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background-color: #fff;
+    left: 50%;
+    top: 0;
+    transform: translateY(-100%);
+}

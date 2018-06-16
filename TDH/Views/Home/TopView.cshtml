@@ -1,0 +1,17 @@
+﻿@using Utils;
+@model IEnumerable<TDH.ViewModel.PostViewModel>
+<div class="top-news">
+    <h4 class="side">Xem nhiều</h4>
+    <div class="top-inner">
+        @{
+            foreach (var item in Model)
+            {
+                <div class="top-text">
+                    <a href="@item.Alias"><img src="@item.Image" class="img-responsive" alt="@item.Title" /></a>
+                    <h5 class="top"><a href="@item.Alias">@item.Title</a></h5>
+                    <div class="td-post-date two"><i class="glyphicon glyphicon-time"></i>@item.CreateDate.DateToString() <a href="#"><i class="glyphicon glyphicon-comment"></i>0 </a></div>
+                </div>
+            }
+        }
+    </div>
+</div>

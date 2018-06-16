@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/Areas/Administrator/Content/dist/css/adminlte.min.css">
+    <link href="/Areas/Administrator/Content/vendors/iCheck/skins/flat/green.css" rel="stylesheet" />
+    <link href="/Areas/Administrator/Content/vendors/lobibox/dist/css/lobibox.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link href="/trandinhhung.ico" rel="shortcut icon" type="image/x-icon" />
+    @RenderSection("header", required: false)
+    <style>
+        .navbar-expand .navbar-nav .dropdown-menu {
+            background-color: #17a2b8;
+            color: black;
+        }
+        .navbar-expand .navbar-nav .dropdown-menu .text-muted {
+            color: white !important;
+        }
+        .dropdown-menu-lg .dropdown-item:hover {
+            background-color: #ffc107;
+        }
+        .dropdown-footer, .dropdown-header {
+            color: white;
+            font-weight: bold;
+        }
+        body {
+            font-size: 13px !important;
+            font-family: sans-serif;
+        }
+        .field-validation-error {
+            color: red;
+        }
+        .form-control, .btn {
+            padding: .2rem .5rem;
+        }
+        .main-header .nav-link {
+            height: unset;
+        }
+        .brand-link {
+            padding: .68rem .2rem;
+        }
+        .content-header {
+            padding: 5px 15px 0px 7px;
+        }
+        .card-body {
+            padding: .5rem;
+        }
+        .mgt-22 {
+            margin-top: -22px;
+        }
+        .page-item.active .page-link {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+        a {
+            color: #17a2b8;
+        }
+        a:hover {
+            color: #0d7283;
+        }
+        .btn-primary {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+            box-shadow: 0 1px 1px rgba(0,0,0,.075);
+        }
+        .btn-primary:hover, 
+        .btn-primary:focus {
+            border-color: #0d7283;
+            background-color: #0d7283;
+        }
+        .nav-sidebar .nav-item > .nav-link {
+            margin-bottom: 2px;
+        }
+        .nav-sidebar .nav-item > .nav-link:hover {
+            color: #0d7283;
+        }
+        .sidebar-mini.sidebar-collapse .main-sidebar, .sidebar-mini.sidebar-collapse .main-sidebar::before {
+            width: 5.6rem;
+        }
+        .elevation-4 {
+            box-shadow: unset;
+        }
+        .form-control {
+            border-radius: unset;
+            box-shadow: unset;
+            transition: unset;
+        }
+        .btn{
+            border-radius: unset;
+        }
+        .callout, .elevation-1, .sidebar-dark-danger .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-dark .nav-sidebar > .nav-item > .nav-link.active, 
+        .sidebar-dark-info .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-light .nav-sidebar > .nav-item > .nav-link.active, 
+        .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-secondary .nav-sidebar > .nav-item > .nav-link.active, 
+        .sidebar-dark-success .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-warning .nav-sidebar > .nav-item > .nav-link.active, 
+        .sidebar-light-danger .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-dark .nav-sidebar > .nav-item > .nav-link.active, 
+        .sidebar-light-info .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-light .nav-sidebar > .nav-item > .nav-link.active, 
+        .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-secondary .nav-sidebar > .nav-item > .nav-link.active, 
+        .sidebar-light-success .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-warning .nav-sidebar > .nav-item > .nav-link.active {
+            box-shadow: none;
+        }
+        .modal-header {
+            display: block;
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini">
+    <div class="wrapper">
+        @Html.Action("AdminNavigation", "Base", new { @area = "administrator" })
+        @Html.Action("AdminSidebar", "Base", new { @area = "administrator" })
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-9 col-xs-12">
+                            <h1 class="m-0" style="color:#17a2b8;">@ViewBag.Title</h1>
+                        </div>
+                        <div class="col-sm-3 col-xs-12">
+                            <ol class="breadcrumb float-sm-right">
+                                @RenderSection("action", required: false)
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="content">
+                <div class="container-fluid">
+                    <input type="hidden" id="message" value="@ViewBag.message" />
+                    <input type="hidden" id="messageType" value="@ViewBag.messageType" />
+                    @RenderBody()
+                </div>
+            </section>
+        </div>
+        @{Html.RenderAction("AdminFooter", "Base", new { @area = "administrator" }); }
+    </div>    
+    @section scripts {
+    
+    }
+    @*<script src="/Areas/Administrator/Content/plugins/jquery/jquery.min.js"></script>*@
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/fastclick/fastclick.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/iCheck/icheck.min.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/lobibox/dist/js/lobibox.min.js"></script>
+    <script src="/Areas/Administrator/Content/dist/js/adminlte.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function () {
+            notification($('#message').val(), $('#messageType').val());
+        });
+        function notification(mesage, type) {
+            if (message === 'undefined' | message.length === 0) {
+                return;
+            }
+            if (type.toLowerCase() === "error") {
+                Lobibox.notify('error', {
+                    sound: false,
+                    delay: false,
+                    size: 'mini',
+                    icon: false,
+                    position: 'bottom right',
+                    msg: mesage
+                });
+                return;
+            }
+            if (type.toLowerCase() === "warning") {
+                Lobibox.notify('warning', {
+                    sound: false,
+                    delay: false,
+                    size: 'mini',
+                    icon: false,
+                    position: 'bottom right',
+                    msg: mesage
+                });
+                return;
+            }
+            if (type.toLowerCase() === "success") {
+                Lobibox.notify('success', {
+                    sound: false,
+                    delay: 3000,
+                    size: 'mini',
+                    icon: false,
+                    position: 'bottom right',
+                    msg: mesage
+                });
+                return;
+            }
+        }
+    </script>
+    @RenderSection("script", required: false)
+    @{Html.RenderPartial("_SignalR");}
+</body>
+</html>

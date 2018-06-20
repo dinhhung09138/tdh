@@ -252,7 +252,7 @@ namespace TDH.Areas.Administrator.Controllers
             try
             {
                 Services.NavigationService _nServices = new Services.NavigationService();
-                ViewBag.navigation = _nServices.GetAll(UserID);
+                ViewBag.navigation = _nServices.GetAllWithNoChild(UserID);
                 return View();
             }
             catch (Exception ex)
@@ -294,7 +294,7 @@ namespace TDH.Areas.Administrator.Controllers
             try
             {
                 Services.NavigationService _nServices = new Services.NavigationService();
-                ViewBag.navigation = _nServices.GetAll(UserID);
+                ViewBag.navigation = _nServices.GetAllWithNoChild(UserID);
                 CategoryModel model = new CategoryModel()
                 {
                     ID = Guid.NewGuid(),
@@ -346,7 +346,7 @@ namespace TDH.Areas.Administrator.Controllers
             try
             {
                 Services.NavigationService _nServices = new Services.NavigationService();
-                ViewBag.navigation = _nServices.GetAll(UserID);
+                ViewBag.navigation = _nServices.GetAllWithNoChild(UserID);
                 Services.CategoryService _service = new Services.CategoryService();
                 CategoryModel model = _service.GetItemByID(new CategoryModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 return View(model);
@@ -508,7 +508,7 @@ namespace TDH.Areas.Administrator.Controllers
 
         #endregion
 
-        #region " [ Post ] "
+        #region " [ News ] "
 
         [HttpGet]
         public ActionResult News()
@@ -552,7 +552,7 @@ namespace TDH.Areas.Administrator.Controllers
             try
             {
                 Services.NavigationService _nServices = new Services.NavigationService();
-                ViewBag.navigation = _nServices.GetAll(UserID);
+                ViewBag.navigation = _nServices.GetAllWithChild(UserID);
                 Services.CategoryService _cServices = new Services.CategoryService();
                 ViewBag.cate = _cServices.GetAll(UserID);
                 PostModel model = new PostModel()
@@ -607,7 +607,7 @@ namespace TDH.Areas.Administrator.Controllers
             try
             {
                 Services.NavigationService _nServices = new Services.NavigationService();
-                ViewBag.navigation = _nServices.GetAll(UserID);
+                ViewBag.navigation = _nServices.GetAllWithChild(UserID);
                 Services.CategoryService _cServices = new Services.CategoryService();
                 ViewBag.cate = _cServices.GetAll(UserID);
                 Services.PostService _service = new Services.PostService();
@@ -715,7 +715,7 @@ namespace TDH.Areas.Administrator.Controllers
 
         #endregion
 
-        #region " [ Post ] "
+        #region " [ About ] "
 
         [HttpGet]
         public ActionResult About()

@@ -23,6 +23,7 @@
                 @{
                     var _listSidebar = ViewBag.sidebar as List<SideBarViewModel>;
                     var _lSetting = _listSidebar.Where(m => m.Code.Contains("setting_")).ToList();
+                    <li class="header">WEBSITE</li>
                     if (_lSetting.Count() > 0)
                     {
                         <li class="nav-item has-treeview">
@@ -48,32 +49,7 @@
                             </ul>
                         </li>
                     }
-                    var _lTarget = _listSidebar.Where(m => m.Code.Contains("target_")).ToList();
-                    if (_lTarget.Count() > 0)
-                    {
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-fire"></i>
-                                <p>
-                                    Ý tưởng - Mục tiêu
-                                    <i class="right fa fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                @{
-                                    foreach (var item in _lTarget)
-                                    {
-                                        <li class="nav-item">
-                                            <a href="/@item.Area/@item.Controller/@item.Action" class="nav-link">
-                                                <i class="fa fa-circle-o nav-icon"></i>
-                                                <p>@item.Title</p>
-                                            </a>
-                                        </li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-                    }
+                    
                     var _lNews = _listSidebar.Where(m => m.Code.Contains("post_")).ToList();
                     if (_lNews.Count() > 0)
                     {
@@ -100,32 +76,7 @@
                             </ul>
                         </li>
                     }
-                    var _lWorking = _listSidebar.Where(m => m.Code.Contains("working_")).ToList();
-                    if (_lWorking.Count() > 0)
-                    {
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-tasks"></i>
-                                <p>
-                                    Công việc - Nhiệm vụ
-                                    <i class="right fa fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                @{
-                                    foreach (var item in _lWorking)
-                                    {
-                                        <li class="nav-item">
-                                            <a href="/@item.Area/@item.Controller/@item.Action" class="nav-link">
-                                                <i class="fa fa-circle-o nav-icon"></i>
-                                                <p>@item.Title</p>
-                                            </a>
-                                        </li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-                    }
+                    
                     var _lSystem = _listSidebar.Where(m => m.Code.Contains("system_")).ToList();
                     if (_lSystem.Count() > 0)
                     {
@@ -140,6 +91,59 @@
                             <ul class="nav nav-treeview">
                                 @{
                                     foreach (var item in _lSystem)
+                                    {
+                                        <li class="nav-item">
+                                            <a href="/@item.Area/@item.Controller/@item.Action" class="nav-link">
+                                                <i class="fa fa-circle-o nav-icon"></i>
+                                                <p>@item.Title</p>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                    }
+                    <li class="header">Ý TƯỞNG - CÔNG VIỆC</li>
+                    var _lTarget = _listSidebar.Where(m => m.Code.Contains("target_")).ToList();
+                    if (_lTarget.Count() > 0)
+                    {
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-fire"></i>
+                                <p>
+                                    Ý tưởng - Mục tiêu
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @{
+                                    foreach (var item in _lTarget)
+                                    {
+                                        <li class="nav-item">
+                                            <a href="/@item.Area/@item.Controller/@item.Action" class="nav-link">
+                                                <i class="fa fa-circle-o nav-icon"></i>
+                                                <p>@item.Title</p>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                    }
+                    var _lWorking = _listSidebar.Where(m => m.Code.Contains("working_")).ToList();
+                    if (_lWorking.Count() > 0)
+                    {
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-tasks"></i>
+                                <p>
+                                    Công việc - Nhiệm vụ
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @{
+                                    foreach (var item in _lWorking)
                                     {
                                         <li class="nav-item">
                                             <a href="/@item.Area/@item.Controller/@item.Action" class="nav-link">

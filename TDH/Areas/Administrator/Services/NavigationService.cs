@@ -122,7 +122,7 @@ namespace TDH.Areas.Administrator.Services
                 List<NavigationModel> _return = new List<NavigationModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
-                    var _list = context.NAVIGATIONs.Where(m => !m.deleted && !m.no_child).OrderByDescending(m => m.ordering).ToList();
+                    var _list = context.NAVIGATIONs.Where(m => !m.deleted).OrderByDescending(m => m.ordering).ToList();
                     foreach (var item in _list)
                     {
                         _return.Add(new NavigationModel() { ID = item.id, Title = item.title });
@@ -133,6 +133,58 @@ namespace TDH.Areas.Administrator.Services
             catch (Exception ex)
             {
                 TDH.Services.Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
+                throw new ApplicationException();
+            }
+        }
+
+        /// <summary>
+        /// Get all item with no child item and without deleted
+        /// </summary>
+        /// <returns></returns>
+        public List<NavigationModel> GetAllWithChild(Guid userID)
+        {
+            try
+            {
+                List<NavigationModel> _return = new List<NavigationModel>();
+                using (var context = new chacd26d_trandinhhungEntities())
+                {
+                    var _list = context.NAVIGATIONs.Where(m => !m.deleted && m.no_child).OrderByDescending(m => m.ordering).ToList();
+                    foreach (var item in _list)
+                    {
+                        _return.Add(new NavigationModel() { ID = item.id, Title = item.title });
+                    }
+                }
+                return _return;
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "GetAllWithChild", userID, ex);
+                throw new ApplicationException();
+            }
+        }
+
+        /// <summary>
+        /// Get all item with no child item and without deleted
+        /// </summary>
+        /// <returns></returns>
+        public List<NavigationModel> GetAllWithNoChild(Guid userID)
+        {
+            try
+            {
+                List<NavigationModel> _return = new List<NavigationModel>();
+                using (var context = new chacd26d_trandinhhungEntities())
+                {
+                    var _list = context.NAVIGATIONs.Where(m => !m.deleted && !m.no_child).OrderByDescending(m => m.ordering).ToList();
+                    foreach (var item in _list)
+                    {
+                        _return.Add(new NavigationModel() { ID = item.id, Title = item.title });
+                    }
+                }
+                return _return;
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "GetAllWithNoChild", userID, ex);
                 throw new ApplicationException();
             }
         }

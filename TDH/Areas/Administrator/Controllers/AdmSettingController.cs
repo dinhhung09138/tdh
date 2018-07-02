@@ -26,6 +26,10 @@ namespace TDH.Areas.Administrator.Controllers
         [HttpGet]
         public ActionResult Navigation()
         {
+            if (!Request.IsAjaxRequest())
+            {
+                throw new HttpException();
+            }
             try
             {
                 return View();
@@ -64,21 +68,22 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
+                {
+                    Status = ResponseStatusCodeHelper.Success,
+                    Message = Resources.Message.Success
+                };
                 Services.HomeNavigationService _service = new Services.HomeNavigationService();
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
-                if (_service.Save(model) == ResponseStatusCodeHelper.Success)
+                if (_service.Save(model) != ResponseStatusCodeHelper.Success)
                 {
-                    Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
-                    {
-                        Status = ResponseStatusCodeHelper.Success,
-                        Message = Resources.Message.Success
-                    };
-                    return this.Json(_result, JsonRequestBehavior.AllowGet);
+                    _result.Status = ResponseStatusCodeHelper.Error;
+                    _result.Message = Resources.Message.Error;
                 }
-                return View();
+                return this.Json(_result, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -94,9 +99,13 @@ namespace TDH.Areas.Administrator.Controllers
         [HttpGet]
         public ActionResult Category()
         {
+            if (!Request.IsAjaxRequest())
+            {
+                throw new HttpException();
+            }
             try
             {
-                return View();
+                return PartialView();
             }
             catch (Exception ex)
             {
@@ -130,23 +139,28 @@ namespace TDH.Areas.Administrator.Controllers
         [HttpPost]
         public ActionResult SaveCategory(HomeCategoryModel model)
         {
+            if (!Request.IsAjaxRequest())
+            {
+                throw new HttpException();
+            }
             try
             {
+                Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
+                {
+                    Status = ResponseStatusCodeHelper.Success,
+                    Message = Resources.Message.Success
+                };
                 Services.HomeCategoryService _service = new Services.HomeCategoryService();
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
-                if (_service.Save(model) == ResponseStatusCodeHelper.Success)
+                if (_service.Save(model) != ResponseStatusCodeHelper.Success)
                 {
-                    Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
-                    {
-                        Status = ResponseStatusCodeHelper.Success,
-                        Message = Resources.Message.Success
-                    };
-                    return this.Json(_result, JsonRequestBehavior.AllowGet);
+                    _result.Status = ResponseStatusCodeHelper.Error;
+                    _result.Message = Resources.Message.Error;
                 }
-                return View();
+                return this.Json(_result, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -162,9 +176,13 @@ namespace TDH.Areas.Administrator.Controllers
         [HttpGet]
         public ActionResult Configuration()
         {
+            if (!Request.IsAjaxRequest())
+            {
+                throw new HttpException();
+            }
             try
             {
-                return View();
+                return PartialView();
             }
             catch (Exception ex)
             {
@@ -198,11 +216,16 @@ namespace TDH.Areas.Administrator.Controllers
         [HttpGet]
         public ActionResult EditConfiguration(string id)
         {
+            if (!Request.IsAjaxRequest())
+            {
+                throw new HttpException();
+            }
+            ViewBag.id = id;
             try
             {
                 Services.ConfigurationService _service = new Services.ConfigurationService();
                 ConfigurationModel model = _service.GetItemByID(new ConfigurationModel() { Key = id, CreateBy = UserID, Insert = false });
-                return View(model);
+                return PartialView(model);
             }
             catch (Exception ex)
             {
@@ -216,21 +239,25 @@ namespace TDH.Areas.Administrator.Controllers
         [ValidateInput(false)]
         public ActionResult EditConfiguration(ConfigurationModel model)
         {
+            if (!Request.IsAjaxRequest())
+            {
+                throw new HttpException();
+            }
             try
             {
+                Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
+                {
+                    Status = ResponseStatusCodeHelper.Success,
+                    Message = Resources.Message.Success
+                };
                 Services.ConfigurationService _service = new Services.ConfigurationService();
                 model.CreateBy = UserID;
-                if (_service.Save(model) == ResponseStatusCodeHelper.Success)
+                if (_service.Save(model) != ResponseStatusCodeHelper.Success)
                 {
-                    Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
-                    {
-                        Status = ResponseStatusCodeHelper.Success,
-                        Message = Resources.Message.Success
-                    };
-                    TempData[CommonHelper.EXECUTE_RESULT] = _result;
-                    return RedirectToAction("Configuration");
+                    _result.Status = ResponseStatusCodeHelper.Error;
+                    _result.Message = Resources.Message.Error;
                 }
-                return View();
+                return this.Json(_result, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

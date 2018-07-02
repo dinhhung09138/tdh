@@ -116,13 +116,13 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 return;
             }
-            if (TempData[CommonHelper.EXECUTE_RESULT] != null)
-            {
-                Utils.CommonModel.ExecuteResultModel _result = TempData[CommonHelper.EXECUTE_RESULT] as Utils.CommonModel.ExecuteResultModel;
-                ViewBag.message = _result.Message;
-                ViewBag.messageType = _result.Status == ResponseStatusCodeHelper.Success ? "success" : "error";
-                TempData.Clear();
-            }
+            //if (TempData[CommonHelper.EXECUTE_RESULT] != null)
+            //{
+            //    Utils.CommonModel.ExecuteResultModel _result = TempData[CommonHelper.EXECUTE_RESULT] as Utils.CommonModel.ExecuteResultModel;
+            //    ViewBag.message = _result.Message;
+            //    ViewBag.messageType = _result.Status == ResponseStatusCodeHelper.Success ? "success" : "error";
+            //    TempData.Clear();
+            //}
         }
 
         /// <summary>

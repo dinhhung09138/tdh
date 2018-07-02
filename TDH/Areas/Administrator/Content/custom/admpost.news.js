@@ -1,15 +1,17 @@
 ﻿var table;
+var id = 0;
 
 $(document).ready(function () {
     var allowEdit = $('#edit').val();
+    var allowDelete = $('#delete').val();
     //
     table = $('#tbList').DataTable({
         processing: true,
         serverSide: true,
         searching: true,
         ordering: true,
-        responsive: true,
         paging: true,
+        responsive: true,
         pageLength: 10,
         pagingType: 'full_numbers',
         info: true,
@@ -18,11 +20,12 @@ $(document).ready(function () {
             //Do something after finish
         },
         language: language,
-        order: [[3, "desc"]],
+        order: [[1, "asc"]],
         ajax: {
-            url: '/administrator/admsetting/navigation',
+            url: '/administrator/admpost/news',
             type: 'post',
             data: function (d) {
+                //d.ModuleCode = ""
             }
         },
         columns: [
@@ -35,19 +38,43 @@ $(document).ready(function () {
                 }
             },
             {
+                data: 'CategoryName',
+                orderable: true,
+                searchable: true,
+                width: '200px',
+            },
+            {
+                data: 'Title',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'Description',
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: 'CreateDateString',
+                orderable: true,
+                searchable: true,
+                className: 'ctn-center',
+                width: '120px',
+            },
+            {
+                data: 'Publish',
                 orderable: false,
                 searchable: false,
                 className: 'ctn-center',
-                width: '90px',
+                width: '50px',
                 render: function (obj, type, data, meta) {
                     if (allowEdit === 'True') {
-                        if (data.Selected === true) {
-                            return '<input type="checkbox" class="flat" name="Selected" checked  value="' + data.NavigationID + '" />';
+                        if (data.Publish === true) {
+                            return '<input type="checkbox" class="flat" name="publish" checked  value="' + data.ID + '" />';
                         } else {
-                            return '<input type="checkbox" class="flat" name="Selected" value="' + data.NavigationID + '" />';
+                            return '<input type="checkbox" class="flat" name="publish" value="' + data.ID + '" />';
                         }
                     } else {
-                        if (data.Selected === true) {
+                        if (data.Publish === true) {
                             return '<div class="icheckbox_flat-green checked" style="position: relative;">\
                                         <input type="checkbox" class="flat" name="table_records" checked="" \
                                                style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
@@ -68,59 +95,58 @@ $(document).ready(function () {
                 }
             },
             {
-                data: 'NavigationTitle',
-                orderable: true,
-                searchable: true,
-                width: '150px',
-            },
-            {
-                data: 'Ordering',
-                orderable: true,
-                searchable: true,
+                orderable: false,
+                width: '40px',
                 className: 'ctn-center',
-                width: '100px',
                 render: function (obj, type, data, meta) {
-                    if (data.Selected === true) {
-                        return '<span class="ordering" data-nav="' + data.NavigationID + '" data-ordering="' + data.Ordering + '">' + data.Ordering + '</span>';
-                    } else {
-                        return data.Ordering;
+                    var str = '';
+                    if (allowEdit === "True") {
+                        str = str + '<a href="javascript:;" data-url="/administrator/admpost/editnews/' + data.ID + '\"  data-title="Cập nhật danh mục" title="Cập nhật" class="pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
+                    if (allowDelete === "True") {
+                        str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');"><i class="fa fa-remove" aria-hidden="true"></i></a>';
+                    }
+                    return str;
                 }
             }
         ]
     });
 
     table.on('draw', function () {
-        if ($('#tbList input[name="Selected"]')[0]) {
-            $('#tbList input[name="Selected"]').iCheck({
+        if ($('#tbList input[name="publish"]')[0]) {
+            $('#tbList input[name="publish"]').iCheck({
                 checkboxClass: 'icheckbox_flat-green',
                 radioClass: 'iradio_flat-green',
                 increaseArea: '20%'
             });
-            $('#tbList input[name="Selected"]').on('ifChecked', function () {
-                saveSelected($(this).val(), true);
+
+            $('#tbList input[name="publish"]').on('ifChecked', function () {
+                savePublish($(this).val(), true);
             });
-            $('#tbList input[name="Selected"]').on('ifUnchecked', function () {
-                saveSelected($(this).val(), false);
+
+            $('#tbList input[name="publish"]').on('ifUnchecked', function () {
+                savePublish($(this).val(), false);
             });
+
         }
     });
 });
 
-function saveSelected(id, selected) {
+function savePublish(id, publish) {
     $.ajax({
-        url: '/Administrator/AdmSetting/savenavigation',
+        url: '/administrator/admpost/publishnews',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify({ NavigationID: id, Selected: selected }),
+        data: JSON.stringify({ ID: id, Publish: publish }),
         success: function (response) {
-            if (response.Status === 0) {
+            if (response.Status === 0) { //success
                 notification(response.Message, 'success');
                 table.ajax.reload();
-            } else {
+            } else { //error
                 notification(response.Message, 'error');
             }
+            id = '';
         },
         error: function (xhr, status, error) {
             console.log(error);
@@ -128,30 +154,31 @@ function saveSelected(id, selected) {
     });
 }
 
-$(document).on('click', '.ordering', function (e) {
-    $('#orderingSelection').val($(this).attr('data-ordering'));
-    $('#navID').val($(this).attr('data-nav'));
-    $('#orderingModal').modal('show');
-});
+function confirmDelete(deletedId) {
+    id = deletedId;
+    $('#deleteModal').modal('show');
+}
 
-function updateOrder() {
+function deleteItem() {
     $.ajax({
-        url: '/Administrator/AdmSetting/savenavigation',
+        url: '/administrator/admpost/deletenews',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify({ NavigationID: $('#navID').val(), Ordering: $('#orderingSelection').val(), Selected: true }),
+        data: JSON.stringify({ ID: id }),
         success: function (response) {
-            if (response.Status === 0) {
+            if (response.Status === 0) { //success
                 notification(response.Message, 'success');
                 table.ajax.reload();
-            } else {
+            } else { //error
                 notification(response.Message, 'error');
             }
-            $('#orderingModal').modal('hide');
+            id = '';
+            $('#deleteModal').modal('hide');
         },
         error: function (xhr, status, error) {
             console.log(error);
+            $('#deleteModal').modal('hide');
         }
     });
 }

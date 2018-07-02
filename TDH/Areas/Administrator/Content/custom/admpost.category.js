@@ -10,6 +10,7 @@ $(document).ready(function () {
         serverSide: true,
         searching: true,
         ordering: true,
+        responsive: true,
         paging: true,
         pageLength: 10,
         pagingType: 'full_numbers',
@@ -19,24 +20,10 @@ $(document).ready(function () {
         initComplete: function (settings, json) {
             //Do something after finish
         },
-        language: {
-            lengthMenu: 'Hiển thị _MENU_ dòng mỗi trang',
-            zeroRecords: 'Dữ liệu không tồn tại',
-            info: 'Trang _PAGE_/_PAGES_',
-            infoEmpty: '',//'Không tìm thấy kết quả',
-            infoFiltered: '',//'(Tìm kiếm trên _MAX_ dòng)',
-            search: 'Tìm kiếm',
-            processing: 'Đang xử lý',
-            paginate: {
-                first: '<<',
-                previous: '<',
-                next: '>',
-                last: '>>'
-            }
-        },
+        language: language,
         order: [[3, "asc"]],
         ajax: {
-            url: document.URL,
+            url: '/administrator/admpost/category',
             type: 'post',
             data: function (d) {
                 d.Parameter1 = $('#navigationSelection').val()
@@ -168,7 +155,7 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="/administrator/admpost/editcategory/' + data.ID + '\" title="Cập nhật"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="javascript:;" data-url="/administrator/admpost/editcategory/' + data.ID + '\" data-title="Cập nhật danh mục" title="Cập nhật" class="pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');"><i class="fa fa-remove" aria-hidden="true"></i></a>';

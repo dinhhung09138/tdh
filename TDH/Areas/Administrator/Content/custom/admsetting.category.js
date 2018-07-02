@@ -8,6 +8,7 @@ $(document).ready(function () {
         serverSide: true,
         searching: true,
         ordering: true,
+        responsive: true,
         paging: true,
         pageLength: 10,
         pagingType: 'full_numbers',
@@ -16,24 +17,10 @@ $(document).ready(function () {
         initComplete: function (settings, json) {
             //Do something after finish
         },
-        language: {
-            lengthMenu: 'Hiển thị _MENU_ dòng mỗi trang',
-            zeroRecords: 'Dữ liệu không tồn tại',
-            info: 'Trang _PAGE_/_PAGES_',
-            infoEmpty: '',//'Không tìm thấy kết quả',
-            infoFiltered: '',//'(Tìm kiếm trên _MAX_ dòng)',
-            search: 'Tìm kiếm',
-            processing: 'Đang xử lý',
-            paginate: {
-                first: '<<',
-                previous: '<',
-                next: '>',
-                last: '>>'
-            }
-        },
+        language: language,
         order: [[4, "desc"]],
         ajax: {
-            url: document.URL,
+            url: '/administrator/admsetting/category',
             type: 'post',
             data: function (d) {
             }

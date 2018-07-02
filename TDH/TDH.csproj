@@ -5889,6 +5889,11 @@
     <Content Include="Areas\Administrator\Content\plugins\timepicker\bootstrap-timepicker.js" />
     <Content Include="Areas\Administrator\Content\plugins\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Areas\Administrator\Content\plugins\timepicker\bootstrap-timepicker.min.js" />
+    <Content Include="Areas\Administrator\Content\plugins\waitMe\img.svg" />
+    <Content Include="Areas\Administrator\Content\plugins\waitMe\waitMe.css" />
+    <Content Include="Areas\Administrator\Content\plugins\waitMe\waitMe.js" />
+    <Content Include="Areas\Administrator\Content\plugins\waitMe\waitMe.min.css" />
+    <Content Include="Areas\Administrator\Content\plugins\waitMe\waitMe.min.js" />
     <Content Include="Areas\Administrator\Content\vendors\animate.css\animate.css" />
     <Content Include="Areas\Administrator\Content\vendors\animate.css\animate.min.css" />
     <Content Include="Areas\Administrator\Content\vendors\animate.css\gulpfile.js" />
@@ -10106,6 +10111,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

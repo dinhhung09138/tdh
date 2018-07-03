@@ -321,12 +321,6 @@ namespace TDH.Areas.Administrator.Controllers
                 #region " [ Declaration ] "
 
                 Services.RoleService _service = new Services.RoleService();
-                //
-                ResultModel = new Utils.CommonModel.ExecuteResultModel()
-                {
-                    Status = ResponseStatusCodeHelper.OK,
-                    Message = ""
-                };
 
                 #endregion
 
@@ -562,8 +556,6 @@ namespace TDH.Areas.Administrator.Controllers
                 #region " [ Declaration ] "
 
                 Services.UserService _service = new Services.UserService();
-                //
-                ResultModel.Message = Resources.Message.Success;
                
                 #endregion
                

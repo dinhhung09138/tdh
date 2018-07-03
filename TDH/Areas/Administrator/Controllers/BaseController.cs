@@ -13,14 +13,7 @@ namespace TDH.Areas.Administrator.Controllers
     public class BaseController : Controller
     {
         #region " [ Properties ] "
-
-        /// <summary>
-        /// TIme to set message disapear.
-        /// Caculate on message appear
-        /// Miliseconds
-        /// </summary>
-        private readonly int TIME_HIDE_MESSAGE = 3000;
-
+        
         /// <summary>
         /// Current user id
         /// </summary>
@@ -279,6 +272,7 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "publishcategory":
                                 case "deletecategory":
                                 case "checkdeletecategory":
+                                case "onnavigationcategory":
                                     return "post_category";
                                 case "navigation":
                                 case "createnavigation":
@@ -428,11 +422,13 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "publishcategory":
                                 case "editnavigation":
                                 case "publishnavigation":
+                                case "onnavigationcategory":
                                     return Services.RoleService.actionType.Edit;
                                 case "deletenews":
                                 case "deletecategory":
                                 case "checkdeletecategory":
                                 case "deletenavigation":
+                                case "checkdeletenavigation":
                                     return Services.RoleService.actionType.Delete;
                             }
 

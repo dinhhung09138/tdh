@@ -144,11 +144,8 @@ function savePublish(id, locked) {
         dataType: 'json',
         data: JSON.stringify({ ID: id, Locked: locked }),
         success: function (response) {
-            if (response.Status === 0) { //success
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else { //error
-                notification(response.Message, 'error');
             }
             id = '';
         },
@@ -171,11 +168,8 @@ function deleteItem() {
         dataType: 'json',
         data: JSON.stringify({ ID: id }),
         success: function (response) {
-            if (response.Status === 0) { //success
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else { //error
-                notification(response.Message, 'error');
             }
             id = '';
             $('#deleteModal').modal('hide');

@@ -146,7 +146,7 @@
             <input type="hidden" id="message" value="@ViewBag.message" />
             <input type="hidden" id="messageType" value="@ViewBag.messageType" />
             <section class="content">
-                <div class="container-fluid" id="formMain">
+                <div class="container-fluid" id="main_layout">
                 </div>
             </section>
             @RenderBody()
@@ -162,8 +162,8 @@
     <script src="/Areas/Administrator/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <script src="/Areas/Administrator/Content/dist/js/adminlte.min.js"></script>
     <script src="/Areas/Administrator/Content/plugins/waitMe/waitMe.min.js"></script>
-    @section scripts {
-    }
+    <script src="/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
     <script type="text/javascript">
         var language = {
             lengthMenu: 'Hiển thị _MENU_',
@@ -180,6 +180,15 @@
                 last: '>>'
             }
         };
+
+        $(document).ready(function () {
+
+            $("*").dblclick(function (e) {
+                console.log('Stop double click');
+                e.preventDefault();
+            });
+            
+        });
 
         function notification(mesage, type) {
             if (message === 'undefined' | message.length === 0) {
@@ -223,24 +232,16 @@
         $(document).on('click', '.pg_ld', function (e) {
             var url = $(this).attr('data-url');
             var title = $(this).attr('data-title');
-            loadPage(url, title, 'page');
+            loadPage(url, title);
         });
 
         function loadPage(url, title) {
-            loading($('body'), 'show');
+            loading($('.content-wrapper'), 'show');
             document.title = title;
-            $.ajax({
-                url: url,
-                type: 'get',
-                contentType: 'charset=utf-8',
-                dataType: 'html',
-                success: function (response) {
-                    $('#formMain').empty();
-                    $('#formMain').append(response);
-                    loading($('body'), 'hide');
-                }
-            });
+            $('#main_layout').load(url);
+            setTimeout(function () { loading($('.content-wrapper'), 'hide') }, 700);            
         }
+
 
         function loading(el, type) {
             if (type === 'show') {

@@ -120,10 +120,19 @@
   <data name="CheckExists" xml:space="preserve">
     <value>Dữ liệu đang được sử dụng, không thể xóa</value>
   </data>
+  <data name="DeleteSuccess" xml:space="preserve">
+    <value>Xóa dữ liệu thành công</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Lỗi trong quá trình thực thi</value>
   </data>
+  <data name="InsertSuccess" xml:space="preserve">
+    <value>Thêm mới dữ liệu thành công</value>
+  </data>
   <data name="Success" xml:space="preserve">
+    <value>Cập nhật dữ liệu thành công</value>
+  </data>
+  <data name="UpdateSuccess" xml:space="preserve">
     <value>Cập nhật dữ liệu thành công</value>
   </data>
 </root>

@@ -47,14 +47,14 @@ $(document).ready(function () {
 
 var beginSubmit = function () {
     loading($('.content-wrapper'), 'show');
-}
+};
 
 var onSuccess = function (response, status, e) {
     loadPage('/administrator/admsystem/role', 'Nhóm quyền');
-}  
+};
 
 var OnFailure = function (response) {
-}
+};
 
 
 

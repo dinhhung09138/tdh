@@ -46,7 +46,7 @@ $(document).ready(function () {
             {
                 data: 'Description',
                 orderable: true,
-                searchable: true,
+                searchable: true
             },
             {
                 data: 'Count',

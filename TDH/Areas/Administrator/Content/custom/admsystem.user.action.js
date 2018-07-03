@@ -15,11 +15,11 @@
 
 var beginSubmit = function () {
     loading($('.content-wrapper'), 'show');
-}
+};
 
 var onSuccess = function (response, status, e) {
     loadPage('/administrator/admsystem/user', 'Tài khoản người dùng');
-}
+};
 
 var OnFailure = function (response) {
-}
+};

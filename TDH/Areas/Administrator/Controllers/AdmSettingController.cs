@@ -6,10 +6,12 @@ using System.Web.Mvc;
 using Utils;
 using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
+using TDH.Areas.Administrator.Filters;
 
 
 namespace TDH.Areas.Administrator.Controllers
 {
+    [AjaxExecuteFilter]
     public class AdmSettingController : BaseController
     {
         #region " [ Properties ] "
@@ -26,13 +28,9 @@ namespace TDH.Areas.Administrator.Controllers
         [HttpGet]
         public ActionResult Navigation()
         {
-            if (!Request.IsAjaxRequest())
-            {
-                throw new HttpException();
-            }
             try
             {
-                return View();
+                return PartialView();
             }
             catch (Exception ex)
             {
@@ -46,14 +44,27 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                #region " [ Declaration ] "
+
                 Services.HomeNavigationService _service = new Services.HomeNavigationService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                // Process sorting column
                 requestData = requestData.SetOrderingColumnName();
+
+                #endregion
+
+                //Call to service
                 Dictionary<string, object> _return = _service.List(requestData, UserID);
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
                     DataTableResponse<HomeNavigationModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<HomeNavigationModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
+                //
                 return this.Json(new DataTableResponse<HomeNavigationModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -68,22 +79,23 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
-                Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
-                {
-                    Status = ResponseStatusCodeHelper.Success,
-                    Message = Resources.Message.Success
-                };
+                #region " [ Declaration ] "
+
                 Services.HomeNavigationService _service = new Services.HomeNavigationService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
-                if (_service.Save(model) != ResponseStatusCodeHelper.Success)
-                {
-                    _result.Status = ResponseStatusCodeHelper.Error;
-                    _result.Message = Resources.Message.Error;
-                }
-                return this.Json(_result, JsonRequestBehavior.AllowGet);
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -99,10 +111,6 @@ namespace TDH.Areas.Administrator.Controllers
         [HttpGet]
         public ActionResult Category()
         {
-            if (!Request.IsAjaxRequest())
-            {
-                throw new HttpException();
-            }
             try
             {
                 return PartialView();
@@ -119,14 +127,27 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                #region " [ Declaration ] "
+
                 Services.HomeCategoryService _service = new Services.HomeCategoryService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                // Process sorting column
                 requestData = requestData.SetOrderingColumnName();
+
+                #endregion
+
+                //Call to service
                 Dictionary<string, object> _return = _service.List(requestData, UserID);
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
                     DataTableResponse<HomeCategoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<HomeCategoryModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
+                //
                 return this.Json(new DataTableResponse<HomeCategoryModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -139,28 +160,25 @@ namespace TDH.Areas.Administrator.Controllers
         [HttpPost]
         public ActionResult SaveCategory(HomeCategoryModel model)
         {
-            if (!Request.IsAjaxRequest())
-            {
-                throw new HttpException();
-            }
             try
             {
-                Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
-                {
-                    Status = ResponseStatusCodeHelper.Success,
-                    Message = Resources.Message.Success
-                };
+                #region " [ Declaration ] "
+
                 Services.HomeCategoryService _service = new Services.HomeCategoryService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
-                if (_service.Save(model) != ResponseStatusCodeHelper.Success)
-                {
-                    _result.Status = ResponseStatusCodeHelper.Error;
-                    _result.Message = Resources.Message.Error;
-                }
-                return this.Json(_result, JsonRequestBehavior.AllowGet);
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -176,10 +194,6 @@ namespace TDH.Areas.Administrator.Controllers
         [HttpGet]
         public ActionResult Configuration()
         {
-            if (!Request.IsAjaxRequest())
-            {
-                throw new HttpException();
-            }
             try
             {
                 return PartialView();
@@ -196,14 +210,27 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                #region " [ Declaration ] "
+
                 Services.ConfigurationService _service = new Services.ConfigurationService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                // Process sorting column
                 requestData = requestData.SetOrderingColumnName();
+
+                #endregion
+
+                //Call to service
                 Dictionary<string, object> _return = _service.List(requestData, UserID);
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
                     DataTableResponse<ConfigurationModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<ConfigurationModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
+                //
                 return this.Json(new DataTableResponse<ConfigurationModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -216,14 +243,17 @@ namespace TDH.Areas.Administrator.Controllers
         [HttpGet]
         public ActionResult EditConfiguration(string id)
         {
-            if (!Request.IsAjaxRequest())
-            {
-                throw new HttpException();
-            }
-            ViewBag.id = id;
             try
             {
+                #region " [ Declaration ] "
+
                 Services.ConfigurationService _service = new Services.ConfigurationService();
+                //
+                ViewBag.id = id;
+
+                #endregion
+
+                //Call to service
                 ConfigurationModel model = _service.GetItemByID(new ConfigurationModel() { Key = id, CreateBy = UserID, Insert = false });
                 return PartialView(model);
             }
@@ -239,25 +269,22 @@ namespace TDH.Areas.Administrator.Controllers
         [ValidateInput(false)]
         public ActionResult EditConfiguration(ConfigurationModel model)
         {
-            if (!Request.IsAjaxRequest())
-            {
-                throw new HttpException();
-            }
             try
             {
-                Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
-                {
-                    Status = ResponseStatusCodeHelper.Success,
-                    Message = Resources.Message.Success
-                };
+                #region " [ Declaration ] "
+
                 Services.ConfigurationService _service = new Services.ConfigurationService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
                 model.CreateBy = UserID;
-                if (_service.Save(model) != ResponseStatusCodeHelper.Success)
-                {
-                    _result.Status = ResponseStatusCodeHelper.Error;
-                    _result.Message = Resources.Message.Error;
-                }
-                return this.Json(_result, JsonRequestBehavior.AllowGet);
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

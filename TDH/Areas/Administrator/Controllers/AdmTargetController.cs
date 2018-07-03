@@ -43,12 +43,12 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 return this.Json("", JsonRequestBehavior.AllowGet);
                 //
-                Services.TargetService _service = new Services.TargetService();
-                model.CreateBy = UserID;
-                model.UpdateBy = UserID;
-                model.UpdateDate = DateTime.Now;
+                //Services.TargetService _service = new Services.TargetService();
+                //model.CreateBy = UserID;
+                //model.UpdateBy = UserID;
+                //model.UpdateDate = DateTime.Now;
                 //
-                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
+                //return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

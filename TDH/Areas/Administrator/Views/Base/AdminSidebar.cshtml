@@ -1,14 +1,11 @@
 ﻿@using TDH.Areas.Administrator.Models;
 <aside class="main-sidebar elevation-4 sidebar-light-info">
-    <!-- Brand Logo -->
     <a href="/administrator/dashboard/index" class="brand-link bg-info">
         <img src="/Areas/Administrator/Content/images/tran-dinh-hung.jpg" alt="Mr. Hưng" class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-light">Mr. Hưng</span>
     </a>
-    <!-- Sidebar -->
     <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="/Areas/Administrator/Content/images/tran-dinh-hung.jpg" class="img-circle elevation-2" alt="User Image">
@@ -17,7 +14,6 @@
                 <a href="#" class="d-block">Trần Đình Hưng</a>
             </div>
         </div>
-        <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 @{
@@ -39,7 +35,7 @@
                                     foreach (var item in _lSetting)
                                     {
                                         <li class="nav-item">
-                                            <a href="/@item.Area/@item.Controller/@item.Action" class="nav-link">
+                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" data-title="Thiết lập - @item.Title" class="nav-link pg_ld">
                                                 <i class="fa fa-circle-o nav-icon"></i>
                                                 <p>@item.Title</p>
                                             </a>
@@ -49,7 +45,6 @@
                             </ul>
                         </li>
                     }
-
                     var _lNews = _listSidebar.Where(m => m.Code.Contains("post_")).ToList();
                     if (_lNews.Count() > 0)
                     {
@@ -76,7 +71,6 @@
                             </ul>
                         </li>
                     }
-
                     var _lSystem = _listSidebar.Where(m => m.Code.Contains("system_")).ToList();
                     if (_lSystem.Count() > 0)
                     {
@@ -159,7 +153,5 @@
                 }
             </ul>
         </nav>
-        <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
 </aside>

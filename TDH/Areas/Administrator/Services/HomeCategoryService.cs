@@ -5,6 +5,7 @@ using TDH.Models;
 using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using Utils;
+using TDH.Areas.Administrator.Common;
 
 namespace TDH.Areas.Administrator.Services
 {
@@ -109,6 +110,7 @@ namespace TDH.Areas.Administrator.Services
             }
             catch (Exception ex)
             {
+                Notifier.Notification(userID, Resources.Message.Error, Notifier.TYPE.Error);
                 TDH.Services.Log.WriteLog(FILE_NAME, "List", userID, ex);
                 throw new ApplicationException();
             }
@@ -158,6 +160,7 @@ namespace TDH.Areas.Administrator.Services
                         }
                         catch (Exception ex)
                         {
+                            Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
                             TDH.Services.Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
                             throw new ApplicationException();
@@ -168,9 +171,11 @@ namespace TDH.Areas.Administrator.Services
             }
             catch (Exception ex)
             {
+                Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
                 TDH.Services.Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
                 throw new ApplicationException();
             }
+            Notifier.Notification(model.CreateBy, Resources.Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
         
@@ -201,6 +206,7 @@ namespace TDH.Areas.Administrator.Services
                         }
                         catch (Exception ex)
                         {
+                            Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
                             TDH.Services.Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
                             throw new ApplicationException();
@@ -211,9 +217,11 @@ namespace TDH.Areas.Administrator.Services
             }
             catch (Exception ex)
             {
+                Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
                 TDH.Services.Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
                 throw new ApplicationException();
             }
+            Notifier.Notification(model.CreateBy, Resources.Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
         

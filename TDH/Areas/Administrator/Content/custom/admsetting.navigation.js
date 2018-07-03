@@ -115,11 +115,8 @@ function saveSelected(id, selected) {
         dataType: 'json',
         data: JSON.stringify({ NavigationID: id, Selected: selected }),
         success: function (response) {
-            if (response.Status === 0) {
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else {
-                notification(response.Message, 'error');
             }
         },
         error: function (xhr, status, error) {
@@ -142,11 +139,8 @@ function updateOrder() {
         dataType: 'json',
         data: JSON.stringify({ NavigationID: $('#navID').val(), Ordering: $('#orderingSelection').val(), Selected: true }),
         success: function (response) {
-            if (response.Status === 0) {
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else {
-                notification(response.Message, 'error');
             }
             $('#orderingModal').modal('hide');
         },

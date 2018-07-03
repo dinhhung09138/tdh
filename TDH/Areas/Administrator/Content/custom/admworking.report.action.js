@@ -1,5 +1,4 @@
-﻿var active = false;
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $('#Title').focus();
     CKEDITOR.replace('Content',
         {
@@ -9,17 +8,21 @@ $(document).ready(function () {
             filebrowserImageUploadUrl: '/Areas/Administrator/Content/ckfinder/connector?command=QuickUpload&type=Images'
         });
 
-});
-var onSuccess = function (response, status, e) {
-    if (active === true) {
+    $(document).on('submit', "#form", function (e) {
+        e.preventDefault();
+        $(document).unbind('submit');
         return;
-    }
-    if (response.Status === 0) {
-        notification(response.Message, 'success');
-        loadPage('/administrator/admworking/report', 'Báo cáo');
-        active = true;
-    } else {
-        notification(response.Message, 'error');
-    }
-    loading($('#submitForm'), 'hide');
-}  
+    });
+
+});
+
+var beginSubmit = function () {
+    loading($('.content-wrapper'), 'show');
+};
+
+var onSuccess = function (response, status, e) {
+    loadPage('/administrator/admworking/report', 'Báo cáo');
+};
+
+var OnFailure = function (response) {
+};

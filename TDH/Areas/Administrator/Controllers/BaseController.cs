@@ -1,6 +1,9 @@
 ﻿using System;
+using Microsoft.AspNet.SignalR.Client;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Utils;
@@ -23,9 +26,18 @@ namespace TDH.Areas.Administrator.Controllers
         /// </summary>
         public Guid UserID { get; set; }
 
+        /// <summary>
+        /// ResultModel message success model
+        /// </summary>
+        public Utils.CommonModel.ExecuteResultModel ResultModel = new Utils.CommonModel.ExecuteResultModel()
+        {
+            Status = ResponseStatusCodeHelper.Success,
+            Message = Resources.Message.Success
+        };
+
         #endregion
 
-        #region " [ Protected method ] "
+        #region " [ Protected overriding method ] "
 
         /// <summary>
         /// Call before action method start
@@ -510,7 +522,8 @@ namespace TDH.Areas.Administrator.Controllers
 
         #endregion
         
-        #region " [  ] "
+        #region " [ Protected function ] "
+                
 
         #endregion
 

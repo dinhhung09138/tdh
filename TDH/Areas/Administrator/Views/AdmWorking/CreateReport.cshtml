@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="card-body">
-        @using (Ajax.BeginForm("createreport", "admworking", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure" }, new { }))
+        @using (Ajax.BeginForm("createreport", "admworking", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
         {
             @Html.Partial("_ReportForm", Model)
         }

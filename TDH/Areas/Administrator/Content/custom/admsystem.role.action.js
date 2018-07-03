@@ -1,5 +1,4 @@
-﻿var active = false;
-var table;
+﻿var table;
 
 $(document).ready(function () {
     $('#Name').focus();
@@ -37,17 +36,25 @@ $(document).ready(function () {
         checkboxClass: 'icheckbox_flat-green',
         radioClass: 'iradio_flat-green'
     });
-});
-var onSuccess = function (response, status, e) {
-    if (active === true) {
+
+    $(document).on('submit', "#form", function (e) {
+        e.preventDefault();
+        $(document).unbind('submit');
         return;
-    }
-    if (response.Status === 0) {
-        notification(response.Message, 'success');
-        loadPage('/administrator/admsystem/role', 'Nhóm quyền');
-        active = true;
-    } else {
-        notification(response.Message, 'error');
-    }
-    loading($('#submitForm'), 'hide');
+    });
+
+});
+
+var beginSubmit = function () {
+    loading($('.content-wrapper'), 'show');
+}
+
+var onSuccess = function (response, status, e) {
+    loadPage('/administrator/admsystem/role', 'Nhóm quyền');
 }  
+
+var OnFailure = function (response) {
+}
+
+
+

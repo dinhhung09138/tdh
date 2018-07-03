@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="card-body">
-        @using (Ajax.BeginForm("CreateRole", "AdmSystem", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure" }, new { @class = "form" }))
+        @using (Ajax.BeginForm("CreateRole", "AdmSystem", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
         {
             @Html.Partial("_RoleForm", Model)
         }

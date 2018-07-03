@@ -135,11 +135,8 @@ function savePublish(id, publish) {
         dataType: 'json',
         data: JSON.stringify({ ID: id, Publish: publish }),
         success: function (response) {
-            if (response.Status === 0) { //success
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else { //error
-                notification(response.Message, 'error');
             }
             id = '';
         },
@@ -157,12 +154,11 @@ function confirmDelete(deletedId) {
         dataType: 'json',
         data: JSON.stringify({ ID: deletedId }),
         success: function (response) {
-            if (response.Status === 3) {
+            if (response === 3) {
                 id = deletedId;
                 $('#deleteModal').modal('show');
-            } else { //error
+            } else {
                 id = '';
-                notification(response.Message, 'error');
             }
             $('#deleteModal').modal('hide');
         },
@@ -181,11 +177,8 @@ function deleteItem() {
         dataType: 'json',
         data: JSON.stringify({ ID: id }),
         success: function (response) {
-            if (response.Status === 0) { //success
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else { //error
-                notification(response.Message, 'error');
             }
             id = '';
             $('#deleteModal').modal('hide');

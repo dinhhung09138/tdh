@@ -8,9 +8,11 @@ using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using Microsoft.AspNet.SignalR.Client;
 using System.Threading.Tasks;
+using TDH.Areas.Administrator.Filters;
 
 namespace TDH.Areas.Administrator.Controllers
 {
+    [AjaxExecuteFilter]
     public class AdmWorkingController : BaseController
     {
         #region " [ Properties ] "
@@ -19,7 +21,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// File name
         /// </summary>
         private readonly string FILE_NAME = "Administrator.Controllers/AdmWorkingController.cs";
-
+        
         #endregion
 
 
@@ -30,7 +32,7 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
-                return View();
+                return PartialView();
             }
             catch (Exception ex)
             {
@@ -44,14 +46,27 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                #region " [ Declaration ] "
+
                 Services.ReportService _service = new Services.ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                // Process sorting column
                 requestData = requestData.SetOrderingColumnName();
+
+                #endregion
+
+                //Call to service
                 Dictionary<string, object> _return = _service.List(requestData, UserID);
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
                     DataTableResponse<ReportModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<ReportModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
+                //
                 return this.Json(new DataTableResponse<ReportModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -66,13 +81,18 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                #region " [ Declaration ] "
+
                 ReportModel model = new ReportModel()
                 {
                     ID = Guid.NewGuid(),
                     CreateBy = UserID,
                     Insert = true
                 };
-                return View(model);
+
+                #endregion
+                
+                return PartialView(model);
             }
             catch (Exception ex)
             {
@@ -88,22 +108,23 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                #region " [ Declaration ] "
+
                 Services.ReportService _service = new Services.ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
-                if (_service.Save(model) == ResponseStatusCodeHelper.Success)
-                {
-                    Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
-                    {
-                        Status = ResponseStatusCodeHelper.Success,
-                        Message = Resources.Message.Success
-                    };
-                    TempData[CommonHelper.EXECUTE_RESULT] = _result;
-                    return RedirectToAction("Report");
-                }
-                return View();
+
+                #endregion
+
+                // Call to service
+                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -117,9 +138,18 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                #region " [ Declaration ] "
+
                 Services.ReportService _service = new Services.ReportService();
+                //
+                ViewBag.id = id;
+
+                #endregion
+
+                // Call to service
                 ReportModel model = _service.GetItemByID(new ReportModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
-                return View(model);
+                //
+                return PartialView(model);
             }
             catch (Exception ex)
             {
@@ -135,22 +165,23 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                #region " [ Declaration ] "
+
                 Services.ReportService _service = new Services.ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
-                if (_service.Save(model) == ResponseStatusCodeHelper.Success)
-                {
-                    Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
-                    {
-                        Status = ResponseStatusCodeHelper.Success,
-                        Message = Resources.Message.Success
-                    };
-                    TempData[CommonHelper.EXECUTE_RESULT] = _result;
-                    return RedirectToAction("Report");
-                }
-                return View();
+
+                #endregion
+
+                // Call to service
+                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -164,23 +195,22 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
-                Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
-                {
-                    Status = ResponseStatusCodeHelper.Success,
-                    Message = Resources.Message.Success
-                };
-                //
+                #region " [ Declaration ] "
+
                 Services.ReportService _service = new Services.ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
                 model.CreateBy = UserID;
                 model.DeleteBy = UserID;
                 model.DeleteDate = DateTime.Now;
-                if (_service.Delete(model) == ResponseStatusCodeHelper.Success)
-                {
-                    return this.Json(_result, JsonRequestBehavior.AllowGet);
-                }
-                _result.Status = ResponseStatusCodeHelper.Error;
-                _result.Message = Resources.Message.Error;
-                return this.Json(_result, JsonRequestBehavior.AllowGet);
+
+                #endregion
+
+                // Call to service
+                return this.Json(_service.Delete(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -194,21 +224,25 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
-                Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
+                #region " [ Declaration ] "
+
+                Services.ReportService _service = new Services.ReportService();
+                //
+                ResultModel = new Utils.CommonModel.ExecuteResultModel()
                 {
                     Status = ResponseStatusCodeHelper.OK,
                     Message = ""
                 };
-                //
-                Services.ReportService _service = new Services.ReportService();
+                #endregion
+
+                #region " [ Main processing ] "
+
                 model.CreateBy = UserID;
-                if (_service.CheckDelete(model) == ResponseStatusCodeHelper.OK)
-                {
-                    return this.Json(_result, JsonRequestBehavior.AllowGet);
-                }
-                _result.Status = ResponseStatusCodeHelper.NG;
-                _result.Message = Resources.Message.CheckExists;
-                return this.Json(_result, JsonRequestBehavior.AllowGet);
+
+                #endregion
+
+                // Call to service
+                return this.Json(_service.CheckDelete(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -222,15 +256,29 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                #region " [ Declaration ] "
+
                 Services.ReportService _service = new Services.ReportService();
+                //
+                ViewBag.id = id;
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                // Call to service
                 ReportModel _model = _service.GetItemByID(new ReportModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 ViewBag.reportData = _model;
                 ViewBag.comments = _service.GetAllComment(new Guid(id), UserID);
-                return View(new ReportCommentModel() { ReportID = _model.ID, Title = "" });
+
+                #endregion
+
+                //
+                return PartialView(new ReportCommentModel() { ReportID = _model.ID, Title = "" });
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Detail", UserID, ex);
+                TDH.Services.Log.WriteLog(FILE_NAME, "DetailReport", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -242,26 +290,28 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                #region " [ Declaration ] "
+
                 Services.ReportService _service = new Services.ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                model.Title = "";
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
-                if (_service.SaveComment(model) == ResponseStatusCodeHelper.Success)
-                {
-                    Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
-                    {
-                        Status = ResponseStatusCodeHelper.Success,
-                        Message = Resources.Message.Success
-                    };
-                    TempData[CommonHelper.EXECUTE_RESULT] = _result;
-                    return RedirectToAction("DetailReport", new { @id = model.ReportID });
-                }
-                return View();
+
+                #endregion
+
+                // Call to service
+                return this.Json(_service.SaveComment(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditReport", UserID, ex);
+                TDH.Services.Log.WriteLog(FILE_NAME, "SaveReportComment", UserID, ex);
                 throw new HttpException();
             }
         }

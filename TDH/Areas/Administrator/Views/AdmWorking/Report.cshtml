@@ -1,46 +1,41 @@
-﻿
-@{
-    ViewBag.Title = "Báo cáo công việc";
-    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
-}
-
-@section header{
-    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
-}
-@section action{
-    @{
-        if (ViewBag.Add == true)
-        {
-            <li class="breadcrumb-item"><a href="/administrator/admworking/createreport">Thêm mới</a></li>
-        }
-    }
-}
-@section script{
-    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
-    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
-    <script src="/Areas/Administrator/Content/custom/working.report.js"></script>
-}
+﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+<link href="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <table id="tbList" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Tiêu đề</th>
-                            <th>Phản hồi</th>
-                            <th>Người tạo</th>
-                            <th>Ngày tạo</th>
-                            <th>#</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Báo cáo công việc</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.Add == true)
+                {
+                    <a title="Thêm mới" class="btn btn-box-tool pg_ld" data-title="Thêm báo cáo" data-url="/administrator/admworking/createreport">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                }
+            }
         </div>
+    </div>
+    <div class="card-body">
+        <table id="tbList" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tiêu đề</th>
+                    <th>Phản hồi</th>
+                    <th>Người tạo</th>
+                    <th>Ngày tạo</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
 @Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
+<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="/Areas/Administrator/Content/custom/admworking.report.js"></script>
+

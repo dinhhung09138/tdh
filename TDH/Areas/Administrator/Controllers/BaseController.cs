@@ -1,6 +1,9 @@
 ﻿using System;
+using Microsoft.AspNet.SignalR.Client;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Utils;
@@ -10,22 +13,24 @@ namespace TDH.Areas.Administrator.Controllers
     public class BaseController : Controller
     {
         #region " [ Properties ] "
-
-        /// <summary>
-        /// TIme to set message disapear.
-        /// Caculate on message appear
-        /// Miliseconds
-        /// </summary>
-        private readonly int TIME_HIDE_MESSAGE = 3000;
-
+        
         /// <summary>
         /// Current user id
         /// </summary>
         public Guid UserID { get; set; }
 
+        /// <summary>
+        /// ResultModel message success model
+        /// </summary>
+        public Utils.CommonModel.ExecuteResultModel ResultModel = new Utils.CommonModel.ExecuteResultModel()
+        {
+            Status = ResponseStatusCodeHelper.Success,
+            Message = Resources.Message.Success
+        };
+
         #endregion
 
-        #region " [ Protected method ] "
+        #region " [ Protected overriding method ] "
 
         /// <summary>
         /// Call before action method start
@@ -116,13 +121,13 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 return;
             }
-            if (TempData[CommonHelper.EXECUTE_RESULT] != null)
-            {
-                Utils.CommonModel.ExecuteResultModel _result = TempData[CommonHelper.EXECUTE_RESULT] as Utils.CommonModel.ExecuteResultModel;
-                ViewBag.message = _result.Message;
-                ViewBag.messageType = _result.Status == ResponseStatusCodeHelper.Success ? "success" : "error";
-                TempData.Clear();
-            }
+            //if (TempData[CommonHelper.EXECUTE_RESULT] != null)
+            //{
+            //    Utils.CommonModel.ExecuteResultModel _result = TempData[CommonHelper.EXECUTE_RESULT] as Utils.CommonModel.ExecuteResultModel;
+            //    ViewBag.message = _result.Message;
+            //    ViewBag.messageType = _result.Status == ResponseStatusCodeHelper.Success ? "success" : "error";
+            //    TempData.Clear();
+            //}
         }
 
         /// <summary>
@@ -267,6 +272,7 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "publishcategory":
                                 case "deletecategory":
                                 case "checkdeletecategory":
+                                case "onnavigationcategory":
                                     return "post_category";
                                 case "navigation":
                                 case "createnavigation":
@@ -416,11 +422,13 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "publishcategory":
                                 case "editnavigation":
                                 case "publishnavigation":
+                                case "onnavigationcategory":
                                     return Services.RoleService.actionType.Edit;
                                 case "deletenews":
                                 case "deletecategory":
                                 case "checkdeletecategory":
                                 case "deletenavigation":
+                                case "checkdeletenavigation":
                                     return Services.RoleService.actionType.Delete;
                             }
 
@@ -510,7 +518,8 @@ namespace TDH.Areas.Administrator.Controllers
 
         #endregion
         
-        #region " [  ] "
+        #region " [ Protected function ] "
+                
 
         #endregion
 

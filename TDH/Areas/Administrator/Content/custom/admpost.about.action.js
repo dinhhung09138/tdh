@@ -1,34 +1,6 @@
 ﻿
 $(document).ready(function () {
-    if ($('#IsNavigation').val() === 'True') {
-        $('#CategoryID').hide();
-        $('#NavigationID').show();
-        $('#navChecked').iCheck('check');
-    } else {
-        $('#CategoryID').show();
-        $('#NavigationID').hide();
-        $('#cateChecked').iCheck('check');
-    }
-
-    $('input[type=checkbox],input[type=radio]').iCheck({
-        checkboxClass: 'icheckbox_flat-green',
-        radioClass: 'iradio_flat-green'
-    });
-
-    $('#navChecked').on('ifChecked', function () {
-        console.log('nav checked');
-        $('#IsNavigation').val(true);
-        $('#CategoryID').hide();
-        $('#NavigationID').show();
-    });
-
-    $('#cateChecked').on('ifChecked', function () {
-        console.log('cate checked');
-        $('#IsNavigation').val(false);
-        $('#CategoryID').show();
-        $('#NavigationID').hide();
-    });
-
+    $('#Content').focus();
     CKEDITOR.replace('Content',
         {
             filebrowserBrowseUrl: '/Areas/Administrator/Content/ckfinder/ckfinder.html',
@@ -64,4 +36,20 @@ $(document).ready(function () {
         finder.popup();
     });
 
+    $(document).on('submit', "#form", function (e) {
+        e.preventDefault();
+        $(document).unbind('submit');
+        return;
+    });
+
 });
+var beginSubmit = function () {
+    loading($('.content-wrapper'), 'show');
+};
+
+var onSuccess = function (response, status, e) {
+    loadPage('/administrator/admpost/about', 'Giới thiệu');
+};
+
+var OnFailure = function (response) {
+};

@@ -1,88 +1,90 @@
 ﻿@model TDH.Areas.Administrator.Models.ConfigurationModel
-@{
-    ViewBag.Title = "Cập nhật cấu hình chung";
-    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
-}
-
-@section header{
-}
-@section action{
-}
-@section script{
-    <script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
-    <script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
-    <script src="/Scripts/jquery.validate.min.js"></script>
-    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="/Areas/Administrator/Content/Custom/setting.configuration.action.js"></script>
-}
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                @using (Html.BeginForm("editconfiguration", "admsetting", FormMethod.Post, new { @class = "form" }))
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Cập nhật thông tin thiết lập</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.View == true)
                 {
-                    @Html.AntiForgeryToken()
-                    @Html.HiddenFor(m => m.Key)
-                    @Html.HiddenFor(m => m.Insert)
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-4 col-xs-12 text-right">
-                            Mã <span style="color:red; font-weight:bold;">*</span>
-                        </div>
-                        <div class="col-md-9 col-sm-8 col-xs-12">
-                            @Html.TextBoxFor(m => m.Key, new { @class = "form-control", @maxlength = 70, @required = true, @readonly = true, @focus = true, @tabindex = "1" })
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-4 col-xs-12 text-right">
-                            Mô tả  <span style="color:red; font-weight:bold;">*</span>
-                        </div>
-                        <div class="col-md-9 col-sm-8 col-xs-12">
-                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = 2, @maxlength = 500, @tabindex = "2" })
-                            @Html.ValidationMessageFor(m => m.Description)
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-4 col-xs-12 text-right">
-                            Giá trị <span style="color:red; font-weight:bold;">*</span>
-                        </div>
-                        <div class="col-md-9 col-sm-8 col-xs-12">
-                            <div class="row form-group">
-                                <div class="col-md-12 col-xs-12">
-                                    <a href="javascript:;" id="selectImg" tabindex="3">Chọn ảnh</a>
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12 col-xs-12">
-                                    @Html.TextBoxFor(m => m.Value, new { @class = "form-control", @maxlength = 255, @required = true, @tabindex = "4" })
-                                    <div style="width:400px; height:auto; padding:10px;">
-                                        @{
-                                            string _imgUrl = null;
-                                            if (Model.Value.Contains(".jpg") || Model.Value.Contains(".png") || Model.Value.Contains(".gif"))
-                                            {
-                                                _imgUrl = Model.Value;
-                                            }
-                                        }
-                                        <img id="imgValue" src="@_imgUrl" width="100%" height="200" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-md-3 col-sm-4 col-xs-12">
-                        </div>
-                        <div class="col-md-9 col-sm-8 col-xs-12">
-                            @{
-                                if (ViewBag.Add == true || ViewBag.Edit == true)
-                                {
-                                    <a href="/administrator/admsetting/configuration" class="btn btn-default" tabindex="5">Quay lại</a>
-                                    <button type="submit" class="btn btn-primary" tabindex="6">Lưu</button>
-                                }
-                            }
-                        </div>
-                    </div>
-                                }
-            </div>
+                    <a href="javascript:;" title="Quay lại" class="btn btn-box-tool pg_ld" data-widget="collapse" data-url="/administrator/admsetting/configuration" data-title="Thiết lập chung">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
+                }
+                <a href="javascript:;" title="Tải lại" class="btn btn-box-tool pg_ld" data-widget="collapse" data-url="/administrator/admsetting/editconfiguration/@ViewBag.id" data-title="Cập nhật thông tin thiết lập">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            }
         </div>
     </div>
+    <div class="card-body">
+        @using (Ajax.BeginForm("editconfiguration", "admsetting", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure="OnFailure", InsertionMode = InsertionMode.InsertAfter, AllowCache = false }, new { @class = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.Key)
+            @Html.HiddenFor(m => m.Insert)
+            <div class="row form-group">
+                <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+                    Mã <span style="color:red; font-weight:bold;">*</span>
+                </div>
+                <div class="col-md-9 col-sm-8 col-xs-12">
+                    @Html.TextBoxFor(m => m.Key, new { @class = "form-control", @maxlength = 70, @required = true, @readonly = true, @focus = true})
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+                    Mô tả  <span style="color:red; font-weight:bold;">*</span>
+                </div>
+                <div class="col-md-9 col-sm-8 col-xs-12">
+                    @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @maxlength = 500, @tabindex = "1", @required = true })
+                    @Html.ValidationMessageFor(m => m.Description)
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+                    Giá trị <span style="color:red; font-weight:bold;">*</span>
+                </div>
+                <div class="col-md-9 col-sm-8 col-xs-12">
+                    <div class="row form-group">
+                        <div class="col-md-12 col-xs-12">
+                            <a href="javascript:;" id="selectImg" tabindex="2">Chọn ảnh</a>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-12 col-xs-12">
+                            @Html.TextBoxFor(m => m.Value, new { @class = "form-control", @maxlength = 255, @required = true, @tabindex = "3" })
+                            <div style="width:400px; height:auto; padding:10px;">
+                                @{
+                                    string _imgUrl = null;
+                                    if (Model.Value.Contains(".jpg") || Model.Value.Contains(".png") || Model.Value.Contains(".gif"))
+                                    {
+                                        _imgUrl = Model.Value;
+                                    }
+                                }
+                                <img id="imgValue" src="@_imgUrl" width="100%" height="200" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-3 col-sm-4 col-xs-12">
+                </div>
+                <div class="col-md-9 col-sm-8 col-xs-12">
+                    @{
+                        if (ViewBag.Add == true || ViewBag.Edit == true)
+                        {
+                            <a href="javascript:;" data-url="/administrator/admsetting/configuration" data-title="Thiết lập chung" class="btn btn-default pg_ld" tabindex="4">Quay lại</a>
+                            <button type="submit" class="btn btn-primary" id="submitForm" tabindex="5">Lưu</button>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
 </div>
+<script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
+<script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
+<script src="/Scripts/jquery.validate.min.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="/Areas/Administrator/Content/custom/admsetting.configuration.action.js"></script>

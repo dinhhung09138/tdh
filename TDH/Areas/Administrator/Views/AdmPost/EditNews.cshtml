@@ -1,29 +1,31 @@
 ﻿@model TDH.Areas.Administrator.Models.PostModel
-@{
-    ViewBag.Title = "Cập nhật bài viết";
-    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
-}
-
-@section header{
-}
-@section action{
-}
-@section script{
-    <script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
-    <script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
-    <script src="/Scripts/jquery.validate.min.js"></script>
-    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="/Areas/Administrator/Content/custom/post.news.action.js"></script>
-}
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                @using (Html.BeginForm("EditNews", "admpost", FormMethod.Post, new { @class = "form" }))
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Cập nhật bài viết</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.View == true)
                 {
-                    @Html.Partial("_NewsForm", Model)
+                    <a href="javascript:;" title="Quay lại" class="btn btn-box-tool pg_ld" data-widget="collapse" data-url="/administrator/admpost/news" data-title="Bài viết">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
                 }
-            </div>
+                <a href="javascript:;" title="Tải lại" class="btn btn-box-tool pg_ld" data-widget="collapse" data-url="/administrator/admpost/editnews" data-title="Cập nhật bài viết">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            }
         </div>
     </div>
+    <div class="card-body">
+        @using (Ajax.BeginForm("editnews", "admpost", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
+        {
+            @Html.Partial("_NewsForm", Model)
+        }
+    </div>
 </div>
+<script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
+<script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
+<script src="/Scripts/jquery.validate.min.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="/Areas/Administrator/Content/Custom/admpost.news.action.js"></script>

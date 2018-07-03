@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="/Areas/Administrator/Content/dist/css/adminlte.min.css">
     <link href="/Areas/Administrator/Content/vendors/iCheck/skins/flat/green.css" rel="stylesheet" />
     <link href="/Areas/Administrator/Content/vendors/lobibox/dist/css/lobibox.min.css" rel="stylesheet" />
+    <link href="/Areas/Administrator/Content/plugins/waitMe/waitMe.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <link href="/trandinhhung.ico" rel="shortcut icon" type="image/x-icon" />
     @RenderSection("header", required: false)
     <style>
         .navbar-expand .navbar-nav .dropdown-menu {
-            background-color: #17a2b8;
+            background-color: #359746;
             color: black;
         }
         .navbar-expand .navbar-nav .dropdown-menu .text-muted {
@@ -53,18 +54,18 @@
             margin-top: -22px;
         }
         .page-item.active .page-link {
-            background-color: #17a2b8;
-            border-color: #17a2b8;
+            background-color: #359746;
+            border-color: #359746;
         }
         a {
-            color: #17a2b8;
+            color: #359746;
         }
         a:hover {
             color: #0d7283;
         }
         .btn-primary {
-            background-color: #17a2b8;
-            border-color: #17a2b8;
+            background-color: #359746;
+            border-color: #359746;
             box-shadow: 0 1px 1px rgba(0,0,0,.075);
         }
         .btn-primary:hover, 
@@ -105,6 +106,36 @@
         .modal-header {
             display: block;
         }
+        .no-bg {
+            background-color: unset !important;
+        }
+        .no-bg .card-title {
+            color: #359746 !important;
+            font-weight:bold;
+            border-bottom: #359746 solid 1px;
+            padding-bottom: 7px;
+        }
+        a.btn-box-tool {
+            color: rgba(255,255,255, 1) !important;
+            background-color: #359746 !important;
+        }
+        a.btn-box-tool:hover, a.btn-box-tool:active {
+            background-color: #0D7283 !important;
+        }
+        .nav-sidebar > .nav-item .nav-icon {
+            color: #359746;
+        }
+        .page-link {
+            color: #359746;
+        }
+        #formMain{
+            min-height: 500px;
+        }
+        .modal-content {
+            border: unset;
+            border-radius: 0rem;
+            box-shadow: none !important;
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -112,45 +143,52 @@
         @Html.Action("AdminNavigation", "Base", new { @area = "administrator" })
         @Html.Action("AdminSidebar", "Base", new { @area = "administrator" })
         <div class="content-wrapper">
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-9 col-xs-12">
-                            <h1 class="m-0" style="color:#17a2b8;">@ViewBag.Title</h1>
-                        </div>
-                        <div class="col-sm-3 col-xs-12">
-                            <ol class="breadcrumb float-sm-right">
-                                @RenderSection("action", required: false)
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <input type="hidden" id="message" value="@ViewBag.message" />
+            <input type="hidden" id="messageType" value="@ViewBag.messageType" />
             <section class="content">
-                <div class="container-fluid">
-                    <input type="hidden" id="message" value="@ViewBag.message" />
-                    <input type="hidden" id="messageType" value="@ViewBag.messageType" />
-                    @RenderBody()
+                <div class="container-fluid" id="main_layout">
                 </div>
             </section>
+            @RenderBody()
         </div>
         @{Html.RenderAction("AdminFooter", "Base", new { @area = "administrator" }); }
     </div>    
-    @section scripts {
-    
-    }
-    @*<script src="/Areas/Administrator/Content/plugins/jquery/jquery.min.js"></script>*@
+  
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/Areas/Administrator/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/Areas/Administrator/Content/plugins/fastclick/fastclick.js"></script>
     <script src="/Areas/Administrator/Content/vendors/iCheck/icheck.min.js"></script>
     <script src="/Areas/Administrator/Content/vendors/lobibox/dist/js/lobibox.min.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <script src="/Areas/Administrator/Content/dist/js/adminlte.min.js"></script>
-    
+    <script src="/Areas/Administrator/Content/plugins/waitMe/waitMe.min.js"></script>
+    <script src="/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="~/signalr/hubs"></script>
     <script type="text/javascript">
+        var language = {
+            lengthMenu: 'Hiển thị _MENU_',
+            zeroRecords: 'Dữ liệu không tồn tại',
+            info: 'Trang _PAGE_/_PAGES_',
+            infoEmpty: 'Không tìm thấy kết quả',
+            infoFiltered: '(Tìm kiếm trên _MAX_ dòng)',
+            search: 'Tìm kiếm',
+            processing: 'Đang xử lý',
+            paginate: {
+                first: '<<',
+                previous: '<',
+                next: '>',
+                last: '>>'
+            }
+        };
+
         $(document).ready(function () {
-            notification($('#message').val(), $('#messageType').val());
+
+            $("*").dblclick(function (e) {
+                e.preventDefault();
+            });
+            
         });
+
         function notification(mesage, type) {
             if (message === 'undefined' | message.length === 0) {
                 return;
@@ -189,6 +227,39 @@
                 return;
             }
         }
+
+        $(document).on('click', '.pg_ld', function (e) {
+            var url = $(this).attr('data-url');
+            var title = $(this).attr('data-title');
+            loadPage(url, title);
+        });
+
+        function loadPage(url, title) {
+            loading($('.content-wrapper'), 'show');
+            document.title = title;
+            $('#main_layout').load(url);
+            setTimeout(function () { loading($('.content-wrapper'), 'hide') }, 700);            
+        }
+
+
+        function loading(el, type) {
+            if (type === 'show') {
+                el.waitMe({
+                    effect: 'facebook',
+                    text: '',
+                    maxSize: '',
+                    waitTime: -1,
+                    source: 'img.svg',
+                    textPos: 'vertical',
+                    fontSize: '',
+                    onClose: function (el) { }
+                });                
+            }
+            else {
+                el.waitMe('hide');
+            }
+        }
+        
     </script>
     @RenderSection("script", required: false)
     @{Html.RenderPartial("_SignalR");}

@@ -11,6 +11,7 @@ $(document).ready(function () {
         searching: true,
         ordering: true,
         paging: true,
+        responsive: true,
         pageLength: 10,
         pagingType: 'full_numbers',
         info: true,
@@ -18,24 +19,10 @@ $(document).ready(function () {
         initComplete: function (settings, json) {
             //Do something after finish
         },
-        language: {
-            lengthMenu: 'Hiển thị _MENU_ dòng mỗi trang',
-            zeroRecords: 'Dữ liệu không tồn tại',
-            info: 'Trang _PAGE_/_PAGES_',
-            infoEmpty: '',//'Không tìm thấy kết quả',
-            infoFiltered: '',//'(Tìm kiếm trên _MAX_ dòng)',
-            search: 'Tìm kiếm',
-            processing: 'Đang xử lý',
-            paginate: {
-                first: '<<',
-                previous: '<',
-                next: '>',
-                last: '>>'
-            }
-        },
+        language: language,
         order: [[2, "asc"]],
         ajax: {
-            url: document.URL,
+            url: '/administrator/admsystem/role',
             type: 'post',
             data: function (d) {
                 //d.ModuleCode = ""
@@ -44,28 +31,17 @@ $(document).ready(function () {
         columns: [
             {
                 orderable: false,
-                width: '30px',
+                width: '40px',
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }
             },
             {
-                orderable: false,
-                searchable: false,
-                width: '90px',
-                className: 'ctn-center',
-                render: function (obj, type, data, meta) {
-                    if (data.Image.length > 0) {
-                        return '<img src="' + data.Image + '" width="88" height="56"/>';
-                    }
-                    return '';
-                }
-            },
-            {
-                data: 'Title',
+                data: 'Name',
                 orderable: true,
-                searchable: true
+                searchable: true,
+                width: '200px'
             },
             {
                 data: 'Description',
@@ -74,43 +50,10 @@ $(document).ready(function () {
             },
             {
                 data: 'Count',
-                orderable: false,
-                searchable: false,
-                className: 'ctn-center',
-                width: '60px',
-            },
-            {
-                data: 'NoChild',
-                orderable: false,
-                searchable: false,
-                className: 'ctn-center',
-                width: '80px',
-                render: function (obj, type, data, meta) {
-                    if (data.NoChild === true) {
-                        return '<div class="icheckbox_flat-green checked" style="position: relative;">\
-                                        <input type="checkbox" class="flat" name="table_records" checked="" \
-                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
-                                        <ins class="iCheck-helper" \
-                                                style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
-                                        </ins>\
-                                    </div>';
-                    } else {
-                        return '<div class="icheckbox_flat-green" style="position: relative;">\
-                                        <input type="checkbox" class="flat" name="table_records" value="14" \
-                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
-                                        <ins class="iCheck-helper" \
-                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
-                                        </ins>\
-                                    </div>';
-                    }
-                }
-            },
-            {
-                data: 'Ordering',
                 orderable: true,
                 searchable: true,
                 className: 'ctn-center',
-                width: '60px',
+                width: '70px'
             },
             {
                 data: 'Publish',
@@ -153,7 +96,7 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="/administrator/admpost/editnavigation/' + data.ID + '\" title="Cập nhật"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="javascript:;" data-url="/administrator/admsystem/editrole/' + data.ID + '\" data-title="Cập nhật nhóm quyền" title="Cập nhật" class="pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');"><i class="fa fa-remove" aria-hidden="true"></i></a>';
@@ -171,29 +114,29 @@ $(document).ready(function () {
                 radioClass: 'iradio_flat-green',
                 increaseArea: '20%'
             });
+
             $('#tbList input[name="publish"]').on('ifChecked', function () {
                 savePublish($(this).val(), true);
             });
+
             $('#tbList input[name="publish"]').on('ifUnchecked', function () {
                 savePublish($(this).val(), false);
             });
+            
         }
     });
 });
 
 function savePublish(id, publish) {
     $.ajax({
-        url: '/administrator/admpost/publishnavigation',
+        url: '/administrator/admsystem/publishrole',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify({ ID: id, Publish: publish }),
         success: function (response) {
-            if (response.Status === 0) { //success
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else { //error
-                notification(response.Message, 'error');
             }
             id = '';
         },
@@ -205,39 +148,37 @@ function savePublish(id, publish) {
 
 function confirmDelete(deletedId) {
     $.ajax({
-        url: '/administrator/admpost/checkdeletenavigation',
+        url: '/administrator/admsystem/checkdeleterole',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify({ ID: deletedId }),
         success: function (response) {
-            if (response.Status === 3) { 
+            if (response === 3) {
                 id = deletedId;
                 $('#deleteModal').modal('show');
             } else {
-                notification(response.Message, 'error');
+                id = '';
             }
+            $('#deleteModal').modal('hide');
         },
         error: function (xhr, status, error) {
             console.log(error);
+            $('#deleteModal').modal('hide');
         }
     });
-    
 }
 
 function deleteItem() {
     $.ajax({
-        url: '/administrator/admpost/deletenavigation',
+        url: '/administrator/admsystem/deleterole',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify({ ID: id }),
         success: function (response) {
-            if (response.Status === 0) { //success
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else { //error
-                notification(response.Message, 'error');
             }
             id = '';
             $('#deleteModal').modal('hide');

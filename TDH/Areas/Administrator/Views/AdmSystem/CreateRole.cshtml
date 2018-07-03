@@ -1,33 +1,38 @@
 ﻿@model TDH.Areas.Administrator.Models.RoleModel
-@{
-    ViewBag.Title = "Thêm nhóm quyền mới";
-    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
-}
-
-@section header{
-    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
-}
-@section action{
-}
-@section script{
-    <!-- DataTables -->
-    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
-    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
-    <script src="/Areas/Administrator/Content/vendors/autoNumeric/autoNumeric.min.js"></script>
-    <script src="/Scripts/jquery.validate.min.js"></script>
-    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="/Areas/Administrator/Content/custom/system.role.action.js"></script>
-}
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                @using (Html.BeginForm("CreateRole", "AdmSystem", FormMethod.Post, new { @class = "form" }))
+<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+<link href="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Thêm nhóm quyền mới</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.View == true)
                 {
-                    @Html.Partial("_RoleForm", Model)
+                    <a href="javascript:;" title="Quay lại" class="btn btn-box-tool pg_ld" data-url="/administrator/admsystem/role" data-title="Nnóm quyền">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
                 }
-            </div>
+                <a href="javascript:;" title="Tải lại" class="btn btn-box-tool pg_ld" data-url="/administrator/admsystem/createrole" data-title="Thêm nhóm quyền mới">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            }
         </div>
     </div>
+    <div class="card-body">
+        @using (Ajax.BeginForm("CreateRole", "AdmSystem", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
+        {
+            @Html.Partial("_RoleForm", Model)
+        }
+    </div>
 </div>
+<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
+<script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
+<script src="/Scripts/jquery.validate.min.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="/Areas/Administrator/Content/custom/admsystem.role.action.js"></script>

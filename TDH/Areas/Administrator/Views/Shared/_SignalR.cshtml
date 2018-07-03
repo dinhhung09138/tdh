@@ -1,17 +1,26 @@
-﻿@*<script>
+﻿<script>
     $(function () {
-        // Reference the auto-generated proxy for the hub.
-        var chat = $.connection.signalrHub;
+        var chat = $.connection.notificationHub;
         // Create a function that the hub can call back to display messages.
-        chat.client.client.signalRTestNotification = function (userID) {
-            if (userID == '@ViewBag.userID') {
-                alert(userID);
-            }
-        }
+        chat.client.notificationToUser = function (userID, message, type) {
+            if ('@ViewBag.userID' === userID) {
+                notification(message, type);
+            }            
+        };
+       
+        //$.connection.hub.start().done(function () {
+        //    $('#sendmessage').click(function () {
+        //        console.log($('#messageChat').val());
+        //        // Call the Send method on the hub.
+        //        chat.server.send($('#displayname').val(), $('#messageChat').val());
+        //        // Clear text box and reset focus for next comment.
+        //        $('#messageChat').val('').focus();
+        //    });
+        //});
     });
     // This optional function html-encodes messages for display in the page.
     function htmlEncode(value) {
         var encodedValue = $('<div />').text(value).html();
         return encodedValue;
     }
-</script>*@
+</script>

@@ -12,6 +12,7 @@ $(document).ready(function () {
         searching: true,
         ordering: true,
         paging: true,
+        responsive: true,
         pageLength: 10,
         pagingType: 'full_numbers',
         info: true,
@@ -19,24 +20,10 @@ $(document).ready(function () {
         initComplete: function (settings, json) {
             //Do something after finish
         },
-        language: {
-            lengthMenu: 'Hiển thị _MENU_ dòng mỗi trang',
-            zeroRecords: 'Dữ liệu không tồn tại',
-            info: 'Trang _PAGE_/_PAGES_',
-            infoEmpty: '',//'Không tìm thấy kết quả',
-            infoFiltered: '',//'(Tìm kiếm trên _MAX_ dòng)',
-            search: 'Tìm kiếm',
-            processing: 'Đang xử lý',
-            paginate: {
-                first: '<<',
-                previous: '<',
-                next: '>',
-                last: '>>'
-            }
-        },
+        language: language,
         order: [[1, "asc"]],
         ajax: {
-            url: document.URL,
+            url: '/administrator/admsystem/user',
             type: 'post',
             data: function (d) {
                 //d.ModuleCode = ""
@@ -118,7 +105,7 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="/administrator/admsystem/edituser/' + data.ID + '\" title="Cập nhật"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="javascript:;" data-url="/administrator/admsystem/edituser/' + data.ID + '\" data-title="Cập nhật tài khoản" title="Cập nhật" class="pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');"><i class="fa fa-remove" aria-hidden="true"></i></a>';
@@ -157,11 +144,8 @@ function savePublish(id, locked) {
         dataType: 'json',
         data: JSON.stringify({ ID: id, Locked: locked }),
         success: function (response) {
-            if (response.Status === 0) { //success
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else { //error
-                notification(response.Message, 'error');
             }
             id = '';
         },
@@ -184,11 +168,8 @@ function deleteItem() {
         dataType: 'json',
         data: JSON.stringify({ ID: id }),
         success: function (response) {
-            if (response.Status === 0) { //success
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else { //error
-                notification(response.Message, 'error');
             }
             id = '';
             $('#deleteModal').modal('hide');

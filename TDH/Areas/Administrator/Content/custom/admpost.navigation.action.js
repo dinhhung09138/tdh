@@ -1,9 +1,14 @@
-﻿
-$(document).ready(function () {
-
+﻿$(document).ready(function () {
+    $('#Title').focus();
     $('input[type=checkbox],input[type=radio]').iCheck({
         checkboxClass: 'icheckbox_flat-green',
         radioClass: 'iradio_flat-green'
+    });
+
+    $(document).on('submit', "#form", function (e) {
+        e.preventDefault();
+        $(document).unbind('submit');
+        return;
     });
 
 });
@@ -31,3 +36,13 @@ $(document).on('click', '#selectImgTwitter', function () {
     };
     finder.popup();
 });
+var beginSubmit = function () {
+    loading($('.content-wrapper'), 'show');
+};
+
+var onSuccess = function (response, status, e) {
+    loadPage('/administrator/admpost/navigation', 'Danh mục bài viết');
+};
+
+var OnFailure = function (response) {
+};

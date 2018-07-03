@@ -3,127 +3,148 @@
 @{
     ReportModel _report = ViewBag.reportData;
     ViewBag.Title = _report.Title;
-    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
+<style>
+    .nicEdit-main {
+        min-height: 400px !important;
+        overflow: auto !important;
+    }
 
-@section header{
-    <style>
-        .nicEdit-main {
-            min-height: 400px !important;
-            overflow: auto !important;
-        }
-        .labelView {
-            color: #17a2b8;
-        }
-        .contentReport{
-            padding: 10px;
-            background-color: #c6e6dd;
-        }
-    </style>
-}
-@section action{
-    <a href="/administrator/admworking/report" class="btn btn-default" tabindex="18">Quay lại</a>
-}
-@section script{
-    <script src="/Areas/Administrator/Content/plugins/nicedit/nicEdit-latest.js"></script>
-    <script src="/Scripts/jquery.validate.min.js"></script>
-    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script type="text/javascript">
-        bkLib.onDomLoaded(function () {
-            new nicEditor({ fullPanel: true, maxHeight: 500}).panelInstance('Content');
-        });
-    </script>
-}
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
+    .labelView {
+        color: #17a2b8;
+    }
+
+    .contentReport {
+        padding: 10px;
+        background-color: #c6e6dd;
+    }
+</style>
+
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">@_report.Title</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.View == true)
+                {
+                    <a href="javascript:;" title="Quay lại" class="btn btn-box-tool pg_ld" data-url="/administrator/admworking/report" data-title="Báo cáo">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
+                }
+                <a href="javascript:;" title="Tải lại" class="btn btn-box-tool pg_ld" data-url="/administrator/admworking/detailreport/@ViewBag.id" data-title="@_report.Title">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label class="labelView">Người phản hồi: </label> @Html.Raw(_report.UserCreate)
-                            </div>
-                            <div class="col-md-12">
-                                <label class="labelView">Ngày tạo: </label> @Html.Raw(_report.CreateDateString)
-                            </div>
-                            <div class="col-md-12">
-                                <label class="labelView">Nội dung báo cáo:</label><br /> 
-                                <div class="contentReport">
-                                    @Html.Raw(_report.Content)
-                                </div>
-                            </div>
+                        <label class="labelView">Người tạo: </label> @Html.Raw(_report.UserCreate)
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labelView">Ngày tạo: </label> @Html.Raw(_report.CreateDateString)
+                    </div>
+                    <div class="col-md-12">
+                        <label class="labelView">Nội dung báo cáo:</label><br />
+                        <div class="contentReport">
+                            @Html.Raw(_report.Content)
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        @{
-                            List<ReportCommentModel> _comments = ViewBag.comments as List<ReportCommentModel>;
-                            foreach (var item in _comments)
-                            {
-                                <div class="row">
-                                    <div class="col-md-12" style="border: 1px solid #17a2b8; margin: 10px 2px; padding: 5px;">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="labelView">Người phản hồi: </label> @Html.Raw(item.UserCreate)
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label class="labelView">Ngày tạo: </label> @Html.Raw(item.CreateDateString)
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label class="labelView">Nội dung:</label><br/> @Html.Raw(item.Content)
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
-                        }
-                        
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12" style="border-bottom: 1px solid #17a2b8; margin: 20px 0px">
-                        Phản hồi
-                    </div>
-                </div>
-                @{
-                    if (ViewBag.Add == true)
-                    {
-                        using (Html.BeginForm("SaveReportComment", "admworking", FormMethod.Post, new { @class = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            @Html.HiddenFor(m => m.ReportID)
-                            @Html.HiddenFor(m => m.Insert)
-                            @Html.HiddenFor(m => m.Title)
-                            <div class="row form-group">
-                                <div class="col-md-3 col-sm-4 col-xs-12 text-right">
-                                    Phản hồi  <span style="color:red; font-weight:bold;">*</span>
-                                </div>
-                                <div class="col-md-9 col-sm-8 col-xs-12">
-                                    @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @row = 10, @tabindex = "2" })
-                                    @Html.ValidationMessageFor(m => m.Content)
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-3 col-sm-4 col-xs-12">
-                                </div>
-                                <div class="col-md-9 col-sm-8 col-xs-12">
-                                    @{
-                                        <button type="submit" class="btn btn-primary" tabindex="19">Lưu</button>
-                                    }
-                                </div>
-                            </div>
-                        }
-                    }
-                }
-                
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    List<ReportCommentModel> _comments = ViewBag.comments as List<ReportCommentModel>;
+                    foreach (var item in _comments)
+                    {
+                        <div class="row">
+                            <div class="col-md-12" style="border: 1px solid #17a2b8; margin: 10px 2px; padding: 5px;">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="labelView">Người phản hồi: </label> @Html.Raw(item.UserCreate)
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labelView">Ngày tạo: </label> @Html.Raw(item.CreateDateString)
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="labelView">Nội dung:</label><br /> @Html.Raw(item.Content)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="border-bottom: 1px solid #17a2b8; margin: 20px 0px">
+                Phản hồi
+            </div>
+        </div>
+        @{
+            if (ViewBag.Add == true)
+            {
+                using (Ajax.BeginForm("SaveReportComment", "admworking", null, new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess",  OnFailure = "OnFailure" }, new { @class = "form", @id="addCommentForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.ReportID)
+                    @Html.HiddenFor(m => m.Insert)
+                    @Html.HiddenFor(m => m.Title)
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+                            Phản hồi  <span style="color:red; font-weight:bold;">*</span>
+                        </div>
+                        <div class="col-md-9 col-sm-8 col-xs-12">
+                            @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @row = 10, @required = true, @tabindex = "1" })
+                            @Html.ValidationMessageFor(m => m.Content)
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-3 col-sm-4 col-xs-12">
+                        </div>
+                        <div class="col-md-9 col-sm-8 col-xs-12">
+                            @{
+                                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="2">Lưu</button>
+                            }
+                        </div>
+                    </div>
+                }
+            }
+        }
     </div>
 </div>
+<script src="/Scripts/jquery.validate.min.js"></script>
+<script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+<script type="text/javascript">
+    var active = false;
+    function onSuccess(response, status) {
+        console.log(active);
+        if (active === true) {
+            return;
+        }
+        if (response.Status === 0) {
+            $('#Content').val('');
+            notification(response.Message, 'success');
+            loadPage('/administrator/admworking/detailreport/@ViewBag.id', '@_report.Title');
+            active = true;
+        } else {
+            notification(response.Message, 'error');
+            return false;
+        }
+        loading($('#submitForm'), 'hide');
+    }
+</script>

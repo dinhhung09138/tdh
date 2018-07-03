@@ -1,5 +1,6 @@
 ﻿
 $(document).ready(function () {
+    $('#CategoryID').focus();
     if ($('#IsNavigation').val() === 'True') {
         $('#CategoryID').hide();
         $('#NavigationID').show();

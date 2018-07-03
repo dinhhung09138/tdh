@@ -1,5 +1,6 @@
 ﻿
 $(document).ready(function () {
+    $('#Content').focus();
     CKEDITOR.replace('Content',
         {
             filebrowserBrowseUrl: '/Areas/Administrator/Content/ckfinder/ckfinder.html',
@@ -35,4 +36,20 @@ $(document).ready(function () {
         finder.popup();
     });
 
+    $(document).on('submit', "#form", function (e) {
+        e.preventDefault();
+        $(document).unbind('submit');
+        return;
+    });
+
 });
+var beginSubmit = function () {
+    loading($('.content-wrapper'), 'show');
+};
+
+var onSuccess = function (response, status, e) {
+    loadPage('/administrator/admpost/about', 'Giới thiệu');
+};
+
+var OnFailure = function (response) {
+};

@@ -5085,7 +5085,7 @@
     <Content Include="Areas\Administrator\Content\custom\admtarget.idea.js" />
     <Content Include="Areas\Administrator\Content\custom\admworking.report.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admworking.report.js" />
-    <Content Include="Areas\Administrator\Content\custom\post.about.action.js" />
+    <Content Include="Areas\Administrator\Content\custom\admpost.about.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admpost.category.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admpost.category.js" />
     <Content Include="Areas\Administrator\Content\custom\product.action.js" />

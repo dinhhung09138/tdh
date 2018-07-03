@@ -153,8 +153,7 @@
         </div>
         @{Html.RenderAction("AdminFooter", "Base", new { @area = "administrator" }); }
     </div>    
-    @section scripts {
-    }
+  
     <script src="/Scripts/jquery-1.10.2.min.js"></script>
     <script src="/Areas/Administrator/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/Areas/Administrator/Content/plugins/fastclick/fastclick.js"></script>
@@ -163,7 +162,8 @@
     <script src="/Areas/Administrator/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <script src="/Areas/Administrator/Content/dist/js/adminlte.min.js"></script>
     <script src="/Areas/Administrator/Content/plugins/waitMe/waitMe.min.js"></script>
-    
+    @section scripts {
+    }
     <script type="text/javascript">
         var language = {
             lengthMenu: 'Hiển thị _MENU_',

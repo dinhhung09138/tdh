@@ -32,7 +32,7 @@ namespace TDH.Areas.Administrator.Controllers
         {
             UserService _services = new UserService();
             UserModel _model = _services.Login(model);
-            if(_model.UserName == "")
+            if(_model.UserName == null || _model.UserName == "" )
             {
                 TempData["model"] = new LoginModel() { UserName = model.UserName, RememberMe = model.RememberMe };
                 TempData["msg"] = "Tên đăng nhập hoặc mật khẩu không hợp lệ";

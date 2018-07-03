@@ -155,7 +155,7 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admpost/editcategory/' + data.ID + '\" data-title="Cập nhật danh mục" title="Cập nhật" class="pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="javascript:;" data-url="/administrator/admpost/editcategory/' + data.ID + '\" data-title="Cập nhật danh mục bài viết" title="Cập nhật" class="pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');"><i class="fa fa-remove" aria-hidden="true"></i></a>';
@@ -206,11 +206,8 @@ function saveOnNav(id, show) {
         dataType: 'json',
         data: JSON.stringify({ ID: id, ShowOnNav: show }),
         success: function (response) {
-            if (response.Status === 0) { //success
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else { //error
-                notification(response.Message, 'error');
             }
             id = '';
         },
@@ -228,11 +225,8 @@ function savePublish(id, publish) {
         dataType: 'json',
         data: JSON.stringify({ ID: id, Publish: publish }),
         success: function (response) {
-            if (response.Status === 0) { //success
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else { //error
-                notification(response.Message, 'error');
             }
             id = '';
         },
@@ -250,11 +244,11 @@ function confirmDelete(deletedId) {
         dataType: 'json',
         data: JSON.stringify({ ID: deletedId }),
         success: function (response) {
-            if (response.Status === 3) {
+            if (response === 3) {
                 id = deletedId;
                 $('#deleteModal').modal('show');
-            } else { //error
-                notification(response.Message, 'error');
+            } else {
+                id = '';
             }
         },
         error: function (xhr, status, error) {
@@ -272,11 +266,8 @@ function deleteItem() {
         dataType: 'json',
         data: JSON.stringify({ ID: id }),
         success: function (response) {
-            if (response.Status === 0) { //success
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else { //error
-                notification(response.Message, 'error');
             }
             id = '';
             $('#deleteModal').modal('hide');

@@ -64,4 +64,20 @@ $(document).ready(function () {
         finder.popup();
     });
 
+    $(document).on('submit', "#form", function (e) {
+        e.preventDefault();
+        $(document).unbind('submit');
+        return;
+    });
+
 });
+var beginSubmit = function () {
+    loading($('.content-wrapper'), 'show');
+};
+
+var onSuccess = function (response, status, e) {
+    loadPage('/administrator/admpost/news', 'Bài viết');
+};
+
+var OnFailure = function (response) {
+};

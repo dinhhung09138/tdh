@@ -1,20 +1,23 @@
 ﻿@model TDH.Areas.Administrator.Models.CategoryModel
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Thêm nhóm chủ đề</h3>
+        <h3 class="card-title">Thêm danh mục bài viết</h3>
         <div class="card-tools pull-right">
             @{
                 if (ViewBag.View == true)
                 {
-                    <button type="button" title="Quay lại" class="btn btn-box-tool" data-widget="collapse" data-url="/administrator/admpost/category" data-title="Nhóm chủ đề">
-                        <i class="fa fa-arrow-left"></i>
-                    </button>
+                    <a href="javascript:;" title="Quay lại" class="btn btn-box-tool pg_ld" data-widget="collapse" data-url="/administrator/admpost/category" data-title="Chủ đề bài viết">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
                 }
+                <a href="javascript:;" title="Tải lại" class="btn btn-box-tool pg_ld" data-widget="collapse" data-url="/administrator/admpost/createcategory" data-title="Thêm nhóm chủ đề">
+                    <i class="fa fa-refresh"></i>
+                </a>
             }
         </div>
     </div>
     <div class="card-body">
-        @using (Html.BeginForm("CreateCategory", "admpost", FormMethod.Post, new { @class = "form" }))
+        @using (Ajax.BeginForm("createcategory", "admpost", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
         {
             @Html.Partial("_CategoryForm", Model)
         }
@@ -24,4 +27,5 @@
 <script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
 <script src="/Scripts/jquery.validate.min.js"></script>
 <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script src="/Areas/Administrator/Content/Custom/post.category.action.js"></script>
+<script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="/Areas/Administrator/Content/custom/admpost.category.action.js"></script>

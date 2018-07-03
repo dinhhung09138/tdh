@@ -1,5 +1,4 @@
-﻿@Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
-<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
 <link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
@@ -11,15 +10,15 @@
             @{
                 if (ViewBag.Add == true)
                 {
-                    <button type="button" title="Thêm mới" class="btn btn-box-tool pg_ld" data-widget="collapse" data-title="Thêm bài viết" data-url="/administrator/admpost/createnews">
+                    <a title="Thêm mới" class="btn btn-box-tool pg_ld" data-title="Thêm bài viết" data-url="/administrator/admpost/createnews">
                         <i class="fa fa-plus"></i>
-                    </button>
+                    </a>
                 }
             }
         </div>
     </div>
     <div class="card-body">
-        <table id="tbList" class="table table-bordered table-striped">
+        <table id="tbList" class="table table-bordered table-hover">
             <thead>
                 <tr>
                     <th>STT</th>
@@ -27,6 +26,8 @@
                     <th>Tiêu đề</th>
                     <th>Mô tả</th>
                     <th>Ngày tạo</th>
+                    <th>Hiển thị</th>
+                    <th>#</th>
                 </tr>
             </thead>
         </table>

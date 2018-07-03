@@ -20,16 +20,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// File name
         /// </summary>
         private readonly string FILE_NAME = "Administrator.Controllers/AdmTargetController.cs";
-
-        /// <summary>
-        /// ResultModel message success model
-        /// </summary>
-        private Utils.CommonModel.ExecuteResultModel ResultModel = new Utils.CommonModel.ExecuteResultModel()
-        {
-            Status = ResponseStatusCodeHelper.Success,
-            Message = Resources.Message.Success
-        };
-
+        
         #endregion
 
         public ActionResult OverView()
@@ -51,23 +42,13 @@ namespace TDH.Areas.Administrator.Controllers
             try
             {
                 return this.Json("", JsonRequestBehavior.AllowGet);
-                Utils.CommonModel.ExecuteResultModel _result = new Utils.CommonModel.ExecuteResultModel()
-                {
-                    Status = ResponseStatusCodeHelper.Success,
-                    Message = Resources.Message.Success
-                };
                 //
                 Services.TargetService _service = new Services.TargetService();
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.UpdateDate = DateTime.Now;
-                if (_service.Save(model) == ResponseStatusCodeHelper.Success)
-                {
-                    return this.Json(_result, JsonRequestBehavior.AllowGet);
-                }
-                _result.Status = ResponseStatusCodeHelper.Error;
-                _result.Message = Resources.Message.Error;
-                return this.Json(_result, JsonRequestBehavior.AllowGet);
+                //
+                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -101,16 +82,7 @@ namespace TDH.Areas.Administrator.Controllers
                 throw new HttpException();
             }
         }
-
-        public async Task Send()
-        {
-            var hubConnection = new HubConnection("http://localhost:53542");
-            IHubProxy notifyHub = hubConnection.CreateHubProxy("SignalrHub");
-            hubConnection.Start().Wait();
-            await notifyHub.Invoke("SendSignalRTestNotification", UserID);
-        }
-
-
+        
         #region " [ Idea ] "
 
         [HttpGet]
@@ -210,13 +182,7 @@ namespace TDH.Areas.Administrator.Controllers
                 #endregion
 
                 // Call to service
-                if (_service.Save(model) != ResponseStatusCodeHelper.Success)
-                {
-                    ResultModel.Status = ResponseStatusCodeHelper.Error;
-                    ResultModel.Message = Resources.Message.Error;
-                }
-                //
-                return this.Json(ResultModel, JsonRequestBehavior.AllowGet);
+                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -272,13 +238,7 @@ namespace TDH.Areas.Administrator.Controllers
                 #endregion
 
                 // Call to service
-                if (_service.Save(model) != ResponseStatusCodeHelper.Success)
-                {
-                    ResultModel.Status = ResponseStatusCodeHelper.Error;
-                    ResultModel.Message = Resources.Message.Error;
-                }
-                //
-                return this.Json(ResultModel, JsonRequestBehavior.AllowGet);
+                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -307,13 +267,7 @@ namespace TDH.Areas.Administrator.Controllers
                 #endregion
 
                 // Call to service
-                if (_service.Delete(model) != ResponseStatusCodeHelper.Success)
-                {
-                    ResultModel.Status = ResponseStatusCodeHelper.Error;
-                    ResultModel.Message = Resources.Message.Error;
-                }
-                //
-                return this.Json(ResultModel, JsonRequestBehavior.AllowGet);
+                return this.Json(_service.Delete(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -345,13 +299,7 @@ namespace TDH.Areas.Administrator.Controllers
                 #endregion
 
                 // Call to service
-                if (_service.CheckDelete(model) != ResponseStatusCodeHelper.OK)
-                {
-                    ResultModel.Status = ResponseStatusCodeHelper.NG;
-                    ResultModel.Message = Resources.Message.CheckExists;
-                }
-                //
-                return this.Json(ResultModel, JsonRequestBehavior.AllowGet);
+                return this.Json(_service.CheckDelete(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

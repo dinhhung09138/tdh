@@ -1,5 +1,4 @@
-﻿var active = false;
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $('#Title').focus();
     CKEDITOR.replace('Content',
         {
@@ -8,18 +7,22 @@ $(document).ready(function () {
             filebrowserUploadUrl: '/Areas/Administrator/Content/ckfinder/core/connector/aspx/connector.aspx?command=GetFiles&type=Images',
             filebrowserImageUploadUrl: '/Areas/Administrator/Content/ckfinder/connector?command=QuickUpload&type=Images'
         });
-    
-});
-var onSuccess = function (response, status, e) {
-    if (active === true) {
+
+    $(document).on('submit', "#form", function (e) {
+        e.preventDefault();
+        $(document).unbind('submit');
         return;
-    }
-    if (response.Status === 0) {
-        notification(response.Message, 'success');
-        loadPage('/administrator/admtarget/idea', 'Khu vườn ý tưởng');
-        active = true;
-    } else {
-        notification(response.Message, 'error');
-    }
-    loading($('#submitForm'), 'hide');
-}  
+    });
+
+});
+
+var beginSubmit = function () {
+    loading($('.content-wrapper'), 'show');
+};
+
+var onSuccess = function (response, status, e) {
+    loadPage('/administrator/admtarget/idea', 'Khu vườn ý tưởng');
+};
+
+var OnFailure = function (response) {
+};

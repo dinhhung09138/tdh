@@ -93,11 +93,9 @@ function confirmDelete(deletedId) {
         dataType: 'json',
         data: JSON.stringify({ ID: deletedId }),
         success: function (response) {
-            if (response.Status === 3) {
+            if (response === 3) {
                 id = deletedId;
                 $('#deleteModal').modal('show');
-            } else {
-                notification(response.Message, 'error');
             }
         },
         error: function (xhr, status, error) {
@@ -115,11 +113,8 @@ function deleteItem() {
         dataType: 'json',
         data: JSON.stringify({ ID: id }),
         success: function (response) {
-            if (response.Status === 0) {
-                notification(response.Message, 'success');
+            if (response === 0) {
                 table.ajax.reload();
-            } else {
-                notification(response.Message, 'error');
             }
             id = '';
             $('#deleteModal').modal('hide');

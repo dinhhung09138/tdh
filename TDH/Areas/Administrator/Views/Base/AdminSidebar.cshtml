@@ -49,7 +49,7 @@
                             </ul>
                         </li>
                     }
-                    
+
                     var _lNews = _listSidebar.Where(m => m.Code.Contains("post_")).ToList();
                     if (_lNews.Count() > 0)
                     {
@@ -76,7 +76,7 @@
                             </ul>
                         </li>
                     }
-                    
+
                     var _lSystem = _listSidebar.Where(m => m.Code.Contains("system_")).ToList();
                     if (_lSystem.Count() > 0)
                     {
@@ -93,7 +93,7 @@
                                     foreach (var item in _lSystem)
                                     {
                                         <li class="nav-item">
-                                            <a href="/@item.Area/@item.Controller/@item.Action" class="nav-link">
+                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" data-title="Hệ thống - @item.Title" class="nav-link pg_ld">
                                                 <i class="fa fa-circle-o nav-icon"></i>
                                                 <p>@item.Title</p>
                                             </a>
@@ -120,7 +120,7 @@
                                     foreach (var item in _lTarget)
                                     {
                                         <li class="nav-item">
-                                            <a href="/@item.Area/@item.Controller/@item.Action" class="nav-link">
+                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" data-title="Ý tưởng - Mục tiêu - @item.Title" class="nav-link pg_ld">
                                                 <i class="fa fa-circle-o nav-icon"></i>
                                                 <p>@item.Title</p>
                                             </a>
@@ -146,7 +146,7 @@
                                     foreach (var item in _lWorking)
                                     {
                                         <li class="nav-item">
-                                            <a href="/@item.Area/@item.Controller/@item.Action" class="nav-link">
+                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" data-title="Công việc - @item.Title" class="nav-link pg_ld">
                                                 <i class="fa fa-circle-o nav-icon"></i>
                                                 <p>@item.Title</p>
                                             </a>

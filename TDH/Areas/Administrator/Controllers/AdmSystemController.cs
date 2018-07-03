@@ -578,7 +578,83 @@ namespace TDH.Areas.Administrator.Controllers
         }
 
         #endregion
-        
+
+        #region " [ Error Log ] "
+
+        [HttpGet]
+        public ActionResult ErrorLog()
+        {
+            try
+            {
+                return PartialView();
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "ErrorLog", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public JsonResult ErrorLog(CustomDataTableRequestHelper requestData)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.ErrorLogService _service = new Services.ErrorLogService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+                
+                #endregion
+
+                //Call to service
+                Dictionary<string, object> _return = _service.List(requestData, UserID);
+                //
+                if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
+                {
+                    DataTableResponse<ErrorLogModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<ErrorLogModel>;
+                    return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
+                }
+                //
+                return this.Json(new DataTableResponse<ErrorLogModel>(), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "ErrorLog", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DetailErroLog(string id)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.ErrorLogService _service = new Services.ErrorLogService();
+                //
+                ViewBag.id = id;
+
+                #endregion
+
+                //Call to service
+                ErrorLogModel model = _service.GetItemByID(new ErrorLogModel() { ID = new Guid(id), CreateBy = UserID });
+                //
+                return this.Json(model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "DetailErroLog", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        #endregion
+
 
     }
 }

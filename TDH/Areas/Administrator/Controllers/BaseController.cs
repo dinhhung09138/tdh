@@ -1,9 +1,4 @@
 ﻿using System;
-using Microsoft.AspNet.SignalR.Client;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Utils;
@@ -251,6 +246,9 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "eublishuser":
                                 case "deleteuser":
                                     return "system_user";
+                                case "errorlog":
+                                case "detailerrolog":
+                                    return "system_error_log";
                             }
 
                             #endregion
@@ -381,6 +379,8 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "role":
                                 case "employee":
                                 case "user":
+                                case "errorlog":
+                                case "detailerrolog":
                                     return Services.RoleService.actionType.View;
                                 case "createrole":
                                 case "createemployee":

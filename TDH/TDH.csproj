@@ -233,6 +233,7 @@
     <Compile Include="Areas\Administrator\Models\AboutModel.cs" />
     <Compile Include="Areas\Administrator\Models\ConfigurationModel.cs" />
     <Compile Include="Areas\Administrator\Models\DailyTaskModel.cs" />
+    <Compile Include="Areas\Administrator\Models\ErrorLogModel.cs" />
     <Compile Include="Areas\Administrator\Models\HomeCategoryModel.cs" />
     <Compile Include="Areas\Administrator\Models\HomeNavigationModel.cs" />
     <Compile Include="Areas\Administrator\Models\IdeaDetailModel.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="Areas\Administrator\Models\UserModel.cs" />
     <Compile Include="Areas\Administrator\Services\AboutService.cs" />
     <Compile Include="Areas\Administrator\Services\ConfigurationService.cs" />
+    <Compile Include="Areas\Administrator\Services\ErrorLogService.cs" />
     <Compile Include="Areas\Administrator\Services\HomeCategoryService.cs" />
     <Compile Include="Areas\Administrator\Services\HomeNavigationService.cs" />
     <Compile Include="Areas\Administrator\Services\IdeaService.cs" />
@@ -5092,6 +5094,7 @@
     <Content Include="Areas\Administrator\Content\custom\admsetting.configuration.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admsetting.configuration.js" />
     <Content Include="Areas\Administrator\Content\custom\admsetting.navigation.js" />
+    <Content Include="Areas\Administrator\Content\custom\admsystem.errorlog.js" />
     <Content Include="Areas\Administrator\Content\custom\admsystem.role.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admsystem.role.js" />
     <Content Include="Areas\Administrator\Content\custom\admsystem.user.action.js" />
@@ -10136,6 +10139,7 @@
     <Content Include="Areas\Administrator\Views\AdmWorking\_ReportForm.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmTarget\DetailIdea.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmWorking\DetailReport.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmSystem\ErrorLog.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

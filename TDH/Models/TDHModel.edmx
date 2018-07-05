@@ -164,6 +164,210 @@
           <Property Name="delete_by" Type="uniqueidentifier" />
           <Property Name="delete_date" Type="datetime" />
         </EntityType>
+        <EntityType Name="MM_ACCOUNT">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="account_type_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="start" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="input" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="output" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="end" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="ordering" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MM_ACCOUNT_HISTORY">
+          <Key>
+            <PropertyRef Name="yearmonth" />
+          </Key>
+          <Property Name="yearmonth" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="account_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="start" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="input" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="output" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="end" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MM_ACCOUNT_TYPE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MM_INCOME">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="account_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="category_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="date" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="purpose" Type="nvarchar" MaxLength="255" />
+          <Property Name="notes" Type="nvarchar" MaxLength="255" />
+          <Property Name="money" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MM_PAYMENT">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="account_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="category_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="date" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="purpose" Type="nvarchar" MaxLength="255" />
+          <Property Name="notes" Type="nvarchar" MaxLength="255" />
+          <Property Name="money" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MM_TRANSFER">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="account_from" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="account_to" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="date" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="purpose" Type="nvarchar" MaxLength="255" />
+          <Property Name="notes" Type="nvarchar" MaxLength="255" />
+          <Property Name="money" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="fee" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MN_CATEGORY">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="notes" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="group_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="percent_setting" Type="tinyint" Nullable="false" />
+          <Property Name="percent_current" Type="tinyint" Nullable="false" />
+          <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="startmonth" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="endmonth" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MN_CATEGORY_SETTING">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="category_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="year_month" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="percent_setting" Type="tinyint" Nullable="false" />
+          <Property Name="percent_current" Type="tinyint" Nullable="false" />
+          <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MN_GROUP">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="notes" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="is_input" Type="bit" Nullable="false" />
+          <Property Name="percent_setting" Type="tinyint" Nullable="false" />
+          <Property Name="percent_current" Type="tinyint" Nullable="false" />
+          <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="startmonth" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="endmonth" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MN_GROUP_SETTING">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="group_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="year_month" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="percent_setting" Type="tinyint" Nullable="false" />
+          <Property Name="percent_current" Type="tinyint" Nullable="false" />
+          <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="NAVIGATION">
           <Key>
             <PropertyRef Name="id" />
@@ -413,6 +617,144 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MM_ACCOUNT_HISTORY_MM_ACCOUNT">
+          <End Role="MM_ACCOUNT" Type="Self.MM_ACCOUNT" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MM_ACCOUNT_HISTORY" Type="Self.MM_ACCOUNT_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_ACCOUNT_HISTORY">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_ACCOUNT_MM_ACCOUNT_TYPE">
+          <End Role="MM_ACCOUNT_TYPE" Type="Self.MM_ACCOUNT_TYPE" Multiplicity="1" />
+          <End Role="MM_ACCOUNT" Type="Self.MM_ACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT_TYPE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_ACCOUNT">
+              <PropertyRef Name="account_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_INCOME_MM_ACCOUNT">
+          <End Role="MM_ACCOUNT" Type="Self.MM_ACCOUNT" Multiplicity="1" />
+          <End Role="MM_INCOME" Type="Self.MM_INCOME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_INCOME">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_INCOME_MN_CATEGORY">
+          <End Role="MN_CATEGORY" Type="Self.MN_CATEGORY" Multiplicity="1" />
+          <End Role="MM_INCOME" Type="Self.MM_INCOME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MN_CATEGORY">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_INCOME">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_PAYMENT_MM_ACCOUNT">
+          <End Role="MM_ACCOUNT" Type="Self.MM_ACCOUNT" Multiplicity="1" />
+          <End Role="MM_PAYMENT" Type="Self.MM_PAYMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_PAYMENT">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_PAYMENT_MN_CATEGORY">
+          <End Role="MN_CATEGORY" Type="Self.MN_CATEGORY" Multiplicity="1" />
+          <End Role="MM_PAYMENT" Type="Self.MM_PAYMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MN_CATEGORY">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_PAYMENT">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_TRANSFER_MM_ACCOUNT_FROM">
+          <End Role="MM_ACCOUNT" Type="Self.MM_ACCOUNT" Multiplicity="1" />
+          <End Role="MM_TRANSFER" Type="Self.MM_TRANSFER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_TRANSFER">
+              <PropertyRef Name="account_from" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_TRANSFER_MM_ACCOUNT_TO">
+          <End Role="MM_ACCOUNT" Type="Self.MM_ACCOUNT" Multiplicity="1" />
+          <End Role="MM_TRANSFER" Type="Self.MM_TRANSFER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_TRANSFER">
+              <PropertyRef Name="account_to" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MN_CATEGORY_MN_GROUP">
+          <End Role="MN_GROUP" Type="Self.MN_GROUP" Multiplicity="1" />
+          <End Role="MN_CATEGORY" Type="Self.MN_CATEGORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MN_GROUP">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MN_CATEGORY">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MN_CATEGORY_SETTING_MN_CATEGORY">
+          <End Role="MN_CATEGORY" Type="Self.MN_CATEGORY" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MN_CATEGORY_SETTING" Type="Self.MN_CATEGORY_SETTING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MN_CATEGORY">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MN_CATEGORY_SETTING">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MN_GROUP_SETTING_MN_GROUP">
+          <End Role="MN_GROUP" Type="Self.MN_GROUP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MN_GROUP_SETTING" Type="Self.MN_GROUP_SETTING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MN_GROUP">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MN_GROUP_SETTING">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_POST_CATEGORY">
           <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -544,6 +886,16 @@
           <EntitySet Name="HOME_NAVIGATION" EntityType="Self.HOME_NAVIGATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IDEA" EntityType="Self.IDEA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IDEA_DETAIL" EntityType="Self.IDEA_DETAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MM_ACCOUNT" EntityType="Self.MM_ACCOUNT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MM_ACCOUNT_HISTORY" EntityType="Self.MM_ACCOUNT_HISTORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MM_ACCOUNT_TYPE" EntityType="Self.MM_ACCOUNT_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MM_INCOME" EntityType="Self.MM_INCOME" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MM_PAYMENT" EntityType="Self.MM_PAYMENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MM_TRANSFER" EntityType="Self.MM_TRANSFER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MN_CATEGORY" EntityType="Self.MN_CATEGORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MN_CATEGORY_SETTING" EntityType="Self.MN_CATEGORY_SETTING" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MN_GROUP" EntityType="Self.MN_GROUP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MN_GROUP_SETTING" EntityType="Self.MN_GROUP_SETTING" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NAVIGATION" EntityType="Self.NAVIGATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="POST" EntityType="Self.POST" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="REPORT" EntityType="Self.REPORT" Schema="dbo" store:Type="Tables" />
@@ -569,6 +921,50 @@
           <AssociationSet Name="FK_IDEA_DETAIL_IDEA" Association="Self.FK_IDEA_DETAIL_IDEA">
             <End Role="IDEA" EntitySet="IDEA" />
             <End Role="IDEA_DETAIL" EntitySet="IDEA_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_ACCOUNT_HISTORY_MM_ACCOUNT" Association="Self.FK_MM_ACCOUNT_HISTORY_MM_ACCOUNT">
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+            <End Role="MM_ACCOUNT_HISTORY" EntitySet="MM_ACCOUNT_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_ACCOUNT_MM_ACCOUNT_TYPE" Association="Self.FK_MM_ACCOUNT_MM_ACCOUNT_TYPE">
+            <End Role="MM_ACCOUNT_TYPE" EntitySet="MM_ACCOUNT_TYPE" />
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_INCOME_MM_ACCOUNT" Association="Self.FK_MM_INCOME_MM_ACCOUNT">
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+            <End Role="MM_INCOME" EntitySet="MM_INCOME" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_INCOME_MN_CATEGORY" Association="Self.FK_MM_INCOME_MN_CATEGORY">
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+            <End Role="MM_INCOME" EntitySet="MM_INCOME" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_PAYMENT_MM_ACCOUNT" Association="Self.FK_MM_PAYMENT_MM_ACCOUNT">
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+            <End Role="MM_PAYMENT" EntitySet="MM_PAYMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_PAYMENT_MN_CATEGORY" Association="Self.FK_MM_PAYMENT_MN_CATEGORY">
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+            <End Role="MM_PAYMENT" EntitySet="MM_PAYMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_TRANSFER_MM_ACCOUNT_FROM" Association="Self.FK_MM_TRANSFER_MM_ACCOUNT_FROM">
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+            <End Role="MM_TRANSFER" EntitySet="MM_TRANSFER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_TRANSFER_MM_ACCOUNT_TO" Association="Self.FK_MM_TRANSFER_MM_ACCOUNT_TO">
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+            <End Role="MM_TRANSFER" EntitySet="MM_TRANSFER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_CATEGORY_MN_GROUP" Association="Self.FK_MN_CATEGORY_MN_GROUP">
+            <End Role="MN_GROUP" EntitySet="MN_GROUP" />
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_CATEGORY_SETTING_MN_CATEGORY" Association="Self.FK_MN_CATEGORY_SETTING_MN_CATEGORY">
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+            <End Role="MN_CATEGORY_SETTING" EntitySet="MN_CATEGORY_SETTING" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_GROUP_SETTING_MN_GROUP" Association="Self.FK_MN_GROUP_SETTING_MN_GROUP">
+            <End Role="MN_GROUP" EntitySet="MN_GROUP" />
+            <End Role="MN_GROUP_SETTING" EntitySet="MN_GROUP_SETTING" />
           </AssociationSet>
           <AssociationSet Name="FK_POST_CATEGORY" Association="Self.FK_POST_CATEGORY">
             <End Role="CATEGORY" EntitySet="CATEGORY" />
@@ -1012,6 +1408,60 @@
             <End Role="TARGET" EntitySet="TARGETs" />
             <End Role="TARGET_TASK" EntitySet="TARGET_TASK" />
           </AssociationSet>
+          <EntitySet Name="MM_ACCOUNT" EntityType="chacd26d_trandinhhungModel.MM_ACCOUNT" />
+          <EntitySet Name="MM_ACCOUNT_HISTORY" EntityType="chacd26d_trandinhhungModel.MM_ACCOUNT_HISTORY" />
+          <EntitySet Name="MM_ACCOUNT_TYPE" EntityType="chacd26d_trandinhhungModel.MM_ACCOUNT_TYPE" />
+          <EntitySet Name="MM_INCOME" EntityType="chacd26d_trandinhhungModel.MM_INCOME" />
+          <EntitySet Name="MM_PAYMENT" EntityType="chacd26d_trandinhhungModel.MM_PAYMENT" />
+          <EntitySet Name="MM_TRANSFER" EntityType="chacd26d_trandinhhungModel.MM_TRANSFER" />
+          <EntitySet Name="MN_CATEGORY" EntityType="chacd26d_trandinhhungModel.MN_CATEGORY" />
+          <EntitySet Name="MN_CATEGORY_SETTING" EntityType="chacd26d_trandinhhungModel.MN_CATEGORY_SETTING" />
+          <EntitySet Name="MN_GROUP" EntityType="chacd26d_trandinhhungModel.MN_GROUP" />
+          <EntitySet Name="MN_GROUP_SETTING" EntityType="chacd26d_trandinhhungModel.MN_GROUP_SETTING" />
+          <AssociationSet Name="FK_MM_ACCOUNT_HISTORY_MM_ACCOUNT" Association="chacd26d_trandinhhungModel.FK_MM_ACCOUNT_HISTORY_MM_ACCOUNT">
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+            <End Role="MM_ACCOUNT_HISTORY" EntitySet="MM_ACCOUNT_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_ACCOUNT_MM_ACCOUNT_TYPE" Association="chacd26d_trandinhhungModel.FK_MM_ACCOUNT_MM_ACCOUNT_TYPE">
+            <End Role="MM_ACCOUNT_TYPE" EntitySet="MM_ACCOUNT_TYPE" />
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_INCOME_MM_ACCOUNT" Association="chacd26d_trandinhhungModel.FK_MM_INCOME_MM_ACCOUNT">
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+            <End Role="MM_INCOME" EntitySet="MM_INCOME" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_PAYMENT_MM_ACCOUNT" Association="chacd26d_trandinhhungModel.FK_MM_PAYMENT_MM_ACCOUNT">
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+            <End Role="MM_PAYMENT" EntitySet="MM_PAYMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_TRANSFER_MM_ACCOUNT_FROM" Association="chacd26d_trandinhhungModel.FK_MM_TRANSFER_MM_ACCOUNT_FROM">
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+            <End Role="MM_TRANSFER" EntitySet="MM_TRANSFER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_TRANSFER_MM_ACCOUNT_TO" Association="chacd26d_trandinhhungModel.FK_MM_TRANSFER_MM_ACCOUNT_TO">
+            <End Role="MM_ACCOUNT" EntitySet="MM_ACCOUNT" />
+            <End Role="MM_TRANSFER" EntitySet="MM_TRANSFER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_INCOME_MN_CATEGORY" Association="chacd26d_trandinhhungModel.FK_MM_INCOME_MN_CATEGORY">
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+            <End Role="MM_INCOME" EntitySet="MM_INCOME" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MM_PAYMENT_MN_CATEGORY" Association="chacd26d_trandinhhungModel.FK_MM_PAYMENT_MN_CATEGORY">
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+            <End Role="MM_PAYMENT" EntitySet="MM_PAYMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_CATEGORY_MN_GROUP" Association="chacd26d_trandinhhungModel.FK_MN_CATEGORY_MN_GROUP">
+            <End Role="MN_GROUP" EntitySet="MN_GROUP" />
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_CATEGORY_SETTING_MN_CATEGORY" Association="chacd26d_trandinhhungModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY">
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+            <End Role="MN_CATEGORY_SETTING" EntitySet="MN_CATEGORY_SETTING" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_GROUP_SETTING_MN_GROUP" Association="chacd26d_trandinhhungModel.FK_MN_GROUP_SETTING_MN_GROUP">
+            <End Role="MN_GROUP" EntitySet="MN_GROUP" />
+            <End Role="MN_GROUP_SETTING" EntitySet="MN_GROUP_SETTING" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="HOME_CATEGORY">
           <Key>
@@ -1236,6 +1686,370 @@
             </Principal>
             <Dependent Role="TARGET_TASK">
               <PropertyRef Name="target_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MM_ACCOUNT">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="account_type_id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="start" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="input" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="output" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="end" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="ordering" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MM_ACCOUNT_HISTORY" Relationship="chacd26d_trandinhhungModel.FK_MM_ACCOUNT_HISTORY_MM_ACCOUNT" FromRole="MM_ACCOUNT" ToRole="MM_ACCOUNT_HISTORY" />
+          <NavigationProperty Name="MM_ACCOUNT_TYPE" Relationship="chacd26d_trandinhhungModel.FK_MM_ACCOUNT_MM_ACCOUNT_TYPE" FromRole="MM_ACCOUNT" ToRole="MM_ACCOUNT_TYPE" />
+          <NavigationProperty Name="MM_INCOME" Relationship="chacd26d_trandinhhungModel.FK_MM_INCOME_MM_ACCOUNT" FromRole="MM_ACCOUNT" ToRole="MM_INCOME" />
+          <NavigationProperty Name="MM_PAYMENT" Relationship="chacd26d_trandinhhungModel.FK_MM_PAYMENT_MM_ACCOUNT" FromRole="MM_ACCOUNT" ToRole="MM_PAYMENT" />
+          <NavigationProperty Name="MM_TRANSFER" Relationship="chacd26d_trandinhhungModel.FK_MM_TRANSFER_MM_ACCOUNT_FROM" FromRole="MM_ACCOUNT" ToRole="MM_TRANSFER" />
+          <NavigationProperty Name="MM_TRANSFER1" Relationship="chacd26d_trandinhhungModel.FK_MM_TRANSFER_MM_ACCOUNT_TO" FromRole="MM_ACCOUNT" ToRole="MM_TRANSFER" />
+        </EntityType>
+        <EntityType Name="MM_ACCOUNT_HISTORY">
+          <Key>
+            <PropertyRef Name="yearmonth" />
+          </Key>
+          <Property Name="yearmonth" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="account_id" Type="Guid" Nullable="false" />
+          <Property Name="start" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="input" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="output" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="end" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MM_ACCOUNT" Relationship="chacd26d_trandinhhungModel.FK_MM_ACCOUNT_HISTORY_MM_ACCOUNT" FromRole="MM_ACCOUNT_HISTORY" ToRole="MM_ACCOUNT" />
+        </EntityType>
+        <EntityType Name="MM_ACCOUNT_TYPE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MM_ACCOUNT" Relationship="chacd26d_trandinhhungModel.FK_MM_ACCOUNT_MM_ACCOUNT_TYPE" FromRole="MM_ACCOUNT_TYPE" ToRole="MM_ACCOUNT" />
+        </EntityType>
+        <EntityType Name="MM_INCOME">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="account_id" Type="Guid" Nullable="false" />
+          <Property Name="category_id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MM_ACCOUNT" Relationship="chacd26d_trandinhhungModel.FK_MM_INCOME_MM_ACCOUNT" FromRole="MM_INCOME" ToRole="MM_ACCOUNT" />
+          <NavigationProperty Name="MN_CATEGORY" Relationship="chacd26d_trandinhhungModel.FK_MM_INCOME_MN_CATEGORY" FromRole="MM_INCOME" ToRole="MN_CATEGORY" />
+        </EntityType>
+        <EntityType Name="MM_PAYMENT">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="account_id" Type="Guid" Nullable="false" />
+          <Property Name="category_id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MM_ACCOUNT" Relationship="chacd26d_trandinhhungModel.FK_MM_PAYMENT_MM_ACCOUNT" FromRole="MM_PAYMENT" ToRole="MM_ACCOUNT" />
+          <NavigationProperty Name="MN_CATEGORY" Relationship="chacd26d_trandinhhungModel.FK_MM_PAYMENT_MN_CATEGORY" FromRole="MM_PAYMENT" ToRole="MN_CATEGORY" />
+        </EntityType>
+        <EntityType Name="MM_TRANSFER">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="account_from" Type="Guid" Nullable="false" />
+          <Property Name="account_to" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="Binary" Nullable="false" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="fee" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MM_ACCOUNT" Relationship="chacd26d_trandinhhungModel.FK_MM_TRANSFER_MM_ACCOUNT_FROM" FromRole="MM_TRANSFER" ToRole="MM_ACCOUNT" />
+          <NavigationProperty Name="MM_ACCOUNT1" Relationship="chacd26d_trandinhhungModel.FK_MM_TRANSFER_MM_ACCOUNT_TO" FromRole="MM_TRANSFER" ToRole="MM_ACCOUNT" />
+        </EntityType>
+        <EntityType Name="MN_CATEGORY">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="group_id" Type="Guid" Nullable="false" />
+          <Property Name="percent_setting" Type="Byte" Nullable="false" />
+          <Property Name="percent_current" Type="Byte" Nullable="false" />
+          <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="startmonth" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="endmonth" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MM_INCOME" Relationship="chacd26d_trandinhhungModel.FK_MM_INCOME_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MM_INCOME" />
+          <NavigationProperty Name="MM_PAYMENT" Relationship="chacd26d_trandinhhungModel.FK_MM_PAYMENT_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MM_PAYMENT" />
+          <NavigationProperty Name="MN_GROUP" Relationship="chacd26d_trandinhhungModel.FK_MN_CATEGORY_MN_GROUP" FromRole="MN_CATEGORY" ToRole="MN_GROUP" />
+          <NavigationProperty Name="MN_CATEGORY_SETTING" Relationship="chacd26d_trandinhhungModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MN_CATEGORY_SETTING" />
+        </EntityType>
+        <EntityType Name="MN_CATEGORY_SETTING">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="category_id" Type="Guid" Nullable="false" />
+          <Property Name="year_month" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="percent_setting" Type="Byte" Nullable="false" />
+          <Property Name="percent_current" Type="Byte" Nullable="false" />
+          <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MN_CATEGORY" Relationship="chacd26d_trandinhhungModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY" FromRole="MN_CATEGORY_SETTING" ToRole="MN_CATEGORY" />
+        </EntityType>
+        <EntityType Name="MN_GROUP">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="is_input" Type="Boolean" Nullable="false" />
+          <Property Name="percent_setting" Type="Byte" Nullable="false" />
+          <Property Name="percent_current" Type="Byte" Nullable="false" />
+          <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="startmonth" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="endmonth" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MN_CATEGORY" Relationship="chacd26d_trandinhhungModel.FK_MN_CATEGORY_MN_GROUP" FromRole="MN_GROUP" ToRole="MN_CATEGORY" />
+          <NavigationProperty Name="MN_GROUP_SETTING" Relationship="chacd26d_trandinhhungModel.FK_MN_GROUP_SETTING_MN_GROUP" FromRole="MN_GROUP" ToRole="MN_GROUP_SETTING" />
+        </EntityType>
+        <EntityType Name="MN_GROUP_SETTING">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="group_id" Type="Guid" Nullable="false" />
+          <Property Name="year_month" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="percent_setting" Type="Byte" Nullable="false" />
+          <Property Name="percent_current" Type="Byte" Nullable="false" />
+          <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="MN_GROUP" Relationship="chacd26d_trandinhhungModel.FK_MN_GROUP_SETTING_MN_GROUP" FromRole="MN_GROUP_SETTING" ToRole="MN_GROUP" />
+        </EntityType>
+        <Association Name="FK_MM_ACCOUNT_HISTORY_MM_ACCOUNT">
+          <End Type="chacd26d_trandinhhungModel.MM_ACCOUNT" Role="MM_ACCOUNT" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="chacd26d_trandinhhungModel.MM_ACCOUNT_HISTORY" Role="MM_ACCOUNT_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_ACCOUNT_HISTORY">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_ACCOUNT_MM_ACCOUNT_TYPE">
+          <End Type="chacd26d_trandinhhungModel.MM_ACCOUNT_TYPE" Role="MM_ACCOUNT_TYPE" Multiplicity="1" />
+          <End Type="chacd26d_trandinhhungModel.MM_ACCOUNT" Role="MM_ACCOUNT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT_TYPE">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_ACCOUNT">
+              <PropertyRef Name="account_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_INCOME_MM_ACCOUNT">
+          <End Type="chacd26d_trandinhhungModel.MM_ACCOUNT" Role="MM_ACCOUNT" Multiplicity="1" />
+          <End Type="chacd26d_trandinhhungModel.MM_INCOME" Role="MM_INCOME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_INCOME">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_PAYMENT_MM_ACCOUNT">
+          <End Type="chacd26d_trandinhhungModel.MM_ACCOUNT" Role="MM_ACCOUNT" Multiplicity="1" />
+          <End Type="chacd26d_trandinhhungModel.MM_PAYMENT" Role="MM_PAYMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_PAYMENT">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_TRANSFER_MM_ACCOUNT_FROM">
+          <End Type="chacd26d_trandinhhungModel.MM_ACCOUNT" Role="MM_ACCOUNT" Multiplicity="1" />
+          <End Type="chacd26d_trandinhhungModel.MM_TRANSFER" Role="MM_TRANSFER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_TRANSFER">
+              <PropertyRef Name="account_from" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_TRANSFER_MM_ACCOUNT_TO">
+          <End Type="chacd26d_trandinhhungModel.MM_ACCOUNT" Role="MM_ACCOUNT" Multiplicity="1" />
+          <End Type="chacd26d_trandinhhungModel.MM_TRANSFER" Role="MM_TRANSFER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MM_ACCOUNT">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_TRANSFER">
+              <PropertyRef Name="account_to" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_INCOME_MN_CATEGORY">
+          <End Type="chacd26d_trandinhhungModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="1" />
+          <End Type="chacd26d_trandinhhungModel.MM_INCOME" Role="MM_INCOME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MN_CATEGORY">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_INCOME">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MM_PAYMENT_MN_CATEGORY">
+          <End Type="chacd26d_trandinhhungModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="1" />
+          <End Type="chacd26d_trandinhhungModel.MM_PAYMENT" Role="MM_PAYMENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MN_CATEGORY">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MM_PAYMENT">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MN_CATEGORY_MN_GROUP">
+          <End Type="chacd26d_trandinhhungModel.MN_GROUP" Role="MN_GROUP" Multiplicity="1" />
+          <End Type="chacd26d_trandinhhungModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MN_GROUP">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MN_CATEGORY">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MN_CATEGORY_SETTING_MN_CATEGORY">
+          <End Type="chacd26d_trandinhhungModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="chacd26d_trandinhhungModel.MN_CATEGORY_SETTING" Role="MN_CATEGORY_SETTING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MN_CATEGORY">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MN_CATEGORY_SETTING">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MN_GROUP_SETTING_MN_GROUP">
+          <End Type="chacd26d_trandinhhungModel.MN_GROUP" Role="MN_GROUP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="chacd26d_trandinhhungModel.MN_GROUP_SETTING" Role="MN_GROUP_SETTING" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MN_GROUP">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MN_GROUP_SETTING">
+              <PropertyRef Name="group_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1613,6 +2427,220 @@
                 <ScalarProperty Name="result" ColumnName="result" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="target_id" ColumnName="target_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MM_ACCOUNT">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.MM_ACCOUNT">
+              <MappingFragment StoreEntitySet="MM_ACCOUNT">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="output" ColumnName="output" />
+                <ScalarProperty Name="input" ColumnName="input" />
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="account_type_id" ColumnName="account_type_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MM_ACCOUNT_HISTORY">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.MM_ACCOUNT_HISTORY">
+              <MappingFragment StoreEntitySet="MM_ACCOUNT_HISTORY">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="output" ColumnName="output" />
+                <ScalarProperty Name="input" ColumnName="input" />
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="yearmonth" ColumnName="yearmonth" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MM_ACCOUNT_TYPE">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.MM_ACCOUNT_TYPE">
+              <MappingFragment StoreEntitySet="MM_ACCOUNT_TYPE">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MM_INCOME">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.MM_INCOME">
+              <MappingFragment StoreEntitySet="MM_INCOME">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="purpose" ColumnName="purpose" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MM_PAYMENT">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.MM_PAYMENT">
+              <MappingFragment StoreEntitySet="MM_PAYMENT">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="purpose" ColumnName="purpose" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MM_TRANSFER">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.MM_TRANSFER">
+              <MappingFragment StoreEntitySet="MM_TRANSFER">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="fee" ColumnName="fee" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="purpose" ColumnName="purpose" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="account_to" ColumnName="account_to" />
+                <ScalarProperty Name="account_from" ColumnName="account_from" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_CATEGORY">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.MN_CATEGORY">
+              <MappingFragment StoreEntitySet="MN_CATEGORY">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="endmonth" ColumnName="endmonth" />
+                <ScalarProperty Name="startmonth" ColumnName="startmonth" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_CATEGORY_SETTING">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.MN_CATEGORY_SETTING">
+              <MappingFragment StoreEntitySet="MN_CATEGORY_SETTING">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="year_month" ColumnName="year_month" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_GROUP">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.MN_GROUP">
+              <MappingFragment StoreEntitySet="MN_GROUP">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="endmonth" ColumnName="endmonth" />
+                <ScalarProperty Name="startmonth" ColumnName="startmonth" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="is_input" ColumnName="is_input" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_GROUP_SETTING">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.MN_GROUP_SETTING">
+              <MappingFragment StoreEntitySet="MN_GROUP_SETTING">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="year_month" ColumnName="year_month" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -325,6 +325,36 @@ namespace TDH.Areas.Administrator.Controllers
 
                             #endregion
                             break;
+                        case "admmoney":
+                            #region " [ Money ] "
+
+                            switch (actionName)
+                            {
+                                case "accounttype":
+                                case "createaccounttype":
+                                case "editaccounttype":
+                                case "publishaccounttype":
+                                case "checkdeleteaccounttype":
+                                case "deleteaccounttype":
+                                    return "money_account_type";
+                                case "account":
+                                case "createaccount":
+                                case "editaccount":
+                                case "publishaccount":
+                                case "checkdeleteaccount":
+                                case "deleteaccount":
+                                    return "money_account";
+                                case "group":
+                                case "creategroup":
+                                case "editgroup":
+                                case "publishgroup":
+                                case "checkdeletegroup":
+                                case "deletegroup":
+                                    return "money_group";
+                            }
+
+                            #endregion
+                            break;
                         case "dashboard":
                             break;
                     }
@@ -503,6 +533,37 @@ namespace TDH.Areas.Administrator.Controllers
                                     return Services.RoleService.actionType.Edit;
                                 case "deletereport":
                                 case "checkdeletereport":
+                                    return Services.RoleService.actionType.Delete;
+                            }
+
+                            #endregion
+                            break;
+                        case "admmoney":
+                            #region " [ Money ] "
+
+                            switch (actionName)
+                            {
+                                case "accounttype":
+                                case "account":
+                                case "group":
+                                    return Services.RoleService.actionType.View;
+                                case "createaccounttype":
+                                case "createaccount":
+                                case "creategroup":
+                                    return Services.RoleService.actionType.Create;
+                                case "editaccounttype":
+                                case "publishaccounttype":
+                                case "editaccount":
+                                case "publishaccount":
+                                case "editgroup":
+                                case "publishgroup":
+                                    return Services.RoleService.actionType.Edit;
+                                case "checkdeleteaccounttype":
+                                case "deleteaccounttype":
+                                case "checkdeleteaccount":
+                                case "deleteaccount":
+                                case "checkdeletegroup":
+                                case "deletegroup":
                                     return Services.RoleService.actionType.Delete;
                             }
 

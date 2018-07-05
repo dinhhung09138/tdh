@@ -1,0 +1,40 @@
+﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+<link href="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+<input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
+<input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Loại tài khoản</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.Add == true)
+                {
+                    <a title="Thêm mới" class="btn btn-box-tool pg_ld" data-title="Thêm loại tài khoản" data-url="/administrator/admmoney/createaccounttype">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="tbList" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên</th>
+                    <th>Thứ tự</th>
+                    <th>Hiển thị</th>
+                    <th>Số TK</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
+<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="/Areas/Administrator/Content/Custom/admmoney.accounttype.js"></script>

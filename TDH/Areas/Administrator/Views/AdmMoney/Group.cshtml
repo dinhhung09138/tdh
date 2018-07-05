@@ -1,0 +1,51 @@
+﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+<link href="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+<input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
+<input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
+<select id="ddlSelect" class="form-control form-control-sm">
+    <option value="" selected>Tất cả</option>
+    <option value="1">Thu nhập</option>
+    <option value="0">Chi tiêu</option>
+</select>
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Quy tắc quản lý</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.Add == true)
+                {
+                    <a title="Thêm mới" class="btn btn-box-tool pg_ld" data-title="Thêm quy tắc quản lý" data-url="/administrator/admmoney/creategroup">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="tbList" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Loại</th>
+                    <th>Tên</th>
+                    <th>Ghi chú</th>
+                    <th>% Thiết lập</th>
+                    <th>% Thực tế</th>
+                    <th>Số tiền thiết lập</th>
+                    <th>Số tiền thực tế</th>
+                    <th>Số danh mục</th>
+                    <th>Hiển thị</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
+<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="/Areas/Administrator/Content/Custom/admmoney.group.js"></script>
+

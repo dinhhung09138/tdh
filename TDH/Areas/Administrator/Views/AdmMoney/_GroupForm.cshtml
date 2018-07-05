@@ -1,0 +1,70 @@
+﻿@model TDH.Areas.Administrator.Models.MoneyGroupModel
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.Insert)
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Tên <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @maxlength = 50, @required = true, @focus = true, @tabindex = "1" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Ghi chú <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextAreaFor(m => m.Notes, new { @class = "form-control", @rows = 3, @maxlength = 255, @tabindex = "2" })
+        @Html.ValidationMessageFor(m => m.Notes)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Chi tiêu <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (Model.Insert)
+            {
+                @Html.CheckBoxFor(m => m.IsInput, new { @class = "form-control", @tabindex = "4" }) @Html.Raw("Giá trị chỉ được thiết lập 1 lần khi tạo mới!")
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.IsInput)
+                if (Model.IsInput)
+                {
+                    @Html.Raw("Thu nhập")
+                }
+                else
+                {
+                    @Html.Raw("Chi tiêu")
+                }
+            }
+        }
+        
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hiển thị <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "3" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (ViewBag.Add == true || ViewBag.Edit == true)
+            {
+                <a href="javascript:;" data-url="/administrator/admmoney/group" data-title="Quy tắc quản lý" class="btn btn-default pg_ld" tabindex="5">Quay lại</a>
+                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="6">Lưu</button>
+            }
+        }
+    </div>
+</div>
+

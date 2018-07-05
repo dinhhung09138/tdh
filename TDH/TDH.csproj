@@ -304,6 +304,36 @@
     <Compile Include="Models\IDEA_DETAIL.cs">
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MN_ACCOUNT.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MN_ACCOUNT_SETTING.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MN_ACCOUNT_TYPE.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MN_CATEGORY.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MN_CATEGORY_SETTING.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MN_GROUP.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MN_GROUP_SETTING.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MN_INCOME.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MN_PAYMENT.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MN_TRANSFER.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\NAVIGATION.cs">
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>

@@ -12,7 +12,7 @@ namespace TDH.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MM_INCOME
+    public partial class MN_PAYMENT
     {
         public System.Guid id { get; set; }
         public System.Guid account_id { get; set; }
@@ -30,7 +30,7 @@ namespace TDH.Models
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
     
-        public virtual MM_ACCOUNT MM_ACCOUNT { get; set; }
+        public virtual MN_ACCOUNT MN_ACCOUNT { get; set; }
         public virtual MN_CATEGORY MN_CATEGORY { get; set; }
     }
 }

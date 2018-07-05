@@ -12,16 +12,15 @@ namespace TDH.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MM_ACCOUNT_TYPE
+    public partial class MN_ACCOUNT_SETTING
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MM_ACCOUNT_TYPE()
-        {
-            this.MM_ACCOUNT = new HashSet<MM_ACCOUNT>();
-        }
-    
         public System.Guid id { get; set; }
-        public string name { get; set; }
+        public decimal yearmonth { get; set; }
+        public System.Guid account_id { get; set; }
+        public decimal start { get; set; }
+        public decimal input { get; set; }
+        public decimal output { get; set; }
+        public decimal end { get; set; }
         public short ordering { get; set; }
         public bool publish { get; set; }
         public System.Guid create_by { get; set; }
@@ -32,7 +31,6 @@ namespace TDH.Models
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MM_ACCOUNT> MM_ACCOUNT { get; set; }
+        public virtual MN_ACCOUNT MN_ACCOUNT { get; set; }
     }
 }

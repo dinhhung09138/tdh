@@ -45,15 +45,15 @@ namespace TDH.Models
         public virtual DbSet<REPORT_COMMENT> REPORT_COMMENT { get; set; }
         public virtual DbSet<TARGET> TARGETs { get; set; }
         public virtual DbSet<TARGET_TASK> TARGET_TASK { get; set; }
-        public virtual DbSet<MM_ACCOUNT> MM_ACCOUNT { get; set; }
-        public virtual DbSet<MM_ACCOUNT_HISTORY> MM_ACCOUNT_HISTORY { get; set; }
-        public virtual DbSet<MM_ACCOUNT_TYPE> MM_ACCOUNT_TYPE { get; set; }
-        public virtual DbSet<MM_INCOME> MM_INCOME { get; set; }
-        public virtual DbSet<MM_PAYMENT> MM_PAYMENT { get; set; }
-        public virtual DbSet<MM_TRANSFER> MM_TRANSFER { get; set; }
         public virtual DbSet<MN_CATEGORY> MN_CATEGORY { get; set; }
         public virtual DbSet<MN_CATEGORY_SETTING> MN_CATEGORY_SETTING { get; set; }
         public virtual DbSet<MN_GROUP> MN_GROUP { get; set; }
         public virtual DbSet<MN_GROUP_SETTING> MN_GROUP_SETTING { get; set; }
+        public virtual DbSet<MN_ACCOUNT> MN_ACCOUNT { get; set; }
+        public virtual DbSet<MN_ACCOUNT_SETTING> MN_ACCOUNT_SETTING { get; set; }
+        public virtual DbSet<MN_ACCOUNT_TYPE> MN_ACCOUNT_TYPE { get; set; }
+        public virtual DbSet<MN_INCOME> MN_INCOME { get; set; }
+        public virtual DbSet<MN_PAYMENT> MN_PAYMENT { get; set; }
+        public virtual DbSet<MN_TRANSFER> MN_TRANSFER { get; set; }
     }
 }

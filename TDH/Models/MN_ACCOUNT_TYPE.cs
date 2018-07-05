@@ -12,17 +12,18 @@ namespace TDH.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MM_TRANSFER
+    public partial class MN_ACCOUNT_TYPE
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public MN_ACCOUNT_TYPE()
+        {
+            this.MN_ACCOUNT = new HashSet<MN_ACCOUNT>();
+        }
+    
         public System.Guid id { get; set; }
-        public System.Guid account_from { get; set; }
-        public System.Guid account_to { get; set; }
-        public string title { get; set; }
-        public byte[] date { get; set; }
-        public string purpose { get; set; }
-        public string notes { get; set; }
-        public decimal money { get; set; }
-        public decimal fee { get; set; }
+        public string name { get; set; }
+        public short ordering { get; set; }
+        public bool publish { get; set; }
         public System.Guid create_by { get; set; }
         public System.DateTime create_date { get; set; }
         public Nullable<System.Guid> update_by { get; set; }
@@ -31,7 +32,7 @@ namespace TDH.Models
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
     
-        public virtual MM_ACCOUNT MM_ACCOUNT { get; set; }
-        public virtual MM_ACCOUNT MM_ACCOUNT1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MN_ACCOUNT> MN_ACCOUNT { get; set; }
     }
 }

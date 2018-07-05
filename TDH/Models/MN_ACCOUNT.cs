@@ -12,16 +12,16 @@ namespace TDH.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MM_ACCOUNT
+    public partial class MN_ACCOUNT
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MM_ACCOUNT()
+        public MN_ACCOUNT()
         {
-            this.MM_ACCOUNT_HISTORY = new HashSet<MM_ACCOUNT_HISTORY>();
-            this.MM_INCOME = new HashSet<MM_INCOME>();
-            this.MM_PAYMENT = new HashSet<MM_PAYMENT>();
-            this.MM_TRANSFER = new HashSet<MM_TRANSFER>();
-            this.MM_TRANSFER1 = new HashSet<MM_TRANSFER>();
+            this.MN_ACCOUNT_SETTING = new HashSet<MN_ACCOUNT_SETTING>();
+            this.MN_INCOME = new HashSet<MN_INCOME>();
+            this.MN_PAYMENT = new HashSet<MN_PAYMENT>();
+            this.MN_TRANSFER = new HashSet<MN_TRANSFER>();
+            this.MN_TRANSFER1 = new HashSet<MN_TRANSFER>();
         }
     
         public System.Guid id { get; set; }
@@ -41,16 +41,16 @@ namespace TDH.Models
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
     
+        public virtual MN_ACCOUNT_TYPE MN_ACCOUNT_TYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MM_ACCOUNT_HISTORY> MM_ACCOUNT_HISTORY { get; set; }
-        public virtual MM_ACCOUNT_TYPE MM_ACCOUNT_TYPE { get; set; }
+        public virtual ICollection<MN_ACCOUNT_SETTING> MN_ACCOUNT_SETTING { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MM_INCOME> MM_INCOME { get; set; }
+        public virtual ICollection<MN_INCOME> MN_INCOME { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MM_PAYMENT> MM_PAYMENT { get; set; }
+        public virtual ICollection<MN_PAYMENT> MN_PAYMENT { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MM_TRANSFER> MM_TRANSFER { get; set; }
+        public virtual ICollection<MN_TRANSFER> MN_TRANSFER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MM_TRANSFER> MM_TRANSFER1 { get; set; }
+        public virtual ICollection<MN_TRANSFER> MN_TRANSFER1 { get; set; }
     }
 }

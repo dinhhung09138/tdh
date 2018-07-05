@@ -17,9 +17,9 @@ namespace TDH.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MN_CATEGORY()
         {
-            this.MM_INCOME = new HashSet<MM_INCOME>();
-            this.MM_PAYMENT = new HashSet<MM_PAYMENT>();
             this.MN_CATEGORY_SETTING = new HashSet<MN_CATEGORY_SETTING>();
+            this.MN_INCOME = new HashSet<MN_INCOME>();
+            this.MN_PAYMENT = new HashSet<MN_PAYMENT>();
         }
     
         public System.Guid id { get; set; }
@@ -42,12 +42,12 @@ namespace TDH.Models
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MM_INCOME> MM_INCOME { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MM_PAYMENT> MM_PAYMENT { get; set; }
         public virtual MN_GROUP MN_GROUP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MN_CATEGORY_SETTING> MN_CATEGORY_SETTING { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MN_INCOME> MN_INCOME { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MN_PAYMENT> MN_PAYMENT { get; set; }
     }
 }

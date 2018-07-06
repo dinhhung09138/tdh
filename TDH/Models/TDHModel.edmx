@@ -234,8 +234,6 @@
           <Property Name="percent_current" Type="tinyint" Nullable="false" />
           <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
           <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="startmonth" Type="numeric" Precision="6" Scale="0" Nullable="false" />
-          <Property Name="endmonth" Type="numeric" Precision="6" Scale="0" Nullable="false" />
           <Property Name="ordering" Type="smallint" Nullable="false" />
           <Property Name="publish" Type="bit" Nullable="false" />
           <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
@@ -277,8 +275,6 @@
           <Property Name="percent_current" Type="tinyint" Nullable="false" />
           <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
           <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="startmonth" Type="numeric" Precision="6" Scale="0" Nullable="false" />
-          <Property Name="endmonth" Type="numeric" Precision="6" Scale="0" Nullable="false" />
           <Property Name="ordering" Type="smallint" Nullable="false" />
           <Property Name="publish" Type="bit" Nullable="false" />
           <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
@@ -1702,8 +1698,6 @@
           <Property Name="percent_current" Type="Byte" Nullable="false" />
           <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
           <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
-          <Property Name="startmonth" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
-          <Property Name="endmonth" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
@@ -1750,8 +1744,6 @@
           <Property Name="percent_current" Type="Byte" Nullable="false" />
           <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
           <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
-          <Property Name="startmonth" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
-          <Property Name="endmonth" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
@@ -2445,8 +2437,6 @@
                 <ScalarProperty Name="create_by" ColumnName="create_by" />
                 <ScalarProperty Name="publish" ColumnName="publish" />
                 <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="endmonth" ColumnName="endmonth" />
-                <ScalarProperty Name="startmonth" ColumnName="startmonth" />
                 <ScalarProperty Name="money_current" ColumnName="money_current" />
                 <ScalarProperty Name="money_setting" ColumnName="money_setting" />
                 <ScalarProperty Name="percent_current" ColumnName="percent_current" />
@@ -2490,8 +2480,6 @@
                 <ScalarProperty Name="create_by" ColumnName="create_by" />
                 <ScalarProperty Name="publish" ColumnName="publish" />
                 <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="endmonth" ColumnName="endmonth" />
-                <ScalarProperty Name="startmonth" ColumnName="startmonth" />
                 <ScalarProperty Name="money_current" ColumnName="money_current" />
                 <ScalarProperty Name="money_setting" ColumnName="money_setting" />
                 <ScalarProperty Name="percent_current" ColumnName="percent_current" />

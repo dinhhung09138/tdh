@@ -29,8 +29,6 @@ namespace TDH.Models
         public byte percent_current { get; set; }
         public decimal money_setting { get; set; }
         public decimal money_current { get; set; }
-        public decimal startmonth { get; set; }
-        public decimal endmonth { get; set; }
         public short ordering { get; set; }
         public bool publish { get; set; }
         public System.Guid create_by { get; set; }

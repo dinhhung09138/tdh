@@ -135,11 +135,49 @@ namespace TDH.Areas.Administrator.Services
                                  select new
                                  {
                                      m.id,
+                                      m.name,
+                                     m.percent_setting
+                                 }).ToList();
+                    foreach (var item in _list)
+                    {
+                        _return.Add(new MoneyGroupModel() { ID = item.id, Name = string.Format("{0} - {1}%", item.name, item.percent_setting) });
+                    }
+                }
+                return _return;
+            }
+            catch (Exception ex)
+            {
+                Notifier.Notification(userID, Resources.Message.Error, Notifier.TYPE.Error);
+                TDH.Services.Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
+                throw new ApplicationException();
+            }
+        }
+
+        /// <summary>
+        /// Get all item without deleted
+        /// </summary>
+        /// <param name="userID">User id</param>
+        /// <param name="IsInput">true: input mean payment, false: income money</param>
+        /// <returns></returns>
+        public List<MoneyGroupModel> GetAll(Guid userID, bool IsInput)
+        {
+            try
+            {
+                List<MoneyGroupModel> _return = new List<MoneyGroupModel>();
+                using (var context = new chacd26d_trandinhhungEntities())
+                {
+                    var _list = (from m in context.MN_GROUP
+                                 where !m.deleted && m.publish && m.is_input == IsInput
+                                 orderby m.ordering descending
+                                 select new
+                                 {
+                                     m.id,
+                                     m.percent_setting,
                                      m.name
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyGroupModel() { ID = item.id, Name = item.name });
+                        _return.Add(new MoneyGroupModel() { ID = item.id, Name = string.Format("{0} - {1}%",item.name, item.percent_setting) });
                     }
                 }
                 return _return;
@@ -180,8 +218,6 @@ namespace TDH.Areas.Administrator.Services
                         MoneyCurrentString = _md.money_current.NumberToString(),
                         MoneySetting = _md.money_setting,
                         MoneySettingString = _md.money_setting.NumberToString(),
-                        StartMonth = _md.startmonth,
-                        EndMonth = _md.endmonth,
                         Ordering = _md.ordering,
                         Publish = _md.publish
                     };
@@ -226,8 +262,6 @@ namespace TDH.Areas.Administrator.Services
                             }
                             _md.name = model.Name;
                             _md.notes = model.Notes;
-                            _md.startmonth = model.StartMonth;
-                            _md.endmonth = model.EndMonth;
                             _md.ordering = model.Ordering;
                             _md.publish = model.Publish;
                             //Setting value don't allow change when create or edit

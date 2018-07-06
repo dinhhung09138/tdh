@@ -94,7 +94,7 @@ $(document).ready(function () {
                 orderable: false,
                 searchable: false,
                 className: 'ctn-center',
-                width: '90px'
+                width: '80px'
             },
             {
                 data: 'Publish',
@@ -132,15 +132,16 @@ $(document).ready(function () {
             },
             {
                 orderable: false,
-                width: '40px',
+                width: '80px',
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admmoney/editgroup/' + data.ID + '\" data-title="Cập nhật quy tắc chi tiêu" title="Cập nhật" class="pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="javascript:;" onclick="setting(\'' + data.ID + '\')" title="Thiết lập" class="mg-lr-2 pg_ld"><i class="fa fa-cogs" aria-hidden="true"></i></a>';
+                        str = str + '<a href="javascript:;" data-url="/administrator/admmoney/editgroup/' + data.ID + '\" data-title="Cập nhật quy tắc chi tiêu" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
-                        str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');"><i class="fa fa-remove" aria-hidden="true"></i></a>';
+                        str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-remove" aria-hidden="true"></i></a>';
                     }
                     return str;
                 }
@@ -235,4 +236,8 @@ function deleteItem() {
             $('#deleteModal').modal('hide');
         }
     });
+}
+
+function setting(id) {
+    console.log('setting');
 }

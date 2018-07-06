@@ -18,7 +18,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admmoney/group', 'Quy tắc quản lý');
+    loadPage('/administrator/admmoney/group', 'Quy tắc chi tiêu');
 };
 
 var OnFailure = function (response) {

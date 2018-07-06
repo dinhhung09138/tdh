@@ -62,43 +62,31 @@ $(document).ready(function () {
                 searchable: true
             },
             {
-                data: 'PercentSetting',
                 orderable: false,
                 searchable: false,
-                className: 'text-right',
-                width: '90px',
+                width: '100px',
                 render: function (obj, type, data, meta) {
-                    return data.PercentSetting;
+                    var _str = '<div class="row">\
+                                    <div class="col-12">Thiết lập</div>\
+                                    <div class="col-12">' + data.PercentSetting + '</div>\
+                                    <div class="col-12">Thực tế</div>\
+                                    <div class="col-12">' + data.PercentCurrent + '</div>\
+                                </div>';
+                    return _str;
                 }
             },
             {
-                data: 'PercentCurrent',
                 orderable: false,
                 searchable: false,
-                className: 'text-right',
                 width: '90px',
                 render: function (obj, type, data, meta) {
-                    return data.PercentCurrent;
-                }
-            },
-            {
-                data: 'MoneySettingString',
-                orderable: false,
-                searchable: false,
-                className: 'text-right',
-                width: '90px',
-                render: function (obj, type, data, meta) {
-                    return data.MoneySettingString;
-                }
-            },
-            {
-                data: 'MoneyCurrentString',
-                orderable: false,
-                searchable: false,
-                className: 'text-right',
-                width: '90px',
-                render: function (obj, type, data, meta) {
-                    return data.MoneyCurrentString;
+                    var _str = '<div class="row">\
+                                    <div class="col-12">Thiết lập</div>\
+                                    <div class="col-12">' + data.MoneySettingString + '</div>\
+                                    <div class="col-12">Thực tế</div>\
+                                    <div class="col-12">' + data.MoneyCurrentString + '</div>\
+                                </div>';
+                    return _str;
                 }
             },
             {
@@ -149,7 +137,7 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admmoney/editgroup/' + data.ID + '\" data-title="Cập nhật quy tắc quản lý" title="Cập nhật" class="pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="javascript:;" data-url="/administrator/admmoney/editgroup/' + data.ID + '\" data-title="Cập nhật quy tắc chi tiêu" title="Cập nhật" class="pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');"><i class="fa fa-remove" aria-hidden="true"></i></a>';

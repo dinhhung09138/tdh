@@ -137,7 +137,7 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" onclick="setting(\'' + data.ID + '\')" title="Thiết lập" class="mg-lr-2 pg_ld"><i class="fa fa-cogs" aria-hidden="true"></i></a>';
+                        str = str + '<a href="javascript:;" onclick="groupSetting(\'' + data.ID + '\')" title="Thiết lập" class="mg-lr-2"><i class="fa fa-cogs" aria-hidden="true"></i></a>';
                         str = str + '<a href="javascript:;" data-url="/administrator/admmoney/editgroup/' + data.ID + '\" data-title="Cập nhật quy tắc chi tiêu" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
@@ -169,6 +169,15 @@ $(document).ready(function () {
 
         }
     });
+
+    $("#monthSelect").datepicker({
+        format: "mm/yyyy",
+        viewMode: "months",
+        minViewMode: "months"
+    })
+        .on('changeDate', function (ev) {
+            $('#monthSelect').datepicker('hide');
+        });;
 });
 
 $(document).on('change', '#ddlSelect', function (e) {
@@ -238,6 +247,100 @@ function deleteItem() {
     });
 }
 
-function setting(id) {
+function spendSetting() {
+    var currentTime = new Date()
+    // returns the month (from 0 to 11)
+    var month = currentTime.getMonth() + 1;
+    // returns the day of the month (from 1 to 31)
+    var day = currentTime.getDate();
+    // returns the year (four digits)
+    var year = currentTime.getFullYear();
+    $('#monthSelect').val((month < 10 ? '0' + month : month) + '/' + year);
+    getSpendSetting(parseInt(year + (month < 10 ? '0' + month : month)));
+}
+
+function getSpendSetting(year) {
+    $('#bodytbListFullGroupSetting').empty();
+    $.ajax({
+        url: '/administrator/admmoney/getgroupsettinginfo',
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({ year: year }),
+        success: function (response) {
+            console.log(response);
+            $.each(response, function (idx, item) {
+                console.log(idx);
+                var _str = '<tr>\
+                                <td>' + (idx + 1) + '</td>\
+                                <td>' + item.GroupName + '</td>\
+                                <td class="text-right"><input type="text" data-id="' + item.ID + '" class="form-control text-right settingItem id' + idx + '" maxlength="2" min="0" value="' + item.PercentSetting + '" /></td>\
+                                <td class="text-right">' + item.PercentCurrent + '</td>\
+                                <td class="text-right">' + item.MoneySettingString + '</td>\
+                                <td class="text-right">' + item.MoneyCurrentString + '</td>\
+                            </tr>';
+                $('#bodytbListFullGroupSetting').append(_str);
+                new AutoNumeric('.id' + idx, {
+                    minimumValue: '0',
+                    maximumValue: '99',
+                    selectNumberOnly: true,
+                    allowDecimalPadding: false
+                });
+            });
+            $('#settingModel').modal('show');
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
+function saveSpendSetting() {
+    var list = [];
+    $('.settingItem').each(function (idx) {
+        var id = $(this).attr('data-id');
+        var value = $(this).val();
+        list.push({
+            ID: id,
+            PercentSetting: value
+        });
+    });
+    if (list.length > 0) {
+        $.ajax({
+            url: '/administrator/admmoney/savegroupsettinginfo',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({ model: list }),
+            success: function (response) {
+                table.ajax.reload();
+                $('#settingModel').modal('hide');
+            },
+            error: function (xhr, status, error) {
+                console.log(error);
+            }
+        });
+    }
+}
+
+function groupSetting(id) {
     console.log('setting');
+    $.ajax({
+        url: '/administrator/admmoney/groupsettinginfo',
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({ ID: id }),
+        success: function (response) {
+            if (response === 0) {
+                table.ajax.reload();
+            }
+            id = '';
+            $('#deleteModal').modal('hide');
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+            $('#deleteModal').modal('hide');
+        }
+    });
+    $('#groupSettingModel').modal('show');
 }

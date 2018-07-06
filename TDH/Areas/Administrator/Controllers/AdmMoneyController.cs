@@ -681,6 +681,62 @@ namespace TDH.Areas.Administrator.Controllers
         }
 
         [HttpPost]
+        public ActionResult GetGroupSettingInfo(decimal year)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyGroupSettingService _service = new Services.MoneyGroupSettingService();
+                
+                #endregion
+
+                //Call to service
+                List< MoneyGroupSettingModel> model = _service.GetAll(UserID, year);
+                //
+                return this.Json(model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "GroupSettingInfo", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SaveGroupSettingInfo(List<MoneyGroupSettingModel> model)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyGroupSettingService _service = new Services.MoneyGroupSettingService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                if(model.Count == 0)
+                {
+                    return this.Json(ResponseStatusCodeHelper.OK, JsonRequestBehavior.AllowGet);
+                }
+                //
+                model[0].CreateBy = UserID;
+                model[0].UpdateBy = UserID;
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "GroupSettingInfo", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditGroup(MoneyGroupModel model)
         {

@@ -350,6 +350,8 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "publishgroup":
                                 case "checkdeletegroup":
                                 case "deletegroup":
+                                case "getgroupsettinginfo":
+                                case "savegroupsettinginfo":
                                     return "money_group";
                                 case "category":
                                 case "createcategory":
@@ -553,6 +555,7 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "accounttype":
                                 case "account":
                                 case "group":
+                                case "getgroupsettinginfo":
                                 case "category":
                                     return Services.RoleService.actionType.View;
                                 case "createaccounttype":
@@ -566,6 +569,7 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "publishaccount":
                                 case "editgroup":
                                 case "publishgroup":
+                                case "savegroupsettinginfo":
                                 case "editcategory":
                                 case "publishcategory":
                                     return Services.RoleService.actionType.Edit;

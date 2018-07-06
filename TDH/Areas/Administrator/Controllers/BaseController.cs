@@ -351,6 +351,13 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "checkdeletegroup":
                                 case "deletegroup":
                                     return "money_group";
+                                case "category":
+                                case "createcategory":
+                                case "editcategory":
+                                case "publishcategory":
+                                case "checkdeletecategory":
+                                case "deletecategory":
+                                    return "money_category";
                             }
 
                             #endregion
@@ -546,10 +553,12 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "accounttype":
                                 case "account":
                                 case "group":
+                                case "category":
                                     return Services.RoleService.actionType.View;
                                 case "createaccounttype":
                                 case "createaccount":
                                 case "creategroup":
+                                case "createcategory":
                                     return Services.RoleService.actionType.Create;
                                 case "editaccounttype":
                                 case "publishaccounttype":
@@ -557,6 +566,8 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "publishaccount":
                                 case "editgroup":
                                 case "publishgroup":
+                                case "editcategory":
+                                case "publishcategory":
                                     return Services.RoleService.actionType.Edit;
                                 case "checkdeleteaccounttype":
                                 case "deleteaccounttype":
@@ -564,6 +575,8 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "deleteaccount":
                                 case "checkdeletegroup":
                                 case "deletegroup":
+                                case "checkdeletecategory":
+                                case "deletecategory":
                                     return Services.RoleService.actionType.Delete;
                             }
 

@@ -21,13 +21,9 @@ namespace TDH.Areas.Administrator.Models
         public string Notes { get; set; }
         
         public byte PercentSetting { get; set; } = 0;
-
-        public string PercentSettingString { get; set; } = "";
-
+        
         public byte PercentCurrent { get; set; } = 0;
-
-        public string PercentCurrentString { get; set; } = "";
-
+        
         public decimal MoneySetting { get; set; } = 0;
 
         public string MoneySettingString { get; set; } = "";

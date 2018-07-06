@@ -49,11 +49,7 @@ namespace TDH.Areas.Administrator.Services
                                       m.percent_current,
                                       m.percent_setting,
                                       m.money_current,
-                                      m.money_setting,
-                                      m.startmonth,
-                                      m.endmonth,
-                                      m.ordering,
-                                      m.publish
+                                      m.money_setting
                                   }).ToList();
 
                     _itemResponse.draw = request.draw;
@@ -64,8 +60,7 @@ namespace TDH.Areas.Administrator.Services
                         string searchValue = request.search.Value.ToLower();
                         _lData = _lData.Where(m => m.name.ToLower().Contains(searchValue) ||
                                                    m.notes.ToLower().Contains(searchValue) ||
-                                                   m.group_name.ToLower().Contains(searchValue) ||
-                                                   m.ordering.ToString().Contains(searchValue)).ToList();
+                                                   m.group_name.ToLower().Contains(searchValue)).ToList();
                     }
                     //Add to list
                     foreach (var item in _lData)
@@ -79,13 +74,9 @@ namespace TDH.Areas.Administrator.Services
                             PercentCurrent = item.percent_current,
                             PercentSetting = item.percent_setting,
                             MoneyCurrent = item.money_current,
+                            MoneyCurrentString = item.money_current.NumberToString(),
                             MoneySetting = item.money_setting,
-                            Ordering = item.ordering,
-                            Publish = item.publish,
-                            StartMonth = item.startmonth,
-                            EndMonth = item.endmonth,
-                            StartMonthString = item.startmonth.NumberToString("##/####"),
-                            EndMonthString = item.endmonth.NumberToString("##/####")
+                            MoneySettingString = item.money_setting.NumberToString()
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -104,9 +95,6 @@ namespace TDH.Areas.Administrator.Services
                                     break;
                                 case "GroupName":
                                     _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.GroupName) : _sortList.Sort(col.Dir, m => m.GroupName);
-                                    break;
-                                case "Ordering":
-                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Ordering) : _sortList.Sort(col.Dir, m => m.Ordering);
                                     break;
                             }
                         }
@@ -193,8 +181,6 @@ namespace TDH.Areas.Administrator.Services
                         PercentCurrent = _md.percent_current,
                         MoneyCurrent = _md.money_current,
                         MoneySetting = _md.money_setting,
-                        StartMonth = _md.startmonth,
-                        EndMonth = _md.endmonth,
                         Ordering = _md.ordering,
                         Publish = _md.publish
                     };
@@ -239,14 +225,7 @@ namespace TDH.Areas.Administrator.Services
                             _md.group_id = model.GroupID;
                             _md.name = model.Name;
                             _md.notes = model.Notes;
-                            _md.startmonth = model.StartMonth;
-                            _md.endmonth = model.EndMonth;
-                            _md.ordering = model.Ordering;
-                            _md.publish = model.Publish;
-                            _md.percent_current = model.PercentCurrent;
-                            _md.percent_setting = model.PercentSetting;
-                            _md.money_current = model.MoneyCurrent;
-                            _md.money_setting = model.MoneySetting;
+                            //Setting doesn't allow set in create or update
                             if (model.Insert)
                             {
                                 _md.create_by = model.CreateBy;

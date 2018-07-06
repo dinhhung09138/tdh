@@ -448,7 +448,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditAccountType", UserID, ex);
+                TDH.Services.Log.WriteLog(FILE_NAME, "EditAccount", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -477,7 +477,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "PublishAccountType", UserID, ex);
+                TDH.Services.Log.WriteLog(FILE_NAME, "PublishAccount", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -506,7 +506,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DeleteAccountType", UserID, ex);
+                TDH.Services.Log.WriteLog(FILE_NAME, "DeleteAccount", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -533,7 +533,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CheckDeleteAccountType", UserID, ex);
+                TDH.Services.Log.WriteLog(FILE_NAME, "CheckDeleteAccount", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -798,5 +798,275 @@ namespace TDH.Areas.Administrator.Controllers
 
         #endregion
 
+        #region " [ Category ]  "
+
+        /// <summary>
+        /// Category form
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Category()
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyGroupService _groupServices = new Services.MoneyGroupService();
+                //
+                ViewBag.group = _groupServices.GetAll(UserID, true);
+
+                #endregion
+                //
+                return PartialView();
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "Category", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public JsonResult Category(CustomDataTableRequestHelper requestData)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+                
+                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                if(requestData.Parameter1 == null)
+                {
+                    requestData.Parameter1 = "";
+                }
+                // Process sorting column
+                requestData = requestData.SetOrderingColumnName();
+
+                #endregion
+
+                //Call to service
+                Dictionary<string, object> _return = _service.List(requestData, UserID);
+                //
+                if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
+                {
+                    DataTableResponse<MoneyCategoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<MoneyCategoryModel>;
+                    return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
+                }
+                //
+                return this.Json(new DataTableResponse<MoneyCategoryModel>(), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "Category", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult CreateCategory()
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyGroupService _groupServices = new Services.MoneyGroupService();
+                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+                //
+                ViewBag.group = _groupServices.GetAll(UserID, true);
+
+                #endregion
+                //
+                MoneyCategoryModel model = new MoneyCategoryModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
+                //
+                return PartialView(model);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "CreateCategory", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCategory(MoneyCategoryModel model)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                model.CreateBy = UserID;
+                model.UpdateBy = UserID;
+                model.CreateDate = DateTime.Now;
+                model.UpdateDate = DateTime.Now;
+
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "CreateCategory", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult EditCategory(string id)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyGroupService _groupServices = new Services.MoneyGroupService();
+                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+                //
+                ViewBag.group = _groupServices.GetAll(UserID, true);
+
+                ViewBag.id = id;
+
+                #endregion
+
+                //Call to service
+                MoneyCategoryModel model = _service.GetItemByID(new MoneyCategoryModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+                //
+                return PartialView(model);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "EditCategory", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCategory(MoneyCategoryModel model)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                model.CreateBy = UserID;
+                model.UpdateBy = UserID;
+                model.CreateDate = DateTime.Now;
+                model.UpdateDate = DateTime.Now;
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "EditCategory", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult PublishCategory(MoneyCategoryModel model)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+
+                #endregion
+
+                #region " [ Main process ] "
+
+                model.CreateBy = UserID;
+                model.UpdateBy = UserID;
+                model.UpdateDate = DateTime.Now;
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.Publish(model), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "PublishCategory", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCategory(MoneyCategoryModel model)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+
+                #endregion
+
+                #region " [ Main process ] "
+
+                model.CreateBy = UserID;
+                model.DeleteBy = UserID;
+                model.DeleteDate = DateTime.Now;
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.Delete(model), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "DeleteAccount", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CheckDeleteCategory(MoneyCategoryModel model)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+
+                #endregion
+
+                #region " [ Main process ] "
+
+                model.CreateBy = UserID;
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.CheckDelete(model), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "CheckDeleteCategory", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        #endregion
     }
 }

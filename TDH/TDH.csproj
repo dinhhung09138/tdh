@@ -5135,6 +5135,8 @@
     <Content Include="Areas\Administrator\Content\custom\admmoney.account.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.accounttype.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.accounttype.js" />
+    <Content Include="Areas\Administrator\Content\custom\admmoney.category.action.js" />
+    <Content Include="Areas\Administrator\Content\custom\admmoney.category.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.group.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.group.js" />
     <Content Include="Areas\Administrator\Content\custom\admpost.navigation.action.js" />
@@ -10203,6 +10205,10 @@
     <Content Include="Areas\Administrator\Views\AdmMoney\CreateGroup.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmMoney\EditGroup.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmMoney\_GroupForm.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmMoney\Category.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmMoney\CreateCategory.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmMoney\EditCategory.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmMoney\_CategoryForm.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

@@ -20,6 +20,18 @@ $(document).ready(function () {
         initComplete: function (settings, json) {
             //Do something after finish
         },
+        createdRow: function(row, data, dataIndex) {
+            if (data.IsInput === true || (data.PercentCurrent === 0 && data.PercentSetting === 0) || ((data.PercentCurrent * 100) / data.PercentSetting) <= 80) {
+                //
+            } else {
+                var cls = '';
+                if (((data.PercentCurrent * 100) / data.PercentSetting) < 100) {
+                    $(row).css({ 'background-color': '#ffc107' });
+                } else {
+                    $(row).css({ 'background-color': '#dc3545' });
+                }                
+            }
+        },
         language: language,
         order: [[3, "asc"]],
         ajax: {
@@ -44,9 +56,9 @@ $(document).ready(function () {
                 width: '100px',
                 render: function (obj, type, data, meta) {
                     if (data.IsInput === true) {
-                        return 'Chi tiêu';
-                    } else {
                         return 'Thu nhập';
+                    } else {
+                        return 'Chi tiêu';
                     }
                 }
             },
@@ -66,11 +78,19 @@ $(document).ready(function () {
                 searchable: false,
                 width: '100px',
                 render: function (obj, type, data, meta) {
+                    var cls = '';
+                    if (((data.PercentCurrent * 100) / data.PercentSetting) <= 80) {
+                        cls = 'success';
+                    } else {
+                        cls = 'info';
+                    }
                     var _str = '<div class="row">\
-                                    <div class="col-12">Thiết lập</div>\
-                                    <div class="col-12">' + data.PercentSetting + '</div>\
-                                    <div class="col-12">Thực tế</div>\
-                                    <div class="col-12">' + data.PercentCurrent + '</div>\
+                                    <div class="col-12">\
+                                        Thiết lập:  <h6><span class="badge badge-' + cls + '">' + data.PercentSetting + '%</span></h6>\
+                                    </div>\
+                                    <div class="col-12">\
+                                        Thực tế:  <h6><span class="badge badge-' + cls + '">' + data.PercentCurrent + '%</span></h6>\
+                                    </div>\
                                 </div>';
                     return _str;
                 }
@@ -80,11 +100,19 @@ $(document).ready(function () {
                 searchable: false,
                 width: '90px',
                 render: function (obj, type, data, meta) {
+                    var cls = '';
+                    if (((data.PercentCurrent * 100) / data.PercentSetting) <= 80) {
+                        cls = 'success';
+                    } else {
+                        cls = 'info';
+                    }
                     var _str = '<div class="row">\
-                                    <div class="col-12">Thiết lập</div>\
-                                    <div class="col-12">' + data.MoneySettingString + '</div>\
-                                    <div class="col-12">Thực tế</div>\
-                                    <div class="col-12">' + data.MoneyCurrentString + '</div>\
+                                    <div class="col-12">\
+                                        Thiết lập:  <h6><span class="badge badge-' + cls + '">' + data.MoneySettingString + '</span></h6>\
+                                    </div>\
+                                    <div class="col-12">\
+                                        Thực tế:  <h6><span class="badge badge-' + cls + '">' + data.MoneyCurrentString + '</span></h6>\
+                                    </div>\
                                 </div>';
                     return _str;
                 }
@@ -169,7 +197,7 @@ $(document).ready(function () {
 
         }
     });
-
+    
     $("#monthSelect").datepicker({
         format: "mm/yyyy",
         viewMode: "months",
@@ -177,6 +205,9 @@ $(document).ready(function () {
     })
         .on('changeDate', function (ev) {
             $('#monthSelect').datepicker('hide');
+            var month = $(this).val().substring(0, 2);
+            var year = $(this).val().substring(3, 8);
+            getSpendSetting(parseInt(year + month));
         });;
 });
 
@@ -268,9 +299,7 @@ function getSpendSetting(year) {
         dataType: 'json',
         data: JSON.stringify({ year: year }),
         success: function (response) {
-            console.log(response);
             $.each(response, function (idx, item) {
-                console.log(idx);
                 var _str = '<tr>\
                                 <td>' + (idx + 1) + '</td>\
                                 <td>' + item.GroupName + '</td>\
@@ -294,6 +323,7 @@ function getSpendSetting(year) {
         }
     });
 }
+
 function saveSpendSetting() {
     var list = [];
     $('.settingItem').each(function (idx) {
@@ -323,7 +353,6 @@ function saveSpendSetting() {
 }
 
 function groupSetting(id) {
-    console.log('setting');
     $.ajax({
         url: '/administrator/admmoney/groupsettinginfo',
         type: 'POST',

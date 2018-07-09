@@ -22,7 +22,7 @@
 </div>
 <div class="row form-group">
     <div class="col-md-3 col-sm-4 col-xs-12 text-right">
-        Chi tiêu <span style="color:red; font-weight:bold;">*</span>
+        Thu nhập <span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
         @{
@@ -35,11 +35,11 @@
                 @Html.HiddenFor(m => m.IsInput)
                 if (Model.IsInput)
                 {
-                    @Html.Raw("Chi tiêu")
+                    @Html.Raw("Thu nhập")
                 }
                 else
                 {
-                    @Html.Raw("Thu nhập")
+                    @Html.Raw("Chi tiêu")
                 }
             }
         }

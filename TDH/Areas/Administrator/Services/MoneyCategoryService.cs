@@ -131,7 +131,42 @@ namespace TDH.Areas.Administrator.Services
                 {
                     var _list = (from m in context.MN_CATEGORY
                                  join n in context.MN_GROUP on m.group_id equals n.id
-                                 where n.publish && !n.deleted && !m.deleted && m.publish
+                                 where n.publish && !n.deleted && !m.deleted
+                                 orderby m.ordering descending
+                                 select new
+                                 {
+                                     m.id,
+                                     m.name
+                                 }).ToList();
+                    foreach (var item in _list)
+                    {
+                        _return.Add(new MoneyCategoryModel() { ID = item.id, Name = item.name });
+                    }
+                }
+                return _return;
+            }
+            catch (Exception ex)
+            {
+                Notifier.Notification(userID, Resources.Message.Error, Notifier.TYPE.Error);
+                TDH.Services.Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
+                throw new ApplicationException();
+            }
+        }
+
+        /// <summary>
+        /// Get all item without deleted
+        /// </summary>
+        /// <returns></returns>
+        public List<MoneyCategoryModel> GetAll(Guid userID, bool isInput)
+        {
+            try
+            {
+                List<MoneyCategoryModel> _return = new List<MoneyCategoryModel>();
+                using (var context = new chacd26d_trandinhhungEntities())
+                {
+                    var _list = (from m in context.MN_CATEGORY
+                                 join n in context.MN_GROUP on m.group_id equals n.id
+                                 where n.publish && !n.deleted && !m.deleted && n.is_input == isInput
                                  orderby m.ordering descending
                                  select new
                                  {

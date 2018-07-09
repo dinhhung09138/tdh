@@ -932,7 +932,7 @@ namespace TDH.Areas.Administrator.Controllers
                 Services.MoneyGroupService _groupServices = new Services.MoneyGroupService();
                 Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
                 //
-                ViewBag.group = _groupServices.GetAll(UserID, true);
+                ViewBag.group = _groupServices.GetAll(UserID);
 
                 #endregion
                 //
@@ -989,7 +989,7 @@ namespace TDH.Areas.Administrator.Controllers
                 Services.MoneyGroupService _groupServices = new Services.MoneyGroupService();
                 Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
                 //
-                ViewBag.group = _groupServices.GetAll(UserID, true);
+                ViewBag.group = _groupServices.GetAll(UserID);
 
                 ViewBag.id = id;
 

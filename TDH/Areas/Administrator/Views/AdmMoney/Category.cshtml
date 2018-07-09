@@ -6,12 +6,12 @@
 @Html.DropDownList("groupSelect", new SelectList(ViewBag.group, "ID", "Name"), "Tất cả", new { @class = "form-control form-control-sm" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Danh mục chi tiêu</h3>
+        <h3 class="card-title">Danh mục thu tiêu</h3>
         <div class="card-tools pull-right">
             @{
                 if (ViewBag.Add == true)
                 {
-                    <a title="Thêm mới" class="btn btn-box-tool pg_ld" data-title="Thêm danh mục chi" data-url="/administrator/admmoney/createcategory">
+                    <a title="Thêm mới" class="btn btn-box-tool pg_ld" data-title="Thêm danh mục thu chi" data-url="/administrator/admmoney/createcategory">
                         <i class="fa fa-plus"></i>
                     </a>
                 }

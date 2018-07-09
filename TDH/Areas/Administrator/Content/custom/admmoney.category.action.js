@@ -18,7 +18,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admmoney/category', 'Danh mục chi');
+    loadPage('/administrator/admmoney/category', 'Danh mục thu chi');
 };
 
 var OnFailure = function (response) {

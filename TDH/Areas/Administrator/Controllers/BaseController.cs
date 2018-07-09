@@ -362,6 +362,8 @@ namespace TDH.Areas.Administrator.Controllers
                                     return "money_category";
                                 case "flowhistory":
                                 case "saveincome":
+                                case "savepayment":
+                                case "savetransfer":
                                     return "money_flow";
                             }
 
@@ -567,6 +569,8 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "creategroup":
                                 case "createcategory":
                                 case "saveincome":
+                                case "savepayment":
+                                case "savetransfer":
                                     return Services.RoleService.actionType.Create;
                                 case "editaccounttype":
                                 case "publishaccounttype":

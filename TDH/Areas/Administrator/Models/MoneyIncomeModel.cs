@@ -21,6 +21,8 @@ namespace TDH.Areas.Administrator.Models
         [Required(ErrorMessage = "Nội dung không được rỗng")]
         public DateTime Date { get; set; }
 
+        public string DateString { get; set; } = "";
+
         [StringLength(255, ErrorMessage = "Nội dung không quá 255 ký tự")]
         public string Purpose { get; set; }
 

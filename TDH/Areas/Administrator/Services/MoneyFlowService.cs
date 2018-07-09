@@ -120,7 +120,7 @@ namespace TDH.Areas.Administrator.Services
                             _md.account_id = model.AccountID;
                             _md.category_id = model.CategoryID;
                             _md.title = model.Title;
-                            _md.date = DateTime.Now;
+                            _md.date = model.Date;
                             _md.purpose = model.Purpose;
                             _md.notes = model.Notes;
                             _md.money = model.Money;
@@ -157,7 +157,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper SavePayment(MoneyIncomeModel model)
+        public ResponseStatusCodeHelper SavePayment(MoneyPaymentModel model)
         {
             try
             {
@@ -172,7 +172,7 @@ namespace TDH.Areas.Administrator.Services
                             _md.account_id = model.AccountID;
                             _md.category_id = model.CategoryID;
                             _md.title = model.Title;
-                            _md.date = DateTime.Now;
+                            _md.date = model.Date;
                             _md.purpose = model.Purpose;
                             _md.notes = model.Notes;
                             _md.money = model.Money;
@@ -188,6 +188,59 @@ namespace TDH.Areas.Administrator.Services
                             Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
                             TDH.Services.Log.WriteLog(FILE_NAME, "SavePayment", model.CreateBy, ex);
+                            throw new ApplicationException();
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
+                TDH.Services.Log.WriteLog(FILE_NAME, "SavePayment", model.CreateBy, ex);
+                throw new ApplicationException();
+            }
+            Notifier.Notification(model.CreateBy, Resources.Message.InsertSuccess, Notifier.TYPE.Success);
+            return ResponseStatusCodeHelper.Success;
+        }
+
+        /// <summary>
+        /// Save
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>ResponseStatusCodeHelper</returns>
+        public ResponseStatusCodeHelper SaveTransfer(MoneyTransferModel model)
+        {
+            try
+            {
+                using (var context = new chacd26d_trandinhhungEntities())
+                {
+                    using (var trans = context.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            MN_TRANSFER _md = new MN_TRANSFER();
+                            _md.id = Guid.NewGuid();
+                            _md.account_from = model.AccountFrom;
+                            _md.account_to = model.AccountTo;
+                            _md.title = model.Title;
+                            _md.date = model.Date;
+                            _md.purpose = model.Purpose;
+                            _md.notes = model.Notes;
+                            _md.money = model.Money;
+                            _md.fee = model.Fee;
+                            _md.create_by = model.CreateBy;
+                            _md.create_date = DateTime.Now;
+                            context.MN_TRANSFER.Add(_md);
+                            context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                            context.SaveChanges();
+                            trans.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
+                            trans.Rollback();
+                            TDH.Services.Log.WriteLog(FILE_NAME, "SaveTransfer", model.CreateBy, ex);
                             throw new ApplicationException();
                         }
                     }

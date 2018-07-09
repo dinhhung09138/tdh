@@ -208,7 +208,7 @@ $(document).ready(function () {
             var month = $(this).val().substring(0, 2);
             var year = $(this).val().substring(3, 8);
             getSpendSetting(parseInt(year + month));
-        });;
+        });
 });
 
 $(document).on('change', '#ddlSelect', function (e) {

@@ -1,18 +1,17 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace TDH.Areas.Administrator.Models
 {
-    public class MoneyPaymentModel : Utils.Database.BaseModel
+    public class MoneyTransferModel : Utils.Database.BaseModel
     {
         public Guid ID { get; set; }
 
         [Required(ErrorMessage = "Nội dung không được rỗng")]
-        public Guid AccountID { get; set; }
+        public Guid AccountFrom { get; set; }
 
         [Required(ErrorMessage = "Nội dung không được rỗng")]
-        public Guid CategoryID { get; set; }
+        public Guid AccountTo { get; set; }
 
         [Required(ErrorMessage = "Nội dung không được rỗng")]
         [StringLength(100, ErrorMessage = "Nội dung không quá 100 ký tự")]
@@ -31,5 +30,8 @@ namespace TDH.Areas.Administrator.Models
 
         [Required(ErrorMessage = "Nội dung không được rỗng")]
         public decimal Money { get; set; }
+
+        [Required(ErrorMessage = "Nội dung không được rỗng")]
+        public decimal Fee { get; set; }
     }
 }

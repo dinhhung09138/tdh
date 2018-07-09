@@ -1194,12 +1194,14 @@ namespace TDH.Areas.Administrator.Controllers
 
                 #region " [ Main processing ] "
 
+                string[] tmp = model.DateString.Split('/');
+                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
+                //
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
-
-
+                
                 #endregion
 
                 //Call to service
@@ -1208,6 +1210,72 @@ namespace TDH.Areas.Administrator.Controllers
             catch (Exception ex)
             {
                 TDH.Services.Log.WriteLog(FILE_NAME, "SaveIncome", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SavePayment(MoneyPaymentModel model)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyFlowService _service = new Services.MoneyFlowService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                string[] tmp = model.DateString.Split('/');
+                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
+                //
+                model.CreateBy = UserID;
+                model.UpdateBy = UserID;
+                model.CreateDate = DateTime.Now;
+                model.UpdateDate = DateTime.Now;
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.SavePayment(model), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "SavePayment", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SaveTransfer(MoneyTransferModel model)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyFlowService _service = new Services.MoneyFlowService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                string[] tmp = model.DateString.Split('/');
+                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
+                //
+                model.CreateBy = UserID;
+                model.UpdateBy = UserID;
+                model.CreateDate = DateTime.Now;
+                model.UpdateDate = DateTime.Now;
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.SaveTransfer(model), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "SaveTransfer", UserID, ex);
                 throw new HttpException();
             }
         }

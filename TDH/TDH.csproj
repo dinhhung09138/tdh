@@ -250,6 +250,7 @@
     <Compile Include="Areas\Administrator\Models\MoneyGroupSettingModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyIncomeModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyPaymentModel.cs" />
+    <Compile Include="Areas\Administrator\Models\MoneyTransferModel.cs" />
     <Compile Include="Areas\Administrator\Models\NavigationModel.cs" />
     <Compile Include="Areas\Administrator\Models\CategoryModel.cs" />
     <Compile Include="Areas\Administrator\Models\PostModel.cs" />

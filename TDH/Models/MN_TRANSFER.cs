@@ -18,7 +18,6 @@ namespace TDH.Models
         public System.Guid account_from { get; set; }
         public System.Guid account_to { get; set; }
         public string title { get; set; }
-        public byte[] date { get; set; }
         public string purpose { get; set; }
         public string notes { get; set; }
         public decimal money { get; set; }
@@ -30,6 +29,7 @@ namespace TDH.Models
         public bool deleted { get; set; }
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
+        public System.DateTime date { get; set; }
     
         public virtual MN_ACCOUNT MN_ACCOUNT { get; set; }
         public virtual MN_ACCOUNT MN_ACCOUNT1 { get; set; }

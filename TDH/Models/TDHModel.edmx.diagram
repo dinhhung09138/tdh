@@ -48,18 +48,19 @@
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_ACCOUNT" Width="1.5" PointX="22" PointY="8.875" />
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_ACCOUNT_SETTING" Width="1.5" PointX="22" PointY="14.375" />
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_ACCOUNT_TYPE" Width="1.5" PointX="18.25" PointY="11" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_INCOME" Width="1.5" PointX="25.5" PointY="10.375" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_PAYMENT" Width="1.5" PointX="23.75" PointY="13" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_TRANSFER" Width="1.5" PointX="20.25" PointY="11.5" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_INCOME" Width="1.5" PointX="25.5" PointY="10.5" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_PAYMENT" Width="1.5" PointX="23.625" PointY="13.375" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_TRANSFER" Width="1.5" PointX="20.25" PointY="12.875" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_INCOME_MN_ACCOUNT" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_PAYMENT_MN_ACCOUNT" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_TRANSFER_MN_ACCOUNT_FROM" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_TRANSFER_MN_ACCOUNT_TO" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_INCOME_MN_CATEGORY" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_PAYMENT_MN_CATEGORY" />
-      </Diagram>
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.V_MONEY_FLOW" Width="1.5" PointX="18.25" PointY="14.75" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

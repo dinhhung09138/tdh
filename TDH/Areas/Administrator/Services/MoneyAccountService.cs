@@ -128,7 +128,7 @@ namespace TDH.Areas.Administrator.Services
                 {
                     var _list = (from m in context.MN_ACCOUNT
                                  join n in context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
-                                 where !m.deleted && !n.deleted && n.publish && m.publish
+                                 where !m.deleted && !n.deleted && n.publish
                                  orderby m.name descending
                                  select new
                                  {

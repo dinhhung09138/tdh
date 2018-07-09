@@ -1,0 +1,155 @@
+﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+<link href="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+<link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+<input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
+<input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
+<select id="ddlSelect" class="form-control form-control-sm">
+    <option value="" selected>Tất cả</option>
+    <option value="1">Thu nhập</option>
+    <option value="-1">Chi tiêu</option>
+    <option value="0">Chuyển khoản</option>
+</select>
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Lịch sử thu nhập - chi tiêu - Chuyển khoản</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.Add == true)
+                {
+                    <a title="Thêm mới" class="btn btn-box-tool" onclick="income();">
+                        Thu nhập
+                    </a>
+                    <a title="Thêm mới" class="btn btn-box-tool">
+                        Chi tiêu
+                    </a>
+                    <a title="Thêm mới" class="btn btn-box-tool">
+                        Chuyển khoản
+                    </a>
+                }
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="tbList" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Hình thức</th>
+                    <th>Danh mục thu/chi</th>
+                    <th>Từ TK</th>
+                    <th>Đến TK</th>
+                    <th>Nội dung</th>
+                    <th>Số tiền</th>
+                    <th>Phí</th>
+                    <th>Ngày</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="incomeModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h3 class="card-title">Thu nhập</h3>
+                        <div class="card-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="frmIncome" class="form">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Tiêu đề
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtIncomeTitle" type="text" class="form-control" maxlength="100" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Số tiền
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtIncomeMoney" type="text" class="form-control" maxlength="100" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Hình thức thu vào
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.DropDownList("cbIncomeCategory", new SelectList(ViewBag.incomeCategory, "ID", "Name"), "Chọn hình thức thu vào", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Tài khoản thu vào
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    @Html.DropDownList("cbIncomeAccount", new SelectList(ViewBag.account, "ID", "Name"), "Chọn tài khoản thu vào", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Mục đích
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtIncomePurpose" type="text" class="form-control" maxlength="255" data-parsley-maxlength="255" data-parsley-maxlength-message="Nội dung tối đa 255 ký tự" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSaveIncome" class="btn btn-primary" onclick="saveIncome();">Lưu</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="groupSettingModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Xác nhận</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h5 id="groupTitle"></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="deleteItem();">Lưu</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+<script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="/Areas/Administrator/Content/vendors/autoNumeric/autoNumeric.min.js"></script>
+<script src="~/Areas/Administrator/Content/vendors/parsleyjs/dist/parsley.min.js"></script>
+<script src="/Areas/Administrator/Content/Custom/admmoney.historyflow.js"></script>
+

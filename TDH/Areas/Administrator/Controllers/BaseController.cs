@@ -360,6 +360,9 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "checkdeletecategory":
                                 case "deletecategory":
                                     return "money_category";
+                                case "flowhistory":
+                                case "saveincome":
+                                    return "money_flow";
                             }
 
                             #endregion
@@ -557,11 +560,13 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "group":
                                 case "getgroupsettinginfo":
                                 case "category":
+                                case "flowhistory":
                                     return Services.RoleService.actionType.View;
                                 case "createaccounttype":
                                 case "createaccount":
                                 case "creategroup":
                                 case "createcategory":
+                                case "saveincome":
                                     return Services.RoleService.actionType.Create;
                                 case "editaccounttype":
                                 case "publishaccounttype":

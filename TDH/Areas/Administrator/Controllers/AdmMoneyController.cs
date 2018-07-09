@@ -1124,5 +1124,95 @@ namespace TDH.Areas.Administrator.Controllers
         }
 
         #endregion
+
+        #region " [ Income, Payment, Transfer ] "
+
+        [HttpGet]
+        public ActionResult FlowHistory()
+        {
+            #region " [ Declaration ] "
+
+            Services.MoneyCategoryService _categoryServices = new Services.MoneyCategoryService();
+            Services.MoneyAccountService _accountServices = new Services.MoneyAccountService();
+            //
+            ViewBag.incomeCategory = _categoryServices.GetAll(UserID, true);
+            ViewBag.paymentCategory = _categoryServices.GetAll(UserID, false);
+            ViewBag.account = _accountServices.GetAll(UserID);
+
+            #endregion
+            //
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult FlowHistory(CustomDataTableRequestHelper requestData)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyFlowService _service = new Services.MoneyFlowService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                if (requestData.Parameter1 == null)
+                {
+                    requestData.Parameter1 = "";
+                }
+                #endregion
+
+                //Call to service
+                Dictionary<string, object> _return = _service.List(requestData, UserID);
+                //
+                if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
+                {
+                    DataTableResponse<MoneyFlowModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<MoneyFlowModel>;
+                    return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
+                }
+                //
+                return this.Json(new DataTableResponse<MoneyFlowModel>(), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "FlowHistory", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult SaveIncome(MoneyIncomeModel model)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyFlowService _service = new Services.MoneyFlowService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                model.CreateBy = UserID;
+                model.UpdateBy = UserID;
+                model.CreateDate = DateTime.Now;
+                model.UpdateDate = DateTime.Now;
+
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.SaveIncome(model), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "SaveIncome", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        #endregion
+
     }
 }

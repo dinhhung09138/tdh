@@ -45,11 +45,7 @@ namespace TDH.Areas.Administrator.Services
                                       m.id,
                                       m.name,
                                       m.notes,
-                                      group_name = n.name,
-                                      m.percent_current,
-                                      m.percent_setting,
-                                      m.money_current,
-                                      m.money_setting
+                                      group_name = n.name
                                   }).ToList();
 
                     _itemResponse.draw = request.draw;
@@ -63,20 +59,36 @@ namespace TDH.Areas.Administrator.Services
                                                    m.group_name.ToLower().Contains(searchValue)).ToList();
                     }
                     //Add to list
+                    byte _percentSet = 0;
+                    byte _percentCur = 0;
+                    decimal _moneySet = 0;
+                    decimal _moneyCur = 0;
                     foreach (var item in _lData)
                     {
+                        _percentSet = 0;
+                        _percentCur = 0;
+                        _moneySet = 0;
+                        _moneyCur = 0;
+                        var _cateSetting = context.MN_CATEGORY_SETTING.FirstOrDefault(m => m.category_id == item.id && m.year_month.ToString() == request.Parameter2); //By month year
+                        if (_cateSetting != null)
+                        {
+                            _percentSet = _cateSetting.percent_setting;
+                            _percentCur = _cateSetting.percent_current;
+                            _moneySet = _cateSetting.money_setting;
+                            _moneyCur = _cateSetting.money_current;
+                        }
                         _list.Add(new MoneyCategoryModel()
                         {
                             ID = item.id,
                             Name = item.name,
                             GroupName = item.group_name,
                             Notes = item.notes,
-                            PercentCurrent = item.percent_current,
-                            PercentSetting = item.percent_setting,
-                            MoneyCurrent = item.money_current,
-                            MoneyCurrentString = item.money_current.NumberToString(),
-                            MoneySetting = item.money_setting,
-                            MoneySettingString = item.money_setting.NumberToString()
+                            PercentCurrent = _percentCur,
+                            PercentSetting = _percentSet,
+                            MoneyCurrent = _moneyCur,
+                            MoneyCurrentString = _moneyCur.NumberToString(),
+                            MoneySetting = _moneySet,
+                            MoneySettingString = _moneySet.NumberToString(),
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -189,6 +201,76 @@ namespace TDH.Areas.Administrator.Services
         }
 
         /// <summary>
+        /// Check income, payment history by month, and category id and by type (payment or income)
+        /// Parameter1: by month
+        /// Parameter2: by acount id
+        /// Parameter3: by type (income or payment)
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public Dictionary<string, object> GetHistory(CustomDataTableRequestHelper request, Guid userID)
+        {
+            Dictionary<string, object> _return = new Dictionary<string, object>();
+            try
+            {
+                //Declare response data to json object
+                DataTableResponse<MoneyCategoryHistoryModel> _itemResponse = new DataTableResponse<MoneyCategoryHistoryModel>();
+                //List of data
+                List<MoneyCategoryHistoryModel> _list = new List<MoneyCategoryHistoryModel>();
+                using (var context = new chacd26d_trandinhhungEntities())
+                {
+                    var _lData = (from m in context.V_CATEGORY_HISTORY
+                                  where request.Parameter2 == (request.Parameter2.Length == 0 ? request.Parameter2 : m.category_id.ToString()) //By account id
+                                  orderby m.date descending
+                                  select new
+                                  {
+                                      m.title,
+                                      m.date,
+                                      m.money,
+                                      m.type
+                                  }).ToList();
+                    if (request.Parameter1.Length > 0) //by month
+                    {
+                        _lData = _lData.Where(m => m.date.Value.DateToString("yyyyMM") == request.Parameter1).ToList();
+                    }
+                    _itemResponse.draw = request.draw;
+                    _itemResponse.recordsTotal = _lData.Count;
+                    //Search
+                    if (request.search != null && !string.IsNullOrWhiteSpace(request.search.Value))
+                    {
+                        string searchValue = request.search.Value.ToLower();
+                        _lData = _lData.Where(m => m.title.ToLower().Contains(searchValue)).ToList();
+                    }
+                    //Add to list
+                    foreach (var item in _lData)
+                    {
+                        _list.Add(new MoneyCategoryHistoryModel()
+                        {
+                            Title = item.title,
+                            Date = item.date.Value,
+                            DateString = item.date.Value.DateToString(),
+                            MoneyString = item.money.NumberToString(),
+                            Type = item.type
+                        });
+                    }
+                    _itemResponse.recordsFiltered = _list.Count;
+                    _itemResponse.data = _list.Skip(request.start).Take(request.length).ToList();
+                    _return.Add(DatatableCommonSetting.Response.DATA, _itemResponse);
+                }
+                _return.Add(DatatableCommonSetting.Response.STATUS, ResponseStatusCodeHelper.OK);
+            }
+            catch (Exception ex)
+            {
+                Notifier.Notification(userID, Resources.Message.Error, Notifier.TYPE.Error);
+                TDH.Services.Log.WriteLog(FILE_NAME, "GetHistory", userID, ex);
+                throw new ApplicationException();
+            }
+
+            return _return;
+        }
+
+        /// <summary>
         /// Get item
         /// </summary>
         /// <param name="model"></param>
@@ -205,7 +287,9 @@ namespace TDH.Areas.Administrator.Services
                         throw new FieldAccessException();
                     }
                     var _gr = context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
-                    return new MoneyCategoryModel()
+                    var _lSetting = context.MN_CATEGORY_SETTING.Where(m => m.category_id == model.ID && m.year_month.ToString().Contains(DateTime.Now.Year.ToString())).OrderByDescending(m => m.year_month);
+                    //
+                    MoneyCategoryModel _return = new MoneyCategoryModel()
                     {
                         ID = _md.id,
                         Name = _md.name,
@@ -219,6 +303,22 @@ namespace TDH.Areas.Administrator.Services
                         Ordering = _md.ordering,
                         Publish = _md.publish
                     };
+                    //
+                    foreach (var item in _lSetting)
+                    {
+                        _return.Setting.Add(new MoneyCategorySettingModel()
+                        {
+                            Month = item.year_month % 100,
+                            Year = item.year_month / 100,
+                            PercentSetting = item.percent_setting,
+                            PercentCurrent = item.percent_current,
+                            MoneySetting = item.money_setting,
+                            MoneyCurrent = item.money_current,
+                            YearMonthString = item.year_month.ToString()
+                        });
+                    }
+                    //
+                    return _return;
                 }
             }
             catch (Exception ex)
@@ -423,11 +523,13 @@ namespace TDH.Areas.Administrator.Services
                     var _payment = context.MN_PAYMENT.FirstOrDefault(m => m.category_id == model.ID && !m.deleted);
                     if (_payment != null)
                     {
+                        Notifier.Notification(model.CreateBy, Resources.Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
                     var _income = context.MN_INCOME.FirstOrDefault(m => m.category_id == model.ID && !m.deleted);
                     if (_income != null)
                     {
+                        Notifier.Notification(model.CreateBy, Resources.Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
                 }

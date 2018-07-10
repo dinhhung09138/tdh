@@ -1015,6 +1015,74 @@ namespace TDH.Areas.Administrator.Controllers
         }
 
         [HttpGet]
+        public ActionResult CategoryHistory(string id, string name, string yearMonth)
+        {
+            try
+            {
+                ViewBag.cateID = id;
+                ViewBag.name = name;
+                ViewBag.yearMonth = DateTime.Now.ToString("yyyyMM");
+                ViewBag.yearMonthValue = DateTime.Now.ToString("yyyy/MM");
+                ViewBag.listAccount = "1"; //Back  to list account
+                if (yearMonth != "")
+                {
+                    ViewBag.yearMonth = yearMonth;
+                    ViewBag.yearMonthValue = yearMonth.Insert(4, "/");
+                    ViewBag.listAccount = "0";//Back to edit account
+                }
+                //
+                return PartialView();
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "CategoryHistory", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public JsonResult CategoryHistory(CustomDataTableRequestHelper requestData)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                if (requestData.Parameter1 == null)
+                {
+                    requestData.Parameter1 = "";
+                }
+                if (requestData.Parameter2 == null)
+                {
+                    requestData.Parameter2 = "";
+                }
+
+                #endregion
+
+                //Call to service
+                Dictionary<string, object> _return = _service.GetHistory(requestData, UserID);
+                //
+                if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
+                {
+                    DataTableResponse<MoneyCategoryHistoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<MoneyCategoryHistoryModel>;
+                    return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
+                }
+                //
+                return this.Json(new DataTableResponse<MoneyCategoryHistoryModel>(), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "CategoryHistory", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpGet]
         public ActionResult CreateCategory()
         {
             try
@@ -1230,6 +1298,7 @@ namespace TDH.Areas.Administrator.Controllers
             ViewBag.incomeCategory = _categoryServices.GetAll(UserID, true);
             ViewBag.paymentCategory = _categoryServices.GetAll(UserID, false);
             ViewBag.account = _accountServices.GetAll(UserID);
+            ViewBag.accountHasMoney = _accountServices.GetAllWithFullMoney(UserID);
 
             #endregion
             //

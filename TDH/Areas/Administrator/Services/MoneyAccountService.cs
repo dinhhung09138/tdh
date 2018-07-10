@@ -78,10 +78,12 @@ namespace TDH.Areas.Administrator.Services
                             ID = item.id,
                             Name = item.name,
                             AccountTypeName = item.type_name,
-                            Input = _input,
-                            InputString = _input.NumberToString(),
-                            Output = _out,
-                            OutputString = _out.NumberToString()
+                            MonthInput = _input,
+                            MonthInputString = _input.NumberToString(),
+                            MonthOutput = _out,
+                            MonthOutputString = _out.NumberToString(),
+                            MonthTotalString = (_input - _out).NumberToString(),
+                            TotalString = (item.input - item.output).NumberToString()
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -156,6 +158,41 @@ namespace TDH.Areas.Administrator.Services
         }
 
         /// <summary>
+        /// Get all item without deleted
+        /// </summary>
+        /// <returns></returns>
+        public List<MoneyAccountModel> GetAllWithFullMoney(Guid userID)
+        {
+            try
+            {
+                List<MoneyAccountModel> _return = new List<MoneyAccountModel>();
+                using (var context = new chacd26d_trandinhhungEntities())
+                {
+                    var _list = (from m in context.MN_ACCOUNT
+                                 join n in context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
+                                 where !m.deleted && !n.deleted && n.publish && (m.input - m.output) > 0
+                                 orderby m.name descending
+                                 select new
+                                 {
+                                     m.id,
+                                     m.name
+                                 }).ToList();
+                    foreach (var item in _list)
+                    {
+                        _return.Add(new MoneyAccountModel() { ID = item.id, Name = item.name });
+                    }
+                }
+                return _return;
+            }
+            catch (Exception ex)
+            {
+                Notifier.Notification(userID, Resources.Message.Error, Notifier.TYPE.Error);
+                TDH.Services.Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
+                throw new ApplicationException();
+            }
+        }
+
+        /// <summary>
         /// Get item
         /// </summary>
         /// <param name="model"></param>
@@ -180,10 +217,11 @@ namespace TDH.Areas.Administrator.Services
                         Name = _md.name,
                         AccountTypeID = _md.account_type_id,
                         AccountTypeName = _type.name,
-                        Start = _md.start,
-                        End = _md.input - _md.output,
-                        Input = _md.input,
-                        Output = _md.output
+                        Total = _md.input - _md.output
+                        //Start = _md.start,
+                        //End = _md.input - _md.output,
+                        //Input = _md.input,
+                        //Output = _md.output
                     };
                     foreach (var item in _lSetting)
                     {

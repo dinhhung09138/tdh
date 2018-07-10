@@ -2,27 +2,30 @@
 <link href="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
 <link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
-<input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
-<input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
+<input type="hidden" id="id" value="@ViewBag.cateID" />
 <div id="toolbarSearch" class="row">
     <div class="col-md-6">
-        @Html.DropDownList("groupSelect", new SelectList(ViewBag.group, "ID", "Name"), "Tất cả", new { @class = "form-control form-control-sm" })
+        <input type="hidden" id="monthSelectValue" value="@ViewBag.yearMonth" />
+        <input type="text" id="monthSelect" class="form-control form-control-sm" value="@ViewBag.yearMonthValue" readonly />
     </div>
     <div class="col-md-6">
-        <input type="hidden" id="monthSelectValue" value="@DateTime.Now.ToString("yyyyMM")" />
-        <input type="text" id="monthSelect" class="form-control form-control-sm" value="@DateTime.Now.ToString("yyyy/MM")" readonly />
     </div>
 </div>
-
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Danh mục thu chi</h3>
+        <h3 class="card-title">Lịch sử giao dịch: @ViewBag.name</h3>
         <div class="card-tools pull-right">
             @{
-                if (ViewBag.Add == true)
+                if (ViewBag.listAccount == "1")
                 {
-                    <a title="Thêm mới" class="btn btn-box-tool pg_ld" data-title="Thêm danh mục thu chi" data-url="/administrator/admmoney/createcategory">
-                        <i class="fa fa-plus"></i>
+                    <a href="javascript:;" title="Quay lại" class="btn btn-box-tool pg_ld" data-widget="collapse" data-url="/administrator/admmoney/category" data-title="Danh mục thu chi">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
+                }
+                else
+                {
+                    <a href="javascript:;" title="Quay lại" class="btn btn-box-tool pg_ld" data-widget="collapse" data-url="/administrator/admmoney/editcategory/@ViewBag.cateID" data-title="Cập nhật danh mục thu chi">
+                        <i class="fa fa-long-arrow-left"></i>
                     </a>
                 }
             }
@@ -33,23 +36,19 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Loại</th>
-                    <th>Tên</th>
-                    <th>Ghi chú</th>
-                    <th>%</th>
+                    <th></th>
+                    <th>Ngày</th>
                     <th>Số tiền</th>
-                    <th>#</th>
+                    <th>Nội dung chi/thu</th>
                 </tr>
             </thead>
         </table>
     </div>
 </div>
-@Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
 <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
 <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
 <script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
 <script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script src="~/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
-<script src="/Areas/Administrator/Content/Custom/admmoney.category.js"></script>
-
+<script src="/Areas/Administrator/Content/Custom/admmoney.category.history.js"></script>

@@ -11,7 +11,13 @@ namespace TDH.Areas.Administrator.Models
         /// Format yyyyMM
         /// </summary>
         [Required(ErrorMessage = "Nội dung không được rỗng")]
-        public float YearMonth { get; set; }
+        public decimal YearMonth { get; set; }
+
+        public string YearMonthString { get; set; }
+
+        public decimal Month { get; set; }
+
+        public decimal Year { get; set; }
 
         [Required(ErrorMessage = "Nội dung không được rỗng")]
         public Guid CategoryID { get; set; }
@@ -22,9 +28,9 @@ namespace TDH.Areas.Administrator.Models
 
         public short PercentCurrent { get; set; } = 0;
 
-        public short MoneySetting { get; set; } = 0;
+        public decimal MoneySetting { get; set; } = 0;
 
-        public short MoneyCurrent { get; set; } = 0;
+        public decimal MoneyCurrent { get; set; } = 0;
 
     }
 }

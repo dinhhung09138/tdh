@@ -355,6 +355,7 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "savegroupsettinginfo":
                                     return "money_group";
                                 case "category":
+                                case "categoryhistory":
                                 case "createcategory":
                                 case "editcategory":
                                 case "publishcategory":
@@ -564,6 +565,7 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "group":
                                 case "getgroupsettinginfo":
                                 case "category":
+                                case "categoryhistory":
                                 case "flowhistory":
                                     return Services.RoleService.actionType.View;
                                 case "createaccounttype":

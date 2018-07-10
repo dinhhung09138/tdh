@@ -292,11 +292,8 @@ namespace TDH.Areas.Administrator.Services
                 List<MoneyGroupSettingModel> _return = new List<MoneyGroupSettingModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
-                    var _count = context.MN_GROUP_SETTING.Count(m => !m.deleted && m.year_month == yearMonth);
-                    if(_count == 0)
-                    {
-                        Save(yearMonth, userID);
-                    }
+                    Save(yearMonth, userID);
+                    //
                     var _list = (from m in context.MN_GROUP_SETTING
                                  join n in context.MN_GROUP on m.group_id equals n.id
                                  where !m.deleted && m.year_month == yearMonth && !n.deleted && n.is_input
@@ -460,6 +457,11 @@ namespace TDH.Areas.Administrator.Services
                             var _list = context.MN_GROUP.Where(m => !m.deleted);
                             foreach (var item in _list)
                             {
+                                //Check if exists
+                                if(context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == item.id && m.year_month == yearMonth) != null)
+                                {
+                                    continue;
+                                }
                                 MN_GROUP_SETTING _st = new MN_GROUP_SETTING()
                                 {
                                     id = Guid.NewGuid(),

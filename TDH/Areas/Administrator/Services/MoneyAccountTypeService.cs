@@ -367,6 +367,7 @@ namespace TDH.Areas.Administrator.Services
                     var _account = context.MN_ACCOUNT.FirstOrDefault(m => m.account_type_id == model.ID && !m.deleted);
                     if (_account != null)
                     {
+                        Notifier.Notification(model.CreateBy, Resources.Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
                 }

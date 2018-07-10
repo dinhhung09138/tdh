@@ -427,6 +427,7 @@ namespace TDH.Areas.Administrator.Services
                     var _group = context.MN_CATEGORY.FirstOrDefault(m => m.group_id == model.ID && !m.deleted);
                     if (_group != null)
                     {
+                        Notifier.Notification(model.CreateBy, Resources.Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
                 }

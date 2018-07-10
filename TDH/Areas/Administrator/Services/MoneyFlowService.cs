@@ -107,6 +107,7 @@ namespace TDH.Areas.Administrator.Services
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper SaveIncome(MoneyIncomeModel model)
         {
+            decimal _currentYearMonth = decimal.Parse(DateTime.Now.DateToString("yyyyMM"));
             try
             {
                 using (var context = new chacd26d_trandinhhungEntities())
@@ -129,6 +130,136 @@ namespace TDH.Areas.Administrator.Services
                             context.MN_INCOME.Add(_md);
                             context.Entry(_md).State = System.Data.Entity.EntityState.Added;
                             context.SaveChanges();
+                            //
+                            decimal _yearMonth = decimal.Parse(model.Date.DateToString("yyyyMM"));
+
+                            #region " [ Category ] "
+
+                            MN_CATEGORY _cateMd = context.MN_CATEGORY.FirstOrDefault(m => m.id == model.CategoryID);
+                            MN_CATEGORY_SETTING _cateSettingMd = context.MN_CATEGORY_SETTING.FirstOrDefault(m => m.category_id == model.CategoryID && m.year_month == _yearMonth);
+                            //Category
+                            if(_yearMonth == _currentYearMonth)
+                            {
+                                _cateMd.money_current += model.Money;
+                                _cateMd.update_by = model.UpdateBy;
+                                _cateMd.update_date = DateTime.Now;
+                                context.MN_CATEGORY.Attach(_cateMd);
+                                context.Entry(_cateMd).State = System.Data.Entity.EntityState.Modified;
+                            }
+                            //Category setting
+                            if(_cateSettingMd == null)
+                            {
+                                _cateSettingMd = new MN_CATEGORY_SETTING()
+                                {
+                                    id = Guid.NewGuid(),
+                                    category_id = model.CategoryID,
+                                    percent_setting = 0,
+                                    percent_current = 0,
+                                    money_setting = 0,
+                                    money_current = model.Money,
+                                    year_month = _yearMonth,
+                                    create_by = model.CreateBy,
+                                    create_date = DateTime.Now
+                                };
+                                context.MN_CATEGORY_SETTING.Add(_cateSettingMd);
+                                context.Entry(_cateSettingMd).State = System.Data.Entity.EntityState.Added;
+                            }
+                            else
+                            {
+                                _cateSettingMd.money_current += model.Money;
+                                _cateSettingMd.update_by = model.UpdateBy;
+                                _cateSettingMd.update_date = DateTime.Now;
+                                context.MN_CATEGORY_SETTING.Attach(_cateSettingMd);
+                                context.Entry(_cateSettingMd).State = System.Data.Entity.EntityState.Modified;
+                            }
+                            context.SaveChanges();
+
+                            #endregion
+
+                            #region " [ Group ] "
+
+                            MN_GROUP _groupMd = context.MN_GROUP.FirstOrDefault(m => m.id == _cateMd.group_id);
+                            MN_GROUP_SETTING _groupSettingMd = context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == _groupMd.id && m.year_month == _yearMonth);
+                            //Group
+                            if (_yearMonth == _currentYearMonth)
+                            {
+                                _groupMd.money_current += model.Money;
+                                _groupMd.update_by = model.UpdateBy;
+                                _groupMd.update_date = DateTime.Now;
+                                context.MN_GROUP.Attach(_groupMd);
+                                context.Entry(_groupMd).State = System.Data.Entity.EntityState.Modified;
+                            }
+                            //Group setting
+                            if (_groupSettingMd == null)
+                            {
+                                _groupSettingMd = new MN_GROUP_SETTING()
+                                {
+                                    id = Guid.NewGuid(),
+                                    group_id = _groupMd.id,
+                                    percent_setting = 0,
+                                    percent_current = 0,
+                                    money_setting = 0,
+                                    money_current = model.Money,
+                                    year_month = _yearMonth,
+                                    create_by = model.CreateBy,
+                                    create_date = DateTime.Now
+                                };
+                                context.MN_GROUP_SETTING.Add(_groupSettingMd);
+                                context.Entry(_groupSettingMd).State = System.Data.Entity.EntityState.Added;
+                            }
+                            else
+                            {
+                                _groupSettingMd.money_current += model.Money;
+                                _groupSettingMd.update_by = model.UpdateBy;
+                                _groupSettingMd.update_date = DateTime.Now;
+                                context.MN_GROUP_SETTING.Attach(_groupSettingMd);
+                                context.Entry(_groupSettingMd).State = System.Data.Entity.EntityState.Modified;
+                            }
+                            context.SaveChanges();
+
+                            #endregion
+
+                            #region " [ Account ] "
+
+                            MN_ACCOUNT _accMd = context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.AccountID);
+                            MN_ACCOUNT_SETTING _accSettingMd = context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == model.AccountID && m.yearmonth == _yearMonth);
+                            //
+                            _accMd.input += model.Money;
+                            _accMd.update_by = model.UpdateBy;
+                            _accMd.update_date = DateTime.Now;
+                            context.MN_ACCOUNT.Attach(_accMd);
+                            context.Entry(_accMd).State = System.Data.Entity.EntityState.Modified;
+                            //
+                            if(_accSettingMd == null)
+                            {
+                                _accSettingMd = new MN_ACCOUNT_SETTING()
+                                {
+                                    id = Guid.NewGuid(),
+                                    account_id  = model.AccountID,
+                                    yearmonth = _yearMonth,
+                                    input = model.Money,
+                                    output = 0,
+                                    start = 0,
+                                    end = 0,
+                                    create_by = model.CreateBy,
+                                    create_date = DateTime.Now
+                                };
+                                context.MN_ACCOUNT_SETTING.Add(_accSettingMd);
+                                context.Entry(_accSettingMd).State = System.Data.Entity.EntityState.Added;
+                            }
+                            else
+                            {
+                                _accSettingMd.input += model.Money;
+                                _accSettingMd.update_by = model.UpdateBy;
+                                _accSettingMd.update_date = DateTime.Now;
+                                context.MN_ACCOUNT_SETTING.Attach(_accSettingMd);
+                                context.Entry(_accSettingMd).State = System.Data.Entity.EntityState.Modified;
+                            }
+                            //
+                            context.SaveChanges();
+
+                            #endregion
+
                             trans.Commit();
                         }
                         catch (Exception ex)

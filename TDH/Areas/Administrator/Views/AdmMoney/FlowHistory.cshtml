@@ -192,7 +192,7 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-12">
-                                    @Html.DropDownList("cbPaymentAccount", new SelectList(ViewBag.account, "ID", "Name"), "Chọn tài khoản chi", new { @class = "form-control", @tabindex = "5" })
+                                    @Html.DropDownList("cbPaymentAccount", new SelectList(ViewBag.accountHasMoney, "ID", "Name"), "Chọn tài khoản chi", new { @class = "form-control", @tabindex = "5" })
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -276,7 +276,7 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-12">
-                                    @Html.DropDownList("cbTransferAccountFrom", new SelectList(ViewBag.account, "ID", "Name"), "Chọn tài khoản chuyển tiền", new { @class = "form-control", @tabindex = "5" })
+                                    @Html.DropDownList("cbTransferAccountFrom", new SelectList(ViewBag.accountHasMoney, "ID", "Name"), "Chọn tài khoản chuyển tiền", new { @class = "form-control", @tabindex = "5" })
                                 </div>
                             </div>
                             <div class="row form-group">

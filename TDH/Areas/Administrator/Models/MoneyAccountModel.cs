@@ -20,30 +20,44 @@ namespace TDH.Areas.Administrator.Models
         /// <summary>
         /// Money left in last month
         /// </summary>
-        public decimal Start { get; set; } = 0;
+        public decimal MonthStart { get; set; } = 0;
 
-        public string StartString { get; set; } = "";
+        public string MonthStartString { get; set; } = "";
 
         /// <summary>
         /// Money receive in month
         /// </summary>
-        public decimal Input { get; set; } = 0;
+        public decimal MonthInput { get; set; } = 0;
 
-        public string InputString { get; set; } = "";
+        public string MonthInputString { get; set; } = "";
 
         /// <summary>
         /// Money spend in month
         /// </summary>
-        public decimal Output { get; set; } = 0;
+        public decimal MonthOutput { get; set; } = 0;
 
-        public string OutputString { get; set; } = "";
+        public string MonthOutputString { get; set; } = "";
 
         /// <summary>
         /// Money end of month
         /// </summary>
-        public decimal End { get; set; } = 0;
+        public decimal MonthEnd { get; set; } = 0;
 
-        public string EndString { get; set; } = "";
+        public string MonthEndString { get; set; } = "";
+
+        /// <summary>
+        /// Money spend in month
+        /// </summary>
+        public decimal MonthTotal { get; set; } = 0;
+
+        public string MonthTotalString { get; set; } = "";
+        
+        /// <summary>
+        /// Money spend in month
+        /// </summary>
+        public decimal Total { get; set; } = 0;
+
+        public string TotalString { get; set; } = "";
 
         public List<MoneyAccountSettingModel> Setting { get; set; } = new List<MoneyAccountSettingModel>();
 

@@ -52,23 +52,39 @@ $(document).ready(function () {
                 }
             },
             {
-                data: 'InputString',
                 orderable: false,
                 searchable: false,
                 className: 'text-right',
-                width: '150px',
+                width: '110px',
                 render: function (obj, type, data, meta) {
-                    return data.InputString;
+                    return data.MonthInputString;
                 }
             },
             {
-                data: 'OutputString',
                 orderable: false,
                 searchable: false,
                 className: 'text-right',
-                width: '150px',
+                width: '110px',
                 render: function (obj, type, data, meta) {
-                    return data.OutputString;
+                    return data.MonthOutputString;
+                }
+            },
+            {
+                orderable: false,
+                searchable: false,
+                className: 'text-right',
+                width: '110px',
+                render: function (obj, type, data, meta) {
+                    return data.TotalString;
+                }
+            },
+            {
+                orderable: false,
+                searchable: false,
+                className: 'text-right',
+                width: '110px',
+                render: function (obj, type, data, meta) {
+                    return data.MonthTotalString;
                 }
             },
             {

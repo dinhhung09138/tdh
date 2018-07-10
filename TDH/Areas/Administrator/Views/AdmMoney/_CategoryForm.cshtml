@@ -29,6 +29,52 @@
         @Html.ValidationMessageFor(m => m.Notes)
     </div>
 </div>
+@{
+    if (!Model.Insert)
+    {
+        <div class="row form-group">
+            <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+                Lịch sử giao dịch trong năm
+            </div>
+            <div class="col-md-9 col-sm-8 col-xs-12">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Tháng</th>
+                            <th colspan="2">Tỷ lệ</th>
+                            <th colspan="2">Tổng tiền</th>
+                            <td rowspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th>Thiết lập</th>
+                            <th>Thực tế</th>
+                            <th>Thiết lập</th>
+                            <th>Thực tế</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            string _cls = "";
+                            foreach (var item in Model.Setting)
+                            {
+                                <tr>
+                                    <td class="@_cls">@item.Month</td>
+                                    <td class="text-right">@item.PercentSetting.ToString("#,##0.##")</td>
+                                    <td class="text-right">@item.PercentCurrent.ToString("#,##0.##")</td>
+                                    <td class="text-right">@item.MoneySetting.ToString("#,##0.##")</td>
+                                    <td class="text-right">@item.MoneyCurrent.ToString("#,##0.##")</td>
+                                    <td class="ctn-center">
+                                        <a href="javascript:;" onclick="history('@Model.ID', '@Model.Name', '@item.YearMonthString');" title="Lịch sử giao dịch" class="mg-lr-2"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+                            }
+}
 <div class="row form-group">
     <div class="col-md-3 col-sm-4 col-xs-12">
     </div>

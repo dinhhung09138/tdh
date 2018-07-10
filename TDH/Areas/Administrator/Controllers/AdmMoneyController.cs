@@ -349,7 +349,7 @@ namespace TDH.Areas.Administrator.Controllers
                 if(yearMonth != "")
                 {
                     ViewBag.yearMonth = yearMonth;
-                    ViewBag.yearMonthValue = yearMonth.Insert(5, "/");
+                    ViewBag.yearMonthValue = yearMonth.Insert(4, "/");
                     ViewBag.listAccount = "0";//Back to edit account
                 }
                 //
@@ -983,9 +983,13 @@ namespace TDH.Areas.Administrator.Controllers
 
                 #region " [ Main processing ] "
 
-                if(requestData.Parameter1 == null)
+                if(requestData.Parameter1 == null) // by group
                 {
                     requestData.Parameter1 = "";
+                }
+                if (requestData.Parameter2 == null) // By year month
+                {
+                    requestData.Parameter2 = DateTime.Now.ToString("yyyyMM");
                 }
                 // Process sorting column
                 requestData = requestData.SetOrderingColumnName();

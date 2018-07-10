@@ -3,7 +3,6 @@
 <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
 <link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
 <input type="hidden" id="id" value="@ViewBag.accID" />
-<input type="hidden" id="yearMonth" value="@ViewBag.yearMonth" />
 <div id="toolbarSearch" class="row">
     <div class="col-md-6">
         <select id="ddlSelect" class="form-control form-control-sm">
@@ -13,6 +12,7 @@
         </select>
     </div>
     <div class="col-md-6">
+        <input type="hidden" id="monthSelectValue" value="@ViewBag.yearMonth" />
         <input type="text" id="monthSelect" class="form-control form-control-sm" value="@ViewBag.yearMonthValue" readonly />
     </div>
 </div>

@@ -12,7 +12,7 @@ $(document).ready(function () {
         $('#monthSelect').datepicker('hide');
         var month = $(this).val().substring(5, 8);
         var year = $(this).val().substring(0, 4);
-        $('#yearMonth').val(parseInt(year + month));
+        $('#monthSelectValue').val(parseInt(year + month));
         table.ajax.reload();
     });
 
@@ -37,7 +37,7 @@ $(document).ready(function () {
             url: '/administrator/admmoney/accounthistory',
             type: 'post',
             data: function (d) {
-                d.Parameter1 = $('#yearMonth').val(), //By month
+                d.Parameter1 = $('#monthSelectValue').val(), //By month
                 d.Parameter2 = $('#id').val(), //By account id
                 d.Parameter3 = $('#ddlSelect').val() //by type (income or payment)
             }

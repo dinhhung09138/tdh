@@ -400,6 +400,9 @@
     <Compile Include="Models\USER_ROLE.cs">
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\V_ACCOUNT_HISTORY.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\V_MONEY_FLOW.cs">
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>

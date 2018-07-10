@@ -559,13 +559,26 @@
           <Property Name="role_id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'chacd26d_trandinhhung.chacd26d_Store.V_MONEY_FLOW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_ACCOUNT_HISTORY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_ACCOUNT_HISTORY">
+          <Key>
+            <PropertyRef Name="account_id" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="type" />
+          </Key>
+          <Property Name="account_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="money" Type="numeric" Precision="19" Scale="1" />
+          <Property Name="type" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_MONEY_FLOW">
           <Key>
             <PropertyRef Name="id" />
             <PropertyRef Name="from_id" />
             <PropertyRef Name="from_name" />
-            <PropertyRef Name="to_name" />
             <PropertyRef Name="category_name" />
             <PropertyRef Name="title" />
             <PropertyRef Name="money" />
@@ -576,7 +589,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.chacd26d_Store.V_MONEY_FLOW'
           <Property Name="from_id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="from_name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="to_id" Type="uniqueidentifier" />
-          <Property Name="to_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="to_name" Type="nvarchar" MaxLength="50" />
           <Property Name="category_name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="date" Type="datetime" />
@@ -929,7 +942,16 @@ warning 6002: The table/view 'chacd26d_trandinhhung.chacd26d_Store.V_MONEY_FLOW'
           <EntitySet Name="TARGET_TASK" EntityType="Self.TARGET_TASK" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USER_ROLE" EntityType="Self.USER_ROLE" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="V_MONEY_FLOW" EntityType="Self.V_MONEY_FLOW" store:Type="Views" store:Schema="chacd26d_Store">
+          <EntitySet Name="V_ACCOUNT_HISTORY" EntityType="Self.V_ACCOUNT_HISTORY" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_ACCOUNT_HISTORY].[account_id] AS [account_id], 
+    [V_ACCOUNT_HISTORY].[title] AS [title], 
+    [V_ACCOUNT_HISTORY].[date] AS [date], 
+    [V_ACCOUNT_HISTORY].[money] AS [money], 
+    [V_ACCOUNT_HISTORY].[type] AS [type]
+    FROM [dbo].[V_ACCOUNT_HISTORY] AS [V_ACCOUNT_HISTORY]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="V_MONEY_FLOW" EntityType="Self.V_MONEY_FLOW" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [V_MONEY_FLOW].[id] AS [id], 
     [V_MONEY_FLOW].[from_id] AS [from_id], 
@@ -942,7 +964,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.chacd26d_Store.V_MONEY_FLOW'
     [V_MONEY_FLOW].[money] AS [money], 
     [V_MONEY_FLOW].[fee] AS [fee], 
     [V_MONEY_FLOW].[type] AS [type]
-    FROM [chacd26d_Store].[V_MONEY_FLOW] AS [V_MONEY_FLOW]</DefiningQuery>
+    FROM [dbo].[V_MONEY_FLOW] AS [V_MONEY_FLOW]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_CATEGORY_NAVIGATION" Association="Self.FK_CATEGORY_NAVIGATION">
             <End Role="NAVIGATION" EntitySet="NAVIGATION" />
@@ -1500,6 +1522,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.chacd26d_Store.V_MONEY_FLOW'
             <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
             <End Role="MN_PAYMENT" EntitySet="MN_PAYMENT" />
           </AssociationSet>
+          <EntitySet Name="V_ACCOUNT_HISTORY" EntityType="chacd26d_trandinhhungModel.V_ACCOUNT_HISTORY" />
           <EntitySet Name="V_MONEY_FLOW" EntityType="chacd26d_trandinhhungModel.V_MONEY_FLOW" />
           </EntityContainer>
         <EntityType Name="HOME_CATEGORY">
@@ -2089,12 +2112,23 @@ warning 6002: The table/view 'chacd26d_trandinhhung.chacd26d_Store.V_MONEY_FLOW'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="V_ACCOUNT_HISTORY">
+          <Key>
+            <PropertyRef Name="account_id" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="type" />
+          </Key>
+          <Property Name="account_id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="money" Type="Decimal" Precision="19" Scale="1" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+        </EntityType>
         <EntityType Name="V_MONEY_FLOW">
           <Key>
             <PropertyRef Name="id" />
             <PropertyRef Name="from_id" />
             <PropertyRef Name="from_name" />
-            <PropertyRef Name="to_name" />
             <PropertyRef Name="category_name" />
             <PropertyRef Name="title" />
             <PropertyRef Name="money" />
@@ -2105,7 +2139,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.chacd26d_Store.V_MONEY_FLOW'
           <Property Name="from_id" Type="Guid" Nullable="false" />
           <Property Name="from_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="to_id" Type="Guid" />
-          <Property Name="to_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="to_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="category_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="date" Type="DateTime" Precision="3" />
@@ -2699,6 +2733,17 @@ warning 6002: The table/view 'chacd26d_trandinhhung.chacd26d_Store.V_MONEY_FLOW'
                 <ScalarProperty Name="account_to" ColumnName="account_to" />
                 <ScalarProperty Name="account_from" ColumnName="account_from" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_ACCOUNT_HISTORY">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.V_ACCOUNT_HISTORY">
+              <MappingFragment StoreEntitySet="V_ACCOUNT_HISTORY">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

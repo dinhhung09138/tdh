@@ -647,9 +647,13 @@ namespace TDH.Areas.Administrator.Controllers
 
                 #region " [ Main processing ] "
 
-                if(requestData.Parameter1 == null)
+                if(requestData.Parameter1 == null) // By type (income or payment)
                 {
                     requestData.Parameter1 = "";
+                }
+                if (requestData.Parameter2 == null) // By year month
+                {
+                    requestData.Parameter2 = DateTime.Now.ToString("yyyyMM");
                 }
                 // Process sorting column
                 requestData = requestData.SetOrderingColumnName();
@@ -673,7 +677,7 @@ namespace TDH.Areas.Administrator.Controllers
                 throw new HttpException();
             }
         }
-
+        
         [HttpGet]
         public ActionResult CreateGroup()
         {
@@ -754,6 +758,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Get all group to set in a month
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult GetGroupSettingInfo(decimal year)
         {
@@ -777,6 +786,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// All group to set in a month
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult SaveGroupSettingInfo(List<MoneyGroupSettingModel> model)
         {

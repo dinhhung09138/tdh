@@ -4,11 +4,20 @@
 <link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
-<select id="ddlSelect" class="form-control form-control-sm">
-    <option value="" selected>Tất cả</option>
-    <option value="1">Thu nhập</option>
-    <option value="0">Chi tiêu</option>
-</select>
+<div id="toolbarSearch" class="row">
+    <div class="col-md-6">
+        <select id="ddlSelect" class="form-control form-control-sm">
+            <option value="" selected>Tất cả</option>
+            <option value="1">Thu nhập</option>
+            <option value="0">Chi tiêu</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <input type="hidden" id="monthSelectValue" value="@DateTime.Now.ToString("yyyyMM")" />
+        <input type="text" id="monthSelect" class="form-control form-control-sm" value="@DateTime.Now.ToString("yyyy/MM")" readonly />
+    </div>
+</div>
+
 <div class="card card-success">
     <div class="card-header with-border no-bg">
         <h3 class="card-title">Quy tắc chi tiêu</h3>
@@ -22,7 +31,7 @@
                 }
                 if (ViewBag.Edit == true)
                 {
-                    <a title="Thiết lập" class="btn btn-box-tool pg_ld" onclick="spendSetting()">
+                    <a title="Thiết lập quy tắc chi tiêu" class="btn btn-box-tool pg_ld" onclick="spendSetting()">
                         <i class="fa fa-cogs"></i>
                     </a>
                 }

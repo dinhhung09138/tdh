@@ -296,7 +296,7 @@ namespace TDH.Areas.Administrator.Services
                     //
                     var _list = (from m in context.MN_GROUP_SETTING
                                  join n in context.MN_GROUP on m.group_id equals n.id
-                                 where !m.deleted && m.year_month == yearMonth && !n.deleted && n.is_input
+                                 where !m.deleted && m.year_month == yearMonth && !n.deleted && !n.is_input
                                  orderby m.group_id, m.year_month ascending
                                  select new
                                  {

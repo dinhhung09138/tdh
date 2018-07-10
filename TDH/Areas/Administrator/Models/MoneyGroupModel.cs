@@ -12,6 +12,7 @@ namespace TDH.Areas.Administrator.Models
         [StringLength(50, MinimumLength = 1, ErrorMessage = "Nội dung không quá 50 ký tự")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "Nội dung không được rỗng")]
         [StringLength(255, MinimumLength = 1, ErrorMessage = "Nội dung không quá 255 ký tự")]
         public string Notes { get; set; }
 

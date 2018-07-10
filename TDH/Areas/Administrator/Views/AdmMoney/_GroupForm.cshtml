@@ -16,7 +16,7 @@
         Ghi chú <span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextAreaFor(m => m.Notes, new { @class = "form-control", @rows = 3, @maxlength = 255, @tabindex = "2" })
+        @Html.TextAreaFor(m => m.Notes, new { @class = "form-control", @rows = 3, @maxlength = 255, @required = true, @tabindex = "2" })
         @Html.ValidationMessageFor(m => m.Notes)
     </div>
 </div>
@@ -28,7 +28,7 @@
         @{
             if (Model.Insert)
             {
-                @Html.CheckBoxFor(m => m.IsInput, new { @class = "form-control", @tabindex = "4" }) @Html.Raw("Giá trị chỉ được thiết lập 1 lần khi tạo mới!")
+                @Html.CheckBoxFor(m => m.IsInput, new { @class = "form-control", @tabindex = "3" }) @Html.Raw("Giá trị chỉ được thiết lập 1 lần khi tạo mới!")
             }
             else
             {
@@ -51,7 +51,7 @@
         Hiển thị <span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "3" })
+        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "4" })
     </div>
 </div>
 <div class="row form-group">

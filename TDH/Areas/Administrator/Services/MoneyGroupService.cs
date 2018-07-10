@@ -37,17 +37,14 @@ namespace TDH.Areas.Administrator.Services
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _lData = (from m in context.MN_GROUP
-                                  where !m.deleted && m.is_input == (request.Parameter1 == "" ? m.is_input : request.Parameter1 == "0" ? false : true)
+                                  where !m.deleted && 
+                                        m.is_input == (request.Parameter1 == "" ? m.is_input : request.Parameter1 == "0" ? false : true) //by Type (income of payment)
                                   select new
                                   {
                                       m.id,
                                       m.name,
                                       m.notes,
                                       m.is_input,
-                                      m.percent_current,
-                                      m.percent_setting,
-                                      m.money_current,
-                                      m.money_setting,
                                       m.publish
                                   }).ToList();
 
@@ -62,21 +59,38 @@ namespace TDH.Areas.Administrator.Services
                     }
                     //Add to list
                     int _count = 0;
+                    byte _percentSet = 0;
+                    byte _percentCur = 0;
+                    decimal _moneySet = 0;
+                    decimal _moneyCur = 0;
                     foreach (var item in _lData)
                     {
                         _count = context.MN_CATEGORY.Count(m => m.group_id == item.id && !m.deleted);
+                        _percentSet = 0;
+                        _percentCur = 0;
+                        _moneySet = 0;
+                        _moneyCur = 0;
+                        var _grSetting = context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == item.id && m.year_month.ToString() == request.Parameter2); //By month year
+                        if(_grSetting != null)
+                        {
+                            _percentSet = _grSetting.percent_setting;
+                            _percentCur = _grSetting.percent_current;
+                            _moneySet = _grSetting.money_setting;
+                            _moneyCur = _grSetting.money_current;
+                        }
+                        //
                         _list.Add(new MoneyGroupModel()
                         {
                             ID = item.id,
                             Name = item.name,
                             Notes = item.notes,
                             IsInput = item.is_input,
-                            PercentCurrent = item.percent_current,
-                            PercentSetting = item.percent_setting,
-                            MoneyCurrent = item.money_current,
-                            MoneyCurrentString = item.money_current.NumberToString(),
-                            MoneySetting = item.money_setting,
-                            MoneySettingString = item.money_setting.NumberToString(),
+                            PercentCurrent = _percentCur,
+                            PercentSetting = _percentSet,
+                            MoneyCurrent = _moneyCur,
+                            MoneyCurrentString = _moneyCur.NumberToString(),
+                            MoneySetting = _moneySet,
+                            MoneySettingString = _moneySet.NumberToString(),
                             Publish = item.publish,
                             Count = _count,
                             CountString = _count.NumberToString()
@@ -135,12 +149,11 @@ namespace TDH.Areas.Administrator.Services
                                  select new
                                  {
                                      m.id,
-                                      m.name,
-                                     m.percent_setting
+                                      m.name
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyGroupModel() { ID = item.id, Name = string.Format("{0} - {1}%", item.name, item.percent_setting) });
+                        _return.Add(new MoneyGroupModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -172,12 +185,11 @@ namespace TDH.Areas.Administrator.Services
                                  select new
                                  {
                                      m.id,
-                                     m.percent_setting,
                                      m.name
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyGroupModel() { ID = item.id, Name = string.Format("{0} - {1}%",item.name, item.percent_setting) });
+                        _return.Add(new MoneyGroupModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;

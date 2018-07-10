@@ -14,7 +14,7 @@ $(document).ready(function () {
         responsive: true,
         pageLength: 10,
         pagingType: 'full_numbers',
-        dom: '<"top"<"row"<"col-sm-4"l><"col-sm-4"<"toolbar">><"col-sm-4 text-right"f>>>rt<"bottom"ip><"clear">',
+        dom: '<"top"<"row"<"col-md-3 col-sm-4 col-xs-12"l><"col-md-6 col-sm-4 col-xs-12"<"toolbar">><"col-md-3 col-sm-4 col-xs-12 text-right"f>>>rt<"bottom"ip><"clear">',
         info: true,
         autoWidth: false,
         initComplete: function (settings, json) {
@@ -38,7 +38,8 @@ $(document).ready(function () {
             url: '/administrator/admmoney/group',
             type: 'post',
             data: function (d) {
-                d.Parameter1 = $('#ddlSelect').val()
+                d.Parameter1 = $('#ddlSelect').val(),
+                d.Parameter2 = $('#monthSelectValue').val()
             }
         },
         columns: [
@@ -53,7 +54,7 @@ $(document).ready(function () {
             {
                 orderable: false,
                 searchable: false,
-                width: '100px',
+                width: '80px',
                 render: function (obj, type, data, meta) {
                     if (data.IsInput === true) {
                         return 'Thu nhập';
@@ -165,7 +166,6 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" onclick="groupSetting(\'' + data.ID + '\')" title="Thiết lập" class="mg-lr-2"><i class="fa fa-cogs" aria-hidden="true"></i></a>';
                         str = str + '<a href="javascript:;" data-url="/administrator/admmoney/editgroup/' + data.ID + '\" data-title="Cập nhật quy tắc chi tiêu" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
@@ -177,7 +177,7 @@ $(document).ready(function () {
         ]
     });
 
-    $(".dataTables_wrapper .toolbar").append(ddlSelect);
+    $(".dataTables_wrapper .toolbar").append(toolbarSearch);
 
     table.on('draw', function () {
         if ($('#tbList input[name="publish"]')[0]) {
@@ -199,16 +199,29 @@ $(document).ready(function () {
     });
     
     $("#monthSelect").datepicker({
-        format: "mm/yyyy",
+        language: 'vi',
+        format: "yyyy/mm",
         viewMode: "months",
         minViewMode: "months"
-    })
-        .on('changeDate', function (ev) {
-            $('#monthSelect').datepicker('hide');
-            var month = $(this).val().substring(0, 2);
-            var year = $(this).val().substring(3, 8);
-            getSpendSetting(parseInt(year + month));
-        });
+    }).on('changeDate', function (ev) {
+        $('#monthSelect').datepicker('hide');
+        var month = $(this).val().substring(5, 8);
+        var year = $(this).val().substring(0, 4);
+        $('#monthSelectValue').val(parseInt(year + month));
+        table.ajax.reload();
+    });
+
+    $("#monthSettingSelect").datepicker({
+        language: 'vi',
+        format: "yyyy/mm",
+        viewMode: "months",
+        minViewMode: "months"
+    }).on('changeDate', function (ev) {
+        $('#monthSettingSelect').datepicker('hide');
+        var month = $(this).val().substring(5, 8);
+        var year = $(this).val().substring(0, 4);
+        getSpendSetting(parseInt(year + month));
+    });
 });
 
 $(document).on('change', '#ddlSelect', function (e) {
@@ -286,7 +299,7 @@ function spendSetting() {
     var day = currentTime.getDate();
     // returns the year (four digits)
     var year = currentTime.getFullYear();
-    $('#monthSelect').val((month < 10 ? '0' + month : month) + '/' + year);
+    $('#monthSettingSelect').val(year + '/' + (month < 10 ? '0' + month : month));
     getSpendSetting(parseInt(year + (month < 10 ? '0' + month : month)));
 }
 

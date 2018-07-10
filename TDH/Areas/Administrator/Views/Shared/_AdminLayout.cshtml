@@ -147,6 +147,27 @@
             color: red;
             list-style: none;
         }
+        .disabledAnchor {
+            pointer-events: none !important;
+            cursor: default;
+            color: white;
+            opacity: .5;
+        }
+        .datepicker table tr td span.active:hover, .datepicker table tr td span.active:hover:hover, .datepicker table tr td span.active.disabled:hover,
+        .datepicker table tr td span.active.disabled:hover:hover, .datepicker table tr td span.active:focus, .datepicker table tr td span.active:hover:focus,
+        .datepicker table tr td span.active.disabled:focus, .datepicker table tr td span.active.disabled:hover:focus, .datepicker table tr td span.active:active,
+        .datepicker table tr td span.active:hover:active, .datepicker table tr td span.active.disabled:active, .datepicker table tr td span.active.disabled:hover:active,
+        .datepicker table tr td span.active.active, .datepicker table tr td span.active:hover.active, .datepicker table tr td span.active.disabled.active, .datepicker table tr td span.active.disabled:hover.active,
+        .open .dropdown-toggle.datepicker table tr td span.active, .open .dropdown-toggle.datepicker table tr td span.active:hover, .open .dropdown-toggle.datepicker table tr td span.active.disabled,
+        .open .dropdown-toggle.datepicker table tr td span.active.disabled:hover {
+            background-color: #359746 !important;
+            border-color: #359746 !important;
+        }
+        .datepicker table tr td span {
+            height: 40px !important;
+            line-height: 40px !important;
+            border-radius: 0px !important;
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini">

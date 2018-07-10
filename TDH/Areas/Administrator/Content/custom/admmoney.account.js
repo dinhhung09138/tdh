@@ -52,16 +52,6 @@ $(document).ready(function () {
                 }
             },
             {
-                data: 'StartString',
-                orderable: false,
-                searchable: false,
-                className: 'text-right',
-                width: '150px',
-                render: function (obj, type, data, meta) {
-                    return data.StartString;
-                }
-            },
-            {
                 data: 'InputString',
                 orderable: false,
                 searchable: false,
@@ -82,21 +72,12 @@ $(document).ready(function () {
                 }
             },
             {
-                data: 'EndString',
                 orderable: false,
-                searchable: false,
-                className: 'text-right',
-                width: '150px',
-                render: function (obj, type, data, meta) {
-                    return data.EndString;
-                }
-            },
-            {
-                orderable: false,
-                width: '40px',
+                width: '70px',
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     var str = '';
+                    str = str + '<a href="javascript:;" onclick="history(\'' + data.ID + '\',\'' + data.Name + '\');" title="Lịch sử giao dịch" class="mg-lr-2"><i class="fa fa-eye" aria-hidden="true"></i></a>';
                     if (allowEdit === "True") {
                         str = str + '<a href="javascript:;" data-url="/administrator/admmoney/editaccount/' + data.ID + '\" data-title="Cập nhật tài khoản" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
@@ -190,4 +171,21 @@ function deleteItem() {
             $('#deleteModal').modal('hide');
         }
     });
+}
+
+function history(id, name) {
+    loading($('.content-wrapper'), 'show');
+    $.ajax({
+        url: '/administrator/admmoney/accounthistory/',
+        type: 'get',
+        async: false,
+        dataType: 'html',
+        data: { id: id, name: name, yearMonth: '' },
+        success: function (response) {
+            document.title = 'Lịch sử giao dịch: ' + name;
+            $('#main_layout').empty();
+            $('#main_layout').append(response);
+            setTimeout(function () { loading($('.content-wrapper'), 'hide') }, 700);      
+        }
+    }); 
 }

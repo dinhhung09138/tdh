@@ -11,7 +11,13 @@ namespace TDH.Areas.Administrator.Models
         /// Format yyyyMM
         /// </summary>
         [Required(ErrorMessage = "Nội dung không được rỗng")]
-        public float YearMonth { get; set; }
+        public decimal YearMonth { get; set; }
+
+        public string YearMonthString { get; set; }
+
+        public decimal Year { get; set; }
+
+        public decimal Month { get; set; }
 
         [Required(ErrorMessage = "Nội dung không được rỗng")]
         public Guid AccountID { get; set; }

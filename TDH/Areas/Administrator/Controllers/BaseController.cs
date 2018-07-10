@@ -338,6 +338,7 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "deleteaccounttype":
                                     return "money_account_type";
                                 case "account":
+                                case "accounthistory":
                                 case "createaccount":
                                 case "editaccount":
                                 case "publishaccount":
@@ -559,6 +560,7 @@ namespace TDH.Areas.Administrator.Controllers
                             {
                                 case "accounttype":
                                 case "account":
+                                case "accounthistory":
                                 case "group":
                                 case "getgroupsettinginfo":
                                 case "category":

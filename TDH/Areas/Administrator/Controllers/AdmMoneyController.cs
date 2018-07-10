@@ -337,6 +337,80 @@ namespace TDH.Areas.Administrator.Controllers
         }
 
         [HttpGet]
+        public ActionResult AccountHistory(string id, string name, string yearMonth)
+        {
+            try
+            {
+                ViewBag.accID = id;
+                ViewBag.name = name;
+                ViewBag.yearMonth = DateTime.Now.ToString("yyyyMM");
+                ViewBag.yearMonthValue = DateTime.Now.ToString("yyyy/MM");
+                ViewBag.listAccount = "1"; //Back  to list account
+                if(yearMonth != "")
+                {
+                    ViewBag.yearMonth = yearMonth;
+                    ViewBag.yearMonthValue = yearMonth.Insert(5, "/");
+                    ViewBag.listAccount = "0";//Back to edit account
+                }
+                //
+                return PartialView();
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "AccountHistory", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AccountHistory(CustomDataTableRequestHelper requestData)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyAccountService _service = new Services.MoneyAccountService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                if(requestData.Parameter1 == null)
+                {
+                    requestData.Parameter1 = "";
+                }
+                if (requestData.Parameter2 == null)
+                {
+                    requestData.Parameter2 = "";
+                }
+                if (requestData.Parameter3 == null)
+                {
+                    requestData.Parameter3 = "";
+                }
+                // Process sorting column
+
+                #endregion
+
+                //Call to service
+                Dictionary<string, object> _return = _service.GetHistory(requestData, UserID);
+                //
+                if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
+                {
+                    DataTableResponse<MoneyAccountHistoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<MoneyAccountHistoryModel>;
+                    return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
+                }
+                //
+                return this.Json(new DataTableResponse<MoneyAccountHistoryModel>(), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "AccountHistory", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+
+        [HttpGet]
         public ActionResult CreateAccount()
         {
             try
@@ -869,7 +943,7 @@ namespace TDH.Areas.Administrator.Controllers
 
                 Services.MoneyGroupService _groupServices = new Services.MoneyGroupService();
                 //
-                ViewBag.group = _groupServices.GetAll(UserID, true);
+                ViewBag.group = _groupServices.GetAll(UserID);
 
                 #endregion
                 //

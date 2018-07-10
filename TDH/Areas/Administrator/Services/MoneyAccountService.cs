@@ -45,8 +45,6 @@ namespace TDH.Areas.Administrator.Services
                                   {
                                       m.id,
                                       m.name,
-                                      m.start,
-                                      m.end,
                                       m.input,
                                       m.output,
                                       type_name = n.name
@@ -62,21 +60,28 @@ namespace TDH.Areas.Administrator.Services
                                                    m.type_name.ToLower().Contains(searchValue)).ToList();
                     }
                     //Add to list
+                    decimal _input = 0;
+                    decimal _out = 0;
+                    decimal _yearMonth = decimal.Parse(DateTime.Now.DateToString("yyyyMM"));
                     foreach (var item in _lData)
                     {
+                        _input = 0;
+                        _out = 0;
+                        var _setting = context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == item.id && m.yearmonth == _yearMonth);
+                        if(_setting != null)
+                        {
+                            _input = _setting.input;
+                            _out = _setting.output;
+                        }
                         _list.Add(new MoneyAccountModel()
                         {
                             ID = item.id,
                             Name = item.name,
                             AccountTypeName = item.type_name,
-                            Start = item.start,
-                            StartString = item.start.NumberToString(),
-                            End = item.end,
-                            EndString = item.end.NumberToString(),
-                            Input = item.input,
-                            InputString = item.input.NumberToString(),
-                            Output = item.output,
-                            OutputString = item.output.NumberToString()
+                            Input = _input,
+                            InputString = _input.NumberToString(),
+                            Output = _out,
+                            OutputString = _out.NumberToString()
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -167,17 +172,30 @@ namespace TDH.Areas.Administrator.Services
                         throw new FieldAccessException();
                     }
                     MN_ACCOUNT_TYPE _type = context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == _md.account_type_id);
-                    return new MoneyAccountModel()
+                    var _lSetting = context.MN_ACCOUNT_SETTING.Where(m => m.account_id == model.ID && m.yearmonth.ToString().Contains(DateTime.Now.Year.ToString())).OrderByDescending(m => m.yearmonth);
+                    //
+                    var _return = new MoneyAccountModel()
                     {
                         ID = _md.id,
                         Name = _md.name,
                         AccountTypeID = _md.account_type_id,
                         AccountTypeName = _type.name,
                         Start = _md.start,
-                        End = _md.end,
+                        End = _md.input - _md.output,
                         Input = _md.input,
                         Output = _md.output
                     };
+                    foreach (var item in _lSetting)
+                    {
+                        _return.Setting.Add(new MoneyAccountSettingModel() {
+                            Month = item.yearmonth % 100,
+                            Year = item.yearmonth / 100,
+                            Input = item.input,
+                            Output = item.output,
+                            YearMonthString = item.yearmonth.ToString()
+                        });
+                    }
+                    return _return;
                 }
             }
             catch (Exception ex)
@@ -186,6 +204,77 @@ namespace TDH.Areas.Administrator.Services
                 TDH.Services.Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
                 throw new ApplicationException();
             }
+        }
+
+        /// <summary>
+        /// Check income, payment history by month, and account id and by type (payment or income)
+        /// Parameter1: by month
+        /// Parameter2: by acount id
+        /// Parameter3: by type (income or payment)
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public Dictionary<string, object> GetHistory(CustomDataTableRequestHelper request, Guid userID)
+        {
+            Dictionary<string, object> _return = new Dictionary<string, object>();
+            try
+            {
+                //Declare response data to json object
+                DataTableResponse<MoneyAccountHistoryModel> _itemResponse = new DataTableResponse<MoneyAccountHistoryModel>();
+                //List of data
+                List<MoneyAccountHistoryModel> _list = new List<MoneyAccountHistoryModel>();
+                using (var context = new chacd26d_trandinhhungEntities())
+                {
+                    var _lData = (from m in context.V_ACCOUNT_HISTORY
+                                  where request.Parameter2 == (request.Parameter2.Length == 0 ? request.Parameter2 : m.account_id.ToString()) && //By account id
+                                        request.Parameter3 == (request.Parameter3.Length == 0 ? request.Parameter3 : m.type.ToString()) //by type (income or payment)
+                                  orderby m.date descending
+                                  select new
+                                  {
+                                      m.title,
+                                      m.date,
+                                      m.money,
+                                      m.type
+                                  }).ToList();
+                    if(request.Parameter1.Length > 0) //by month
+                    {
+                        _lData = _lData.Where(m => m.date.Value.DateToString("yyyyMM") == request.Parameter1).ToList();
+                    }
+                    _itemResponse.draw = request.draw;
+                    _itemResponse.recordsTotal = _lData.Count;
+                    //Search
+                    if (request.search != null && !string.IsNullOrWhiteSpace(request.search.Value))
+                    {
+                        string searchValue = request.search.Value.ToLower();
+                        _lData = _lData.Where(m => m.title.ToLower().Contains(searchValue)).ToList();
+                    }
+                    //Add to list
+                    foreach (var item in _lData)
+                    {
+                        _list.Add(new MoneyAccountHistoryModel()
+                        {
+                            Title = item.title,
+                            Date = item.date.Value,
+                            DateString = item.date.Value.DateToString(),
+                            MoneyString = item.money.Value.NumberToString(),
+                            Type = item.type
+                        });
+                    }
+                    _itemResponse.recordsFiltered = _list.Count;
+                    _itemResponse.data = _list.Skip(request.start).Take(request.length).ToList();
+                    _return.Add(DatatableCommonSetting.Response.DATA, _itemResponse);
+                }
+                _return.Add(DatatableCommonSetting.Response.STATUS, ResponseStatusCodeHelper.OK);
+            }
+            catch (Exception ex)
+            {
+                Notifier.Notification(userID, Resources.Message.Error, Notifier.TYPE.Error);
+                TDH.Services.Log.WriteLog(FILE_NAME, "GetHistory", userID, ex);
+                throw new ApplicationException();
+            }
+
+            return _return;
         }
 
         /// <summary>
@@ -381,26 +470,31 @@ namespace TDH.Areas.Administrator.Services
                     var _accSetting = context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
                     if (_accSetting != null)
                     {
+                        Notifier.Notification(model.CreateBy, Resources.Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
                     var _payment = context.MN_PAYMENT.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
                     if (_payment != null)
                     {
+                        Notifier.Notification(model.CreateBy, Resources.Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
                     var _income = context.MN_INCOME.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
                     if (_income != null)
                     {
+                        Notifier.Notification(model.CreateBy, Resources.Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
                     var _transFrom = context.MN_TRANSFER.FirstOrDefault(m => m.account_from == model.ID && !m.deleted);
                     if (_transFrom != null)
                     {
+                        Notifier.Notification(model.CreateBy, Resources.Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
                     var _transTo = context.MN_TRANSFER.FirstOrDefault(m => m.account_to == model.ID && !m.deleted);
                     if (_transTo != null)
                     {
+                        Notifier.Notification(model.CreateBy, Resources.Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
                 }

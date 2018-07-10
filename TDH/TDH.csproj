@@ -240,6 +240,7 @@
     <Compile Include="Areas\Administrator\Models\IdeaDetailModel.cs" />
     <Compile Include="Areas\Administrator\Models\IdeaModel.cs" />
     <Compile Include="Areas\Administrator\Models\LoginModel.cs" />
+    <Compile Include="Areas\Administrator\Models\MoneyAccountHistoryModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyAccountModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyAccountSettingModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyAccountTypeModel.cs" />
@@ -5140,6 +5141,7 @@
     <Content Include="Areas\Administrator\Content\ckfinder\skins\v1\skin.js" />
     <Content Include="Areas\Administrator\Content\ckfinder\skins\v1\uipanel.css" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.account.action.js" />
+    <Content Include="Areas\Administrator\Content\custom\admmoney.account.history.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.account.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.accounttype.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.accounttype.js" />
@@ -10207,6 +10209,7 @@
     <Content Include="Areas\Administrator\Views\AdmMoney\EditCategory.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmMoney\_CategoryForm.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmMoney\FlowHistory.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmMoney\AccountHistory.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

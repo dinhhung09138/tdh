@@ -1,0 +1,59 @@
+﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+<link href="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+<link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+<input type="hidden" id="id" value="@ViewBag.accID" />
+<input type="hidden" id="yearMonth" value="@ViewBag.yearMonth" />
+<div id="toolbarSearch" class="row">
+    <div class="col-md-6">
+        <select id="ddlSelect" class="form-control form-control-sm">
+            <option value="" selected>Tất cả</option>
+            <option value="1">Thu nhập</option>
+            <option value="-1">Chi tiêu</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <input type="text" id="monthSelect" class="form-control form-control-sm" value="@ViewBag.yearMonthValue" readonly />
+    </div>
+</div>
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Lịch sử giao dịch: @ViewBag.name</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.listAccount == "1")
+                {
+                    <a href="javascript:;" title="Quay lại" class="btn btn-box-tool pg_ld" data-widget="collapse" data-url="/administrator/admmoney/account" data-title="Tài khoản">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
+                }
+                else
+                {
+                    <a href="javascript:;" title="Quay lại" class="btn btn-box-tool pg_ld" data-widget="collapse" data-url="/administrator/admmoney/editaccount/@ViewBag.accID" data-title="Cập nhật tài khoản">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="tbList" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th></th>
+                    <th>Ngày</th>
+                    <th>Số tiền</th>
+                    <th>Nội dung chi</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="~/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
+<script src="/Areas/Administrator/Content/Custom/admmoney.account.history.js"></script>

@@ -21,6 +21,66 @@
     </div>
 </div>
 <div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Số tiền còn lại
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (Model.End >= 0)
+            {
+                <span class="label label-success pd-5">@Model.End.ToString("#,##0.##")</span>
+            }
+            else
+            {
+                <span class="label label-danger pd-5">-@Model.End.ToString("#,##0.##")</span>
+            }
+        }
+    </div>
+</div>
+@{
+    if (!Model.Insert)
+    {
+        <div class="row form-group">
+            <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+                Lịch sử tài khoản trong năm
+            </div>
+            <div class="col-md-9 col-sm-8 col-xs-12">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tháng</th>
+                            <th>Tổng thu</th>
+                            <th>Tổng chi</th>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            string _cls = "";
+                            foreach (var item in Model.Setting)
+                            {
+                                _cls = "";
+                                if (item.Input <= item.Output)
+                                {
+                                    _cls = "background-color: rgb(220, 53, 69);";
+                                }
+                                <tr>
+                                    <td class="@_cls">@item.Month</td>
+                                    <td class="text-right">@item.Input.ToString("#,##0.##")</td>
+                                    <td class="text-right">@item.Output.ToString("#,##0.##")</td>
+                                    <td class="ctn-center">
+                                        <a href="javascript:;" onclick="history('@Model.ID', '@Model.Name', '@item.YearMonthString');" title="Lịch sử giao dịch" class="mg-lr-2"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
+<div class="row form-group">
     <div class="col-md-3 col-sm-4 col-xs-12">
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">

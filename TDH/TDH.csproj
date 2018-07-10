@@ -244,6 +244,7 @@
     <Compile Include="Areas\Administrator\Models\MoneyAccountModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyAccountSettingModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyAccountTypeModel.cs" />
+    <Compile Include="Areas\Administrator\Models\MoneyCategoryHistoryModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyCategoryModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyCategorySettingModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyFlowModel.cs" />
@@ -401,6 +402,9 @@
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\V_ACCOUNT_HISTORY.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\V_CATEGORY_HISTORY.cs">
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\V_MONEY_FLOW.cs">
@@ -5149,6 +5153,7 @@
     <Content Include="Areas\Administrator\Content\custom\admmoney.accounttype.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.accounttype.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.category.action.js" />
+    <Content Include="Areas\Administrator\Content\custom\admmoney.category.history.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.category.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.historyflow.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.group.action.js" />
@@ -10213,6 +10218,7 @@
     <Content Include="Areas\Administrator\Views\AdmMoney\_CategoryForm.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmMoney\FlowHistory.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmMoney\AccountHistory.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmMoney\CategoryHistory.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

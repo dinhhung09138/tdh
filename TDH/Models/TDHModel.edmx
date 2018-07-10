@@ -573,6 +573,21 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_ACCOUNT_HISTORY' does 
           <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_CATEGORY_HISTORY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_CATEGORY_HISTORY">
+          <Key>
+            <PropertyRef Name="category_id" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="money" />
+            <PropertyRef Name="type" />
+          </Key>
+          <Property Name="category_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="money" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="type" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_MONEY_FLOW">
           <Key>
@@ -950,6 +965,15 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
     [V_ACCOUNT_HISTORY].[money] AS [money], 
     [V_ACCOUNT_HISTORY].[type] AS [type]
     FROM [dbo].[V_ACCOUNT_HISTORY] AS [V_ACCOUNT_HISTORY]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="V_CATEGORY_HISTORY" EntityType="Self.V_CATEGORY_HISTORY" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_CATEGORY_HISTORY].[category_id] AS [category_id], 
+    [V_CATEGORY_HISTORY].[title] AS [title], 
+    [V_CATEGORY_HISTORY].[date] AS [date], 
+    [V_CATEGORY_HISTORY].[money] AS [money], 
+    [V_CATEGORY_HISTORY].[type] AS [type]
+    FROM [dbo].[V_CATEGORY_HISTORY] AS [V_CATEGORY_HISTORY]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_MONEY_FLOW" EntityType="Self.V_MONEY_FLOW" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1524,6 +1548,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </AssociationSet>
           <EntitySet Name="V_ACCOUNT_HISTORY" EntityType="chacd26d_trandinhhungModel.V_ACCOUNT_HISTORY" />
           <EntitySet Name="V_MONEY_FLOW" EntityType="chacd26d_trandinhhungModel.V_MONEY_FLOW" />
+          <EntitySet Name="V_CATEGORY_HISTORY" EntityType="chacd26d_trandinhhungModel.V_CATEGORY_HISTORY" />
           </EntityContainer>
         <EntityType Name="HOME_CATEGORY">
           <Key>
@@ -2147,6 +2172,19 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="fee" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
           <Property Name="type" Type="Int32" Nullable="false" />
         </EntityType>
+        <EntityType Name="V_CATEGORY_HISTORY">
+          <Key>
+            <PropertyRef Name="category_id" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="money" />
+            <PropertyRef Name="type" />
+          </Key>
+          <Property Name="category_id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2761,6 +2799,17 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
                 <ScalarProperty Name="from_name" ColumnName="from_name" />
                 <ScalarProperty Name="from_id" ColumnName="from_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_CATEGORY_HISTORY">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.V_CATEGORY_HISTORY">
+              <MappingFragment StoreEntitySet="V_CATEGORY_HISTORY">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

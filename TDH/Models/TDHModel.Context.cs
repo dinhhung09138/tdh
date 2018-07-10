@@ -57,5 +57,6 @@ namespace TDH.Models
         public virtual DbSet<MN_TRANSFER> MN_TRANSFER { get; set; }
         public virtual DbSet<V_ACCOUNT_HISTORY> V_ACCOUNT_HISTORY { get; set; }
         public virtual DbSet<V_MONEY_FLOW> V_MONEY_FLOW { get; set; }
+        public virtual DbSet<V_CATEGORY_HISTORY> V_CATEGORY_HISTORY { get; set; }
     }
 }

@@ -17,10 +17,10 @@ $(document).ready(function () {
         info: true,
         autoWidth: false,
         initComplete: function (settings, json) {
-            loading($('body'), 'hide');
         },
         stateSave: false,
-        language: language
+        language: language,
+        order: [[1, "asc"]]
     });
 
     table.on('draw', function () {

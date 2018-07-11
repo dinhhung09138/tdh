@@ -68,7 +68,8 @@ namespace TDH.Areas.Administrator.Services
                             Name = item.name,
                             Description = item.description,
                             Publish = item.publish,
-                            Count = _count.NumberToString()
+                            Count = _count,
+                            CountString = _count.NumberToString()
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -405,6 +406,7 @@ namespace TDH.Areas.Administrator.Services
                     var _user = context.USER_ROLE.FirstOrDefault(m => m.role_id == _md.id);
                     if (_user != null)
                     {
+                        Notifier.Notification(model.CreateBy, Resources.Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
                 }

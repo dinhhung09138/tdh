@@ -71,7 +71,8 @@ namespace TDH.Areas.Administrator.Services
                             Image = item.image ?? "",
                             Publish = item.publish,
                             NoChild = item.no_child,
-                            Count = _count.NumberToString()
+                            Count = _count,
+                            CountString = _count.NumberToString()
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -449,6 +450,7 @@ namespace TDH.Areas.Administrator.Services
                     var _cate = context.CATEGORies.FirstOrDefault(m => m.navigation_id == model.ID && !m.deleted);
                     if(_cate != null)
                     {
+                        Notifier.Notification(model.CreateBy, Resources.Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
                 }

@@ -50,7 +50,7 @@ $(document).ready(function () {
                 searchable: true
             },
             {
-                data: 'Count',
+                data: 'CountString',
                 orderable: true,
                 searchable: true,
                 className: 'ctn-center',
@@ -63,7 +63,7 @@ $(document).ready(function () {
                 className: 'ctn-center',
                 width: '60px',
                 render: function (obj, type, data, meta) {
-                    if (allowEdit === 'True') {
+                    if (allowEdit === 'True' && data.Count === 0) {
                         if (data.Publish === true) {
                             return '<input type="checkbox" class="flat" name="publish" checked  value="' + data.ID + '" />';
                         } else {

@@ -67,7 +67,7 @@ $(document).ready(function () {
                 orderable: false,
                 searchable: false,
                 className: 'ctn-center',
-                width: '40px',
+                width: '60px',
                 render: function (obj, type, data, meta) {
                     if (data.ID === curID) {
                         return '';

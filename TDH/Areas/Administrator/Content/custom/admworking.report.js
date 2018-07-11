@@ -68,7 +68,7 @@ $(document).ready(function () {
             },
             {
                 orderable: false,
-                width: '40px',
+                width: '60px',
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     var str = '';

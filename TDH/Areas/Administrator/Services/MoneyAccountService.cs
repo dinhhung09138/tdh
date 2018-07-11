@@ -82,7 +82,9 @@ namespace TDH.Areas.Administrator.Services
                             MonthInputString = _input.NumberToString(),
                             MonthOutput = _out,
                             MonthOutputString = _out.NumberToString(),
+                            MonthTotal = (_input - _out),
                             MonthTotalString = (_input - _out).NumberToString(),
+                            Total = (item.input - item.output),
                             TotalString = (item.input - item.output).NumberToString()
                         });
                     }

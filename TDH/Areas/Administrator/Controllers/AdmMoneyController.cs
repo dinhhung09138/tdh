@@ -26,6 +26,30 @@ namespace TDH.Areas.Administrator.Controllers
 
         #endregion
 
+        #region " [ Report ] "
+
+        /// <summary>
+        /// Report form
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Report()
+        {
+            try
+            {
+                return PartialView();
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "Report", UserID, ex);
+                throw new HttpException();
+            }
+        }
+        
+
+        #endregion
+
+
         #region " [ Account Type ]  "
 
         /// <summary>

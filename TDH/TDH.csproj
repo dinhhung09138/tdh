@@ -5158,6 +5158,7 @@
     <Content Include="Areas\Administrator\Content\custom\admmoney.historyflow.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.group.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admmoney.group.js" />
+    <Content Include="Areas\Administrator\Content\custom\admmoney.report.js" />
     <Content Include="Areas\Administrator\Content\custom\admpost.navigation.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admpost.navigation.js" />
     <Content Include="Areas\Administrator\Content\custom\admpost.news.action.js" />
@@ -10219,6 +10220,7 @@
     <Content Include="Areas\Administrator\Views\AdmMoney\FlowHistory.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmMoney\AccountHistory.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmMoney\CategoryHistory.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmMoney\Report.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

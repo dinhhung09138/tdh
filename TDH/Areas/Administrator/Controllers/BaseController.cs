@@ -367,6 +367,8 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "savepayment":
                                 case "savetransfer":
                                     return "money_flow";
+                                case "report":
+                                    return "money_report";
                             }
 
                             #endregion
@@ -559,6 +561,7 @@ namespace TDH.Areas.Administrator.Controllers
 
                             switch (actionName)
                             {
+                                case "report":
                                 case "accounttype":
                                 case "account":
                                 case "accounthistory":

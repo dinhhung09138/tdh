@@ -7,64 +7,15 @@
 
 }
 
-@section script{<!-- AdminLTE for demo purposes -->
+@section script {
 <script src="/Areas/Administrator/Content/dist/js/demo.js"></script>
-<!--SignalR script to update the chat page and send messages.-->
-<script>
-    $(function () {
-        // Reference the auto-generated proxy for the hub.
-        var chat = $.connection.chatHub;
-        // Create a function that the hub can call back to display messages.
-        chat.client.addNewMessageToPage = function (name, message) {
-            notification(message, 'success');
-            // Add the message to the page.
-            $('#discussion').append('<li><strong>' + htmlEncode(name)
-                + '</strong>: ' + htmlEncode(message) + '</li>');
-        };
-        // Get the user name and store it to prepend to messages.
-        //$('#displayname').val(prompt('Enter your name:', ''));
-        // Set initial focus to message input box.
-        $('#messageChat').focus();
-        // Start the connection.
-        $.connection.hub.start().done(function () {
-            $('#sendmessage').click(function () {
-                console.log($('#messageChat').val());
-                // Call the Send method on the hub.
-                chat.server.send($('#displayname').val(), $('#messageChat').val());
-                // Clear text box and reset focus for next comment.
-                $('#messageChat').val('').focus();
-            });
-        });
-    });
-    // This optional function html-encodes messages for display in the page.
-    function htmlEncode(value) {
-        var encodedValue = $('<div />').text(value).html();
-        return encodedValue;
-    }
-</script>
+<script type="text/javascript">
+   
 
+</script>
 }
 
-<!--
-NUGET SignalR 
-    Uninstall-Package Microsoft.AspNet.SignalR -RemoveDependencies
-    Install-Package Microsoft.AspNet.SignalR
-    Lưu ý khi tạo 1 hub services trong chathub.
-    1. Chỉ để lại namespace gốc. loại bỏ hết các namespace con là các thư mục đi kèm
-    2. Tạo file startup.cs -> Là file OWIN Startup class
-        Thêm vào : app.MapSignalR();
 
--->
-<h2>Chat</h2>
-<div class="container">
-    <input type="text" id="messageChat" />
-    <input type="button" id="sendmessage" value="Send" />
-    <input type="hidden" id="displayname" />
-    <ul id="discussion"></ul>
-</div>
-<div class="row">
-    <a href="javascript:;" id="loadForm">Load form</a>
-</div>
 
 <div class="row">
     <div class="col-lg-3 col-6">

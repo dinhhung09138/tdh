@@ -12,6 +12,8 @@ namespace TDH.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class chacd26d_trandinhhungEntities : DbContext
     {
@@ -58,5 +60,15 @@ namespace TDH.Models
         public virtual DbSet<V_ACCOUNT_HISTORY> V_ACCOUNT_HISTORY { get; set; }
         public virtual DbSet<V_MONEY_FLOW> V_MONEY_FLOW { get; set; }
         public virtual DbSet<V_CATEGORY_HISTORY> V_CATEGORY_HISTORY { get; set; }
+    
+        [DbFunction("chacd26d_trandinhhungEntities", "FNC_REPORT_SUMMARY_BY_YEAR")]
+        public virtual IQueryable<FNC_REPORT_SUMMARY_BY_YEAR_Result> FNC_REPORT_SUMMARY_BY_YEAR(Nullable<int> i_Year)
+        {
+            var i_YearParameter = i_Year.HasValue ?
+                new ObjectParameter("I_Year", i_Year) :
+                new ObjectParameter("I_Year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_REPORT_SUMMARY_BY_YEAR_Result>("[chacd26d_trandinhhungEntities].[FNC_REPORT_SUMMARY_BY_YEAR](@I_Year)", i_YearParameter);
+        }
     }
 }

@@ -6,6 +6,7 @@ using Utils;
 using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using TDH.Areas.Administrator.Filters;
+using System.Threading.Tasks;
 
 namespace TDH.Areas.Administrator.Controllers
 {
@@ -44,6 +45,24 @@ namespace TDH.Areas.Administrator.Controllers
                 TDH.Services.Log.WriteLog(FILE_NAME, "Report", UserID, ex);
                 throw new HttpException();
             }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SummaryReportByYear(int year)
+        {
+            #region " [ Declaration ] "
+
+            Services.MoneyReportService _service = new Services.MoneyReportService();
+
+            #endregion
+
+            #region " [ Main processing ] "
+
+            var _model = await _service.SummaryByYear(year, UserID);
+
+            #endregion
+
+            return this.Json(_model, JsonRequestBehavior.AllowGet);
         }
         
 

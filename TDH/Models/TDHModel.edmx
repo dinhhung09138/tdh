@@ -926,6 +926,20 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="FNC_REPORT_SUMMARY_BY_YEAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="I_Year" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="year" Type="int" Nullable="false" />
+                <Property Name="month" Type="int" Nullable="false" />
+                <Property Name="input" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="output" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="final" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <EntityContainer Name="chacd26d_trandinhhungModelStoreContainer">
           <EntitySet Name="ABOUT" EntityType="Self.ABOUT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CATEGORY" EntityType="Self.CATEGORY" Schema="dbo" store:Type="Tables" />
@@ -1549,6 +1563,9 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <EntitySet Name="V_ACCOUNT_HISTORY" EntityType="chacd26d_trandinhhungModel.V_ACCOUNT_HISTORY" />
           <EntitySet Name="V_MONEY_FLOW" EntityType="chacd26d_trandinhhungModel.V_MONEY_FLOW" />
           <EntitySet Name="V_CATEGORY_HISTORY" EntityType="chacd26d_trandinhhungModel.V_CATEGORY_HISTORY" />
+          <FunctionImport Name="FNC_REPORT_SUMMARY_BY_YEAR" IsComposable="true" ReturnType="Collection(chacd26d_trandinhhungModel.FNC_REPORT_SUMMARY_BY_YEAR_Result)">
+            <Parameter Name="I_Year" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="HOME_CATEGORY">
           <Key>
@@ -2185,6 +2202,13 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
           <Property Name="type" Type="Int32" Nullable="false" />
         </EntityType>
+        <ComplexType Name="FNC_REPORT_SUMMARY_BY_YEAR_Result">
+          <Property Type="Int32" Name="year" Nullable="false" />
+          <Property Type="Int32" Name="month" Nullable="false" />
+          <Property Type="Decimal" Name="input" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="output" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="final" Nullable="false" Precision="38" Scale="1" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2813,6 +2837,17 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FNC_REPORT_SUMMARY_BY_YEAR" FunctionName="chacd26d_trandinhhungModel.Store.FNC_REPORT_SUMMARY_BY_YEAR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="chacd26d_trandinhhungModel.FNC_REPORT_SUMMARY_BY_YEAR_Result">
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="input" ColumnName="input" />
+                <ScalarProperty Name="output" ColumnName="output" />
+                <ScalarProperty Name="final" ColumnName="final" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

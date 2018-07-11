@@ -252,6 +252,7 @@
     <Compile Include="Areas\Administrator\Models\MoneyGroupSettingModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyIncomeModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyPaymentModel.cs" />
+    <Compile Include="Areas\Administrator\Models\MoneyReportCollectionByYearModel.cs" />
     <Compile Include="Areas\Administrator\Models\MoneyTransferModel.cs" />
     <Compile Include="Areas\Administrator\Models\NavigationModel.cs" />
     <Compile Include="Areas\Administrator\Models\CategoryModel.cs" />
@@ -278,6 +279,7 @@
     <Compile Include="Areas\Administrator\Services\MoneyFlowService.cs" />
     <Compile Include="Areas\Administrator\Services\MoneyGroupService.cs" />
     <Compile Include="Areas\Administrator\Services\MoneyGroupSettingService.cs" />
+    <Compile Include="Areas\Administrator\Services\MoneyReportService.cs" />
     <Compile Include="Areas\Administrator\Services\NavigationService.cs" />
     <Compile Include="Areas\Administrator\Services\CategoryService.cs" />
     <Compile Include="Areas\Administrator\Services\PostService.cs" />
@@ -309,6 +311,9 @@
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ERROR_LOG.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FNC_REPORT_SUMMARY_BY_YEAR_Result.cs">
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FUNCTION.cs">

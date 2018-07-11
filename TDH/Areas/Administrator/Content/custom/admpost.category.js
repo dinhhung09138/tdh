@@ -14,7 +14,7 @@ $(document).ready(function () {
         paging: true,
         pageLength: 10,
         pagingType: 'full_numbers',
-        dom: '<"top"<"row"<"col-sm-4"l><"col-sm-4"<"toolbar">><"col-sm-4 text-right"f>>>rt<"bottom"ip><"clear">',
+        dom: dom,
         info: true,
         autoWidth: false,
         initComplete: function (settings, json) {

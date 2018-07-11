@@ -13,6 +13,7 @@ $(document).ready(function () {
         responsive: true,
         pageLength: 10,
         pagingType: 'full_numbers',
+        dom: dom,
         info: true,
         autoWidth: false,
         initComplete: function (settings, json) {

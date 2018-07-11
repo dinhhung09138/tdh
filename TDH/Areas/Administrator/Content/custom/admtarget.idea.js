@@ -12,6 +12,7 @@ $(document).ready(function () {
         ordering: true,
         paging: true,
         pageLength: 10,
+        dom: dom,
         pagingType: 'full_numbers',
         info: true,
         autoWidth: false,

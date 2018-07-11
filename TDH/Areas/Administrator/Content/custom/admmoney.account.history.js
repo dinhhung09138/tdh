@@ -25,7 +25,7 @@ $(document).ready(function () {
         responsive: true,
         pageLength: 10,
         pagingType: 'full_numbers',
-        dom: '<"top"<"row"<"col-md-3 col-sm-4 col-xs-12"l><"col-md-6 col-sm-4 col-xs-12"<"toolbar">><"col-md-3 col-sm-4 col-xs-12 text-right"f>>>rt<"bottom"ip><"clear">',
+        dom: dom,
         info: true,
         autoWidth: false,
         initComplete: function (settings, json) {

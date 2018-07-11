@@ -19,6 +19,51 @@ $(document).ready(function () {
         initComplete: function (settings, json) {
             //Do something after finish
         },
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api(), data;
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '') * 1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+            var _str = '';
+            //Month Income
+            monthIncome = api.column(3, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+            _str = '';
+            if (monthIncome > 0) {
+                _str = '<span style="color: #359746;">' + number_format(monthIncome, 2) + '</span>';
+            }
+            else {
+                _str = '<span style="color: #dc3545;">' + number_format(monthIncome, 2) + '</span>';
+            }
+            $(api.column(3).footer()).html(_str);
+            //Month Payment
+            monthPayment = api.column(4, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+            _str = '<span style="color: #dc3545;">' + number_format(monthPayment, 2) + '</span>';
+            $(api.column(4).footer()).html(_str);
+            //Month total
+            monthTotal = api.column(5, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+            _str = '';
+            if (monthTotal > 0) {
+                _str = '<span style="color: #359746;">' + number_format(monthTotal, 2) + '</span>';
+            }
+            else {
+                _str = '<span style="color: #dc3545;">' + number_format(monthTotal, 2) + '</span>';
+            }
+            $(api.column(5).footer()).html(_str);
+            // Total over
+            total = api.column(6, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+            _str = '';
+            if (total > 0) {
+                _str = '<span style="color: #359746;">' + number_format(total, 2) + '</span>';
+            }
+            else {
+                _str = '<span style="color: #dc3545;">' + number_format(total, 2) + '</span>';
+            }
+            $(api.column(6).footer()).html(_str);
+        },
         language: language,
         order: [[1, "asc"]],
         ajax: {
@@ -52,6 +97,7 @@ $(document).ready(function () {
                 }
             },
             {
+                data: 'MonthInput',
                 orderable: false,
                 searchable: false,
                 className: 'text-right',
@@ -61,6 +107,7 @@ $(document).ready(function () {
                 }
             },
             {
+                data: 'MonthOutput',
                 orderable: false,
                 searchable: false,
                 className: 'text-right',
@@ -70,21 +117,29 @@ $(document).ready(function () {
                 }
             },
             {
+                data: 'MonthTotal',
                 orderable: false,
                 searchable: false,
                 className: 'text-right',
                 width: '110px',
                 render: function (obj, type, data, meta) {
-                    return data.TotalString;
+                    if (data.MonthTotal > 0) {
+                        return '<span style="color: #359746;">' + data.MonthTotalString + '</span>';
+                    }
+                    return '<span style="color: #dc3545;">' + data.MonthTotalString + '</span>'; 
                 }
             },
             {
+                data: 'Total',
                 orderable: false,
                 searchable: false,
                 className: 'text-right',
                 width: '110px',
                 render: function (obj, type, data, meta) {
-                    return data.MonthTotalString;
+                    if (data.Total > 0) {
+                        return '<span style="color: #359746;">' + data.TotalString + "</span>"; 
+                    }
+                    return '<span style="color: #dc3545;">' + data.TotalString + "</span>"; 
                 }
             },
             {

@@ -278,7 +278,7 @@
             $("*").dblclick(function (e) {
                 e.preventDefault();
             });
-
+            
         });
 
         /**
@@ -360,8 +360,8 @@
         function loadPage(url, title) {
             loading($('.content-wrapper'), 'show');
             document.title = title;
-            $('#main_layout').load(url);
-            setTimeout(function () { loading($('.content-wrapper'), 'hide') }, 700);
+            $('#main_layout').load(url, function (response, status, xhr) { loading($('.content-wrapper'), 'hide'); });
+            //setTimeout(function () { loading($('.content-wrapper'), 'hide') }, 700);
         }
         
         function loading(el, type) {
@@ -387,7 +387,9 @@
             var title = $(this).attr('data-title');
             loadPage(url, title);
         });
-
+        $('#main_layout').load(function () {
+            loading($('.content-wrapper'), 'hide');
+        });
 
     </script>
     @RenderSection("script", required: false)

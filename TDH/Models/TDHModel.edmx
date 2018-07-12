@@ -975,6 +975,18 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="FNC_REPORT_SUMMARY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="year" Type="int" Nullable="false" />
+                <Property Name="input" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="output" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="final" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="FNC_REPORT_SUMMARY_BY_YEAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="I_Year" Type="int" Mode="In" />
           <ReturnType>
@@ -1624,6 +1636,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             <Parameter Name="I_Year" Mode="In" Type="Int32" />
             <Parameter Name="I_UserID" Mode="In" Type="Guid" />
           </FunctionImport>
+          <FunctionImport Name="FNC_REPORT_SUMMARY" IsComposable="true" ReturnType="Collection(chacd26d_trandinhhungModel.FNC_REPORT_SUMMARY_Result)" />
           </EntityContainer>
         <EntityType Name="HOME_CATEGORY">
           <Key>
@@ -2293,6 +2306,12 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Type="Decimal" Name="percent_current" Nullable="false" Precision="38" Scale="1" />
           <Property Type="Decimal" Name="money_setting" Nullable="false" Precision="38" Scale="1" />
           <Property Type="Decimal" Name="money_current" Nullable="false" Precision="38" Scale="1" />
+        </ComplexType>
+        <ComplexType Name="FNC_REPORT_SUMMARY_Result">
+          <Property Type="Int32" Name="year" Nullable="false" />
+          <Property Type="Decimal" Name="input" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="output" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="final" Nullable="false" Precision="38" Scale="1" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2969,6 +2988,16 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
                 <ScalarProperty Name="percent_current" ColumnName="percent_current" />
                 <ScalarProperty Name="money_setting" ColumnName="money_setting" />
                 <ScalarProperty Name="money_current" ColumnName="money_current" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FNC_REPORT_SUMMARY" FunctionName="chacd26d_trandinhhungModel.Store.FNC_REPORT_SUMMARY">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="chacd26d_trandinhhungModel.FNC_REPORT_SUMMARY_Result">
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="input" ColumnName="input" />
+                <ScalarProperty Name="output" ColumnName="output" />
+                <ScalarProperty Name="final" ColumnName="final" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

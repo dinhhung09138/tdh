@@ -22,7 +22,21 @@
                     </div>
                     <div class="card-body" style="display: block;">
                         <div class="row">
-                            <div id="divSummaryByYearChart" class="col-md-12" style="height: 300px;"></div>
+                            <div id="divIncomeSummaryByCategory" class="col-md-12" style="height: 300px;"></div>
+                        </div>
+                        <div class="row">
+                            <div id="divSummary" class="col-md-12" style="height: 300px;"></div>
+                        </div>
+                        <div class="row">
+                            <div id="divSummaryByYear" class="col-md-12" style="height: 300px;"></div>
+                        </div>
+                        <div class="row">
+                            <p>Các nguồn thu trong năm, tính theo từng tháng</p>
+                            <p>Báo cáo theo quy tắc chi, có bị vượt giới hạn hay không.</p>
+                            <p>Column: Báo cáo thu theo từng danh mục thu trong tháng</p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
                         </div>
                         <div class="row">
                             <div class="col-md-4 col-xs-12">
@@ -253,13 +267,116 @@
 
 <script>
     //
+    google.charts.setOnLoadCallback(drawVisualization);
+
+    function drawIncomeSummaryByCategoryChart() {
+
+        var chartDiv = document.getElementById('divIncomeSummaryByCategory');
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Tháng');
+        data.addColumn('number', "Thu vào");
+        data.addColumn('number', "Chi ra");
+        data.addColumn('number', "Còn lại");
+
+        function loadDataSummaryByYearChart(callback) {
+            $.ajax({
+                url: '/administrator/admmoney/summaryreportbyyear',
+                type: 'POST',
+                cache: false,
+                async: true,
+                xhrFields: {
+                    withCredentials: true,
+                },
+                dataType: 'json',
+                data: ({ year: 2018 }),
+                success: function (response) {
+                    $.each(response, function (idx, item) {
+                        data.addRow([item.Month, item.Income, item.Payment, item.Total]);
+                    });
+                    console.log(data);
+                    callback();
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+        }
+
+        var options = {
+            legend: { position: 'bottom' },
+            chart: {
+                title: 'Báo cáo tình hình thu chi trong năm',
+                subtitle: ''
+            },
+            chartArea: {
+                width: '100%'
+            },
+            //width: 900,
+            //height: 500,
+            series: {
+                // Gives each series an axis name that matches the Y-axis below.
+                0: {
+                    axis: 'dvt', color: '28a745'
+                },
+                1: {
+                    color: 'dc3545'
+                },
+                2: {
+                    color: '007bff'
+                }
+            },
+            axes: {
+                // Adds labels to each axis; they don't have to match the axis names.
+                y: {
+                    dvt: { label: '(vnd)' }
+                }
+            }
+        };
+
+        function drawChart() {
+            var chart = new google.charts.Line(chartDiv);
+            chart.draw(data, options);
+        }
+
+        loadDataSummaryByYearChart(drawChart);
+
+        if (document.addEventListener) {
+            window.addEventListener('resize', drawChart);
+        }
+        else if (document.attachEvent) {
+            window.attachEvent('onresize', drawChart);
+        }
+        else {
+            window.resize = drawChart;
+        }
+    }
     //
     //
     $(document).ready(function () {
         //loadDataSummaryByYearChart();
     });
 
+    function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Month', 'Bolivia', 'Ecuador', 'Madagascar', 'Papua New Guinea', 'Rwanda', 'Average'],
+            ['2004/05', 165, 938, 522, 998, 450, 614.6],
+            ['2005/06', 135, 1120, 599, 1268, 288, 682],
+            ['2006/07', 157, 1167, 587, 807, 397, 623],
+            ['2007/08', 139, 1110, 615, 968, 215, 609.4],
+            ['2008/09', 136, 691, 629, 1026, 366, 569.6]
+        ]);
 
+        var options = {
+            title: 'Monthly Coffee Production by Country',
+            vAxis: { title: 'Cups' },
+            hAxis: { title: 'Month' },
+            seriesType: 'bars',
+            series: { 5: { type: 'line' } }
+        };
 
+        var chart = new google.visualization.ComboChart(document.getElementById('divIncomeSummaryByCategory'));
+        chart.draw(data, options);
+    }
 </script>
 

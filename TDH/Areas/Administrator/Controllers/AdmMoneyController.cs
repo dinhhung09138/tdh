@@ -48,21 +48,55 @@ namespace TDH.Areas.Administrator.Controllers
         }
 
         [HttpPost]
+        public async Task<ActionResult> SummaryReport()
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                Services.MoneyReportService _service = new Services.MoneyReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                var _model = await _service.Summary(UserID);
+
+                #endregion
+
+                return this.Json(_model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "SummaryReport", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
         public async Task<ActionResult> SummaryReportByYear(int year)
         {
-            #region " [ Declaration ] "
+            try
+            {
+                #region " [ Declaration ] "
 
-            Services.MoneyReportService _service = new Services.MoneyReportService();
+                Services.MoneyReportService _service = new Services.MoneyReportService();
 
-            #endregion
+                #endregion
 
-            #region " [ Main processing ] "
+                #region " [ Main processing ] "
 
-            var _model = await _service.SummaryByYear(year, UserID);
+                var _model = await _service.SummaryByYear(year, UserID);
 
-            #endregion
+                #endregion
 
-            return this.Json(_model, JsonRequestBehavior.AllowGet);
+                return this.Json(_model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                TDH.Services.Log.WriteLog(FILE_NAME, "SummaryReportByYear", UserID, ex);
+                throw new HttpException();
+            }
         }
         
 

@@ -331,6 +331,7 @@ namespace TDH.Areas.Administrator.Controllers
                             switch (actionName)
                             {
                                 case "report":
+                                case "summaryreport":
                                 case "summaryreportbyyear":
                                     return "money_report";
                                 case "accounttype":
@@ -563,6 +564,7 @@ namespace TDH.Areas.Administrator.Controllers
                             switch (actionName)
                             {
                                 case "report":
+                                case "summaryreport":
                                 case "summaryreportbyyear":
                                 case "accounttype":
                                 case "account":

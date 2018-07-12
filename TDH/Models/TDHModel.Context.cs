@@ -104,5 +104,11 @@ namespace TDH.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result>("[chacd26d_trandinhhungEntities].[FNC_MN_GROUP_SETTING_GET_BY_GROUP](@I_GroupID, @I_Year, @I_UserID)", i_GroupIDParameter, i_YearParameter, i_UserIDParameter);
         }
+    
+        [DbFunction("chacd26d_trandinhhungEntities", "FNC_REPORT_SUMMARY")]
+        public virtual IQueryable<FNC_REPORT_SUMMARY_Result> FNC_REPORT_SUMMARY()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_REPORT_SUMMARY_Result>("[chacd26d_trandinhhungEntities].[FNC_REPORT_SUMMARY]()");
+        }
     }
 }

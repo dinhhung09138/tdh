@@ -313,6 +313,9 @@
     <Compile Include="Models\ERROR_LOG.cs">
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result.cs">
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>
@@ -320,6 +323,9 @@
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FNC_REPORT_SUMMARY_BY_YEAR_Result.cs">
+      <DependentUpon>TDHModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FNC_REPORT_SUMMARY_Result.cs">
       <DependentUpon>TDHModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FUNCTION.cs">

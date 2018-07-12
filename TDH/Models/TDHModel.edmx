@@ -926,6 +926,55 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="I_GroupID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="I_Year" Type="int" Mode="In" />
+          <Parameter Name="I_UserID" Type="uniqueidentifier" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+                <Property Name="group_id" Type="uniqueidentifier" Nullable="false" />
+                <Property Name="year_month" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+                <Property Name="percent_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="percent_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FNC_REPORT_INCOME_BY_CATEGORY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+                <Property Name="month" Type="int" Nullable="false" />
+                <Property Name="year" Type="int" Nullable="false" />
+                <Property Name="percent_setting" Type="tinyint" Nullable="false" />
+                <Property Name="percent_current" Type="tinyint" Nullable="false" />
+                <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="I_Year" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+                <Property Name="month" Type="int" Nullable="false" />
+                <Property Name="year" Type="int" Nullable="false" />
+                <Property Name="percent_setting" Type="tinyint" Nullable="false" />
+                <Property Name="percent_current" Type="tinyint" Nullable="false" />
+                <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="FNC_REPORT_SUMMARY_BY_YEAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="I_Year" Type="int" Mode="In" />
           <ReturnType>
@@ -1564,7 +1613,16 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <EntitySet Name="V_MONEY_FLOW" EntityType="chacd26d_trandinhhungModel.V_MONEY_FLOW" />
           <EntitySet Name="V_CATEGORY_HISTORY" EntityType="chacd26d_trandinhhungModel.V_CATEGORY_HISTORY" />
           <FunctionImport Name="FNC_REPORT_SUMMARY_BY_YEAR" IsComposable="true" ReturnType="Collection(chacd26d_trandinhhungModel.FNC_REPORT_SUMMARY_BY_YEAR_Result)">
+          <Parameter Name="I_Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FNC_REPORT_INCOME_BY_CATEGORY" IsComposable="true" ReturnType="Collection(chacd26d_trandinhhungModel.FNC_REPORT_INCOME_BY_CATEGORY_Result)" />
+          <FunctionImport Name="FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR" IsComposable="true" ReturnType="Collection(chacd26d_trandinhhungModel.FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result)">
+          <Parameter Name="I_Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP" IsComposable="true" ReturnType="Collection(chacd26d_trandinhhungModel.FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result)">
+            <Parameter Name="I_GroupID" Mode="In" Type="Guid" />
             <Parameter Name="I_Year" Mode="In" Type="Int32" />
+            <Parameter Name="I_UserID" Mode="In" Type="Guid" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="HOME_CATEGORY">
@@ -2209,6 +2267,33 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Type="Decimal" Name="output" Nullable="false" Precision="38" Scale="1" />
           <Property Type="Decimal" Name="final" Nullable="false" Precision="38" Scale="1" />
         </ComplexType>
+        <ComplexType Name="FNC_REPORT_INCOME_BY_CATEGORY_Result">
+          <Property Type="String" Name="name" Nullable="false" MaxLength="150" />
+          <Property Type="Int32" Name="month" Nullable="false" />
+          <Property Type="Int32" Name="year" Nullable="false" />
+          <Property Type="Byte" Name="percent_setting" Nullable="false" />
+          <Property Type="Byte" Name="percent_current" Nullable="false" />
+          <Property Type="Decimal" Name="money_setting" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="money_current" Nullable="false" Precision="38" Scale="1" />
+        </ComplexType>
+        <ComplexType Name="FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result">
+          <Property Type="String" Name="name" Nullable="false" MaxLength="150" />
+          <Property Type="Int32" Name="month" Nullable="false" />
+          <Property Type="Int32" Name="year" Nullable="false" />
+          <Property Type="Byte" Name="percent_setting" Nullable="false" />
+          <Property Type="Byte" Name="percent_current" Nullable="false" />
+          <Property Type="Decimal" Name="money_setting" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="money_current" Nullable="false" Precision="38" Scale="1" />
+        </ComplexType>
+        <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
+          <Property Type="Guid" Name="id" Nullable="false" />
+          <Property Type="Guid" Name="group_id" Nullable="false" />
+          <Property Type="Decimal" Name="year_month" Nullable="false" Precision="6" Scale="0" />
+          <Property Type="Decimal" Name="percent_setting" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="percent_current" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="money_setting" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="money_current" Nullable="false" Precision="38" Scale="1" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2845,6 +2930,45 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
                 <ScalarProperty Name="input" ColumnName="input" />
                 <ScalarProperty Name="output" ColumnName="output" />
                 <ScalarProperty Name="final" ColumnName="final" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FNC_REPORT_INCOME_BY_CATEGORY" FunctionName="chacd26d_trandinhhungModel.Store.FNC_REPORT_INCOME_BY_CATEGORY">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="chacd26d_trandinhhungModel.FNC_REPORT_INCOME_BY_CATEGORY_Result">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR" FunctionName="chacd26d_trandinhhungModel.Store.FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="chacd26d_trandinhhungModel.FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FNC_MN_GROUP_SETTING_GET_BY_GROUP" FunctionName="chacd26d_trandinhhungModel.Store.FNC_MN_GROUP_SETTING_GET_BY_GROUP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="chacd26d_trandinhhungModel.FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="year_month" ColumnName="year_month" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

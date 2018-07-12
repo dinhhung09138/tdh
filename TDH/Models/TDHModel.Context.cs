@@ -70,5 +70,39 @@ namespace TDH.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_REPORT_SUMMARY_BY_YEAR_Result>("[chacd26d_trandinhhungEntities].[FNC_REPORT_SUMMARY_BY_YEAR](@I_Year)", i_YearParameter);
         }
+    
+        [DbFunction("chacd26d_trandinhhungEntities", "FNC_REPORT_INCOME_BY_CATEGORY")]
+        public virtual IQueryable<FNC_REPORT_INCOME_BY_CATEGORY_Result> FNC_REPORT_INCOME_BY_CATEGORY()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_REPORT_INCOME_BY_CATEGORY_Result>("[chacd26d_trandinhhungEntities].[FNC_REPORT_INCOME_BY_CATEGORY]()");
+        }
+    
+        [DbFunction("chacd26d_trandinhhungEntities", "FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR")]
+        public virtual IQueryable<FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result> FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR(Nullable<int> i_Year)
+        {
+            var i_YearParameter = i_Year.HasValue ?
+                new ObjectParameter("I_Year", i_Year) :
+                new ObjectParameter("I_Year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result>("[chacd26d_trandinhhungEntities].[FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR](@I_Year)", i_YearParameter);
+        }
+    
+        [DbFunction("chacd26d_trandinhhungEntities", "FNC_MN_GROUP_SETTING_GET_BY_GROUP")]
+        public virtual IQueryable<FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result> FNC_MN_GROUP_SETTING_GET_BY_GROUP(Nullable<System.Guid> i_GroupID, Nullable<int> i_Year, Nullable<System.Guid> i_UserID)
+        {
+            var i_GroupIDParameter = i_GroupID.HasValue ?
+                new ObjectParameter("I_GroupID", i_GroupID) :
+                new ObjectParameter("I_GroupID", typeof(System.Guid));
+    
+            var i_YearParameter = i_Year.HasValue ?
+                new ObjectParameter("I_Year", i_Year) :
+                new ObjectParameter("I_Year", typeof(int));
+    
+            var i_UserIDParameter = i_UserID.HasValue ?
+                new ObjectParameter("I_UserID", i_UserID) :
+                new ObjectParameter("I_UserID", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result>("[chacd26d_trandinhhungEntities].[FNC_MN_GROUP_SETTING_GET_BY_GROUP](@I_GroupID, @I_Year, @I_UserID)", i_GroupIDParameter, i_YearParameter, i_UserIDParameter);
+        }
     }
 }

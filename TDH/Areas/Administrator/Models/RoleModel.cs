@@ -19,8 +19,10 @@ namespace TDH.Areas.Administrator.Models
         /// <summary>
         /// Count number of child item
         /// </summary>
-        public string Count { get; set; } = "0";
-        
+        public int Count { get; set; } = 0;
+
+        public string CountString { get; set; } = "0";
+
         public List<RoleDetailModel> Detail { get; set; } = new List<RoleDetailModel>();
     }
 }

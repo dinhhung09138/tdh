@@ -14,6 +14,13 @@
     <link href="/trandinhhung.ico" rel="shortcut icon" type="image/x-icon" />
     @RenderSection("header", required: false)
     <style>
+        .pd-5{
+            padding: 5px !important;
+        }
+        .mg-lr-2 {
+            margin-left: 2px;
+            margin-right: 2px;
+        }
         .navbar-expand .navbar-nav .dropdown-menu {
             background-color: #359746;
             color: black;
@@ -122,6 +129,10 @@
         a.btn-box-tool:hover, a.btn-box-tool:active {
             background-color: #0D7283 !important;
         }
+        a.btn-box-tool-inner {
+            color: #359746 !important;
+            background-color: transparent !important;
+        }
         .nav-sidebar > .nav-item .nav-icon {
             color: #359746;
         }
@@ -135,6 +146,39 @@
             border: unset;
             border-radius: 0rem;
             box-shadow: none !important;
+        }
+        .parsley-errors-list{
+            color: red;
+            list-style: none;
+        }
+        .disabledAnchor {
+            pointer-events: none !important;
+            cursor: default;
+            color: white;
+            opacity: .5;
+        }
+        .datepicker table tr td span.active:hover, .datepicker table tr td span.active:hover:hover, .datepicker table tr td span.active.disabled:hover,
+        .datepicker table tr td span.active.disabled:hover:hover, .datepicker table tr td span.active:focus, .datepicker table tr td span.active:hover:focus,
+        .datepicker table tr td span.active.disabled:focus, .datepicker table tr td span.active.disabled:hover:focus, .datepicker table tr td span.active:active,
+        .datepicker table tr td span.active:hover:active, .datepicker table tr td span.active.disabled:active, .datepicker table tr td span.active.disabled:hover:active,
+        .datepicker table tr td span.active.active, .datepicker table tr td span.active:hover.active, .datepicker table tr td span.active.disabled.active, .datepicker table tr td span.active.disabled:hover.active,
+        .open .dropdown-toggle.datepicker table tr td span.active, .open .dropdown-toggle.datepicker table tr td span.active:hover, .open .dropdown-toggle.datepicker table tr td span.active.disabled,
+        .open .dropdown-toggle.datepicker table tr td span.active.disabled:hover {
+            background-color: #359746 !important;
+            border-color: #359746 !important;
+        }
+        .datepicker table tr td span {
+            height: 40px !important;
+            line-height: 40px !important;
+            border-radius: 0px !important;
+        }
+        .table i.fa-plus {
+            font-size: 15px;
+            padding-right: 5px;
+            color: #359746;
+        }
+        body.modal-open {
+            padding-right: 0 !important;
         }
     </style>
 </head>
@@ -162,6 +206,7 @@
     <script src="/Areas/Administrator/Content/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <script src="/Areas/Administrator/Content/dist/js/adminlte.min.js"></script>
     <script src="/Areas/Administrator/Content/plugins/waitMe/waitMe.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="/Scripts/jquery.signalR-2.3.0.min.js"></script>
     <script src="~/signalr/hubs"></script>
     <script type="text/javascript">
@@ -180,14 +225,103 @@
                 last: '>>'
             }
         };
+        /**
+         * l: length changing input control
+         * f: filtering input
+         * t: The table
+         * i: Table informatin summary
+         * p: pagination control
+         * r: Processing display element
+         * < and > - div element
+         * <"class" and > - div with a class
+         * <"#id" and > - div with an ID
+         * <"#id.class" and > - div with an ID and a class
+         * https://datatables.net/reference/option/dom
+         */
+        var dom = '<"top"<"row"<"col-md-3 col-sm-4 col-xs-12"l><"col-md-6 col-sm-4 col-xs-12"<"toolbar">><"col-md-3 col-sm-4 col-xs-12 text-right"f>>>rt<"bottom"<"row"<"col-md-5 col-sm-6 col-xs-12"i><"col-md-7 col-sm-6 col-xs-12"p>>><"clear">';
 
         $(document).ready(function () {
+            //------------------------------------------------------
+            //Set modal center screen
+            //-----------------
+            var modalVerticalCenterClass = ".modal";
+            function centerModals($element) {
+                var $modals;
+                if ($element.length) {
+                    $modals = $element;
+                } else {
+                    $modals = $(modalVerticalCenterClass + ':visible');
+                }
+                $modals.each(function (i) {
+                    var $clone = $(this).clone().css('display', 'block').appendTo('body');
+                    var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+                    top = top > 0 ? top : 0;
+                    $clone.remove();
+                    $(this).find('.modal-content').css("margin-top", top);
+                });
+            }
+            $(modalVerticalCenterClass).on('show.bs.modal', function (e) {
+                centerModals($(this));
+            });
+            $(window).on('resize', centerModals);
+            //Show second modal above first modal
+            $(document).on('show.bs.modal', '.modal', function (event) {
+                var zIndex = 1040 + (10 * $('.modal:visible').length);
+                $(this).css('z-index', zIndex);
+                setTimeout(function () {
+                    $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+                }, 0);
+            });
+            //Prevent scrollbar visible when show second modal
+            $(document).on('hidden.bs.modal', '.modal', function (event) {
+                var count = $('.modal:visible').length;
+                if (count > 0) {
+                    $('body').addClass('modal-open');
+                }
+            });
 
             $("*").dblclick(function (e) {
                 e.preventDefault();
             });
             
         });
+
+        /**
+         * number_format(number, decimals, decPoint, thousandsSep) in JavaScript, known from PHP.
+         * It formats a number to a string with grouped thousands, with custom seperator and custom decimal point
+         * param {number} number - number to format
+         * param {number} [decimals=0] - (optional) count of decimals to show
+         * param {string} [decPoint=.] - (optional) decimal point
+         * param {string} [thousandsSep=,] - (optional) thousands seperator
+         * author Felix Leupold <felix@xiel.de>
+         */
+        function number_format(number, decimals, decPoint, thousandsSep) {
+            decimals = Math.abs(decimals) || 0;
+            number = parseFloat(number);
+
+            if (!decPoint || !thousandsSep) {
+                decPoint = '.';
+                thousandsSep = ',';
+            }
+
+            var roundedNumber = Math.round(Math.abs(number) * ('1e' + decimals)) + '';
+            var numbersString = decimals ? (roundedNumber.slice(0, decimals * -1) || 0) : roundedNumber;
+            var decimalsString = decimals ? roundedNumber.slice(decimals * -1) : '';
+            var formattedNumber = "";
+
+            while (numbersString.length > 3) {
+                formattedNumber += thousandsSep + numbersString.slice(-3)
+                numbersString = numbersString.slice(0, -3);
+            }
+
+            if (decimals && decimalsString.length === 1) {
+                while (decimalsString.length < decimals) {
+                    decimalsString = decimalsString + decimalsString;
+                }
+            }
+
+            return (number < 0 ? '-' : '') + numbersString + formattedNumber + (decimalsString ? (decPoint + decimalsString) : '');
+        }
 
         function notification(mesage, type) {
             if (message === 'undefined' | message.length === 0) {
@@ -228,20 +362,13 @@
             }
         }
 
-        $(document).on('click', '.pg_ld', function (e) {
-            var url = $(this).attr('data-url');
-            var title = $(this).attr('data-title');
-            loadPage(url, title);
-        });
-
         function loadPage(url, title) {
             loading($('.content-wrapper'), 'show');
             document.title = title;
-            $('#main_layout').load(url);
-            setTimeout(function () { loading($('.content-wrapper'), 'hide') }, 700);            
+            $('#main_layout').load(url, function (response, status, xhr) { loading($('.content-wrapper'), 'hide'); });
+            //setTimeout(function () { loading($('.content-wrapper'), 'hide') }, 700);
         }
-
-
+        
         function loading(el, type) {
             if (type === 'show') {
                 el.waitMe({
@@ -253,13 +380,22 @@
                     textPos: 'vertical',
                     fontSize: '',
                     onClose: function (el) { }
-                });                
+                });
             }
             else {
                 el.waitMe('hide');
             }
         }
-        
+
+        $(document).on('click', '.pg_ld', function (e) {
+            var url = $(this).attr('data-url');
+            var title = $(this).attr('data-title');
+            loadPage(url, title);
+        });
+        $('#main_layout').load(function () {
+            loading($('.content-wrapper'), 'hide');
+        });
+
     </script>
     @RenderSection("script", required: false)
     @{Html.RenderPartial("_SignalR");}

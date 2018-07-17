@@ -5,17 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d32c7421310244f0aeceb05171e8b591" Name="Diagram1" ZoomLevel="81">
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.ABOUT" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.ABOUT" Width="1.5" PointX="11.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.CATEGORY" Width="1.5" PointX="8" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.CONFIGURATION" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.ERROR_LOG" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.FUNCTION" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.CONFIGURATION" Width="1.5" PointX="7.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.ERROR_LOG" Width="1.5" PointX="1.875" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.FUNCTION" Width="1.5" PointX="5.75" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.NAVIGATION" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.POST" Width="1.5" PointX="10.25" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.ROLE" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.ROLE_DETAIL" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.POST" Width="1.5" PointX="9.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.ROLE" Width="1.5" PointX="1.875" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.ROLE_DETAIL" Width="1.5" PointX="3.875" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.USER" Width="1.5" PointX="3.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.USER_ROLE" Width="1.5" PointX="6" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.USER_ROLE" Width="1.5" PointX="1.875" PointY="8.5" IsExpanded="true" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_CATEGORY_NAVIGATION" ManuallyRouted="false" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_POST_CATEGORY" ManuallyRouted="false" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_ROLE_DETAIL_function" ManuallyRouted="false" />
@@ -23,22 +23,46 @@
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_ROLE_DETAIL_role" ManuallyRouted="false" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_USER_ROLE_role_id" ManuallyRouted="false" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_USER_ROLE_user_id" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.HOME_CATEGORY" Width="1.5" PointX="10.25" PointY="15.125" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.HOME_NAVIGATION" Width="1.5" PointX="8" PointY="14.75" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.HOME_CATEGORY" Width="1.5" PointX="10.875" PointY="12.125" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.HOME_NAVIGATION" Width="1.5" PointX="3.875" PointY="11.25" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_HOME_CATEGORY_category_id" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_HOME_NAVIGATION_navigation_id" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.DAILY_TASK" Width="1.5" PointX="3.375" PointY="14.75" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.IDEA" Width="1.5" PointX="12.375" PointY="15.125" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.IDEA_DETAIL" Width="1.5" PointX="14.625" PointY="15" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.REPORT" Width="1.5" PointX="12.375" PointY="10.125" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.REPORT_COMMENT" Width="1.5" PointX="14.625" PointY="10" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.TARGET" Width="1.5" PointX="12.375" PointY="4" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.TARGET_TASK" Width="1.5" PointX="14.625" PointY="4.5" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.DAILY_TASK" Width="1.5" PointX="4.375" PointY="18.625" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.IDEA" Width="1.5" PointX="9.875" PointY="20" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.IDEA_DETAIL" Width="1.5" PointX="12.125" PointY="19.875" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.REPORT" Width="1.5" PointX="17.375" PointY="20.625" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.REPORT_COMMENT" Width="1.5" PointX="19.625" PointY="20.5" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.TARGET" Width="1.5" PointX="24" PointY="20.875" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.TARGET_TASK" Width="1.5" PointX="26.25" PointY="21.375" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_IDEA_DETAIL_IDEA" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_REPORT_COMMENT_REPORT" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_TARGET_PARENT" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_TARGET_TASK_TARGET" />
-      </Diagram>
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_CATEGORY" Width="1.5" PointX="23.625" PointY="6.125" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_CATEGORY_SETTING" Width="1.5" PointX="25.5" PointY="6.25" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_GROUP" Width="1.5" PointX="20.375" PointY="5.75" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_GROUP_SETTING" Width="1.5" PointX="18.25" PointY="6.5" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_CATEGORY_MN_GROUP" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_GROUP_SETTING_MN_GROUP" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_ACCOUNT" Width="1.5" PointX="22" PointY="8.875" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_ACCOUNT_SETTING" Width="1.5" PointX="22" PointY="14.375" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_ACCOUNT_TYPE" Width="1.5" PointX="18.25" PointY="11" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_INCOME" Width="1.5" PointX="25.5" PointY="10.5" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_PAYMENT" Width="1.5" PointX="23.625" PointY="13.375" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.MN_TRANSFER" Width="1.5" PointX="20.25" PointY="12.875" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_INCOME_MN_ACCOUNT" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_PAYMENT_MN_ACCOUNT" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_TRANSFER_MN_ACCOUNT_FROM" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_TRANSFER_MN_ACCOUNT_TO" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_INCOME_MN_CATEGORY" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_MN_PAYMENT_MN_CATEGORY" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.V_ACCOUNT_HISTORY" Width="1.5" PointX="16.5" PointY="12.125" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.V_MONEY_FLOW" Width="1.5" PointX="16.625" PointY="8.625" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.V_CATEGORY_HISTORY" Width="1.5" PointX="18.25" PointY="14.625" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

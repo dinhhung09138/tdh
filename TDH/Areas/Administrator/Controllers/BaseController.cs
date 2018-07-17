@@ -325,6 +325,56 @@ namespace TDH.Areas.Administrator.Controllers
 
                             #endregion
                             break;
+                        case "admmoney":
+                            #region " [ Money ] "
+
+                            switch (actionName)
+                            {
+                                case "report":
+                                case "summaryreport":
+                                case "summaryreportbyyear":
+                                    return "money_report";
+                                case "accounttype":
+                                case "createaccounttype":
+                                case "editaccounttype":
+                                case "publishaccounttype":
+                                case "checkdeleteaccounttype":
+                                case "deleteaccounttype":
+                                    return "money_account_type";
+                                case "account":
+                                case "accounthistory":
+                                case "createaccount":
+                                case "editaccount":
+                                case "publishaccount":
+                                case "checkdeleteaccount":
+                                case "deleteaccount":
+                                    return "money_account";
+                                case "group":
+                                case "creategroup":
+                                case "editgroup":
+                                case "publishgroup":
+                                case "checkdeletegroup":
+                                case "deletegroup":
+                                case "getgroupsettinginfo":
+                                case "savegroupsettinginfo":
+                                    return "money_group";
+                                case "category":
+                                case "categoryhistory":
+                                case "createcategory":
+                                case "editcategory":
+                                case "publishcategory":
+                                case "checkdeletecategory":
+                                case "deletecategory":
+                                    return "money_category";
+                                case "flowhistory":
+                                case "saveincome":
+                                case "savepayment":
+                                case "savetransfer":
+                                    return "money_flow";
+                            }
+
+                            #endregion
+                            break;
                         case "dashboard":
                             break;
                     }
@@ -503,6 +553,54 @@ namespace TDH.Areas.Administrator.Controllers
                                     return Services.RoleService.actionType.Edit;
                                 case "deletereport":
                                 case "checkdeletereport":
+                                    return Services.RoleService.actionType.Delete;
+                            }
+
+                            #endregion
+                            break;
+                        case "admmoney":
+                            #region " [ Money ] "
+
+                            switch (actionName)
+                            {
+                                case "report":
+                                case "summaryreport":
+                                case "summaryreportbyyear":
+                                case "accounttype":
+                                case "account":
+                                case "accounthistory":
+                                case "group":
+                                case "getgroupsettinginfo":
+                                case "category":
+                                case "categoryhistory":
+                                case "flowhistory":
+                                    return Services.RoleService.actionType.View;
+                                case "createaccounttype":
+                                case "createaccount":
+                                case "creategroup":
+                                case "createcategory":
+                                case "saveincome":
+                                case "savepayment":
+                                case "savetransfer":
+                                    return Services.RoleService.actionType.Create;
+                                case "editaccounttype":
+                                case "publishaccounttype":
+                                case "editaccount":
+                                case "publishaccount":
+                                case "editgroup":
+                                case "publishgroup":
+                                case "savegroupsettinginfo":
+                                case "editcategory":
+                                case "publishcategory":
+                                    return Services.RoleService.actionType.Edit;
+                                case "checkdeleteaccounttype":
+                                case "deleteaccounttype":
+                                case "checkdeleteaccount":
+                                case "deleteaccount":
+                                case "checkdeletegroup":
+                                case "deletegroup":
+                                case "checkdeletecategory":
+                                case "deletecategory":
                                     return Services.RoleService.actionType.Delete;
                             }
 

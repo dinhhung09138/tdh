@@ -150,6 +150,33 @@
                             </ul>
                         </li>
                     }
+                    <li class="header">TCCN</li>
+                    var _lFinance = _listSidebar.Where(m => m.Code.Contains("money_")).ToList();
+                    if (_lFinance.Count() > 0)
+                    {
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-tasks"></i>
+                                <p>
+                                    Công việc - Nhiệm vụ
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @{
+                                    foreach (var item in _lFinance)
+                                    {
+                                        <li class="nav-item">
+                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" data-title="TCCN - @item.Title" class="nav-link pg_ld">
+                                                <i class="fa fa-circle-o nav-icon"></i>
+                                                <p>@item.Title</p>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </li>
+                                    }
                 }
             </ul>
         </nav>

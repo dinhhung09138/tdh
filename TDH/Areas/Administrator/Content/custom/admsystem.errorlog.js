@@ -14,6 +14,7 @@ $(document).ready(function () {
         responsive: true,
         pageLength: 10,
         pagingType: 'full_numbers',
+        dom: dom,
         info: true,
         autoWidth: false,
         initComplete: function (settings, json) {
@@ -57,7 +58,7 @@ $(document).ready(function () {
                 width: '40px',
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
-                    return '<a href="javascript:;"  title="Chi tiết" onclick="detailItem(\'' + data.ID + '\');"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+                    return '<a href="javascript:;"  title="Chi tiết" onclick="detailItem(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-eye" aria-hidden="true"></i></a>';
                     
                     return str;
                 }

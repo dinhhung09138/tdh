@@ -1,0 +1,382 @@
+﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+<link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+<link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Báo cáo chi tiêu</h3>
+        <div class="card-tools pull-right">
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h5 class="card-title">Báo cáo theo năm</h5>
+                        <div class="card-tools">
+                            <input type="text" id="monthSelectByYear" class="form-control form-control-sm" value="@DateTime.Now.ToString("yyyy")" readonly />
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: block;">
+                        <div class="row">
+                            <div id="divIncomeSummaryByCategory" class="col-md-12" style="height: 300px;"></div>
+                        </div>
+                        <div class="row">
+                            <div id="divSummary" class="col-md-12" style="height: 300px;"></div>
+                        </div>
+                        <div class="row">
+                            <div id="divSummaryByYear" class="col-md-12" style="height: 300px;"></div>
+                        </div>
+                        <div class="row">
+                            <p>Các nguồn thu trong năm, tính theo từng tháng</p>
+                            <p>Báo cáo theo quy tắc chi, có bị vượt giới hạn hay không.</p>
+                            <p>Column: Báo cáo thu theo từng danh mục thu trong tháng</p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-12">
+                                <p class="text-center">
+                                    <strong>Các nguồn thu nhập</strong>
+                                </p>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <p class="text-center">
+                                    <strong>Phân bổ chi tiêu (đơn vị %)</strong>
+                                </p>
+                            </div>
+                            <div class="col-md-4 col-xs-12">
+                                <p class="text-center">
+                                    <strong>Phân bổ chi tiêu (đơn vị vnd)</strong>
+                                </p>
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-4">
+                                <p class="text-center">
+                                    <strong>Phân bổ chi tiêu</strong>
+                                </p>
+
+                                <div class="progress-group">
+                                    Add Products to Cart
+                                    <span class="float-right"><b>160</b>/200</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+
+                                <div class="progress-group">
+                                    Complete Purchase
+                                    <span class="float-right"><b>310</b>/400</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-danger" style="width: 75%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- /.progress-group -->
+                                <div class="progress-group">
+                                    <span class="progress-text">Visit Premium Page</span>
+                                    <span class="float-right"><b>480</b>/800</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-success" style="width: 60%"></div>
+                                    </div>
+                                </div>
+
+                                <!-- /.progress-group -->
+                                <div class="progress-group">
+                                    Send Inquiries
+                                    <span class="float-right"><b>250</b>/500</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h5 class="card-title">Tình hình thu chi trong tháng</h5>
+                        <div class="card-tools">
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: block;">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p class="text-center">
+                                    <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
+                                </p>
+
+                                <div class="chart">
+                                    <canvas id="salesChart" height="192" style="height: 192px; width: 707px;" width="707"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="text-center">
+                                    <strong>Goal Completion</strong>
+                                </p>
+
+                                <div class="progress-group">
+                                    Add Products to Cart
+                                    <span class="float-right"><b>160</b>/200</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-primary" style="width: 80%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-group">
+                                    Complete Purchase
+                                    <span class="float-right"><b>310</b>/400</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-danger" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-group">
+                                    <span class="progress-text">Visit Premium Page</span>
+                                    <span class="float-right"><b>480</b>/800</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-success" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-group">
+                                    Send Inquiries
+                                    <span class="float-right"><b>250</b>/500</span>
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer" style="display: block;">
+                        <div class="row">
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block border-right">
+                                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i> 17%</span>
+                                    <h5 class="description-header">$35,210.43</h5>
+                                    <span class="description-text">TOTAL REVENUE</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block border-right">
+                                    <span class="description-percentage text-warning"><i class="fa fa-caret-left"></i> 0%</span>
+                                    <h5 class="description-header">$10,390.90</h5>
+                                    <span class="description-text">TOTAL COST</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block border-right">
+                                    <span class="description-percentage text-success"><i class="fa fa-caret-up"></i> 20%</span>
+                                    <h5 class="description-header">$24,813.53</h5>
+                                    <span class="description-text">TOTAL PROFIT</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block">
+                                    <span class="description-percentage text-danger"><i class="fa fa-caret-down"></i> 18%</span>
+                                    <h5 class="description-header">1200</h5>
+                                    <span class="description-text">GOAL COMPLETIONS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="settingModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h3 class="card-title">Thiết lập quy tắc chi tiêu</h3>
+                        <div class="card-tools pull-right">
+                            <input type="text" id="monthSelect" readonly />
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="tbListFullGroupSetting" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên</th>
+                                    <th>% thiết lập</th>
+                                    <th>% thực tế</th>
+                                    <th>Số tiền thiết lập</th>
+                                    <th>Số tiền thực tế</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodytbListFullGroupSetting"></tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span style="color: red;">Lưu ý: Tổng số thiết lập trong tháng là 100%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveSpendSetting();">Lưu</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="groupSettingModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Xác nhận</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h5 id="groupTitle"></h5>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="deleteItem();">Lưu</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+<script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
+<script src="/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
+<script src="/Areas/Administrator/Content/vendors/autoNumeric/autoNumeric.min.js"></script>
+<script src="/Areas/Administrator/Content/Custom/admmoney.report.js"></script>
+
+<script>
+    //
+    google.charts.setOnLoadCallback(drawVisualization);
+
+    function drawIncomeSummaryByCategoryChart() {
+
+        var chartDiv = document.getElementById('divIncomeSummaryByCategory');
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Tháng');
+        data.addColumn('number', "Thu vào");
+        data.addColumn('number', "Chi ra");
+        data.addColumn('number', "Còn lại");
+
+        function loadDataSummaryByYearChart(callback) {
+            $.ajax({
+                url: '/administrator/admmoney/summaryreportbyyear',
+                type: 'POST',
+                cache: false,
+                async: true,
+                xhrFields: {
+                    withCredentials: true,
+                },
+                dataType: 'json',
+                data: ({ year: 2018 }),
+                success: function (response) {
+                    $.each(response, function (idx, item) {
+                        data.addRow([item.Month, item.Income, item.Payment, item.Total]);
+                    });
+                    console.log(data);
+                    callback();
+                },
+                error: function (xhr, status, error) {
+                }
+            });
+        }
+
+        var options = {
+            legend: { position: 'bottom' },
+            chart: {
+                title: 'Báo cáo tình hình thu chi trong năm',
+                subtitle: ''
+            },
+            chartArea: {
+                width: '100%'
+            },
+            //width: 900,
+            //height: 500,
+            series: {
+                // Gives each series an axis name that matches the Y-axis below.
+                0: {
+                    axis: 'dvt', color: '28a745'
+                },
+                1: {
+                    color: 'dc3545'
+                },
+                2: {
+                    color: '007bff'
+                }
+            },
+            axes: {
+                // Adds labels to each axis; they don't have to match the axis names.
+                y: {
+                    dvt: { label: '(vnd)' }
+                }
+            }
+        };
+
+        function drawChart() {
+            var chart = new google.charts.Line(chartDiv);
+            chart.draw(data, options);
+        }
+
+        loadDataSummaryByYearChart(drawChart);
+
+        if (document.addEventListener) {
+            window.addEventListener('resize', drawChart);
+        }
+        else if (document.attachEvent) {
+            window.attachEvent('onresize', drawChart);
+        }
+        else {
+            window.resize = drawChart;
+        }
+    }
+    //
+    //
+    $(document).ready(function () {
+        //loadDataSummaryByYearChart();
+    });
+
+    function drawVisualization() {
+        // Some raw data (not necessarily accurate)
+        var data = google.visualization.arrayToDataTable([
+            ['Month', 'Bolivia', 'Ecuador', 'Madagascar', 'Papua New Guinea', 'Rwanda', 'Average'],
+            ['2004/05', 165, 938, 522, 998, 450, 614.6],
+            ['2005/06', 135, 1120, 599, 1268, 288, 682],
+            ['2006/07', 157, 1167, 587, 807, 397, 623],
+            ['2007/08', 139, 1110, 615, 968, 215, 609.4],
+            ['2008/09', 136, 691, 629, 1026, 366, 569.6]
+        ]);
+
+        var options = {
+            title: 'Monthly Coffee Production by Country',
+            vAxis: { title: 'Cups' },
+            hAxis: { title: 'Month' },
+            seriesType: 'bars',
+            series: { 5: { type: 'line' } }
+        };
+
+        var chart = new google.visualization.ComboChart(document.getElementById('divIncomeSummaryByCategory'));
+        chart.draw(data, options);
+    }
+</script>
+

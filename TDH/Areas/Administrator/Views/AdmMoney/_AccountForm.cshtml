@@ -1,0 +1,96 @@
+﻿@model TDH.Areas.Administrator.Models.MoneyAccountModel
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.Insert)
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Loại tài khoản <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.DropDownListFor(m => m.AccountTypeID, new SelectList(ViewBag.type, "ID", "Name"), "Chọn nhóm tài khoản", new { @class = "form-control", @required = true, @focus = true, @tabindex = "1" })
+        @Html.ValidationMessageFor(m => m.AccountTypeID)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Tên TK <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @maxlength = 50, @required = true, @focus = true, @tabindex = "2" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Số tiền còn lại
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (Model.Total >= 0)
+            {
+                <span class="label label-success pd-5">@Model.Total.ToString("#,##0.##")</span>
+            }
+            else
+            {
+                <span class="label label-danger pd-5">-@Model.Total.ToString("#,##0.##")</span>
+            }
+        }
+    </div>
+</div>
+@{
+    if (!Model.Insert)
+    {
+        <div class="row form-group">
+            <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+                Lịch sử tài khoản trong năm
+            </div>
+            <div class="col-md-9 col-sm-8 col-xs-12">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tháng</th>
+                            <th>Tổng thu</th>
+                            <th>Tổng chi</th>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            string _cls = "";
+                            foreach (var item in Model.Setting)
+                            {
+                                _cls = "";
+                                if (item.Input <= item.Output)
+                                {
+                                    _cls = "background-color: rgb(220, 53, 69);";
+                                }
+                                <tr>
+                                    <td class="@_cls">@item.Month</td>
+                                    <td class="text-right">@item.Input.ToString("#,##0.##")</td>
+                                    <td class="text-right">@item.Output.ToString("#,##0.##")</td>
+                                    <td class="ctn-center">
+                                        <a href="javascript:;" onclick="history('@Model.ID', '@Model.Name', '@item.YearMonthString');" title="Lịch sử giao dịch" class="mg-lr-2"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (ViewBag.Add == true || ViewBag.Edit == true)
+            {
+                <a href="javascript:;" data-url="/administrator/admmoney/account" data-title="Tài khoản" class="btn btn-default pg_ld" tabindex="3">Quay lại</a>
+                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="4">Lưu</button>
+            }
+        }
+    </div>
+</div>
+

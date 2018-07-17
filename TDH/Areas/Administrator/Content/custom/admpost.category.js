@@ -14,7 +14,7 @@ $(document).ready(function () {
         paging: true,
         pageLength: 10,
         pagingType: 'full_numbers',
-        dom: '<"top"<"row"<"col-sm-4"l><"col-sm-4"<"toolbar">><"col-sm-4 text-right"f>>>rt<"bottom"ip><"clear">',
+        dom: dom,
         info: true,
         autoWidth: false,
         initComplete: function (settings, json) {
@@ -67,7 +67,7 @@ $(document).ready(function () {
                 searchable: true
             },
             {
-                data: 'Count',
+                data: 'CountString',
                 orderable: false,
                 searchable: false,
                 className: 'ctn-center',
@@ -88,7 +88,7 @@ $(document).ready(function () {
                 width: '90px',
                 render: function (obj, type, data, meta) {
                     if (allowEdit === 'True') {
-                        if (data.ShowOnNav === true) {
+                        if (data.ShowOnNav === true && data.Count === 0) {
                             return '<input type="checkbox" class="flat" name="showOnNav" checked  value="' + data.ID + '" />';
                         } else {
                             return '<input type="checkbox" class="flat" name="showOnNav" value="' + data.ID + '" />';
@@ -150,15 +150,15 @@ $(document).ready(function () {
             },
             {
                 orderable: false,
-                width: '40px',
+                width: '60px',
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admpost/editcategory/' + data.ID + '\" data-title="Cập nhật danh mục bài viết" title="Cập nhật" class="pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="javascript:;" data-url="/administrator/admpost/editcategory/' + data.ID + '\" data-title="Cập nhật danh mục bài viết" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
-                        str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');"><i class="fa fa-remove" aria-hidden="true"></i></a>';
+                        str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-remove" aria-hidden="true"></i></a>';
                     }
                     return str;
                 }

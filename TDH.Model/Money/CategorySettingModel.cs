@@ -56,12 +56,12 @@ namespace TDH.Model.Money
         public short PercentCurrent { get; set; } = 0;
 
         /// <summary>
-        /// Money setting value
+        /// Total money setting value
         /// </summary>
         public decimal MoneySetting { get; set; } = 0;
 
         /// <summary>
-        /// Money current value
+        /// Total money current value
         /// </summary>
         public decimal MoneyCurrent { get; set; } = 0;
     }

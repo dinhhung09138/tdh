@@ -90,13 +90,13 @@ namespace TDH.Model.Money
         public string StartMonthString { get; set; } = "";
 
         /// <summary>
-        /// Total money from the end of month
+        /// Total money at the end of month
         /// </summary>
         [Required(ErrorMessage = "Nội dung không được rỗng")]
         public decimal EndMonth { get; set; }
 
         /// <summary>
-        /// Total money in the end of month, format as string
+        /// Total money at the end of month, format as string
         /// </summary>
         public string EndMonthString { get; set; } = "";
 

@@ -46,22 +46,22 @@ namespace TDH.Model.Money
         public string AccountName { get; set; }
 
         /// <summary>
-        /// Total money begin
+        /// Total money from the start of month
         /// </summary>
         public decimal Start { get; set; } = 0;
 
         /// <summary>
-        /// Total income
+        /// Total income in a month
         /// </summary>
         public decimal Input { get; set; } = 0;
 
         /// <summary>
-        /// Total payment
+        /// Total payment in a month
         /// </summary>
         public decimal Output { get; set; } = 0;
 
         /// <summary>
-        /// Total money left
+        /// Total money at the end of month
         /// </summary>
         public decimal End { get; set; } = 0;
     }

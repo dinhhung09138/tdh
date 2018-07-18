@@ -23,12 +23,12 @@ namespace TDH.Model.Money
         public string Title { get; set; }
 
         /// <summary>
-        /// Money
+        /// Total money
         /// </summary>
         public decimal Money { get; set; }
 
         /// <summary>
-        /// Money, format as string
+        /// Total money, format as string
         /// </summary>
         public string MoneyString { get; set; }
 

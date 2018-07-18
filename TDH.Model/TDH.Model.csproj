@@ -30,24 +30,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System"/>
-    
-    <Reference Include="System.Core"/>
-    <Reference Include="System.Xml.Linq"/>
-    <Reference Include="System.Data.DataSetExtensions"/>
-    
-    
-    <Reference Include="Microsoft.CSharp"/>
-    
-    <Reference Include="System.Data"/>
-    
-    <Reference Include="System.Net.Http"/>
-    
-    <Reference Include="System.Xml"/>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Utils">
+      <HintPath>..\TDH\Libs\Utils.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Money\AccountHistoryModel.cs" />
+    <Compile Include="Money\AccountModel.cs" />
+    <Compile Include="Money\AccountSettingModel.cs" />
+    <Compile Include="Money\AccountTypeModel.cs" />
+    <Compile Include="Money\CategoryHistoryModel.cs" />
+    <Compile Include="Money\CategoryModel.cs" />
+    <Compile Include="Money\CategorySettingModel.cs" />
+    <Compile Include="Money\FlowModel.cs" />
+    <Compile Include="Money\GroupModel.cs" />
+    <Compile Include="Money\GroupSettingModel.cs" />
+    <Compile Include="Money\IncomeModel.cs" />
+    <Compile Include="Money\PaymentModel.cs" />
+    <Compile Include="Money\ReportCollectionByYearModel.cs" />
+    <Compile Include="Money\TransferModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
- </Project>
+</Project>

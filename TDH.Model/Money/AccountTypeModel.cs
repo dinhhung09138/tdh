@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace TDH.Areas.Administrator.Models
+namespace TDH.Model.Money
 {
-    public class MoneyAccountTypeModel : Utils.Database.BaseModel
+    public class AccountTypeModel : Utils.Database.BaseModel
     {
         public Guid ID { get; set; }
 

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace TDH.Areas.Administrator.Models
+namespace TDH.Model.Money
 {
-    public class MoneyFlowModel
+    public class FlowModel
     {
         public Guid ID { get; set; } = Guid.NewGuid();
 
@@ -19,12 +19,11 @@ namespace TDH.Areas.Administrator.Models
         public DateTime Date { get; set; } = DateTime.Now;
 
         public string Money { get; set; } = "";
-        
+
         public string Fee { get; set; } = "";
 
         public int Type { get; set; } = 0;
 
         public string TypeName { get; set; } = "";
-
     }
 }

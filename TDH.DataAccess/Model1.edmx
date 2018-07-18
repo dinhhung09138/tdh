@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TDHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TDHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ABOUT">
           <Key>
             <PropertyRef Name="id" />
@@ -657,6 +657,15 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="fee" Type="numeric" Precision="18" Scale="1" Nullable="false" />
           <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="V_REPORT_SUMMARY_BY_YEAR">
+          <Property Name="input" Type="numeric" Precision="38" Scale="1" />
+          <Property Name="output" Type="numeric" Precision="38" Scale="1" />
+          <Property Name="year" Type="varchar" MaxLength="4" />
+          <Property Name="month" Type="varchar" MaxLength="6" />
+          <Property Name="count" Type="bigint" />
+        </EntityType>-->
         <Association Name="FK_CATEGORY_NAVIGATION">
           <End Role="NAVIGATION" Type="Self.NAVIGATION" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -999,6 +1008,24 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="I_GroupID" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="I_Year" Type="int" Mode="In" />
+          <Parameter Name="I_UserID" Type="uniqueidentifier" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+                <Property Name="group_id" Type="uniqueidentifier" Nullable="false" />
+                <Property Name="year_month" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+                <Property Name="percent_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="percent_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="FNC_REPORT_INCOME_BY_CATEGORY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -1235,8 +1262,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             <End Role="WK_CHECKLIST_ITEM" EntitySet="WK_CHECKLIST_ITEM" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TDHModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1278,13 +1304,177 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="output" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
           <Property Name="final" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
         </ComplexType>
+        <EntityContainer Name="TDHEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="FNC_REPORT_INCOME_BY_CATEGORY" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_INCOME_BY_CATEGORY_Result)" />
+          <FunctionImport Name="FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result)">
+          <Parameter Name="I_Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FNC_REPORT_SUMMARY" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_SUMMARY_Result)" />
+          <FunctionImport Name="FNC_REPORT_SUMMARY_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_SUMMARY_BY_YEAR_Result)">
+          <Parameter Name="I_Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result)">
+            <Parameter Name="I_GroupID" Mode="In" Type="Guid" />
+            <Parameter Name="I_Year" Mode="In" Type="Int32" />
+            <Parameter Name="I_UserID" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <EntitySet Name="ABOUTs" EntityType="TDHModel.ABOUT" />
+          <EntitySet Name="CATEGORies" EntityType="TDHModel.CATEGORY" />
+          <EntitySet Name="CONFIGURATIONs" EntityType="TDHModel.CONFIGURATION" />
+          <EntitySet Name="DAILY_TASK" EntityType="TDHModel.DAILY_TASK" />
+          <EntitySet Name="ERROR_LOG" EntityType="TDHModel.ERROR_LOG" />
+          <EntitySet Name="FUNCTIONs" EntityType="TDHModel.FUNCTION" />
+          <EntitySet Name="HOME_CATEGORY" EntityType="TDHModel.HOME_CATEGORY" />
+          <EntitySet Name="HOME_NAVIGATION" EntityType="TDHModel.HOME_NAVIGATION" />
+          <EntitySet Name="IDEAs" EntityType="TDHModel.IDEA" />
+          <EntitySet Name="IDEA_DETAIL" EntityType="TDHModel.IDEA_DETAIL" />
+          <EntitySet Name="MN_ACCOUNT" EntityType="TDHModel.MN_ACCOUNT" />
+          <EntitySet Name="MN_ACCOUNT_SETTING" EntityType="TDHModel.MN_ACCOUNT_SETTING" />
+          <EntitySet Name="MN_ACCOUNT_TYPE" EntityType="TDHModel.MN_ACCOUNT_TYPE" />
+          <EntitySet Name="MN_CATEGORY" EntityType="TDHModel.MN_CATEGORY" />
+          <EntitySet Name="MN_CATEGORY_SETTING" EntityType="TDHModel.MN_CATEGORY_SETTING" />
+          <EntitySet Name="MN_GROUP" EntityType="TDHModel.MN_GROUP" />
+          <EntitySet Name="MN_GROUP_SETTING" EntityType="TDHModel.MN_GROUP_SETTING" />
+          <EntitySet Name="MN_INCOME" EntityType="TDHModel.MN_INCOME" />
+          <EntitySet Name="MN_PAYMENT" EntityType="TDHModel.MN_PAYMENT" />
+          <EntitySet Name="MN_TRANSFER" EntityType="TDHModel.MN_TRANSFER" />
+          <EntitySet Name="NAVIGATIONs" EntityType="TDHModel.NAVIGATION" />
+          <EntitySet Name="POSTs" EntityType="TDHModel.POST" />
+          <EntitySet Name="REPORTs" EntityType="TDHModel.REPORT" />
+          <EntitySet Name="REPORT_COMMENT" EntityType="TDHModel.REPORT_COMMENT" />
+          <EntitySet Name="ROLEs" EntityType="TDHModel.ROLE" />
+          <EntitySet Name="ROLE_DETAIL" EntityType="TDHModel.ROLE_DETAIL" />
+          <EntitySet Name="TARGETs" EntityType="TDHModel.TARGET" />
+          <EntitySet Name="TARGET_TASK" EntityType="TDHModel.TARGET_TASK" />
+          <EntitySet Name="USERs" EntityType="TDHModel.USER" />
+          <EntitySet Name="USER_ROLE" EntityType="TDHModel.USER_ROLE" />
+          <EntitySet Name="WK_CHECKLIST_GROUP" EntityType="TDHModel.WK_CHECKLIST_GROUP" />
+          <EntitySet Name="WK_CHECKLIST_ITEM" EntityType="TDHModel.WK_CHECKLIST_ITEM" />
+          <EntitySet Name="WK_CHECKLIST_ITEM_DETAIL" EntityType="TDHModel.WK_CHECKLIST_ITEM_DETAIL" />
+          <EntitySet Name="V_ACCOUNT_HISTORY" EntityType="TDHModel.V_ACCOUNT_HISTORY" />
+          <EntitySet Name="V_CATEGORY_HISTORY" EntityType="TDHModel.V_CATEGORY_HISTORY" />
+          <EntitySet Name="V_MONEY_FLOW" EntityType="TDHModel.V_MONEY_FLOW" />
+          <AssociationSet Name="FK_CATEGORY_NAVIGATION" Association="TDHModel.FK_CATEGORY_NAVIGATION">
+            <End Role="NAVIGATION" EntitySet="NAVIGATIONs" />
+            <End Role="CATEGORY" EntitySet="CATEGORies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HOME_CATEGORY_category_id" Association="TDHModel.FK_HOME_CATEGORY_category_id">
+            <End Role="CATEGORY" EntitySet="CATEGORies" />
+            <End Role="HOME_CATEGORY" EntitySet="HOME_CATEGORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_POST_CATEGORY" Association="TDHModel.FK_POST_CATEGORY">
+            <End Role="CATEGORY" EntitySet="CATEGORies" />
+            <End Role="POST" EntitySet="POSTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLE_DETAIL_function" Association="TDHModel.FK_ROLE_DETAIL_function">
+            <End Role="FUNCTION" EntitySet="FUNCTIONs" />
+            <End Role="ROLE_DETAIL" EntitySet="ROLE_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HOME_NAVIGATION_navigation_id" Association="TDHModel.FK_HOME_NAVIGATION_navigation_id">
+            <End Role="NAVIGATION" EntitySet="NAVIGATIONs" />
+            <End Role="HOME_NAVIGATION" EntitySet="HOME_NAVIGATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IDEA_DETAIL_IDEA" Association="TDHModel.FK_IDEA_DETAIL_IDEA">
+            <End Role="IDEA" EntitySet="IDEAs" />
+            <End Role="IDEA_DETAIL" EntitySet="IDEA_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" Association="TDHModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
+            <End Role="MN_ACCOUNT_TYPE" EntitySet="MN_ACCOUNT_TYPE" />
+            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" Association="TDHModel.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT">
+            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+            <End Role="MN_ACCOUNT_SETTING" EntitySet="MN_ACCOUNT_SETTING" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_INCOME_MN_ACCOUNT" Association="TDHModel.FK_MN_INCOME_MN_ACCOUNT">
+            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+            <End Role="MN_INCOME" EntitySet="MN_INCOME" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_PAYMENT_MN_ACCOUNT" Association="TDHModel.FK_MN_PAYMENT_MN_ACCOUNT">
+            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+            <End Role="MN_PAYMENT" EntitySet="MN_PAYMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_TRANSFER_MN_ACCOUNT_FROM" Association="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_FROM">
+            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+            <End Role="MN_TRANSFER" EntitySet="MN_TRANSFER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_TRANSFER_MN_ACCOUNT_TO" Association="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_TO">
+            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+            <End Role="MN_TRANSFER" EntitySet="MN_TRANSFER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_CATEGORY_MN_GROUP" Association="TDHModel.FK_MN_CATEGORY_MN_GROUP">
+            <End Role="MN_GROUP" EntitySet="MN_GROUP" />
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_CATEGORY_SETTING_MN_CATEGORY" Association="TDHModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY">
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+            <End Role="MN_CATEGORY_SETTING" EntitySet="MN_CATEGORY_SETTING" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_INCOME_MN_CATEGORY" Association="TDHModel.FK_MN_INCOME_MN_CATEGORY">
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+            <End Role="MN_INCOME" EntitySet="MN_INCOME" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_PAYMENT_MN_CATEGORY" Association="TDHModel.FK_MN_PAYMENT_MN_CATEGORY">
+            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+            <End Role="MN_PAYMENT" EntitySet="MN_PAYMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MN_GROUP_SETTING_MN_GROUP" Association="TDHModel.FK_MN_GROUP_SETTING_MN_GROUP">
+            <End Role="MN_GROUP" EntitySet="MN_GROUP" />
+            <End Role="MN_GROUP_SETTING" EntitySet="MN_GROUP_SETTING" />
+          </AssociationSet>
+          <AssociationSet Name="FK_POST_NAVIGATION" Association="TDHModel.FK_POST_NAVIGATION">
+            <End Role="NAVIGATION" EntitySet="NAVIGATIONs" />
+            <End Role="POST" EntitySet="POSTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REPORT_COMMENT_REPORT" Association="TDHModel.FK_REPORT_COMMENT_REPORT">
+            <End Role="REPORT" EntitySet="REPORTs" />
+            <End Role="REPORT_COMMENT" EntitySet="REPORT_COMMENT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ROLE_DETAIL_role" Association="TDHModel.FK_ROLE_DETAIL_role">
+            <End Role="ROLE" EntitySet="ROLEs" />
+            <End Role="ROLE_DETAIL" EntitySet="ROLE_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLE_role_id" Association="TDHModel.FK_USER_ROLE_role_id">
+            <End Role="ROLE" EntitySet="ROLEs" />
+            <End Role="USER_ROLE" EntitySet="USER_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TARGET_PARENT" Association="TDHModel.FK_TARGET_PARENT">
+            <End Role="TARGET" EntitySet="TARGETs" />
+            <End Role="TARGET1" EntitySet="TARGETs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TARGET_TASK_TARGET" Association="TDHModel.FK_TARGET_TASK_TARGET">
+            <End Role="TARGET" EntitySet="TARGETs" />
+            <End Role="TARGET_TASK" EntitySet="TARGET_TASK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USER_ROLE_user_id" Association="TDHModel.FK_USER_ROLE_user_id">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="USER_ROLE" EntitySet="USER_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WK_CHECKLIST_ITEM_group_id" Association="TDHModel.FK_WK_CHECKLIST_ITEM_group_id">
+            <End Role="WK_CHECKLIST_GROUP" EntitySet="WK_CHECKLIST_GROUP" />
+            <End Role="WK_CHECKLIST_ITEM" EntitySet="WK_CHECKLIST_ITEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WK_CHECKLIST_ITEM_DETAIL_check_id" Association="TDHModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id">
+            <End Role="WK_CHECKLIST_ITEM" EntitySet="WK_CHECKLIST_ITEM" />
+            <End Role="WK_CHECKLIST_ITEM_DETAIL" EntitySet="WK_CHECKLIST_ITEM_DETAIL" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
+          <Property Type="Guid" Name="id" Nullable="false" />
+          <Property Type="Guid" Name="group_id" Nullable="false" />
+          <Property Type="Decimal" Name="year_month" Nullable="false" Precision="6" Scale="0" />
+          <Property Type="Decimal" Name="percent_setting" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="percent_current" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="money_setting" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="money_current" Nullable="false" Precision="38" Scale="1" />
+        </ComplexType>
         <EntityType Name="ABOUT">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="link" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="link" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="update_by" Type="Guid" />
@@ -1293,8 +1483,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
           <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="meta_title" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="meta_description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="meta_title" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="meta_description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="meta_keywords" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="meta_next" Type="String" MaxLength="170" FixedLength="false" Unicode="true" />
           <Property Name="meta_og_site_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -1311,15 +1501,15 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="navigation_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="70" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="alias" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="alias" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="show_on_nav" Type="Boolean" Nullable="false" />
           <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
-          <Property Name="meta_title" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="meta_description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="meta_title" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="meta_description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="meta_keywords" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="meta_next" Type="String" MaxLength="170" FixedLength="false" Unicode="true" />
           <Property Name="meta_og_site_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -1336,25 +1526,25 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="NAVIGATION" Relationship="Self.FK_CATEGORY_NAVIGATION" FromRole="CATEGORY" ToRole="NAVIGATION" />
-          <NavigationProperty Name="HOME_CATEGORY" Relationship="Self.FK_HOME_CATEGORY_category_id" FromRole="CATEGORY" ToRole="HOME_CATEGORY" />
-          <NavigationProperty Name="POSTs" Relationship="Self.FK_POST_CATEGORY" FromRole="CATEGORY" ToRole="POST" />
+          <NavigationProperty Name="NAVIGATION" Relationship="TDHModel.FK_CATEGORY_NAVIGATION" FromRole="CATEGORY" ToRole="NAVIGATION" />
+          <NavigationProperty Name="HOME_CATEGORY" Relationship="TDHModel.FK_HOME_CATEGORY_category_id" FromRole="CATEGORY" ToRole="HOME_CATEGORY" />
+          <NavigationProperty Name="POSTs" Relationship="TDHModel.FK_POST_CATEGORY" FromRole="CATEGORY" ToRole="POST" />
         </EntityType>
         <EntityType Name="CONFIGURATION">
           <Key>
             <PropertyRef Name="key" />
           </Key>
-          <Property Name="key" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="key" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="value" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="value" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DAILY_TASK">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="done" Type="Boolean" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="level" Type="Int16" Nullable="false" />
@@ -1385,14 +1575,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Key>
             <PropertyRef Name="code" />
           </Key>
-          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="area" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ROLE_DETAIL" Relationship="Self.FK_ROLE_DETAIL_function" FromRole="FUNCTION" ToRole="ROLE_DETAIL" />
+          <NavigationProperty Name="ROLE_DETAIL" Relationship="TDHModel.FK_ROLE_DETAIL_function" FromRole="FUNCTION" ToRole="ROLE_DETAIL" />
         </EntityType>
         <EntityType Name="HOME_CATEGORY">
           <Key>
@@ -1401,7 +1591,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="category_id" Type="Guid" Nullable="false" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="CATEGORY" Relationship="Self.FK_HOME_CATEGORY_category_id" FromRole="HOME_CATEGORY" ToRole="CATEGORY" />
+          <NavigationProperty Name="CATEGORY" Relationship="TDHModel.FK_HOME_CATEGORY_category_id" FromRole="HOME_CATEGORY" ToRole="CATEGORY" />
         </EntityType>
         <EntityType Name="HOME_NAVIGATION">
           <Key>
@@ -1410,14 +1600,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="navigation_id" Type="Guid" Nullable="false" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
-          <NavigationProperty Name="NAVIGATION" Relationship="Self.FK_HOME_NAVIGATION_navigation_id" FromRole="HOME_NAVIGATION" ToRole="NAVIGATION" />
+          <NavigationProperty Name="NAVIGATION" Relationship="TDHModel.FK_HOME_NAVIGATION_navigation_id" FromRole="HOME_NAVIGATION" ToRole="NAVIGATION" />
         </EntityType>
         <EntityType Name="IDEA">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -1426,7 +1616,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="IDEA_DETAIL" Relationship="Self.FK_IDEA_DETAIL_IDEA" FromRole="IDEA" ToRole="IDEA_DETAIL" />
+          <NavigationProperty Name="IDEA_DETAIL" Relationship="TDHModel.FK_IDEA_DETAIL_IDEA" FromRole="IDEA" ToRole="IDEA_DETAIL" />
         </EntityType>
         <EntityType Name="IDEA_DETAIL">
           <Key>
@@ -1434,7 +1624,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="idea_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -1443,7 +1633,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="IDEA" Relationship="Self.FK_IDEA_DETAIL_IDEA" FromRole="IDEA_DETAIL" ToRole="IDEA" />
+          <NavigationProperty Name="IDEA" Relationship="TDHModel.FK_IDEA_DETAIL_IDEA" FromRole="IDEA_DETAIL" ToRole="IDEA" />
         </EntityType>
         <EntityType Name="MN_ACCOUNT">
           <Key>
@@ -1451,12 +1641,12 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="account_type_id" Type="Guid" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="start" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
-          <Property Name="input" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
-          <Property Name="output" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
-          <Property Name="end" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
-          <Property Name="ordering" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="start" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="input" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="output" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="end" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="ordering" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -1465,24 +1655,24 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="MN_ACCOUNT_TYPE" Relationship="Self.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" FromRole="MN_ACCOUNT" ToRole="MN_ACCOUNT_TYPE" />
-          <NavigationProperty Name="MN_ACCOUNT_SETTING" Relationship="Self.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" FromRole="MN_ACCOUNT" ToRole="MN_ACCOUNT_SETTING" />
-          <NavigationProperty Name="MN_INCOME" Relationship="Self.FK_MN_INCOME_MN_ACCOUNT" FromRole="MN_ACCOUNT" ToRole="MN_INCOME" />
-          <NavigationProperty Name="MN_PAYMENT" Relationship="Self.FK_MN_PAYMENT_MN_ACCOUNT" FromRole="MN_ACCOUNT" ToRole="MN_PAYMENT" />
-          <NavigationProperty Name="MN_TRANSFER" Relationship="Self.FK_MN_TRANSFER_MN_ACCOUNT_FROM" FromRole="MN_ACCOUNT" ToRole="MN_TRANSFER" />
-          <NavigationProperty Name="MN_TRANSFER1" Relationship="Self.FK_MN_TRANSFER_MN_ACCOUNT_TO" FromRole="MN_ACCOUNT" ToRole="MN_TRANSFER" />
+          <NavigationProperty Name="MN_ACCOUNT_TYPE" Relationship="TDHModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" FromRole="MN_ACCOUNT" ToRole="MN_ACCOUNT_TYPE" />
+          <NavigationProperty Name="MN_ACCOUNT_SETTING" Relationship="TDHModel.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" FromRole="MN_ACCOUNT" ToRole="MN_ACCOUNT_SETTING" />
+          <NavigationProperty Name="MN_INCOME" Relationship="TDHModel.FK_MN_INCOME_MN_ACCOUNT" FromRole="MN_ACCOUNT" ToRole="MN_INCOME" />
+          <NavigationProperty Name="MN_PAYMENT" Relationship="TDHModel.FK_MN_PAYMENT_MN_ACCOUNT" FromRole="MN_ACCOUNT" ToRole="MN_PAYMENT" />
+          <NavigationProperty Name="MN_TRANSFER" Relationship="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_FROM" FromRole="MN_ACCOUNT" ToRole="MN_TRANSFER" />
+          <NavigationProperty Name="MN_TRANSFER1" Relationship="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_TO" FromRole="MN_ACCOUNT" ToRole="MN_TRANSFER" />
         </EntityType>
         <EntityType Name="MN_ACCOUNT_SETTING">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="yearmonth" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="yearmonth" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
           <Property Name="account_id" Type="Guid" Nullable="false" />
-          <Property Name="start" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
-          <Property Name="input" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
-          <Property Name="output" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
-          <Property Name="end" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="start" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="input" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="output" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="end" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
@@ -1492,14 +1682,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="MN_ACCOUNT" Relationship="Self.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" FromRole="MN_ACCOUNT_SETTING" ToRole="MN_ACCOUNT" />
+          <NavigationProperty Name="MN_ACCOUNT" Relationship="TDHModel.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" FromRole="MN_ACCOUNT_SETTING" ToRole="MN_ACCOUNT" />
         </EntityType>
         <EntityType Name="MN_ACCOUNT_TYPE">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
@@ -1509,20 +1699,20 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="MN_ACCOUNT" Relationship="Self.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" FromRole="MN_ACCOUNT_TYPE" ToRole="MN_ACCOUNT" />
+          <NavigationProperty Name="MN_ACCOUNT" Relationship="TDHModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" FromRole="MN_ACCOUNT_TYPE" ToRole="MN_ACCOUNT" />
         </EntityType>
         <EntityType Name="MN_CATEGORY">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="group_id" Type="Guid" Nullable="false" />
           <Property Name="percent_setting" Type="Byte" Nullable="false" />
           <Property Name="percent_current" Type="Byte" Nullable="false" />
-          <Property Name="money_setting" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="money_current" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
@@ -1532,10 +1722,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="MN_GROUP" Relationship="Self.FK_MN_CATEGORY_MN_GROUP" FromRole="MN_CATEGORY" ToRole="MN_GROUP" />
-          <NavigationProperty Name="MN_CATEGORY_SETTING" Relationship="Self.FK_MN_CATEGORY_SETTING_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MN_CATEGORY_SETTING" />
-          <NavigationProperty Name="MN_INCOME" Relationship="Self.FK_MN_INCOME_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MN_INCOME" />
-          <NavigationProperty Name="MN_PAYMENT" Relationship="Self.FK_MN_PAYMENT_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MN_PAYMENT" />
+          <NavigationProperty Name="MN_GROUP" Relationship="TDHModel.FK_MN_CATEGORY_MN_GROUP" FromRole="MN_CATEGORY" ToRole="MN_GROUP" />
+          <NavigationProperty Name="MN_CATEGORY_SETTING" Relationship="TDHModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MN_CATEGORY_SETTING" />
+          <NavigationProperty Name="MN_INCOME" Relationship="TDHModel.FK_MN_INCOME_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MN_INCOME" />
+          <NavigationProperty Name="MN_PAYMENT" Relationship="TDHModel.FK_MN_PAYMENT_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MN_PAYMENT" />
         </EntityType>
         <EntityType Name="MN_CATEGORY_SETTING">
           <Key>
@@ -1543,11 +1733,11 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="category_id" Type="Guid" Nullable="false" />
-          <Property Name="year_month" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="year_month" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
           <Property Name="percent_setting" Type="Byte" Nullable="false" />
           <Property Name="percent_current" Type="Byte" Nullable="false" />
-          <Property Name="money_setting" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="money_current" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="update_by" Type="Guid" />
@@ -1555,20 +1745,20 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="MN_CATEGORY" Relationship="Self.FK_MN_CATEGORY_SETTING_MN_CATEGORY" FromRole="MN_CATEGORY_SETTING" ToRole="MN_CATEGORY" />
+          <NavigationProperty Name="MN_CATEGORY" Relationship="TDHModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY" FromRole="MN_CATEGORY_SETTING" ToRole="MN_CATEGORY" />
         </EntityType>
         <EntityType Name="MN_GROUP">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="is_input" Type="Boolean" Nullable="false" />
           <Property Name="percent_setting" Type="Byte" Nullable="false" />
           <Property Name="percent_current" Type="Byte" Nullable="false" />
-          <Property Name="money_setting" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="money_current" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
@@ -1578,8 +1768,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="MN_CATEGORY" Relationship="Self.FK_MN_CATEGORY_MN_GROUP" FromRole="MN_GROUP" ToRole="MN_CATEGORY" />
-          <NavigationProperty Name="MN_GROUP_SETTING" Relationship="Self.FK_MN_GROUP_SETTING_MN_GROUP" FromRole="MN_GROUP" ToRole="MN_GROUP_SETTING" />
+          <NavigationProperty Name="MN_CATEGORY" Relationship="TDHModel.FK_MN_CATEGORY_MN_GROUP" FromRole="MN_GROUP" ToRole="MN_CATEGORY" />
+          <NavigationProperty Name="MN_GROUP_SETTING" Relationship="TDHModel.FK_MN_GROUP_SETTING_MN_GROUP" FromRole="MN_GROUP" ToRole="MN_GROUP_SETTING" />
         </EntityType>
         <EntityType Name="MN_GROUP_SETTING">
           <Key>
@@ -1587,11 +1777,11 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="group_id" Type="Guid" Nullable="false" />
-          <Property Name="year_month" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="year_month" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
           <Property Name="percent_setting" Type="Byte" Nullable="false" />
           <Property Name="percent_current" Type="Byte" Nullable="false" />
-          <Property Name="money_setting" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="money_current" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="update_by" Type="Guid" />
@@ -1599,7 +1789,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="MN_GROUP" Relationship="Self.FK_MN_GROUP_SETTING_MN_GROUP" FromRole="MN_GROUP_SETTING" ToRole="MN_GROUP" />
+          <NavigationProperty Name="MN_GROUP" Relationship="TDHModel.FK_MN_GROUP_SETTING_MN_GROUP" FromRole="MN_GROUP_SETTING" ToRole="MN_GROUP" />
         </EntityType>
         <EntityType Name="MN_INCOME">
           <Key>
@@ -1608,10 +1798,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="account_id" Type="Guid" Nullable="false" />
           <Property Name="category_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="money" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="update_by" Type="Guid" />
@@ -1620,8 +1810,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="MN_ACCOUNT" Relationship="Self.FK_MN_INCOME_MN_ACCOUNT" FromRole="MN_INCOME" ToRole="MN_ACCOUNT" />
-          <NavigationProperty Name="MN_CATEGORY" Relationship="Self.FK_MN_INCOME_MN_CATEGORY" FromRole="MN_INCOME" ToRole="MN_CATEGORY" />
+          <NavigationProperty Name="MN_ACCOUNT" Relationship="TDHModel.FK_MN_INCOME_MN_ACCOUNT" FromRole="MN_INCOME" ToRole="MN_ACCOUNT" />
+          <NavigationProperty Name="MN_CATEGORY" Relationship="TDHModel.FK_MN_INCOME_MN_CATEGORY" FromRole="MN_INCOME" ToRole="MN_CATEGORY" />
         </EntityType>
         <EntityType Name="MN_PAYMENT">
           <Key>
@@ -1630,10 +1820,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="account_id" Type="Guid" Nullable="false" />
           <Property Name="category_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="money" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="update_by" Type="Guid" />
@@ -1642,8 +1832,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="MN_ACCOUNT" Relationship="Self.FK_MN_PAYMENT_MN_ACCOUNT" FromRole="MN_PAYMENT" ToRole="MN_ACCOUNT" />
-          <NavigationProperty Name="MN_CATEGORY" Relationship="Self.FK_MN_PAYMENT_MN_CATEGORY" FromRole="MN_PAYMENT" ToRole="MN_CATEGORY" />
+          <NavigationProperty Name="MN_ACCOUNT" Relationship="TDHModel.FK_MN_PAYMENT_MN_ACCOUNT" FromRole="MN_PAYMENT" ToRole="MN_ACCOUNT" />
+          <NavigationProperty Name="MN_CATEGORY" Relationship="TDHModel.FK_MN_PAYMENT_MN_CATEGORY" FromRole="MN_PAYMENT" ToRole="MN_CATEGORY" />
         </EntityType>
         <EntityType Name="MN_TRANSFER">
           <Key>
@@ -1652,11 +1842,11 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="account_from" Type="Guid" Nullable="false" />
           <Property Name="account_to" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="money" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
-          <Property Name="fee" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="fee" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="update_by" Type="Guid" />
@@ -1665,22 +1855,22 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="MN_ACCOUNT" Relationship="Self.FK_MN_TRANSFER_MN_ACCOUNT_FROM" FromRole="MN_TRANSFER" ToRole="MN_ACCOUNT" />
-          <NavigationProperty Name="MN_ACCOUNT1" Relationship="Self.FK_MN_TRANSFER_MN_ACCOUNT_TO" FromRole="MN_TRANSFER" ToRole="MN_ACCOUNT" />
+          <NavigationProperty Name="MN_ACCOUNT" Relationship="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_FROM" FromRole="MN_TRANSFER" ToRole="MN_ACCOUNT" />
+          <NavigationProperty Name="MN_ACCOUNT1" Relationship="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_TO" FromRole="MN_TRANSFER" ToRole="MN_ACCOUNT" />
         </EntityType>
         <EntityType Name="NAVIGATION">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="70" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="alias" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="alias" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
-          <Property Name="meta_title" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="meta_description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="meta_title" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="meta_description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="meta_keywords" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="meta_next" Type="String" MaxLength="170" FixedLength="false" Unicode="true" />
           <Property Name="meta_og_site_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -1698,9 +1888,9 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
           <Property Name="no_child" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="CATEGORies" Relationship="Self.FK_CATEGORY_NAVIGATION" FromRole="NAVIGATION" ToRole="CATEGORY" />
-          <NavigationProperty Name="HOME_NAVIGATION" Relationship="Self.FK_HOME_NAVIGATION_navigation_id" FromRole="NAVIGATION" ToRole="HOME_NAVIGATION" />
-          <NavigationProperty Name="POSTs" Relationship="Self.FK_POST_NAVIGATION" FromRole="NAVIGATION" ToRole="POST" />
+          <NavigationProperty Name="CATEGORies" Relationship="TDHModel.FK_CATEGORY_NAVIGATION" FromRole="NAVIGATION" ToRole="CATEGORY" />
+          <NavigationProperty Name="HOME_NAVIGATION" Relationship="TDHModel.FK_HOME_NAVIGATION_navigation_id" FromRole="NAVIGATION" ToRole="HOME_NAVIGATION" />
+          <NavigationProperty Name="POSTs" Relationship="TDHModel.FK_POST_NAVIGATION" FromRole="NAVIGATION" ToRole="POST" />
         </EntityType>
         <EntityType Name="POST">
           <Key>
@@ -1710,15 +1900,15 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="category_id" Type="Guid" />
           <Property Name="navigation_id" Type="Guid" />
           <Property Name="is_navigation" Type="Boolean" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="alias" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="alias" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
-          <Property Name="meta_title" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="meta_description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="meta_title" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="meta_description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="meta_keywords" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="meta_next" Type="String" MaxLength="170" FixedLength="false" Unicode="true" />
           <Property Name="meta_og_site_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -1737,15 +1927,15 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="delete_date" Type="DateTime" Precision="3" />
           <Property Name="view" Type="Int32" Nullable="false" />
           <Property Name="comment" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CATEGORY" Relationship="Self.FK_POST_CATEGORY" FromRole="POST" ToRole="CATEGORY" />
-          <NavigationProperty Name="NAVIGATION" Relationship="Self.FK_POST_NAVIGATION" FromRole="POST" ToRole="NAVIGATION" />
+          <NavigationProperty Name="CATEGORY" Relationship="TDHModel.FK_POST_CATEGORY" FromRole="POST" ToRole="CATEGORY" />
+          <NavigationProperty Name="NAVIGATION" Relationship="TDHModel.FK_POST_NAVIGATION" FromRole="POST" ToRole="NAVIGATION" />
         </EntityType>
         <EntityType Name="REPORT">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -1754,7 +1944,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="REPORT_COMMENT" Relationship="Self.FK_REPORT_COMMENT_REPORT" FromRole="REPORT" ToRole="REPORT_COMMENT" />
+          <NavigationProperty Name="REPORT_COMMENT" Relationship="TDHModel.FK_REPORT_COMMENT_REPORT" FromRole="REPORT" ToRole="REPORT_COMMENT" />
         </EntityType>
         <EntityType Name="REPORT_COMMENT">
           <Key>
@@ -1762,7 +1952,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="report_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -1771,14 +1961,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="REPORT" Relationship="Self.FK_REPORT_COMMENT_REPORT" FromRole="REPORT_COMMENT" ToRole="REPORT" />
+          <NavigationProperty Name="REPORT" Relationship="TDHModel.FK_REPORT_COMMENT_REPORT" FromRole="REPORT_COMMENT" ToRole="REPORT" />
         </EntityType>
         <EntityType Name="ROLE">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
           <Property Name="created_by" Type="Guid" Nullable="false" />
@@ -1788,8 +1978,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="deleted_by" Type="Guid" />
           <Property Name="deleted_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ROLE_DETAIL" Relationship="Self.FK_ROLE_DETAIL_role" FromRole="ROLE" ToRole="ROLE_DETAIL" />
-          <NavigationProperty Name="USER_ROLE" Relationship="Self.FK_USER_ROLE_role_id" FromRole="ROLE" ToRole="USER_ROLE" />
+          <NavigationProperty Name="ROLE_DETAIL" Relationship="TDHModel.FK_ROLE_DETAIL_role" FromRole="ROLE" ToRole="ROLE_DETAIL" />
+          <NavigationProperty Name="USER_ROLE" Relationship="TDHModel.FK_USER_ROLE_role_id" FromRole="ROLE" ToRole="USER_ROLE" />
         </EntityType>
         <EntityType Name="ROLE_DETAIL">
           <Key>
@@ -1797,13 +1987,13 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="role_id" Type="Guid" Nullable="false" />
-          <Property Name="function_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="function_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="view" Type="Boolean" Nullable="false" />
           <Property Name="add" Type="Boolean" Nullable="false" />
           <Property Name="edit" Type="Boolean" Nullable="false" />
           <Property Name="delete" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="FUNCTION" Relationship="Self.FK_ROLE_DETAIL_function" FromRole="ROLE_DETAIL" ToRole="FUNCTION" />
-          <NavigationProperty Name="ROLE" Relationship="Self.FK_ROLE_DETAIL_role" FromRole="ROLE_DETAIL" ToRole="ROLE" />
+          <NavigationProperty Name="FUNCTION" Relationship="TDHModel.FK_ROLE_DETAIL_function" FromRole="ROLE_DETAIL" ToRole="FUNCTION" />
+          <NavigationProperty Name="ROLE" Relationship="TDHModel.FK_ROLE_DETAIL_role" FromRole="ROLE_DETAIL" ToRole="ROLE" />
         </EntityType>
         <EntityType Name="TARGET">
           <Key>
@@ -1811,7 +2001,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="parent_id" Type="Guid" />
-          <Property Name="title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="result" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="done" Type="Boolean" Nullable="false" />
           <Property Name="estimate_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -1825,9 +2015,9 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TARGET1" Relationship="Self.FK_TARGET_PARENT" FromRole="TARGET" ToRole="TARGET1" />
-          <NavigationProperty Name="TARGET2" Relationship="Self.FK_TARGET_PARENT" FromRole="TARGET1" ToRole="TARGET" />
-          <NavigationProperty Name="TARGET_TASK" Relationship="Self.FK_TARGET_TASK_TARGET" FromRole="TARGET" ToRole="TARGET_TASK" />
+          <NavigationProperty Name="TARGET1" Relationship="TDHModel.FK_TARGET_PARENT" FromRole="TARGET" ToRole="TARGET1" />
+          <NavigationProperty Name="TARGET2" Relationship="TDHModel.FK_TARGET_PARENT" FromRole="TARGET1" ToRole="TARGET" />
+          <NavigationProperty Name="TARGET_TASK" Relationship="TDHModel.FK_TARGET_TASK_TARGET" FromRole="TARGET" ToRole="TARGET_TASK" />
         </EntityType>
         <EntityType Name="TARGET_TASK">
           <Key>
@@ -1835,7 +2025,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="target_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="result" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="done" Type="Boolean" Nullable="false" />
           <Property Name="estimate_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -1847,16 +2037,16 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TARGET" Relationship="Self.FK_TARGET_TASK_TARGET" FromRole="TARGET_TASK" ToRole="TARGET" />
+          <NavigationProperty Name="TARGET" Relationship="TDHModel.FK_TARGET_TASK_TARGET" FromRole="TARGET_TASK" ToRole="TARGET" />
         </EntityType>
         <EntityType Name="USER">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="full_name" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="full_name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="user_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="locked" Type="Boolean" Nullable="false" />
           <Property Name="notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
           <Property Name="last_login" Type="DateTime" Precision="3" />
@@ -1867,7 +2057,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="USER_ROLE" Relationship="Self.FK_USER_ROLE_user_id" FromRole="USER" ToRole="USER_ROLE" />
+          <NavigationProperty Name="USER_ROLE" Relationship="TDHModel.FK_USER_ROLE_user_id" FromRole="USER" ToRole="USER_ROLE" />
         </EntityType>
         <EntityType Name="USER_ROLE">
           <Key>
@@ -1876,15 +2066,15 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="user_id" Type="Guid" Nullable="false" />
           <Property Name="role_id" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="ROLE" Relationship="Self.FK_USER_ROLE_role_id" FromRole="USER_ROLE" ToRole="ROLE" />
-          <NavigationProperty Name="USER" Relationship="Self.FK_USER_ROLE_user_id" FromRole="USER_ROLE" ToRole="USER" />
+          <NavigationProperty Name="ROLE" Relationship="TDHModel.FK_USER_ROLE_role_id" FromRole="USER_ROLE" ToRole="ROLE" />
+          <NavigationProperty Name="USER" Relationship="TDHModel.FK_USER_ROLE_user_id" FromRole="USER_ROLE" ToRole="USER" />
         </EntityType>
         <EntityType Name="WK_CHECKLIST_GROUP">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="update_by" Type="Guid" />
@@ -1892,7 +2082,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="WK_CHECKLIST_ITEM" Relationship="Self.FK_WK_CHECKLIST_ITEM_group_id" FromRole="WK_CHECKLIST_GROUP" ToRole="WK_CHECKLIST_ITEM" />
+          <NavigationProperty Name="WK_CHECKLIST_ITEM" Relationship="TDHModel.FK_WK_CHECKLIST_ITEM_group_id" FromRole="WK_CHECKLIST_GROUP" ToRole="WK_CHECKLIST_ITEM" />
         </EntityType>
         <EntityType Name="WK_CHECKLIST_ITEM">
           <Key>
@@ -1900,7 +2090,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="group_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
@@ -1909,8 +2099,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="WK_CHECKLIST_GROUP" Relationship="Self.FK_WK_CHECKLIST_ITEM_group_id" FromRole="WK_CHECKLIST_ITEM" ToRole="WK_CHECKLIST_GROUP" />
-          <NavigationProperty Name="WK_CHECKLIST_ITEM_DETAIL" Relationship="Self.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" FromRole="WK_CHECKLIST_ITEM" ToRole="WK_CHECKLIST_ITEM_DETAIL" />
+          <NavigationProperty Name="WK_CHECKLIST_GROUP" Relationship="TDHModel.FK_WK_CHECKLIST_ITEM_group_id" FromRole="WK_CHECKLIST_ITEM" ToRole="WK_CHECKLIST_GROUP" />
+          <NavigationProperty Name="WK_CHECKLIST_ITEM_DETAIL" Relationship="TDHModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" FromRole="WK_CHECKLIST_ITEM" ToRole="WK_CHECKLIST_ITEM_DETAIL" />
         </EntityType>
         <EntityType Name="WK_CHECKLIST_ITEM_DETAIL">
           <Key>
@@ -1918,7 +2108,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="check_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
           <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="update_by" Type="Guid" />
@@ -1926,7 +2116,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="WK_CHECKLIST_ITEM" Relationship="Self.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" FromRole="WK_CHECKLIST_ITEM_DETAIL" ToRole="WK_CHECKLIST_ITEM" />
+          <NavigationProperty Name="WK_CHECKLIST_ITEM" Relationship="TDHModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" FromRole="WK_CHECKLIST_ITEM_DETAIL" ToRole="WK_CHECKLIST_ITEM" />
         </EntityType>
         <EntityType Name="V_ACCOUNT_HISTORY">
           <Key>
@@ -1935,7 +2125,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             <PropertyRef Name="type" />
           </Key>
           <Property Name="account_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="date" Type="DateTime" Precision="3" />
           <Property Name="money" Type="Decimal" Precision="19" Scale="1" />
           <Property Name="type" Type="Int32" Nullable="false" />
@@ -1948,9 +2138,9 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             <PropertyRef Name="type" />
           </Key>
           <Property Name="category_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="date" Type="DateTime" Precision="3" />
-          <Property Name="money" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
           <Property Name="type" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="V_MONEY_FLOW">
@@ -1966,21 +2156,21 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="from_id" Type="Guid" Nullable="false" />
-          <Property Name="from_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="from_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="to_id" Type="Guid" />
           <Property Name="to_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="category_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="date" Type="DateTime" Precision="3" />
-          <Property Name="money" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
-          <Property Name="fee" Type="Decimal" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="fee" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
           <Property Name="type" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_CATEGORY_NAVIGATION">
-          <End Role="NAVIGATION" Type="Self.NAVIGATION" Multiplicity="1">
+          <End Type="TDHModel.NAVIGATION" Role="NAVIGATION" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="*" />
+          <End Type="TDHModel.CATEGORY" Role="CATEGORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NAVIGATION">
               <PropertyRef Name="id" />
@@ -1991,10 +2181,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HOME_CATEGORY_category_id">
-          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="1">
+          <End Type="TDHModel.CATEGORY" Role="CATEGORY" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="HOME_CATEGORY" Type="Self.HOME_CATEGORY" Multiplicity="*" />
+          <End Type="TDHModel.HOME_CATEGORY" Role="HOME_CATEGORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CATEGORY">
               <PropertyRef Name="id" />
@@ -2005,10 +2195,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_POST_CATEGORY">
-          <End Role="CATEGORY" Type="Self.CATEGORY" Multiplicity="0..1">
+          <End Type="TDHModel.CATEGORY" Role="CATEGORY" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="POST" Type="Self.POST" Multiplicity="*" />
+          <End Type="TDHModel.POST" Role="POST" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CATEGORY">
               <PropertyRef Name="id" />
@@ -2019,10 +2209,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ROLE_DETAIL_function">
-          <End Role="FUNCTION" Type="Self.FUNCTION" Multiplicity="1">
+          <End Type="TDHModel.FUNCTION" Role="FUNCTION" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="ROLE_DETAIL" Type="Self.ROLE_DETAIL" Multiplicity="*" />
+          <End Type="TDHModel.ROLE_DETAIL" Role="ROLE_DETAIL" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="FUNCTION">
               <PropertyRef Name="code" />
@@ -2033,10 +2223,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HOME_NAVIGATION_navigation_id">
-          <End Role="NAVIGATION" Type="Self.NAVIGATION" Multiplicity="1">
+          <End Type="TDHModel.NAVIGATION" Role="NAVIGATION" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="HOME_NAVIGATION" Type="Self.HOME_NAVIGATION" Multiplicity="*" />
+          <End Type="TDHModel.HOME_NAVIGATION" Role="HOME_NAVIGATION" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NAVIGATION">
               <PropertyRef Name="id" />
@@ -2047,10 +2237,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IDEA_DETAIL_IDEA">
-          <End Role="IDEA" Type="Self.IDEA" Multiplicity="1">
+          <End Type="TDHModel.IDEA" Role="IDEA" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="IDEA_DETAIL" Type="Self.IDEA_DETAIL" Multiplicity="*" />
+          <End Type="TDHModel.IDEA_DETAIL" Role="IDEA_DETAIL" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="IDEA">
               <PropertyRef Name="id" />
@@ -2061,8 +2251,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
-          <End Role="MN_ACCOUNT_TYPE" Type="Self.MN_ACCOUNT_TYPE" Multiplicity="1" />
-          <End Role="MN_ACCOUNT" Type="Self.MN_ACCOUNT" Multiplicity="*" />
+          <End Type="TDHModel.MN_ACCOUNT_TYPE" Role="MN_ACCOUNT_TYPE" Multiplicity="1" />
+          <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MN_ACCOUNT_TYPE">
               <PropertyRef Name="id" />
@@ -2073,10 +2263,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MN_ACCOUNT_SETTING_MN_ACCOUNT">
-          <End Role="MN_ACCOUNT" Type="Self.MN_ACCOUNT" Multiplicity="1">
+          <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="MN_ACCOUNT_SETTING" Type="Self.MN_ACCOUNT_SETTING" Multiplicity="*" />
+          <End Type="TDHModel.MN_ACCOUNT_SETTING" Role="MN_ACCOUNT_SETTING" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MN_ACCOUNT">
               <PropertyRef Name="id" />
@@ -2087,8 +2277,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MN_INCOME_MN_ACCOUNT">
-          <End Role="MN_ACCOUNT" Type="Self.MN_ACCOUNT" Multiplicity="1" />
-          <End Role="MN_INCOME" Type="Self.MN_INCOME" Multiplicity="*" />
+          <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="1" />
+          <End Type="TDHModel.MN_INCOME" Role="MN_INCOME" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MN_ACCOUNT">
               <PropertyRef Name="id" />
@@ -2099,8 +2289,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MN_PAYMENT_MN_ACCOUNT">
-          <End Role="MN_ACCOUNT" Type="Self.MN_ACCOUNT" Multiplicity="1" />
-          <End Role="MN_PAYMENT" Type="Self.MN_PAYMENT" Multiplicity="*" />
+          <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="1" />
+          <End Type="TDHModel.MN_PAYMENT" Role="MN_PAYMENT" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MN_ACCOUNT">
               <PropertyRef Name="id" />
@@ -2111,8 +2301,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MN_TRANSFER_MN_ACCOUNT_FROM">
-          <End Role="MN_ACCOUNT" Type="Self.MN_ACCOUNT" Multiplicity="1" />
-          <End Role="MN_TRANSFER" Type="Self.MN_TRANSFER" Multiplicity="*" />
+          <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="1" />
+          <End Type="TDHModel.MN_TRANSFER" Role="MN_TRANSFER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MN_ACCOUNT">
               <PropertyRef Name="id" />
@@ -2123,8 +2313,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MN_TRANSFER_MN_ACCOUNT_TO">
-          <End Role="MN_ACCOUNT" Type="Self.MN_ACCOUNT" Multiplicity="1" />
-          <End Role="MN_TRANSFER" Type="Self.MN_TRANSFER" Multiplicity="*" />
+          <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="1" />
+          <End Type="TDHModel.MN_TRANSFER" Role="MN_TRANSFER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MN_ACCOUNT">
               <PropertyRef Name="id" />
@@ -2135,8 +2325,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MN_CATEGORY_MN_GROUP">
-          <End Role="MN_GROUP" Type="Self.MN_GROUP" Multiplicity="1" />
-          <End Role="MN_CATEGORY" Type="Self.MN_CATEGORY" Multiplicity="*" />
+          <End Type="TDHModel.MN_GROUP" Role="MN_GROUP" Multiplicity="1" />
+          <End Type="TDHModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MN_GROUP">
               <PropertyRef Name="id" />
@@ -2147,10 +2337,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MN_CATEGORY_SETTING_MN_CATEGORY">
-          <End Role="MN_CATEGORY" Type="Self.MN_CATEGORY" Multiplicity="1">
+          <End Type="TDHModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="MN_CATEGORY_SETTING" Type="Self.MN_CATEGORY_SETTING" Multiplicity="*" />
+          <End Type="TDHModel.MN_CATEGORY_SETTING" Role="MN_CATEGORY_SETTING" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MN_CATEGORY">
               <PropertyRef Name="id" />
@@ -2161,8 +2351,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MN_INCOME_MN_CATEGORY">
-          <End Role="MN_CATEGORY" Type="Self.MN_CATEGORY" Multiplicity="1" />
-          <End Role="MN_INCOME" Type="Self.MN_INCOME" Multiplicity="*" />
+          <End Type="TDHModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="1" />
+          <End Type="TDHModel.MN_INCOME" Role="MN_INCOME" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MN_CATEGORY">
               <PropertyRef Name="id" />
@@ -2173,8 +2363,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MN_PAYMENT_MN_CATEGORY">
-          <End Role="MN_CATEGORY" Type="Self.MN_CATEGORY" Multiplicity="1" />
-          <End Role="MN_PAYMENT" Type="Self.MN_PAYMENT" Multiplicity="*" />
+          <End Type="TDHModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="1" />
+          <End Type="TDHModel.MN_PAYMENT" Role="MN_PAYMENT" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MN_CATEGORY">
               <PropertyRef Name="id" />
@@ -2185,10 +2375,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MN_GROUP_SETTING_MN_GROUP">
-          <End Role="MN_GROUP" Type="Self.MN_GROUP" Multiplicity="1">
+          <End Type="TDHModel.MN_GROUP" Role="MN_GROUP" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="MN_GROUP_SETTING" Type="Self.MN_GROUP_SETTING" Multiplicity="*" />
+          <End Type="TDHModel.MN_GROUP_SETTING" Role="MN_GROUP_SETTING" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MN_GROUP">
               <PropertyRef Name="id" />
@@ -2199,8 +2389,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_POST_NAVIGATION">
-          <End Role="NAVIGATION" Type="Self.NAVIGATION" Multiplicity="0..1" />
-          <End Role="POST" Type="Self.POST" Multiplicity="*" />
+          <End Type="TDHModel.NAVIGATION" Role="NAVIGATION" Multiplicity="0..1" />
+          <End Type="TDHModel.POST" Role="POST" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="NAVIGATION">
               <PropertyRef Name="id" />
@@ -2211,10 +2401,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_REPORT_COMMENT_REPORT">
-          <End Role="REPORT" Type="Self.REPORT" Multiplicity="1">
+          <End Type="TDHModel.REPORT" Role="REPORT" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="REPORT_COMMENT" Type="Self.REPORT_COMMENT" Multiplicity="*" />
+          <End Type="TDHModel.REPORT_COMMENT" Role="REPORT_COMMENT" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="REPORT">
               <PropertyRef Name="id" />
@@ -2225,10 +2415,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ROLE_DETAIL_role">
-          <End Role="ROLE" Type="Self.ROLE" Multiplicity="1">
+          <End Type="TDHModel.ROLE" Role="ROLE" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="ROLE_DETAIL" Type="Self.ROLE_DETAIL" Multiplicity="*" />
+          <End Type="TDHModel.ROLE_DETAIL" Role="ROLE_DETAIL" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ROLE">
               <PropertyRef Name="id" />
@@ -2239,10 +2429,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_USER_ROLE_role_id">
-          <End Role="ROLE" Type="Self.ROLE" Multiplicity="1">
+          <End Type="TDHModel.ROLE" Role="ROLE" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="USER_ROLE" Type="Self.USER_ROLE" Multiplicity="*" />
+          <End Type="TDHModel.USER_ROLE" Role="USER_ROLE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ROLE">
               <PropertyRef Name="id" />
@@ -2253,8 +2443,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TARGET_PARENT">
-          <End Role="TARGET" Type="Self.TARGET" Multiplicity="0..1" />
-          <End Role="TARGET1" Type="Self.TARGET" Multiplicity="*" />
+          <End Type="TDHModel.TARGET" Role="TARGET" Multiplicity="0..1" />
+          <End Type="TDHModel.TARGET" Role="TARGET1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TARGET">
               <PropertyRef Name="id" />
@@ -2265,8 +2455,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TARGET_TASK_TARGET">
-          <End Role="TARGET" Type="Self.TARGET" Multiplicity="1" />
-          <End Role="TARGET_TASK" Type="Self.TARGET_TASK" Multiplicity="*" />
+          <End Type="TDHModel.TARGET" Role="TARGET" Multiplicity="1" />
+          <End Type="TDHModel.TARGET_TASK" Role="TARGET_TASK" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TARGET">
               <PropertyRef Name="id" />
@@ -2277,10 +2467,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_USER_ROLE_user_id">
-          <End Role="USER" Type="Self.USER" Multiplicity="1">
+          <End Type="TDHModel.USER" Role="USER" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="USER_ROLE" Type="Self.USER_ROLE" Multiplicity="*" />
+          <End Type="TDHModel.USER_ROLE" Role="USER_ROLE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USER">
               <PropertyRef Name="id" />
@@ -2291,10 +2481,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_WK_CHECKLIST_ITEM_group_id">
-          <End Role="WK_CHECKLIST_GROUP" Type="Self.WK_CHECKLIST_GROUP" Multiplicity="1">
+          <End Type="TDHModel.WK_CHECKLIST_GROUP" Role="WK_CHECKLIST_GROUP" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="WK_CHECKLIST_ITEM" Type="Self.WK_CHECKLIST_ITEM" Multiplicity="*" />
+          <End Type="TDHModel.WK_CHECKLIST_ITEM" Role="WK_CHECKLIST_ITEM" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WK_CHECKLIST_GROUP">
               <PropertyRef Name="id" />
@@ -2305,10 +2495,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_WK_CHECKLIST_ITEM_DETAIL_check_id">
-          <End Role="WK_CHECKLIST_ITEM" Type="Self.WK_CHECKLIST_ITEM" Multiplicity="1">
+          <End Type="TDHModel.WK_CHECKLIST_ITEM" Role="WK_CHECKLIST_ITEM" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="WK_CHECKLIST_ITEM_DETAIL" Type="Self.WK_CHECKLIST_ITEM_DETAIL" Multiplicity="*" />
+          <End Type="TDHModel.WK_CHECKLIST_ITEM_DETAIL" Role="WK_CHECKLIST_ITEM_DETAIL" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WK_CHECKLIST_ITEM">
               <PropertyRef Name="id" />
@@ -2318,832 +2508,12 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="TDHEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ABOUTs" EntityType="Self.ABOUT" />
-          <EntitySet Name="CATEGORies" EntityType="Self.CATEGORY" />
-          <EntitySet Name="CONFIGURATIONs" EntityType="Self.CONFIGURATION" />
-          <EntitySet Name="DAILY_TASK" EntityType="Self.DAILY_TASK" />
-          <EntitySet Name="ERROR_LOG" EntityType="Self.ERROR_LOG" />
-          <EntitySet Name="FUNCTIONs" EntityType="Self.FUNCTION" />
-          <EntitySet Name="HOME_CATEGORY" EntityType="Self.HOME_CATEGORY" />
-          <EntitySet Name="HOME_NAVIGATION" EntityType="Self.HOME_NAVIGATION" />
-          <EntitySet Name="IDEAs" EntityType="Self.IDEA" />
-          <EntitySet Name="IDEA_DETAIL" EntityType="Self.IDEA_DETAIL" />
-          <EntitySet Name="MN_ACCOUNT" EntityType="Self.MN_ACCOUNT" />
-          <EntitySet Name="MN_ACCOUNT_SETTING" EntityType="Self.MN_ACCOUNT_SETTING" />
-          <EntitySet Name="MN_ACCOUNT_TYPE" EntityType="Self.MN_ACCOUNT_TYPE" />
-          <EntitySet Name="MN_CATEGORY" EntityType="Self.MN_CATEGORY" />
-          <EntitySet Name="MN_CATEGORY_SETTING" EntityType="Self.MN_CATEGORY_SETTING" />
-          <EntitySet Name="MN_GROUP" EntityType="Self.MN_GROUP" />
-          <EntitySet Name="MN_GROUP_SETTING" EntityType="Self.MN_GROUP_SETTING" />
-          <EntitySet Name="MN_INCOME" EntityType="Self.MN_INCOME" />
-          <EntitySet Name="MN_PAYMENT" EntityType="Self.MN_PAYMENT" />
-          <EntitySet Name="MN_TRANSFER" EntityType="Self.MN_TRANSFER" />
-          <EntitySet Name="NAVIGATIONs" EntityType="Self.NAVIGATION" />
-          <EntitySet Name="POSTs" EntityType="Self.POST" />
-          <EntitySet Name="REPORTs" EntityType="Self.REPORT" />
-          <EntitySet Name="REPORT_COMMENT" EntityType="Self.REPORT_COMMENT" />
-          <EntitySet Name="ROLEs" EntityType="Self.ROLE" />
-          <EntitySet Name="ROLE_DETAIL" EntityType="Self.ROLE_DETAIL" />
-          <EntitySet Name="TARGETs" EntityType="Self.TARGET" />
-          <EntitySet Name="TARGET_TASK" EntityType="Self.TARGET_TASK" />
-          <EntitySet Name="USERs" EntityType="Self.USER" />
-          <EntitySet Name="USER_ROLE" EntityType="Self.USER_ROLE" />
-          <EntitySet Name="WK_CHECKLIST_GROUP" EntityType="Self.WK_CHECKLIST_GROUP" />
-          <EntitySet Name="WK_CHECKLIST_ITEM" EntityType="Self.WK_CHECKLIST_ITEM" />
-          <EntitySet Name="WK_CHECKLIST_ITEM_DETAIL" EntityType="Self.WK_CHECKLIST_ITEM_DETAIL" />
-          <EntitySet Name="V_ACCOUNT_HISTORY" EntityType="Self.V_ACCOUNT_HISTORY" />
-          <EntitySet Name="V_CATEGORY_HISTORY" EntityType="Self.V_CATEGORY_HISTORY" />
-          <EntitySet Name="V_MONEY_FLOW" EntityType="Self.V_MONEY_FLOW" />
-          <AssociationSet Name="FK_CATEGORY_NAVIGATION" Association="Self.FK_CATEGORY_NAVIGATION">
-            <End Role="NAVIGATION" EntitySet="NAVIGATIONs" />
-            <End Role="CATEGORY" EntitySet="CATEGORies" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HOME_CATEGORY_category_id" Association="Self.FK_HOME_CATEGORY_category_id">
-            <End Role="CATEGORY" EntitySet="CATEGORies" />
-            <End Role="HOME_CATEGORY" EntitySet="HOME_CATEGORY" />
-          </AssociationSet>
-          <AssociationSet Name="FK_POST_CATEGORY" Association="Self.FK_POST_CATEGORY">
-            <End Role="CATEGORY" EntitySet="CATEGORies" />
-            <End Role="POST" EntitySet="POSTs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ROLE_DETAIL_function" Association="Self.FK_ROLE_DETAIL_function">
-            <End Role="FUNCTION" EntitySet="FUNCTIONs" />
-            <End Role="ROLE_DETAIL" EntitySet="ROLE_DETAIL" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HOME_NAVIGATION_navigation_id" Association="Self.FK_HOME_NAVIGATION_navigation_id">
-            <End Role="NAVIGATION" EntitySet="NAVIGATIONs" />
-            <End Role="HOME_NAVIGATION" EntitySet="HOME_NAVIGATION" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IDEA_DETAIL_IDEA" Association="Self.FK_IDEA_DETAIL_IDEA">
-            <End Role="IDEA" EntitySet="IDEAs" />
-            <End Role="IDEA_DETAIL" EntitySet="IDEA_DETAIL" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" Association="Self.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
-            <End Role="MN_ACCOUNT_TYPE" EntitySet="MN_ACCOUNT_TYPE" />
-            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" Association="Self.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT">
-            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
-            <End Role="MN_ACCOUNT_SETTING" EntitySet="MN_ACCOUNT_SETTING" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MN_INCOME_MN_ACCOUNT" Association="Self.FK_MN_INCOME_MN_ACCOUNT">
-            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
-            <End Role="MN_INCOME" EntitySet="MN_INCOME" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MN_PAYMENT_MN_ACCOUNT" Association="Self.FK_MN_PAYMENT_MN_ACCOUNT">
-            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
-            <End Role="MN_PAYMENT" EntitySet="MN_PAYMENT" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MN_TRANSFER_MN_ACCOUNT_FROM" Association="Self.FK_MN_TRANSFER_MN_ACCOUNT_FROM">
-            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
-            <End Role="MN_TRANSFER" EntitySet="MN_TRANSFER" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MN_TRANSFER_MN_ACCOUNT_TO" Association="Self.FK_MN_TRANSFER_MN_ACCOUNT_TO">
-            <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
-            <End Role="MN_TRANSFER" EntitySet="MN_TRANSFER" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MN_CATEGORY_MN_GROUP" Association="Self.FK_MN_CATEGORY_MN_GROUP">
-            <End Role="MN_GROUP" EntitySet="MN_GROUP" />
-            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MN_CATEGORY_SETTING_MN_CATEGORY" Association="Self.FK_MN_CATEGORY_SETTING_MN_CATEGORY">
-            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
-            <End Role="MN_CATEGORY_SETTING" EntitySet="MN_CATEGORY_SETTING" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MN_INCOME_MN_CATEGORY" Association="Self.FK_MN_INCOME_MN_CATEGORY">
-            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
-            <End Role="MN_INCOME" EntitySet="MN_INCOME" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MN_PAYMENT_MN_CATEGORY" Association="Self.FK_MN_PAYMENT_MN_CATEGORY">
-            <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
-            <End Role="MN_PAYMENT" EntitySet="MN_PAYMENT" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MN_GROUP_SETTING_MN_GROUP" Association="Self.FK_MN_GROUP_SETTING_MN_GROUP">
-            <End Role="MN_GROUP" EntitySet="MN_GROUP" />
-            <End Role="MN_GROUP_SETTING" EntitySet="MN_GROUP_SETTING" />
-          </AssociationSet>
-          <AssociationSet Name="FK_POST_NAVIGATION" Association="Self.FK_POST_NAVIGATION">
-            <End Role="NAVIGATION" EntitySet="NAVIGATIONs" />
-            <End Role="POST" EntitySet="POSTs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_REPORT_COMMENT_REPORT" Association="Self.FK_REPORT_COMMENT_REPORT">
-            <End Role="REPORT" EntitySet="REPORTs" />
-            <End Role="REPORT_COMMENT" EntitySet="REPORT_COMMENT" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ROLE_DETAIL_role" Association="Self.FK_ROLE_DETAIL_role">
-            <End Role="ROLE" EntitySet="ROLEs" />
-            <End Role="ROLE_DETAIL" EntitySet="ROLE_DETAIL" />
-          </AssociationSet>
-          <AssociationSet Name="FK_USER_ROLE_role_id" Association="Self.FK_USER_ROLE_role_id">
-            <End Role="ROLE" EntitySet="ROLEs" />
-            <End Role="USER_ROLE" EntitySet="USER_ROLE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TARGET_PARENT" Association="Self.FK_TARGET_PARENT">
-            <End Role="TARGET" EntitySet="TARGETs" />
-            <End Role="TARGET1" EntitySet="TARGETs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TARGET_TASK_TARGET" Association="Self.FK_TARGET_TASK_TARGET">
-            <End Role="TARGET" EntitySet="TARGETs" />
-            <End Role="TARGET_TASK" EntitySet="TARGET_TASK" />
-          </AssociationSet>
-          <AssociationSet Name="FK_USER_ROLE_user_id" Association="Self.FK_USER_ROLE_user_id">
-            <End Role="USER" EntitySet="USERs" />
-            <End Role="USER_ROLE" EntitySet="USER_ROLE" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WK_CHECKLIST_ITEM_group_id" Association="Self.FK_WK_CHECKLIST_ITEM_group_id">
-            <End Role="WK_CHECKLIST_GROUP" EntitySet="WK_CHECKLIST_GROUP" />
-            <End Role="WK_CHECKLIST_ITEM" EntitySet="WK_CHECKLIST_ITEM" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WK_CHECKLIST_ITEM_DETAIL_check_id" Association="Self.FK_WK_CHECKLIST_ITEM_DETAIL_check_id">
-            <End Role="WK_CHECKLIST_ITEM" EntitySet="WK_CHECKLIST_ITEM" />
-            <End Role="WK_CHECKLIST_ITEM_DETAIL" EntitySet="WK_CHECKLIST_ITEM_DETAIL" />
-          </AssociationSet>
-          <FunctionImport Name="FNC_REPORT_INCOME_BY_CATEGORY" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_INCOME_BY_CATEGORY_Result)" />
-          <FunctionImport Name="FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result)">
-            <Parameter Name="I_Year" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="FNC_REPORT_SUMMARY" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_SUMMARY_Result)" />
-          <FunctionImport Name="FNC_REPORT_SUMMARY_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_SUMMARY_BY_YEAR_Result)">
-            <Parameter Name="I_Year" Mode="In" Type="Int32" />
-          </FunctionImport>
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TDHModelStoreContainer" CdmEntityContainer="TDHEntities">
-          <EntitySetMapping Name="ABOUTs">
-            <EntityTypeMapping TypeName="TDHModel.ABOUT">
-              <MappingFragment StoreEntitySet="ABOUT">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="link" ColumnName="link" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="meta_title" ColumnName="meta_title" />
-                <ScalarProperty Name="meta_description" ColumnName="meta_description" />
-                <ScalarProperty Name="meta_keywords" ColumnName="meta_keywords" />
-                <ScalarProperty Name="meta_next" ColumnName="meta_next" />
-                <ScalarProperty Name="meta_og_site_name" ColumnName="meta_og_site_name" />
-                <ScalarProperty Name="meta_og_image" ColumnName="meta_og_image" />
-                <ScalarProperty Name="meta_twitter_image" ColumnName="meta_twitter_image" />
-                <ScalarProperty Name="meta_article_name" ColumnName="meta_article_name" />
-                <ScalarProperty Name="meta_article_tag" ColumnName="meta_article_tag" />
-                <ScalarProperty Name="meta_article_section" ColumnName="meta_article_section" />
-                <ScalarProperty Name="meta_article_publish" ColumnName="meta_article_publish" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CATEGORies">
-            <EntityTypeMapping TypeName="TDHModel.CATEGORY">
-              <MappingFragment StoreEntitySet="CATEGORY">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="navigation_id" ColumnName="navigation_id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="alias" ColumnName="alias" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="show_on_nav" ColumnName="show_on_nav" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="publish" ColumnName="publish" />
-                <ScalarProperty Name="meta_title" ColumnName="meta_title" />
-                <ScalarProperty Name="meta_description" ColumnName="meta_description" />
-                <ScalarProperty Name="meta_keywords" ColumnName="meta_keywords" />
-                <ScalarProperty Name="meta_next" ColumnName="meta_next" />
-                <ScalarProperty Name="meta_og_site_name" ColumnName="meta_og_site_name" />
-                <ScalarProperty Name="meta_og_image" ColumnName="meta_og_image" />
-                <ScalarProperty Name="meta_twitter_image" ColumnName="meta_twitter_image" />
-                <ScalarProperty Name="meta_article_name" ColumnName="meta_article_name" />
-                <ScalarProperty Name="meta_article_tag" ColumnName="meta_article_tag" />
-                <ScalarProperty Name="meta_article_section" ColumnName="meta_article_section" />
-                <ScalarProperty Name="meta_article_publish" ColumnName="meta_article_publish" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CONFIGURATIONs">
-            <EntityTypeMapping TypeName="TDHModel.CONFIGURATION">
-              <MappingFragment StoreEntitySet="CONFIGURATION">
-                <ScalarProperty Name="key" ColumnName="key" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="value" ColumnName="value" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DAILY_TASK">
-            <EntityTypeMapping TypeName="TDHModel.DAILY_TASK">
-              <MappingFragment StoreEntitySet="DAILY_TASK">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="notes" ColumnName="notes" />
-                <ScalarProperty Name="done" ColumnName="done" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="level" ColumnName="level" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ERROR_LOG">
-            <EntityTypeMapping TypeName="TDHModel.ERROR_LOG">
-              <MappingFragment StoreEntitySet="ERROR_LOG">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="file_name" ColumnName="file_name" />
-                <ScalarProperty Name="method_name" ColumnName="method_name" />
-                <ScalarProperty Name="source" ColumnName="source" />
-                <ScalarProperty Name="stack_trace" ColumnName="stack_trace" />
-                <ScalarProperty Name="inner_exception" ColumnName="inner_exception" />
-                <ScalarProperty Name="message" ColumnName="message" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FUNCTIONs">
-            <EntityTypeMapping TypeName="TDHModel.FUNCTION">
-              <MappingFragment StoreEntitySet="FUNCTION">
-                <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="area" ColumnName="area" />
-                <ScalarProperty Name="controller" ColumnName="controller" />
-                <ScalarProperty Name="action" ColumnName="action" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="title" ColumnName="title" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HOME_CATEGORY">
-            <EntityTypeMapping TypeName="TDHModel.HOME_CATEGORY">
-              <MappingFragment StoreEntitySet="HOME_CATEGORY">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="category_id" ColumnName="category_id" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="HOME_NAVIGATION">
-            <EntityTypeMapping TypeName="TDHModel.HOME_NAVIGATION">
-              <MappingFragment StoreEntitySet="HOME_NAVIGATION">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="navigation_id" ColumnName="navigation_id" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="IDEAs">
-            <EntityTypeMapping TypeName="TDHModel.IDEA">
-              <MappingFragment StoreEntitySet="IDEA">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="IDEA_DETAIL">
-            <EntityTypeMapping TypeName="TDHModel.IDEA_DETAIL">
-              <MappingFragment StoreEntitySet="IDEA_DETAIL">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="idea_id" ColumnName="idea_id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MN_ACCOUNT">
-            <EntityTypeMapping TypeName="TDHModel.MN_ACCOUNT">
-              <MappingFragment StoreEntitySet="MN_ACCOUNT">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="account_type_id" ColumnName="account_type_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="start" ColumnName="start" />
-                <ScalarProperty Name="input" ColumnName="input" />
-                <ScalarProperty Name="output" ColumnName="output" />
-                <ScalarProperty Name="end" ColumnName="end" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="publish" ColumnName="publish" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MN_ACCOUNT_SETTING">
-            <EntityTypeMapping TypeName="TDHModel.MN_ACCOUNT_SETTING">
-              <MappingFragment StoreEntitySet="MN_ACCOUNT_SETTING">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="yearmonth" ColumnName="yearmonth" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
-                <ScalarProperty Name="start" ColumnName="start" />
-                <ScalarProperty Name="input" ColumnName="input" />
-                <ScalarProperty Name="output" ColumnName="output" />
-                <ScalarProperty Name="end" ColumnName="end" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="publish" ColumnName="publish" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MN_ACCOUNT_TYPE">
-            <EntityTypeMapping TypeName="TDHModel.MN_ACCOUNT_TYPE">
-              <MappingFragment StoreEntitySet="MN_ACCOUNT_TYPE">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="publish" ColumnName="publish" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MN_CATEGORY">
-            <EntityTypeMapping TypeName="TDHModel.MN_CATEGORY">
-              <MappingFragment StoreEntitySet="MN_CATEGORY">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="notes" ColumnName="notes" />
-                <ScalarProperty Name="group_id" ColumnName="group_id" />
-                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
-                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
-                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
-                <ScalarProperty Name="money_current" ColumnName="money_current" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="publish" ColumnName="publish" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MN_CATEGORY_SETTING">
-            <EntityTypeMapping TypeName="TDHModel.MN_CATEGORY_SETTING">
-              <MappingFragment StoreEntitySet="MN_CATEGORY_SETTING">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="category_id" ColumnName="category_id" />
-                <ScalarProperty Name="year_month" ColumnName="year_month" />
-                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
-                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
-                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
-                <ScalarProperty Name="money_current" ColumnName="money_current" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MN_GROUP">
-            <EntityTypeMapping TypeName="TDHModel.MN_GROUP">
-              <MappingFragment StoreEntitySet="MN_GROUP">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="notes" ColumnName="notes" />
-                <ScalarProperty Name="is_input" ColumnName="is_input" />
-                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
-                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
-                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
-                <ScalarProperty Name="money_current" ColumnName="money_current" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="publish" ColumnName="publish" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MN_GROUP_SETTING">
-            <EntityTypeMapping TypeName="TDHModel.MN_GROUP_SETTING">
-              <MappingFragment StoreEntitySet="MN_GROUP_SETTING">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="group_id" ColumnName="group_id" />
-                <ScalarProperty Name="year_month" ColumnName="year_month" />
-                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
-                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
-                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
-                <ScalarProperty Name="money_current" ColumnName="money_current" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MN_INCOME">
-            <EntityTypeMapping TypeName="TDHModel.MN_INCOME">
-              <MappingFragment StoreEntitySet="MN_INCOME">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
-                <ScalarProperty Name="category_id" ColumnName="category_id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="purpose" ColumnName="purpose" />
-                <ScalarProperty Name="notes" ColumnName="notes" />
-                <ScalarProperty Name="money" ColumnName="money" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-                <ScalarProperty Name="date" ColumnName="date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MN_PAYMENT">
-            <EntityTypeMapping TypeName="TDHModel.MN_PAYMENT">
-              <MappingFragment StoreEntitySet="MN_PAYMENT">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
-                <ScalarProperty Name="category_id" ColumnName="category_id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="purpose" ColumnName="purpose" />
-                <ScalarProperty Name="notes" ColumnName="notes" />
-                <ScalarProperty Name="money" ColumnName="money" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-                <ScalarProperty Name="date" ColumnName="date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MN_TRANSFER">
-            <EntityTypeMapping TypeName="TDHModel.MN_TRANSFER">
-              <MappingFragment StoreEntitySet="MN_TRANSFER">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="account_from" ColumnName="account_from" />
-                <ScalarProperty Name="account_to" ColumnName="account_to" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="purpose" ColumnName="purpose" />
-                <ScalarProperty Name="notes" ColumnName="notes" />
-                <ScalarProperty Name="money" ColumnName="money" />
-                <ScalarProperty Name="fee" ColumnName="fee" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-                <ScalarProperty Name="date" ColumnName="date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="NAVIGATIONs">
-            <EntityTypeMapping TypeName="TDHModel.NAVIGATION">
-              <MappingFragment StoreEntitySet="NAVIGATION">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="alias" ColumnName="alias" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="publish" ColumnName="publish" />
-                <ScalarProperty Name="meta_title" ColumnName="meta_title" />
-                <ScalarProperty Name="meta_description" ColumnName="meta_description" />
-                <ScalarProperty Name="meta_keywords" ColumnName="meta_keywords" />
-                <ScalarProperty Name="meta_next" ColumnName="meta_next" />
-                <ScalarProperty Name="meta_og_site_name" ColumnName="meta_og_site_name" />
-                <ScalarProperty Name="meta_og_image" ColumnName="meta_og_image" />
-                <ScalarProperty Name="meta_twitter_image" ColumnName="meta_twitter_image" />
-                <ScalarProperty Name="meta_article_name" ColumnName="meta_article_name" />
-                <ScalarProperty Name="meta_article_tag" ColumnName="meta_article_tag" />
-                <ScalarProperty Name="meta_article_section" ColumnName="meta_article_section" />
-                <ScalarProperty Name="meta_article_publish" ColumnName="meta_article_publish" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-                <ScalarProperty Name="no_child" ColumnName="no_child" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="POSTs">
-            <EntityTypeMapping TypeName="TDHModel.POST">
-              <MappingFragment StoreEntitySet="POST">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="category_id" ColumnName="category_id" />
-                <ScalarProperty Name="navigation_id" ColumnName="navigation_id" />
-                <ScalarProperty Name="is_navigation" ColumnName="is_navigation" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="alias" ColumnName="alias" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="publish" ColumnName="publish" />
-                <ScalarProperty Name="meta_title" ColumnName="meta_title" />
-                <ScalarProperty Name="meta_description" ColumnName="meta_description" />
-                <ScalarProperty Name="meta_keywords" ColumnName="meta_keywords" />
-                <ScalarProperty Name="meta_next" ColumnName="meta_next" />
-                <ScalarProperty Name="meta_og_site_name" ColumnName="meta_og_site_name" />
-                <ScalarProperty Name="meta_og_image" ColumnName="meta_og_image" />
-                <ScalarProperty Name="meta_twitter_image" ColumnName="meta_twitter_image" />
-                <ScalarProperty Name="meta_article_name" ColumnName="meta_article_name" />
-                <ScalarProperty Name="meta_article_tag" ColumnName="meta_article_tag" />
-                <ScalarProperty Name="meta_article_section" ColumnName="meta_article_section" />
-                <ScalarProperty Name="meta_article_publish" ColumnName="meta_article_publish" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-                <ScalarProperty Name="view" ColumnName="view" />
-                <ScalarProperty Name="comment" ColumnName="comment" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="REPORTs">
-            <EntityTypeMapping TypeName="TDHModel.REPORT">
-              <MappingFragment StoreEntitySet="REPORT">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="REPORT_COMMENT">
-            <EntityTypeMapping TypeName="TDHModel.REPORT_COMMENT">
-              <MappingFragment StoreEntitySet="REPORT_COMMENT">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="report_id" ColumnName="report_id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="content" ColumnName="content" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ROLEs">
-            <EntityTypeMapping TypeName="TDHModel.ROLE">
-              <MappingFragment StoreEntitySet="ROLE">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="publish" ColumnName="publish" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
-                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
-                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ROLE_DETAIL">
-            <EntityTypeMapping TypeName="TDHModel.ROLE_DETAIL">
-              <MappingFragment StoreEntitySet="ROLE_DETAIL">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="role_id" ColumnName="role_id" />
-                <ScalarProperty Name="function_code" ColumnName="function_code" />
-                <ScalarProperty Name="view" ColumnName="view" />
-                <ScalarProperty Name="add" ColumnName="add" />
-                <ScalarProperty Name="edit" ColumnName="edit" />
-                <ScalarProperty Name="delete" ColumnName="delete" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TARGETs">
-            <EntityTypeMapping TypeName="TDHModel.TARGET">
-              <MappingFragment StoreEntitySet="TARGET">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="result" ColumnName="result" />
-                <ScalarProperty Name="done" ColumnName="done" />
-                <ScalarProperty Name="estimate_date" ColumnName="estimate_date" />
-                <ScalarProperty Name="finish_date" ColumnName="finish_date" />
-                <ScalarProperty Name="task_count" ColumnName="task_count" />
-                <ScalarProperty Name="level" ColumnName="level" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TARGET_TASK">
-            <EntityTypeMapping TypeName="TDHModel.TARGET_TASK">
-              <MappingFragment StoreEntitySet="TARGET_TASK">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="target_id" ColumnName="target_id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="result" ColumnName="result" />
-                <ScalarProperty Name="done" ColumnName="done" />
-                <ScalarProperty Name="estimate_date" ColumnName="estimate_date" />
-                <ScalarProperty Name="finish_date" ColumnName="finish_date" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="USERs">
-            <EntityTypeMapping TypeName="TDHModel.USER">
-              <MappingFragment StoreEntitySet="USER">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="full_name" ColumnName="full_name" />
-                <ScalarProperty Name="user_name" ColumnName="user_name" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="locked" ColumnName="locked" />
-                <ScalarProperty Name="notes" ColumnName="notes" />
-                <ScalarProperty Name="last_login" ColumnName="last_login" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="USER_ROLE">
-            <EntityTypeMapping TypeName="TDHModel.USER_ROLE">
-              <MappingFragment StoreEntitySet="USER_ROLE">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="role_id" ColumnName="role_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WK_CHECKLIST_GROUP">
-            <EntityTypeMapping TypeName="TDHModel.WK_CHECKLIST_GROUP">
-              <MappingFragment StoreEntitySet="WK_CHECKLIST_GROUP">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WK_CHECKLIST_ITEM">
-            <EntityTypeMapping TypeName="TDHModel.WK_CHECKLIST_ITEM">
-              <MappingFragment StoreEntitySet="WK_CHECKLIST_ITEM">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="group_id" ColumnName="group_id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="WK_CHECKLIST_ITEM_DETAIL">
-            <EntityTypeMapping TypeName="TDHModel.WK_CHECKLIST_ITEM_DETAIL">
-              <MappingFragment StoreEntitySet="WK_CHECKLIST_ITEM_DETAIL">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="check_id" ColumnName="check_id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
-                <ScalarProperty Name="update_date" ColumnName="update_date" />
-                <ScalarProperty Name="deleted" ColumnName="deleted" />
-                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
-                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="V_ACCOUNT_HISTORY">
-            <EntityTypeMapping TypeName="TDHModel.V_ACCOUNT_HISTORY">
-              <MappingFragment StoreEntitySet="V_ACCOUNT_HISTORY">
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="money" ColumnName="money" />
-                <ScalarProperty Name="type" ColumnName="type" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="V_CATEGORY_HISTORY">
-            <EntityTypeMapping TypeName="TDHModel.V_CATEGORY_HISTORY">
-              <MappingFragment StoreEntitySet="V_CATEGORY_HISTORY">
-                <ScalarProperty Name="category_id" ColumnName="category_id" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="money" ColumnName="money" />
-                <ScalarProperty Name="type" ColumnName="type" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="V_MONEY_FLOW">
-            <EntityTypeMapping TypeName="TDHModel.V_MONEY_FLOW">
-              <MappingFragment StoreEntitySet="V_MONEY_FLOW">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="from_id" ColumnName="from_id" />
-                <ScalarProperty Name="from_name" ColumnName="from_name" />
-                <ScalarProperty Name="to_id" ColumnName="to_id" />
-                <ScalarProperty Name="to_name" ColumnName="to_name" />
-                <ScalarProperty Name="category_name" ColumnName="category_name" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="money" ColumnName="money" />
-                <ScalarProperty Name="fee" ColumnName="fee" />
-                <ScalarProperty Name="type" ColumnName="type" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionName="TDHModel.Store.FNC_REPORT_INCOME_BY_CATEGORY" FunctionImportName="FNC_REPORT_INCOME_BY_CATEGORY">
             <ResultMapping>
               <ComplexTypeMapping TypeName="TDHModel.FNC_REPORT_INCOME_BY_CATEGORY_Result">
@@ -3198,6 +2568,689 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FNC_MN_GROUP_SETTING_GET_BY_GROUP" FunctionName="TDHModel.Store.FNC_MN_GROUP_SETTING_GET_BY_GROUP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="year_month" ColumnName="year_month" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="ABOUTs">
+            <EntityTypeMapping TypeName="TDHModel.ABOUT">
+              <MappingFragment StoreEntitySet="ABOUT">
+                <ScalarProperty Name="meta_article_publish" ColumnName="meta_article_publish" />
+                <ScalarProperty Name="meta_article_section" ColumnName="meta_article_section" />
+                <ScalarProperty Name="meta_article_tag" ColumnName="meta_article_tag" />
+                <ScalarProperty Name="meta_article_name" ColumnName="meta_article_name" />
+                <ScalarProperty Name="meta_twitter_image" ColumnName="meta_twitter_image" />
+                <ScalarProperty Name="meta_og_image" ColumnName="meta_og_image" />
+                <ScalarProperty Name="meta_og_site_name" ColumnName="meta_og_site_name" />
+                <ScalarProperty Name="meta_next" ColumnName="meta_next" />
+                <ScalarProperty Name="meta_keywords" ColumnName="meta_keywords" />
+                <ScalarProperty Name="meta_description" ColumnName="meta_description" />
+                <ScalarProperty Name="meta_title" ColumnName="meta_title" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATEGORies">
+            <EntityTypeMapping TypeName="TDHModel.CATEGORY">
+              <MappingFragment StoreEntitySet="CATEGORY">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="meta_article_publish" ColumnName="meta_article_publish" />
+                <ScalarProperty Name="meta_article_section" ColumnName="meta_article_section" />
+                <ScalarProperty Name="meta_article_tag" ColumnName="meta_article_tag" />
+                <ScalarProperty Name="meta_article_name" ColumnName="meta_article_name" />
+                <ScalarProperty Name="meta_twitter_image" ColumnName="meta_twitter_image" />
+                <ScalarProperty Name="meta_og_image" ColumnName="meta_og_image" />
+                <ScalarProperty Name="meta_og_site_name" ColumnName="meta_og_site_name" />
+                <ScalarProperty Name="meta_next" ColumnName="meta_next" />
+                <ScalarProperty Name="meta_keywords" ColumnName="meta_keywords" />
+                <ScalarProperty Name="meta_description" ColumnName="meta_description" />
+                <ScalarProperty Name="meta_title" ColumnName="meta_title" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="show_on_nav" ColumnName="show_on_nav" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="navigation_id" ColumnName="navigation_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CONFIGURATIONs">
+            <EntityTypeMapping TypeName="TDHModel.CONFIGURATION">
+              <MappingFragment StoreEntitySet="CONFIGURATION">
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="key" ColumnName="key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DAILY_TASK">
+            <EntityTypeMapping TypeName="TDHModel.DAILY_TASK">
+              <MappingFragment StoreEntitySet="DAILY_TASK">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="level" ColumnName="level" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="done" ColumnName="done" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ERROR_LOG">
+            <EntityTypeMapping TypeName="TDHModel.ERROR_LOG">
+              <MappingFragment StoreEntitySet="ERROR_LOG">
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="message" ColumnName="message" />
+                <ScalarProperty Name="inner_exception" ColumnName="inner_exception" />
+                <ScalarProperty Name="stack_trace" ColumnName="stack_trace" />
+                <ScalarProperty Name="source" ColumnName="source" />
+                <ScalarProperty Name="method_name" ColumnName="method_name" />
+                <ScalarProperty Name="file_name" ColumnName="file_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FUNCTIONs">
+            <EntityTypeMapping TypeName="TDHModel.FUNCTION">
+              <MappingFragment StoreEntitySet="FUNCTION">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="controller" ColumnName="controller" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HOME_CATEGORY">
+            <EntityTypeMapping TypeName="TDHModel.HOME_CATEGORY">
+              <MappingFragment StoreEntitySet="HOME_CATEGORY">
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HOME_NAVIGATION">
+            <EntityTypeMapping TypeName="TDHModel.HOME_NAVIGATION">
+              <MappingFragment StoreEntitySet="HOME_NAVIGATION">
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="navigation_id" ColumnName="navigation_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IDEAs">
+            <EntityTypeMapping TypeName="TDHModel.IDEA">
+              <MappingFragment StoreEntitySet="IDEA">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IDEA_DETAIL">
+            <EntityTypeMapping TypeName="TDHModel.IDEA_DETAIL">
+              <MappingFragment StoreEntitySet="IDEA_DETAIL">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="idea_id" ColumnName="idea_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_ACCOUNT">
+            <EntityTypeMapping TypeName="TDHModel.MN_ACCOUNT">
+              <MappingFragment StoreEntitySet="MN_ACCOUNT">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="output" ColumnName="output" />
+                <ScalarProperty Name="input" ColumnName="input" />
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="account_type_id" ColumnName="account_type_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_ACCOUNT_SETTING">
+            <EntityTypeMapping TypeName="TDHModel.MN_ACCOUNT_SETTING">
+              <MappingFragment StoreEntitySet="MN_ACCOUNT_SETTING">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="end" ColumnName="end" />
+                <ScalarProperty Name="output" ColumnName="output" />
+                <ScalarProperty Name="input" ColumnName="input" />
+                <ScalarProperty Name="start" ColumnName="start" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="yearmonth" ColumnName="yearmonth" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_ACCOUNT_TYPE">
+            <EntityTypeMapping TypeName="TDHModel.MN_ACCOUNT_TYPE">
+              <MappingFragment StoreEntitySet="MN_ACCOUNT_TYPE">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_CATEGORY">
+            <EntityTypeMapping TypeName="TDHModel.MN_CATEGORY">
+              <MappingFragment StoreEntitySet="MN_CATEGORY">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_CATEGORY_SETTING">
+            <EntityTypeMapping TypeName="TDHModel.MN_CATEGORY_SETTING">
+              <MappingFragment StoreEntitySet="MN_CATEGORY_SETTING">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="year_month" ColumnName="year_month" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_GROUP">
+            <EntityTypeMapping TypeName="TDHModel.MN_GROUP">
+              <MappingFragment StoreEntitySet="MN_GROUP">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="is_input" ColumnName="is_input" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_GROUP_SETTING">
+            <EntityTypeMapping TypeName="TDHModel.MN_GROUP_SETTING">
+              <MappingFragment StoreEntitySet="MN_GROUP_SETTING">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="year_month" ColumnName="year_month" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_INCOME">
+            <EntityTypeMapping TypeName="TDHModel.MN_INCOME">
+              <MappingFragment StoreEntitySet="MN_INCOME">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="purpose" ColumnName="purpose" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_PAYMENT">
+            <EntityTypeMapping TypeName="TDHModel.MN_PAYMENT">
+              <MappingFragment StoreEntitySet="MN_PAYMENT">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="purpose" ColumnName="purpose" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MN_TRANSFER">
+            <EntityTypeMapping TypeName="TDHModel.MN_TRANSFER">
+              <MappingFragment StoreEntitySet="MN_TRANSFER">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="fee" ColumnName="fee" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="purpose" ColumnName="purpose" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="account_to" ColumnName="account_to" />
+                <ScalarProperty Name="account_from" ColumnName="account_from" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NAVIGATIONs">
+            <EntityTypeMapping TypeName="TDHModel.NAVIGATION">
+              <MappingFragment StoreEntitySet="NAVIGATION">
+                <ScalarProperty Name="no_child" ColumnName="no_child" />
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="meta_article_publish" ColumnName="meta_article_publish" />
+                <ScalarProperty Name="meta_article_section" ColumnName="meta_article_section" />
+                <ScalarProperty Name="meta_article_tag" ColumnName="meta_article_tag" />
+                <ScalarProperty Name="meta_article_name" ColumnName="meta_article_name" />
+                <ScalarProperty Name="meta_twitter_image" ColumnName="meta_twitter_image" />
+                <ScalarProperty Name="meta_og_image" ColumnName="meta_og_image" />
+                <ScalarProperty Name="meta_og_site_name" ColumnName="meta_og_site_name" />
+                <ScalarProperty Name="meta_next" ColumnName="meta_next" />
+                <ScalarProperty Name="meta_keywords" ColumnName="meta_keywords" />
+                <ScalarProperty Name="meta_description" ColumnName="meta_description" />
+                <ScalarProperty Name="meta_title" ColumnName="meta_title" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="POSTs">
+            <EntityTypeMapping TypeName="TDHModel.POST">
+              <MappingFragment StoreEntitySet="POST">
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="view" ColumnName="view" />
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="meta_article_publish" ColumnName="meta_article_publish" />
+                <ScalarProperty Name="meta_article_section" ColumnName="meta_article_section" />
+                <ScalarProperty Name="meta_article_tag" ColumnName="meta_article_tag" />
+                <ScalarProperty Name="meta_article_name" ColumnName="meta_article_name" />
+                <ScalarProperty Name="meta_twitter_image" ColumnName="meta_twitter_image" />
+                <ScalarProperty Name="meta_og_image" ColumnName="meta_og_image" />
+                <ScalarProperty Name="meta_og_site_name" ColumnName="meta_og_site_name" />
+                <ScalarProperty Name="meta_next" ColumnName="meta_next" />
+                <ScalarProperty Name="meta_keywords" ColumnName="meta_keywords" />
+                <ScalarProperty Name="meta_description" ColumnName="meta_description" />
+                <ScalarProperty Name="meta_title" ColumnName="meta_title" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="is_navigation" ColumnName="is_navigation" />
+                <ScalarProperty Name="navigation_id" ColumnName="navigation_id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REPORTs">
+            <EntityTypeMapping TypeName="TDHModel.REPORT">
+              <MappingFragment StoreEntitySet="REPORT">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REPORT_COMMENT">
+            <EntityTypeMapping TypeName="TDHModel.REPORT_COMMENT">
+              <MappingFragment StoreEntitySet="REPORT_COMMENT">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="report_id" ColumnName="report_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLEs">
+            <EntityTypeMapping TypeName="TDHModel.ROLE">
+              <MappingFragment StoreEntitySet="ROLE">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROLE_DETAIL">
+            <EntityTypeMapping TypeName="TDHModel.ROLE_DETAIL">
+              <MappingFragment StoreEntitySet="ROLE_DETAIL">
+                <ScalarProperty Name="delete" ColumnName="delete" />
+                <ScalarProperty Name="edit" ColumnName="edit" />
+                <ScalarProperty Name="add" ColumnName="add" />
+                <ScalarProperty Name="view" ColumnName="view" />
+                <ScalarProperty Name="function_code" ColumnName="function_code" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TARGETs">
+            <EntityTypeMapping TypeName="TDHModel.TARGET">
+              <MappingFragment StoreEntitySet="TARGET">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="level" ColumnName="level" />
+                <ScalarProperty Name="task_count" ColumnName="task_count" />
+                <ScalarProperty Name="finish_date" ColumnName="finish_date" />
+                <ScalarProperty Name="estimate_date" ColumnName="estimate_date" />
+                <ScalarProperty Name="done" ColumnName="done" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="parent_id" ColumnName="parent_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TARGET_TASK">
+            <EntityTypeMapping TypeName="TDHModel.TARGET_TASK">
+              <MappingFragment StoreEntitySet="TARGET_TASK">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="finish_date" ColumnName="finish_date" />
+                <ScalarProperty Name="estimate_date" ColumnName="estimate_date" />
+                <ScalarProperty Name="done" ColumnName="done" />
+                <ScalarProperty Name="result" ColumnName="result" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="target_id" ColumnName="target_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERs">
+            <EntityTypeMapping TypeName="TDHModel.USER">
+              <MappingFragment StoreEntitySet="USER">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="last_login" ColumnName="last_login" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="locked" ColumnName="locked" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USER_ROLE">
+            <EntityTypeMapping TypeName="TDHModel.USER_ROLE">
+              <MappingFragment StoreEntitySet="USER_ROLE">
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WK_CHECKLIST_GROUP">
+            <EntityTypeMapping TypeName="TDHModel.WK_CHECKLIST_GROUP">
+              <MappingFragment StoreEntitySet="WK_CHECKLIST_GROUP">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WK_CHECKLIST_ITEM">
+            <EntityTypeMapping TypeName="TDHModel.WK_CHECKLIST_ITEM">
+              <MappingFragment StoreEntitySet="WK_CHECKLIST_ITEM">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WK_CHECKLIST_ITEM_DETAIL">
+            <EntityTypeMapping TypeName="TDHModel.WK_CHECKLIST_ITEM_DETAIL">
+              <MappingFragment StoreEntitySet="WK_CHECKLIST_ITEM_DETAIL">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="check_id" ColumnName="check_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_ACCOUNT_HISTORY">
+            <EntityTypeMapping TypeName="TDHModel.V_ACCOUNT_HISTORY">
+              <MappingFragment StoreEntitySet="V_ACCOUNT_HISTORY">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_CATEGORY_HISTORY">
+            <EntityTypeMapping TypeName="TDHModel.V_CATEGORY_HISTORY">
+              <MappingFragment StoreEntitySet="V_CATEGORY_HISTORY">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_MONEY_FLOW">
+            <EntityTypeMapping TypeName="TDHModel.V_MONEY_FLOW">
+              <MappingFragment StoreEntitySet="V_MONEY_FLOW">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="fee" ColumnName="fee" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="to_name" ColumnName="to_name" />
+                <ScalarProperty Name="to_id" ColumnName="to_id" />
+                <ScalarProperty Name="from_name" ColumnName="from_name" />
+                <ScalarProperty Name="from_id" ColumnName="from_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -95,5 +95,23 @@ namespace TDH.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_REPORT_SUMMARY_BY_YEAR_Result>("[TDHEntities].[FNC_REPORT_SUMMARY_BY_YEAR](@I_Year)", i_YearParameter);
         }
+    
+        [DbFunction("TDHEntities", "FNC_MN_GROUP_SETTING_GET_BY_GROUP")]
+        public virtual IQueryable<FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result> FNC_MN_GROUP_SETTING_GET_BY_GROUP(Nullable<System.Guid> i_GroupID, Nullable<int> i_Year, Nullable<System.Guid> i_UserID)
+        {
+            var i_GroupIDParameter = i_GroupID.HasValue ?
+                new ObjectParameter("I_GroupID", i_GroupID) :
+                new ObjectParameter("I_GroupID", typeof(System.Guid));
+    
+            var i_YearParameter = i_Year.HasValue ?
+                new ObjectParameter("I_Year", i_Year) :
+                new ObjectParameter("I_Year", typeof(int));
+    
+            var i_UserIDParameter = i_UserID.HasValue ?
+                new ObjectParameter("I_UserID", i_UserID) :
+                new ObjectParameter("I_UserID", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result>("[TDHEntities].[FNC_MN_GROUP_SETTING_GET_BY_GROUP](@I_GroupID, @I_Year, @I_UserID)", i_GroupIDParameter, i_YearParameter, i_UserIDParameter);
+        }
     }
 }

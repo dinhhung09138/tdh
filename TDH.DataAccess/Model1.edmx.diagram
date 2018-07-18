@@ -5,68 +5,68 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1db7efb47371476dae55424271d6f3ba" Name="Diagram1">
-        <EntityTypeShape EntityType="TDHModel.ABOUT" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.CATEGORY" Width="1.5" PointX="13" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.CONFIGURATION" Width="1.5" PointX="7.75" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.DAILY_TASK" Width="1.5" PointX="0.75" PointY="16.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.ERROR_LOG" Width="1.5" PointX="2.75" PointY="18.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.FUNCTION" Width="1.5" PointX="15.75" PointY="16.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.HOME_CATEGORY" Width="1.5" PointX="15.25" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.HOME_NAVIGATION" Width="1.5" PointX="13" PointY="17.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.IDEA" Width="1.5" PointX="20.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.IDEA_DETAIL" Width="1.5" PointX="23" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.MN_ACCOUNT" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.MN_ACCOUNT_SETTING" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.MN_ACCOUNT_TYPE" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.MN_CATEGORY" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.MN_CATEGORY_SETTING" Width="1.5" PointX="8.25" PointY="15.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.MN_GROUP" Width="1.5" PointX="3.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.MN_GROUP_SETTING" Width="1.5" PointX="6" PointY="28.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.MN_INCOME" Width="1.5" PointX="5.25" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.MN_PAYMENT" Width="1.5" PointX="8.25" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.MN_TRANSFER" Width="1.5" PointX="5.25" PointY="22.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.NAVIGATION" Width="1.5" PointX="10.75" PointY="11" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.POST" Width="1.5" PointX="18.25" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.REPORT" Width="1.5" PointX="7.75" PointY="20.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.REPORT_COMMENT" Width="1.5" PointX="10" PointY="20.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.ROLE" Width="1.5" PointX="15.75" PointY="19.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.ROLE_DETAIL" Width="1.5" PointX="18" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.TARGET" Width="1.5" PointX="8.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.TARGET_TASK" Width="1.5" PointX="11" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.USER" Width="1.5" PointX="18.75" PointY="24.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.USER_ROLE" Width="1.5" PointX="21" PointY="20.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.WK_CHECKLIST_GROUP" Width="1.5" PointX="13.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.WK_CHECKLIST_ITEM" Width="1.5" PointX="16" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.WK_CHECKLIST_ITEM_DETAIL" Width="1.5" PointX="18.25" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.V_ACCOUNT_HISTORY" Width="1.5" PointX="13.75" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.V_CATEGORY_HISTORY" Width="1.5" PointX="15.75" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="TDHModel.V_MONEY_FLOW" Width="1.5" PointX="4.75" PointY="18.375" IsExpanded="true" />
-        <AssociationConnector Association="TDHModel.FK_CATEGORY_NAVIGATION" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_HOME_CATEGORY_category_id" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_POST_CATEGORY" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_ROLE_DETAIL_function" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_HOME_NAVIGATION_navigation_id" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_IDEA_DETAIL_IDEA" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_MN_INCOME_MN_ACCOUNT" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_MN_PAYMENT_MN_ACCOUNT" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_FROM" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_TO" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_MN_CATEGORY_MN_GROUP" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_MN_INCOME_MN_CATEGORY" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_MN_PAYMENT_MN_CATEGORY" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_MN_GROUP_SETTING_MN_GROUP" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_POST_NAVIGATION" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_REPORT_COMMENT_REPORT" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_ROLE_DETAIL_role" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_USER_ROLE_role_id" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_TARGET_PARENT" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_TARGET_TASK_TARGET" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_USER_ROLE_user_id" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_WK_CHECKLIST_ITEM_group_id" ManuallyRouted="false" />
-        <AssociationConnector Association="TDHModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TDHModel.ABOUT" Width="1.5" PointX="0.75" PointY="18.125" />
+        <EntityTypeShape EntityType="TDHModel.CATEGORY" Width="1.5" PointX="13" PointY="8" />
+        <EntityTypeShape EntityType="TDHModel.CONFIGURATION" Width="1.5" PointX="5.75" PointY="9.125" />
+        <EntityTypeShape EntityType="TDHModel.DAILY_TASK" Width="1.5" PointX="17.75" PointY="18.125" />
+        <EntityTypeShape EntityType="TDHModel.ERROR_LOG" Width="1.5" PointX="9.75" PointY="22.125" />
+        <EntityTypeShape EntityType="TDHModel.FUNCTION" Width="1.5" PointX="10.75" PointY="15" />
+        <EntityTypeShape EntityType="TDHModel.HOME_CATEGORY" Width="1.5" PointX="15.25" PointY="18.625" />
+        <EntityTypeShape EntityType="TDHModel.HOME_NAVIGATION" Width="1.5" PointX="13" PointY="5.375" />
+        <EntityTypeShape EntityType="TDHModel.IDEA" Width="1.5" PointX="17.75" PointY="13.5" />
+        <EntityTypeShape EntityType="TDHModel.IDEA_DETAIL" Width="1.5" PointX="20" PointY="13.375" />
+        <EntityTypeShape EntityType="TDHModel.MN_ACCOUNT" Width="1.5" PointX="3" PointY="11.375" />
+        <EntityTypeShape EntityType="TDHModel.MN_ACCOUNT_SETTING" Width="1.5" PointX="5.25" PointY="24.625" />
+        <EntityTypeShape EntityType="TDHModel.MN_ACCOUNT_TYPE" Width="1.5" PointX="0.75" PointY="12.375" />
+        <EntityTypeShape EntityType="TDHModel.MN_CATEGORY" Width="1.5" PointX="3" PointY="5.5" />
+        <EntityTypeShape EntityType="TDHModel.MN_CATEGORY_SETTING" Width="1.5" PointX="5.25" PointY="30.125" />
+        <EntityTypeShape EntityType="TDHModel.MN_GROUP" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="TDHModel.MN_GROUP_SETTING" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="TDHModel.MN_INCOME" Width="1.5" PointX="5.25" PointY="11.875" />
+        <EntityTypeShape EntityType="TDHModel.MN_PAYMENT" Width="1.5" PointX="8.25" PointY="11.875" />
+        <EntityTypeShape EntityType="TDHModel.MN_TRANSFER" Width="1.5" PointX="5.25" PointY="19.375" />
+        <EntityTypeShape EntityType="TDHModel.NAVIGATION" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="TDHModel.POST" Width="1.5" PointX="15.25" PointY="7.125" />
+        <EntityTypeShape EntityType="TDHModel.REPORT" Width="1.5" PointX="17.75" PointY="8.5" />
+        <EntityTypeShape EntityType="TDHModel.REPORT_COMMENT" Width="1.5" PointX="20" PointY="8.375" />
+        <EntityTypeShape EntityType="TDHModel.ROLE" Width="1.5" PointX="7.75" PointY="18.5" />
+        <EntityTypeShape EntityType="TDHModel.ROLE_DETAIL" Width="1.5" PointX="13" PointY="18.875" />
+        <EntityTypeShape EntityType="TDHModel.TARGET" Width="1.5" PointX="5.75" PointY="3.5" />
+        <EntityTypeShape EntityType="TDHModel.TARGET_TASK" Width="1.5" PointX="8" PointY="3.875" />
+        <EntityTypeShape EntityType="TDHModel.USER" Width="1.5" PointX="7.75" PointY="23.375" />
+        <EntityTypeShape EntityType="TDHModel.USER_ROLE" Width="1.5" PointX="10" PointY="19.25" />
+        <EntityTypeShape EntityType="TDHModel.WK_CHECKLIST_GROUP" Width="1.5" PointX="17.75" PointY="3.75" />
+        <EntityTypeShape EntityType="TDHModel.WK_CHECKLIST_ITEM" Width="1.5" PointX="20" PointY="3.375" />
+        <EntityTypeShape EntityType="TDHModel.WK_CHECKLIST_ITEM_DETAIL" Width="1.5" PointX="22.25" PointY="3.625" />
+        <EntityTypeShape EntityType="TDHModel.V_ACCOUNT_HISTORY" Width="1.5" PointX="19.75" PointY="18.125" />
+        <EntityTypeShape EntityType="TDHModel.V_CATEGORY_HISTORY" Width="1.5" PointX="19.75" PointY="21.125" />
+        <EntityTypeShape EntityType="TDHModel.V_MONEY_FLOW" Width="1.5" PointX="11.75" PointY="23.125" />
+        <AssociationConnector Association="TDHModel.FK_CATEGORY_NAVIGATION" />
+        <AssociationConnector Association="TDHModel.FK_HOME_CATEGORY_category_id" />
+        <AssociationConnector Association="TDHModel.FK_POST_CATEGORY" />
+        <AssociationConnector Association="TDHModel.FK_ROLE_DETAIL_function" />
+        <AssociationConnector Association="TDHModel.FK_HOME_NAVIGATION_navigation_id" />
+        <AssociationConnector Association="TDHModel.FK_IDEA_DETAIL_IDEA" />
+        <AssociationConnector Association="TDHModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" />
+        <AssociationConnector Association="TDHModel.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" />
+        <AssociationConnector Association="TDHModel.FK_MN_INCOME_MN_ACCOUNT" />
+        <AssociationConnector Association="TDHModel.FK_MN_PAYMENT_MN_ACCOUNT" />
+        <AssociationConnector Association="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_FROM" />
+        <AssociationConnector Association="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_TO" />
+        <AssociationConnector Association="TDHModel.FK_MN_CATEGORY_MN_GROUP" />
+        <AssociationConnector Association="TDHModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY" />
+        <AssociationConnector Association="TDHModel.FK_MN_INCOME_MN_CATEGORY" />
+        <AssociationConnector Association="TDHModel.FK_MN_PAYMENT_MN_CATEGORY" />
+        <AssociationConnector Association="TDHModel.FK_MN_GROUP_SETTING_MN_GROUP" />
+        <AssociationConnector Association="TDHModel.FK_POST_NAVIGATION" />
+        <AssociationConnector Association="TDHModel.FK_REPORT_COMMENT_REPORT" />
+        <AssociationConnector Association="TDHModel.FK_ROLE_DETAIL_role" />
+        <AssociationConnector Association="TDHModel.FK_USER_ROLE_role_id" />
+        <AssociationConnector Association="TDHModel.FK_TARGET_PARENT" />
+        <AssociationConnector Association="TDHModel.FK_TARGET_TASK_TARGET" />
+        <AssociationConnector Association="TDHModel.FK_USER_ROLE_user_id" />
+        <AssociationConnector Association="TDHModel.FK_WK_CHECKLIST_ITEM_group_id" />
+        <AssociationConnector Association="TDHModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

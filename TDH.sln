@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDH", "TDH\TDH.csproj", "{2561D8C2-8F91-4256-AFE7-B4F154229C4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDH.Services", "TDH.Services\TDH.Services.csproj", "{47C49BF9-E45D-4B25-AEE8-E52B8B4A8E54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDH.DataAccess", "TDH.DataAccess\TDH.DataAccess.csproj", "{E8809BAD-267D-41C9-89F5-1D2A4A37D530}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

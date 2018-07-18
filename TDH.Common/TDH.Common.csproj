@@ -61,6 +61,7 @@
   <ItemGroup>
     <Compile Include="Configuration.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="Message.cs" />
     <Compile Include="Notifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

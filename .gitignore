@@ -19,3 +19,9 @@ packages/
 TDH\.Services/obj/Debug/
 
 TDH\.DataAccess/obj/Debug/
+
+TDH\.Common/bin/Debug/
+
+TDH\.Common/obj/Debug/
+
+TDH\.DataAccess/bin/Debug/

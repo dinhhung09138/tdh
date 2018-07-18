@@ -558,6 +558,51 @@
           <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="role_id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="WK_CHECKLIST_GROUP">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WK_CHECKLIST_ITEM">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="group_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="250" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WK_CHECKLIST_ITEM_DETAIL">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="check_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="update_by" Type="uniqueidentifier" />
+          <Property Name="update_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="delete_by" Type="uniqueidentifier" />
+          <Property Name="delete_date" Type="datetime" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_ACCOUNT_HISTORY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_ACCOUNT_HISTORY">
@@ -926,6 +971,34 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WK_CHECKLIST_ITEM_DETAIL_check_id">
+          <End Role="WK_CHECKLIST_ITEM" Type="Self.WK_CHECKLIST_ITEM" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WK_CHECKLIST_ITEM_DETAIL" Type="Self.WK_CHECKLIST_ITEM_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WK_CHECKLIST_ITEM">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WK_CHECKLIST_ITEM_DETAIL">
+              <PropertyRef Name="check_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WK_CHECKLIST_ITEM_group_id">
+          <End Role="WK_CHECKLIST_GROUP" Type="Self.WK_CHECKLIST_GROUP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="WK_CHECKLIST_ITEM" Type="Self.WK_CHECKLIST_ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WK_CHECKLIST_GROUP">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WK_CHECKLIST_ITEM">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="I_GroupID" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="I_Year" Type="int" Mode="In" />
@@ -964,13 +1037,20 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <ReturnType>
             <CollectionType>
               <RowType>
-                <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
-                <Property Name="month" Type="int" Nullable="false" />
-                <Property Name="year" Type="int" Nullable="false" />
-                <Property Name="percent_setting" Type="tinyint" Nullable="false" />
-                <Property Name="percent_current" Type="tinyint" Nullable="false" />
-                <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="name" Type="nvarchar" MaxLength="40" Nullable="false" />
+                <Property Name="cate_name" Type="nvarchar" MaxLength="150" Nullable="false" />
+                <Property Name="t1" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t2" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t3" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t4" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t5" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t6" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t7" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t8" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t9" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t10" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t11" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t12" Type="numeric" Precision="38" Scale="1" Nullable="false" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -1032,6 +1112,9 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <EntitySet Name="TARGET_TASK" EntityType="Self.TARGET_TASK" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="USER_ROLE" EntityType="Self.USER_ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WK_CHECKLIST_GROUP" EntityType="Self.WK_CHECKLIST_GROUP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WK_CHECKLIST_ITEM" EntityType="Self.WK_CHECKLIST_ITEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WK_CHECKLIST_ITEM_DETAIL" EntityType="Self.WK_CHECKLIST_ITEM_DETAIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="V_ACCOUNT_HISTORY" EntityType="Self.V_ACCOUNT_HISTORY" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [V_ACCOUNT_HISTORY].[account_id] AS [account_id], 
@@ -1160,6 +1243,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <AssociationSet Name="FK_USER_ROLE_user_id" Association="Self.FK_USER_ROLE_user_id">
             <End Role="USER" EntitySet="USER" />
             <End Role="USER_ROLE" EntitySet="USER_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WK_CHECKLIST_ITEM_DETAIL_check_id" Association="Self.FK_WK_CHECKLIST_ITEM_DETAIL_check_id">
+            <End Role="WK_CHECKLIST_ITEM" EntitySet="WK_CHECKLIST_ITEM" />
+            <End Role="WK_CHECKLIST_ITEM_DETAIL" EntitySet="WK_CHECKLIST_ITEM_DETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WK_CHECKLIST_ITEM_group_id" Association="Self.FK_WK_CHECKLIST_ITEM_group_id">
+            <End Role="WK_CHECKLIST_GROUP" EntitySet="WK_CHECKLIST_GROUP" />
+            <End Role="WK_CHECKLIST_ITEM" EntitySet="WK_CHECKLIST_ITEM" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1637,6 +1728,17 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             <Parameter Name="I_UserID" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="FNC_REPORT_SUMMARY" IsComposable="true" ReturnType="Collection(chacd26d_trandinhhungModel.FNC_REPORT_SUMMARY_Result)" />
+          <EntitySet Name="WK_CHECKLIST_GROUP" EntityType="chacd26d_trandinhhungModel.WK_CHECKLIST_GROUP" />
+          <EntitySet Name="WK_CHECKLIST_ITEM" EntityType="chacd26d_trandinhhungModel.WK_CHECKLIST_ITEM" />
+          <EntitySet Name="WK_CHECKLIST_ITEM_DETAIL" EntityType="chacd26d_trandinhhungModel.WK_CHECKLIST_ITEM_DETAIL" />
+          <AssociationSet Name="FK_WK_CHECKLIST_ITEM_group_id" Association="chacd26d_trandinhhungModel.FK_WK_CHECKLIST_ITEM_group_id">
+            <End Role="WK_CHECKLIST_GROUP" EntitySet="WK_CHECKLIST_GROUP" />
+            <End Role="WK_CHECKLIST_ITEM" EntitySet="WK_CHECKLIST_ITEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WK_CHECKLIST_ITEM_DETAIL_check_id" Association="chacd26d_trandinhhungModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id">
+            <End Role="WK_CHECKLIST_ITEM" EntitySet="WK_CHECKLIST_ITEM" />
+            <End Role="WK_CHECKLIST_ITEM_DETAIL" EntitySet="WK_CHECKLIST_ITEM_DETAIL" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="HOME_CATEGORY">
           <Key>
@@ -2313,6 +2415,83 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Type="Decimal" Name="output" Nullable="false" Precision="38" Scale="1" />
           <Property Type="Decimal" Name="final" Nullable="false" Precision="38" Scale="1" />
         </ComplexType>
+        <EntityType Name="WK_CHECKLIST_GROUP">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WK_CHECKLIST_ITEM" Relationship="chacd26d_trandinhhungModel.FK_WK_CHECKLIST_ITEM_group_id" FromRole="WK_CHECKLIST_GROUP" ToRole="WK_CHECKLIST_ITEM" />
+        </EntityType>
+        <EntityType Name="WK_CHECKLIST_ITEM">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="group_id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WK_CHECKLIST_GROUP" Relationship="chacd26d_trandinhhungModel.FK_WK_CHECKLIST_ITEM_group_id" FromRole="WK_CHECKLIST_ITEM" ToRole="WK_CHECKLIST_GROUP" />
+          <NavigationProperty Name="WK_CHECKLIST_ITEM_DETAIL" Relationship="chacd26d_trandinhhungModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" FromRole="WK_CHECKLIST_ITEM" ToRole="WK_CHECKLIST_ITEM_DETAIL" />
+        </EntityType>
+        <EntityType Name="WK_CHECKLIST_ITEM_DETAIL">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="check_id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="update_by" Type="Guid" />
+          <Property Name="update_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="delete_by" Type="Guid" />
+          <Property Name="delete_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WK_CHECKLIST_ITEM" Relationship="chacd26d_trandinhhungModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" FromRole="WK_CHECKLIST_ITEM_DETAIL" ToRole="WK_CHECKLIST_ITEM" />
+        </EntityType>
+        <Association Name="FK_WK_CHECKLIST_ITEM_group_id">
+          <End Type="chacd26d_trandinhhungModel.WK_CHECKLIST_GROUP" Role="WK_CHECKLIST_GROUP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="chacd26d_trandinhhungModel.WK_CHECKLIST_ITEM" Role="WK_CHECKLIST_ITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WK_CHECKLIST_GROUP">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WK_CHECKLIST_ITEM">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WK_CHECKLIST_ITEM_DETAIL_check_id">
+          <End Type="chacd26d_trandinhhungModel.WK_CHECKLIST_ITEM" Role="WK_CHECKLIST_ITEM" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="chacd26d_trandinhhungModel.WK_CHECKLIST_ITEM_DETAIL" Role="WK_CHECKLIST_ITEM_DETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WK_CHECKLIST_ITEM">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WK_CHECKLIST_ITEM_DETAIL">
+              <PropertyRef Name="check_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3001,6 +3180,54 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="WK_CHECKLIST_GROUP">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.WK_CHECKLIST_GROUP">
+              <MappingFragment StoreEntitySet="WK_CHECKLIST_GROUP">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WK_CHECKLIST_ITEM">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.WK_CHECKLIST_ITEM">
+              <MappingFragment StoreEntitySet="WK_CHECKLIST_ITEM">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WK_CHECKLIST_ITEM_DETAIL">
+            <EntityTypeMapping TypeName="chacd26d_trandinhhungModel.WK_CHECKLIST_ITEM_DETAIL">
+              <MappingFragment StoreEntitySet="WK_CHECKLIST_ITEM_DETAIL">
+                <ScalarProperty Name="delete_date" ColumnName="delete_date" />
+                <ScalarProperty Name="delete_by" ColumnName="delete_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="update_date" ColumnName="update_date" />
+                <ScalarProperty Name="update_by" ColumnName="update_by" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="check_id" ColumnName="check_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

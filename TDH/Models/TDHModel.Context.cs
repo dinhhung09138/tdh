@@ -60,6 +60,9 @@ namespace TDH.Models
         public virtual DbSet<V_ACCOUNT_HISTORY> V_ACCOUNT_HISTORY { get; set; }
         public virtual DbSet<V_MONEY_FLOW> V_MONEY_FLOW { get; set; }
         public virtual DbSet<V_CATEGORY_HISTORY> V_CATEGORY_HISTORY { get; set; }
+        public virtual DbSet<WK_CHECKLIST_GROUP> WK_CHECKLIST_GROUP { get; set; }
+        public virtual DbSet<WK_CHECKLIST_ITEM> WK_CHECKLIST_ITEM { get; set; }
+        public virtual DbSet<WK_CHECKLIST_ITEM_DETAIL> WK_CHECKLIST_ITEM_DETAIL { get; set; }
     
         [DbFunction("chacd26d_trandinhhungEntities", "FNC_REPORT_SUMMARY_BY_YEAR")]
         public virtual IQueryable<FNC_REPORT_SUMMARY_BY_YEAR_Result> FNC_REPORT_SUMMARY_BY_YEAR(Nullable<int> i_Year)

@@ -7,6 +7,9 @@ using TDH.DataAccess;
 
 namespace TDH.Common
 {
+    /// <summary>
+    /// Log service
+    /// </summary>
     public class Log
     {
         /// <summary>

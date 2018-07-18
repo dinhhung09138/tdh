@@ -4,6 +4,9 @@ using TDH.DataAccess;
 
 namespace TDH.Common
 {
+    /// <summary>
+    /// Configuration setting
+    /// </summary>
     public class Configuration
     {
         #region " [ Properties ] "

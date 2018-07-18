@@ -44,7 +44,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Money\AccountHistoryModel.cs" />
     <Compile Include="Money\AccountModel.cs" />
     <Compile Include="Money\AccountSettingModel.cs" />

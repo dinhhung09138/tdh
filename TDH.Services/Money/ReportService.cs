@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Utils.JqueryDatatable;
-using Utils;
 using System.Threading.Tasks;
 using TDH.Model.Money;
 using TDH.DataAccess;
@@ -28,8 +26,8 @@ namespace TDH.Services.Money
         /// Total summary
         /// Line chart
         /// </summary>
-        /// <param name="userID"></param>
-        /// <returns></returns>
+        /// <param name="userID">The user identifier</param>
+        /// <returns>List<ReportCollectionByYearModel></returns>
         public async Task<List<ReportCollectionByYearModel>> Summary(Guid userID)
         {
             Task<List<ReportCollectionByYearModel>> _return = Task.Run(() =>
@@ -65,8 +63,8 @@ namespace TDH.Services.Money
         /// line chart
         /// </summary>
         /// <param name="year">year</param>
-        /// <param name="userID">user's id</param>
-        /// <returns></returns>
+        /// <param name="userID">The user identifier</param>
+        /// <returns>List<ReportCollectionByYearModel></returns>
         public async Task<List<ReportCollectionByYearModel>> SummaryByYear(int year, Guid userID)
         {
             Task<List<ReportCollectionByYearModel>> _return = Task.Run(() =>
@@ -96,6 +94,5 @@ namespace TDH.Services.Money
             await _return;
             return _return.Result;
         }
-
     }
 }

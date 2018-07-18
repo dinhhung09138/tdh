@@ -27,3 +27,7 @@ TDH\.Common/obj/Debug/
 TDH\.DataAccess/bin/Debug/
 
 TDH\.Model/obj/Debug/
+
+TDH\.Model/bin/Debug/
+
+TDH\.Services/bin/Debug/

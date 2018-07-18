@@ -1,25 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using TDH.Common;
 using TDH.DataAccess;
 using TDH.Model.Money;
 using Utils;
 using Utils.JqueryDatatable;
 
-namespace Money
+namespace TDH.Services.Money
 {
     /// <summary>
-    /// Account service
+    /// Category service
     /// </summary>
-    public class AccountService
+    public class CategoryService
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/AccountService.cs";
+        private readonly string FILE_NAME = "Services/CategoryService.cs";
 
         #endregion
 
@@ -35,22 +34,20 @@ namespace Money
             try
             {
                 //Declare response data to json object
-                DataTableResponse<AccountModel> _itemResponse = new DataTableResponse<AccountModel>();
+                DataTableResponse<CategoryModel> _itemResponse = new DataTableResponse<CategoryModel>();
                 //List of data
-                List<AccountModel> _list = new List<AccountModel>();
+                List<CategoryModel> _list = new List<CategoryModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _lData = (from m in context.MN_ACCOUNT
-                                  join n in context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
-                                  where !n.deleted && n.publish && !m.deleted
-                                  orderby m.name descending
+                    var _lData = (from m in context.MN_CATEGORY
+                                  join n in context.MN_GROUP on m.group_id equals n.id
+                                  where !n.deleted && !m.deleted && request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.group_id.ToString())
                                   select new
                                   {
                                       m.id,
                                       m.name,
-                                      m.input,
-                                      m.output,
-                                      type_name = n.name
+                                      m.notes,
+                                      group_name = n.name
                                   }).ToList();
 
                     _itemResponse.draw = request.draw;
@@ -60,39 +57,44 @@ namespace Money
                     {
                         string searchValue = request.search.Value.ToLower();
                         _lData = _lData.Where(m => m.name.ToLower().Contains(searchValue) ||
-                                                   m.type_name.ToLower().Contains(searchValue)).ToList();
+                                                   m.notes.ToLower().Contains(searchValue) ||
+                                                   m.group_name.ToLower().Contains(searchValue)).ToList();
                     }
                     //Add to list
-                    decimal _input = 0;
-                    decimal _out = 0;
-                    decimal _yearMonth = decimal.Parse(DateTime.Now.DateToString("yyyyMM"));
+                    byte _percentSet = 0;
+                    byte _percentCur = 0;
+                    decimal _moneySet = 0;
+                    decimal _moneyCur = 0;
                     foreach (var item in _lData)
                     {
-                        _input = 0;
-                        _out = 0;
-                        var _setting = context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == item.id && m.yearmonth == _yearMonth);
-                        if (_setting != null)
+                        _percentSet = 0;
+                        _percentCur = 0;
+                        _moneySet = 0;
+                        _moneyCur = 0;
+                        var _cateSetting = context.MN_CATEGORY_SETTING.FirstOrDefault(m => m.category_id == item.id && m.year_month.ToString() == request.Parameter2); //By month year
+                        if (_cateSetting != null)
                         {
-                            _input = _setting.input;
-                            _out = _setting.output;
+                            _percentSet = _cateSetting.percent_setting;
+                            _percentCur = _cateSetting.percent_current;
+                            _moneySet = _cateSetting.money_setting;
+                            _moneyCur = _cateSetting.money_current;
                         }
-                        _list.Add(new AccountModel()
+                        _list.Add(new CategoryModel()
                         {
                             ID = item.id,
                             Name = item.name,
-                            AccountTypeName = item.type_name,
-                            MonthInput = _input,
-                            MonthInputString = _input.NumberToString(),
-                            MonthOutput = _out,
-                            MonthOutputString = _out.NumberToString(),
-                            MonthTotal = (_input - _out),
-                            MonthTotalString = (_input - _out).NumberToString(),
-                            Total = (item.input - item.output),
-                            TotalString = (item.input - item.output).NumberToString()
+                            GroupName = item.group_name,
+                            Notes = item.notes,
+                            PercentCurrent = _percentCur,
+                            PercentSetting = _percentSet,
+                            MoneyCurrent = _moneyCur,
+                            MoneyCurrentString = _moneyCur.NumberToString(),
+                            MoneySetting = _moneySet,
+                            MoneySettingString = _moneySet.NumberToString(),
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
-                    IOrderedEnumerable<AccountModel> _sortList = null;
+                    IOrderedEnumerable<CategoryModel> _sortList = null;
                     if (request.order != null)
                     {
                         foreach (var col in request.order)
@@ -102,8 +104,11 @@ namespace Money
                                 case "Name":
                                     _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Name) : _sortList.Sort(col.Dir, m => m.Name);
                                     break;
-                                case "AccountTypeName":
-                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.AccountTypeName) : _sortList.Sort(col.Dir, m => m.AccountTypeName);
+                                case "Notes":
+                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Notes) : _sortList.Sort(col.Dir, m => m.Notes);
+                                    break;
+                                case "GroupName":
+                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.GroupName) : _sortList.Sort(col.Dir, m => m.GroupName);
                                     break;
                             }
                         }
@@ -130,18 +135,18 @@ namespace Money
         /// Get all item without deleted
         /// </summary>
         /// <param name="userID">The user identifier</param>
-        /// <returns></returns>
-        public List<AccountModel> GetAll(Guid userID)
+        /// <returns>List<CategoryModel></returns>
+        public List<CategoryModel> GetAll(Guid userID)
         {
             try
             {
-                List<AccountModel> _return = new List<AccountModel>();
+                List<CategoryModel> _return = new List<CategoryModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _list = (from m in context.MN_ACCOUNT
-                                 join n in context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
-                                 where !m.deleted && !n.deleted && n.publish
-                                 orderby m.name descending
+                    var _list = (from m in context.MN_CATEGORY
+                                 join n in context.MN_GROUP on m.group_id equals n.id
+                                 where n.publish && !n.deleted && !m.deleted
+                                 orderby m.ordering descending
                                  select new
                                  {
                                      m.id,
@@ -149,7 +154,7 @@ namespace Money
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new AccountModel() { ID = item.id, Name = item.name });
+                        _return.Add(new CategoryModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -166,18 +171,19 @@ namespace Money
         /// Get all item without deleted
         /// </summary>
         /// <param name="userID">The user identifier</param>
-        /// <returns>List<AccountModel></returns>
-        public List<AccountModel> GetAllWithFullMoney(Guid userID)
+        /// <param name="isInput">true: Income, false: Payment</param>
+        /// <returns>List<CategoryModel></returns>
+        public List<CategoryModel> GetAll(Guid userID, bool isInput)
         {
             try
             {
-                List<AccountModel> _return = new List<AccountModel>();
+                List<CategoryModel> _return = new List<CategoryModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _list = (from m in context.MN_ACCOUNT
-                                 join n in context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
-                                 where !m.deleted && !n.deleted && n.publish && (m.input - m.output) > 0
-                                 orderby m.name descending
+                    var _list = (from m in context.MN_CATEGORY
+                                 join n in context.MN_GROUP on m.group_id equals n.id
+                                 where n.publish && !n.deleted && !m.deleted && n.is_input == isInput
+                                 orderby m.ordering descending
                                  select new
                                  {
                                      m.id,
@@ -185,7 +191,7 @@ namespace Money
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new AccountModel() { ID = item.id, Name = item.name });
+                        _return.Add(new CategoryModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -199,56 +205,7 @@ namespace Money
         }
 
         /// <summary>
-        /// Get item
-        /// </summary>
-        /// <param name="model">Account model</param>
-        /// <returns>MoneyAccountModel. Throw exception if not found or get some error</returns>
-        public AccountModel GetItemByID(AccountModel model)
-        {
-            try
-            {
-                using (var context = new TDHEntities())
-                {
-                    MN_ACCOUNT _md = context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                    if (_md == null)
-                    {
-                        throw new FieldAccessException();
-                    }
-                    MN_ACCOUNT_TYPE _type = context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == _md.account_type_id);
-                    var _lSetting = context.MN_ACCOUNT_SETTING.Where(m => m.account_id == model.ID && m.yearmonth.ToString().Contains(DateTime.Now.Year.ToString())).OrderByDescending(m => m.yearmonth);
-                    
-                    var _return = new AccountModel()
-                    {
-                        ID = _md.id,
-                        Name = _md.name,
-                        AccountTypeID = _md.account_type_id,
-                        AccountTypeName = _type.name,
-                        Total = _md.input - _md.output
-                    };
-                    foreach (var item in _lSetting)
-                    {
-                        _return.Setting.Add(new AccountSettingModel()
-                        {
-                            Month = item.yearmonth % 100,
-                            Year = item.yearmonth / 100,
-                            Input = item.input,
-                            Output = item.output,
-                            YearMonthString = item.yearmonth.ToString()
-                        });
-                    }
-                    return _return;
-                }
-            }
-            catch (Exception ex)
-            {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
-            }
-        }
-
-        /// <summary>
-        /// Check income, payment history by month, and account id and by type (payment or income)
+        /// Check income, payment history by month, and category id and by type (payment or income)
         /// Parameter1: by month
         /// Parameter2: by acount id
         /// Parameter3: by type (income or payment)
@@ -262,14 +219,13 @@ namespace Money
             try
             {
                 //Declare response data to json object
-                DataTableResponse<AccountHistoryModel> _itemResponse = new DataTableResponse<AccountHistoryModel>();
+                DataTableResponse<CategoryHistoryModel> _itemResponse = new DataTableResponse<CategoryHistoryModel>();
                 //List of data
-                List<AccountHistoryModel> _list = new List<AccountHistoryModel>();
+                List<CategoryHistoryModel> _list = new List<CategoryHistoryModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _lData = (from m in context.V_ACCOUNT_HISTORY
-                                  where request.Parameter2 == (request.Parameter2.Length == 0 ? request.Parameter2 : m.account_id.ToString()) && //By account id
-                                        request.Parameter3 == (request.Parameter3.Length == 0 ? request.Parameter3 : m.type.ToString()) //by type (income or payment)
+                    var _lData = (from m in context.V_CATEGORY_HISTORY
+                                  where request.Parameter2 == (request.Parameter2.Length == 0 ? request.Parameter2 : m.category_id.ToString()) //By account id
                                   orderby m.date descending
                                   select new
                                   {
@@ -293,12 +249,12 @@ namespace Money
                     //Add to list
                     foreach (var item in _lData)
                     {
-                        _list.Add(new AccountHistoryModel()
+                        _list.Add(new CategoryHistoryModel()
                         {
                             Title = item.title,
                             Date = item.date.Value,
                             DateString = item.date.Value.DateToString(),
-                            MoneyString = item.money.Value.NumberToString(),
+                            MoneyString = item.money.NumberToString(),
                             Type = item.type
                         });
                     }
@@ -318,11 +274,69 @@ namespace Money
         }
 
         /// <summary>
+        /// Get item
+        /// </summary>
+        /// <param name="model">Category model</param>
+        /// <returns>MoneyCategoryModel. Throw exception if not found or get some error</returns>
+        public CategoryModel GetItemByID(CategoryModel model)
+        {
+            try
+            {
+                using (var context = new TDHEntities())
+                {
+                    MN_CATEGORY _md = context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    if (_md == null)
+                    {
+                        throw new FieldAccessException();
+                    }
+                    var _gr = context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
+                    var _lSetting = context.MN_CATEGORY_SETTING.Where(m => m.category_id == model.ID && m.year_month.ToString().Contains(DateTime.Now.Year.ToString())).OrderByDescending(m => m.year_month);
+                    
+                    CategoryModel _return = new CategoryModel()
+                    {
+                        ID = _md.id,
+                        Name = _md.name,
+                        Notes = _md.notes,
+                        GroupID = _md.group_id,
+                        GroupName = _gr.name,
+                        PercentSetting = _md.percent_setting,
+                        PercentCurrent = _md.percent_current,
+                        MoneyCurrent = _md.money_current,
+                        MoneySetting = _md.money_setting,
+                        Ordering = _md.ordering,
+                        Publish = _md.publish
+                    };
+                    
+                    foreach (var item in _lSetting)
+                    {
+                        _return.Setting.Add(new CategorySettingModel()
+                        {
+                            Month = item.year_month % 100,
+                            Year = item.year_month / 100,
+                            PercentSetting = item.percent_setting,
+                            PercentCurrent = item.percent_current,
+                            MoneySetting = item.money_setting,
+                            MoneyCurrent = item.money_current,
+                            YearMonthString = item.year_month.ToString()
+                        });
+                    }
+                    return _return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
+                throw new ApplicationException();
+            }
+        }
+
+        /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model">Account model</param>
+        /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Save(AccountModel model)
+        public ResponseStatusCodeHelper Save(CategoryModel model)
         {
             try
             {
@@ -332,34 +346,35 @@ namespace Money
                     {
                         try
                         {
-                            MN_ACCOUNT _md = new MN_ACCOUNT();
+                            MN_CATEGORY _md = new MN_CATEGORY();
                             if (model.Insert)
                             {
                                 _md.id = Guid.NewGuid();
                             }
                             else
                             {
-                                _md = context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
                                 }
                             }
-                            _md.account_type_id = model.AccountTypeID;
+                            _md.group_id = model.GroupID;
                             _md.name = model.Name;
-                            //Create or edit, only change the name and type
+                            _md.notes = model.Notes;
+                            //Setting doesn't allow set in create or update
                             if (model.Insert)
                             {
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
-                                context.MN_ACCOUNT.Add(_md);
+                                context.MN_CATEGORY.Add(_md);
                                 context.Entry(_md).State = System.Data.Entity.EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                context.MN_ACCOUNT.Attach(_md);
+                                context.MN_CATEGORY.Attach(_md);
                                 context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
                             }
                             context.SaveChanges();
@@ -395,9 +410,9 @@ namespace Money
         /// <summary>
         /// Publish
         /// </summary>
-        /// <param name="model">Account model</param>
+        /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Publish(AccountModel model)
+        public ResponseStatusCodeHelper Publish(CategoryModel model)
         {
             try
             {
@@ -407,7 +422,7 @@ namespace Money
                     {
                         try
                         {
-                            MN_ACCOUNT _md = context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            MN_CATEGORY _md = context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -415,7 +430,7 @@ namespace Money
                             _md.publish = model.Publish;
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
-                            context.MN_ACCOUNT.Attach(_md);
+                            context.MN_CATEGORY.Attach(_md);
                             context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
                             context.SaveChanges();
                             trans.Commit();
@@ -443,9 +458,9 @@ namespace Money
         /// <summary>
         /// Delete
         /// </summary>
-        /// <param name="model">Account model</param>
+        /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Delete(AccountModel model)
+        public ResponseStatusCodeHelper Delete(CategoryModel model)
         {
             try
             {
@@ -455,7 +470,7 @@ namespace Money
                     {
                         try
                         {
-                            MN_ACCOUNT _md = context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            MN_CATEGORY _md = context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -463,7 +478,7 @@ namespace Money
                             _md.deleted = true;
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
-                            context.MN_ACCOUNT.Attach(_md);
+                            context.MN_CATEGORY.Attach(_md);
                             context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
                             context.SaveChanges();
                             trans.Commit();
@@ -491,45 +506,28 @@ namespace Money
         /// <summary>
         /// Check Delete
         /// </summary>
-        /// <param name="model">Account model</param>
+        /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper CheckDelete(AccountModel model)
+        public ResponseStatusCodeHelper CheckDelete(CategoryModel model)
         {
             try
             {
                 using (var context = new TDHEntities())
                 {
-                    MN_ACCOUNT _md = context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+
+                    MN_CATEGORY _md = context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _accSetting = context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
-                    if (_accSetting != null)
-                    {
-                        Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
-                        return ResponseStatusCodeHelper.NG;
-                    }
-                    var _payment = context.MN_PAYMENT.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
+                    var _payment = context.MN_PAYMENT.FirstOrDefault(m => m.category_id == model.ID && !m.deleted);
                     if (_payment != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
-                    var _income = context.MN_INCOME.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
+                    var _income = context.MN_INCOME.FirstOrDefault(m => m.category_id == model.ID && !m.deleted);
                     if (_income != null)
-                    {
-                        Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
-                        return ResponseStatusCodeHelper.NG;
-                    }
-                    var _transFrom = context.MN_TRANSFER.FirstOrDefault(m => m.account_from == model.ID && !m.deleted);
-                    if (_transFrom != null)
-                    {
-                        Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
-                        return ResponseStatusCodeHelper.NG;
-                    }
-                    var _transTo = context.MN_TRANSFER.FirstOrDefault(m => m.account_to == model.ID && !m.deleted);
-                    if (_transTo != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;

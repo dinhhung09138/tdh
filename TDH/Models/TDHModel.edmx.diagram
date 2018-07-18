@@ -27,9 +27,9 @@
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.HOME_NAVIGATION" Width="1.5" PointX="3.875" PointY="11.25" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_HOME_CATEGORY_category_id" />
         <AssociationConnector Association="chacd26d_trandinhhungModel.FK_HOME_NAVIGATION_navigation_id" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.DAILY_TASK" Width="1.5" PointX="4.375" PointY="18.625" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.IDEA" Width="1.5" PointX="9.875" PointY="20" />
-        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.IDEA_DETAIL" Width="1.5" PointX="12.125" PointY="19.875" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.DAILY_TASK" Width="1.5" PointX="16" PointY="16.625" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.IDEA" Width="1.5" PointX="11.625" PointY="16.875" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.IDEA_DETAIL" Width="1.5" PointX="13.875" PointY="16.75" />
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.REPORT" Width="1.5" PointX="17.375" PointY="20.625" />
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.REPORT_COMMENT" Width="1.5" PointX="19.625" PointY="20.5" />
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.TARGET" Width="1.5" PointX="24" PointY="20.875" />
@@ -62,6 +62,11 @@
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.V_ACCOUNT_HISTORY" Width="1.5" PointX="16.5" PointY="12.125" />
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.V_MONEY_FLOW" Width="1.5" PointX="16.625" PointY="8.625" />
         <EntityTypeShape EntityType="chacd26d_trandinhhungModel.V_CATEGORY_HISTORY" Width="1.5" PointX="18.25" PointY="14.625" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.WK_CHECKLIST_GROUP" Width="1.5" PointX="3.375" PointY="24.25" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.WK_CHECKLIST_ITEM" Width="1.5" PointX="5.625" PointY="24" />
+        <EntityTypeShape EntityType="chacd26d_trandinhhungModel.WK_CHECKLIST_ITEM_DETAIL" Width="1.5" PointX="7.875" PointY="24.25" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_WK_CHECKLIST_ITEM_group_id" />
+        <AssociationConnector Association="chacd26d_trandinhhungModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

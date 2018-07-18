@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDH.DataAccess", "TDH.DataA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDH.Common", "TDH.Common\TDH.Common.csproj", "{81636123-6BC1-4C99-BAD6-7C4C2C567505}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDH.Model", "TDH.Model\TDH.Model.csproj", "{D4C844FF-99F5-4F7E-954D-B88E5F90F576}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

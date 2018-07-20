@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'F:\hungtd\Workspace\hung\TDH\TDH_Github\TDH\Models\TDHModel.edmx'. 
+﻿// T4 code generation is enabled for model 'E:\workSpaceGit\trainning\tdh\TDH\Models\TDHModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

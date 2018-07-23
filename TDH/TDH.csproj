@@ -232,8 +232,9 @@
     <Compile Include="Areas\Administrator\Filters\AuthorizationFilterAttribute.cs" />
     <Compile Include="Areas\Administrator\Filters\ExceptionFilterAttribute.cs" />
     <Compile Include="Areas\Administrator\Models\AboutModel.cs" />
-    <Compile Include="Areas\Administrator\Models\CheckListGroup.cs" />
     <Compile Include="Areas\Administrator\Models\CheckListGroupModel.cs" />
+    <Compile Include="Areas\Administrator\Models\CheckListItemDetailModel.cs" />
+    <Compile Include="Areas\Administrator\Models\CheckListItemModel.cs" />
     <Compile Include="Areas\Administrator\Models\ConfigurationModel.cs" />
     <Compile Include="Areas\Administrator\Models\DailyTaskModel.cs" />
     <Compile Include="Areas\Administrator\Models\ErrorLogModel.cs" />

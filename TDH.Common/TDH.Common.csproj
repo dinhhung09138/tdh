@@ -48,6 +48,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,6 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionType.cs" />
+    <Compile Include="BaseController.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Message.cs" />
@@ -69,6 +76,10 @@
     <ProjectReference Include="..\TDH.DataAccess\TDH.DataAccess.csproj">
       <Project>{e8809bad-267d-41c9-89f5-1d2a4a37d530}</Project>
       <Name>TDH.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TDH.Model\TDH.Model.csproj">
+      <Project>{d4c844ff-99f5-4f7e-954d-b88e5f90f576}</Project>
+      <Name>TDH.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

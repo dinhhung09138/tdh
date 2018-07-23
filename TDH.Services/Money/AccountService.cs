@@ -38,10 +38,10 @@ namespace Money
                 DataTableResponse<AccountModel> _itemResponse = new DataTableResponse<AccountModel>();
                 //List of data
                 List<AccountModel> _list = new List<AccountModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in context.MN_ACCOUNT
-                                  join n in context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
+                    var _lData = (from m in _context.MN_ACCOUNT
+                                  join n in _context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
                                   where !n.deleted && n.publish && !m.deleted
                                   orderby m.name descending
                                   select new
@@ -70,7 +70,7 @@ namespace Money
                     {
                         _input = 0;
                         _out = 0;
-                        var _setting = context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == item.id && m.yearmonth == _yearMonth);
+                        var _setting = _context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == item.id && m.yearmonth == _yearMonth);
                         if (_setting != null)
                         {
                             _input = _setting.input;
@@ -136,10 +136,10 @@ namespace Money
             try
             {
                 List<AccountModel> _return = new List<AccountModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.MN_ACCOUNT
-                                 join n in context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
+                    var _list = (from m in _context.MN_ACCOUNT
+                                 join n in _context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
                                  where !m.deleted && !n.deleted && n.publish
                                  orderby m.name descending
                                  select new
@@ -172,10 +172,10 @@ namespace Money
             try
             {
                 List<AccountModel> _return = new List<AccountModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.MN_ACCOUNT
-                                 join n in context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
+                    var _list = (from m in _context.MN_ACCOUNT
+                                 join n in _context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
                                  where !m.deleted && !n.deleted && n.publish && (m.input - m.output) > 0
                                  orderby m.name descending
                                  select new
@@ -207,15 +207,15 @@ namespace Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    MN_ACCOUNT _md = context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    MN_ACCOUNT _md = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    MN_ACCOUNT_TYPE _type = context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == _md.account_type_id);
-                    var _lSetting = context.MN_ACCOUNT_SETTING.Where(m => m.account_id == model.ID && m.yearmonth.ToString().Contains(DateTime.Now.Year.ToString())).OrderByDescending(m => m.yearmonth);
+                    MN_ACCOUNT_TYPE _type = _context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == _md.account_type_id);
+                    var _lSetting = _context.MN_ACCOUNT_SETTING.Where(m => m.account_id == model.ID && m.yearmonth.ToString().Contains(DateTime.Now.Year.ToString())).OrderByDescending(m => m.yearmonth);
                     
                     var _return = new AccountModel()
                     {
@@ -265,9 +265,9 @@ namespace Money
                 DataTableResponse<AccountHistoryModel> _itemResponse = new DataTableResponse<AccountHistoryModel>();
                 //List of data
                 List<AccountHistoryModel> _list = new List<AccountHistoryModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in context.V_ACCOUNT_HISTORY
+                    var _lData = (from m in _context.V_ACCOUNT_HISTORY
                                   where request.Parameter2 == (request.Parameter2.Length == 0 ? request.Parameter2 : m.account_id.ToString()) && //By account id
                                         request.Parameter3 == (request.Parameter3.Length == 0 ? request.Parameter3 : m.type.ToString()) //by type (income or payment)
                                   orderby m.date descending
@@ -326,9 +326,9 @@ namespace Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
@@ -339,7 +339,7 @@ namespace Money
                             }
                             else
                             {
-                                _md = context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -352,17 +352,17 @@ namespace Money
                             {
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
-                                context.MN_ACCOUNT.Add(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                                _context.MN_ACCOUNT.Add(_md);
+                                _context.Entry(_md).State = System.Data.Entity.EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                context.MN_ACCOUNT.Attach(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                _context.MN_ACCOUNT.Attach(_md);
+                                _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
                             }
-                            context.SaveChanges();
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -401,13 +401,13 @@ namespace Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            MN_ACCOUNT _md = context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            MN_ACCOUNT _md = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -415,9 +415,9 @@ namespace Money
                             _md.publish = model.Publish;
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
-                            context.MN_ACCOUNT.Attach(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
-                            context.SaveChanges();
+                            _context.MN_ACCOUNT.Attach(_md);
+                            _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -449,13 +449,13 @@ namespace Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            MN_ACCOUNT _md = context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            MN_ACCOUNT _md = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -463,9 +463,9 @@ namespace Money
                             _md.deleted = true;
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
-                            context.MN_ACCOUNT.Attach(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
-                            context.SaveChanges();
+                            _context.MN_ACCOUNT.Attach(_md);
+                            _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -497,38 +497,38 @@ namespace Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    MN_ACCOUNT _md = context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    MN_ACCOUNT _md = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _accSetting = context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
+                    var _accSetting = _context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
                     if (_accSetting != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
-                    var _payment = context.MN_PAYMENT.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
+                    var _payment = _context.MN_PAYMENT.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
                     if (_payment != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
-                    var _income = context.MN_INCOME.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
+                    var _income = _context.MN_INCOME.FirstOrDefault(m => m.account_id == model.ID && !m.deleted);
                     if (_income != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
-                    var _transFrom = context.MN_TRANSFER.FirstOrDefault(m => m.account_from == model.ID && !m.deleted);
+                    var _transFrom = _context.MN_TRANSFER.FirstOrDefault(m => m.account_from == model.ID && !m.deleted);
                     if (_transFrom != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
-                    var _transTo = context.MN_TRANSFER.FirstOrDefault(m => m.account_to == model.ID && !m.deleted);
+                    var _transTo = _context.MN_TRANSFER.FirstOrDefault(m => m.account_to == model.ID && !m.deleted);
                     if (_transTo != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);

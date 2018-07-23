@@ -32,9 +32,9 @@ namespace TDH.Services.Money
             try
             {
                 List<GroupSettingModel> _return = new List<GroupSettingModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.MN_GROUP_SETTING
+                    var _list = (from m in _context.MN_GROUP_SETTING
                                  where !m.deleted
                                  orderby m.group_id, m.year_month ascending
                                  select new
@@ -84,9 +84,9 @@ namespace TDH.Services.Money
             try
             {
                 List<GroupSettingModel> _return = new List<GroupSettingModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.MN_GROUP_SETTING
+                    var _list = (from m in _context.MN_GROUP_SETTING
                                  where !m.deleted && m.group_id == groupID
                                  orderby m.group_id, m.year_month ascending
                                  select new
@@ -137,9 +137,9 @@ namespace TDH.Services.Money
             try
             {
                 List<GroupSettingModel> _return = new List<GroupSettingModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.MN_GROUP_SETTING
+                    var _list = (from m in _context.MN_GROUP_SETTING
                                  where !m.deleted && m.group_id == groupID && m.year_month == yearMonth
                                  orderby m.group_id, m.year_month ascending
                                  select new
@@ -189,12 +189,12 @@ namespace TDH.Services.Money
             try
             {
                 List<GroupSettingModel> _return = new List<GroupSettingModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
                     Save(yearMonth, userID);
                     //
-                    var _list = (from m in context.MN_GROUP_SETTING
-                                 join n in context.MN_GROUP on m.group_id equals n.id
+                    var _list = (from m in _context.MN_GROUP_SETTING
+                                 join n in _context.MN_GROUP on m.group_id equals n.id
                                  where !m.deleted && m.year_month == yearMonth && !n.deleted && !n.is_input
                                  orderby m.group_id, m.year_month ascending
                                  select new
@@ -246,14 +246,14 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    MN_GROUP_SETTING _md = context.MN_GROUP_SETTING.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    MN_GROUP_SETTING _md = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _group = context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
+                    var _group = _context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
                     return new GroupSettingModel()
                     {
                         ID = _md.id,
@@ -286,15 +286,15 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
                             foreach (var item in model)
                             {
-                                MN_GROUP_SETTING _md = context.MN_GROUP_SETTING.FirstOrDefault(m => m.id == item.ID && !m.deleted);
+                                MN_GROUP_SETTING _md = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.id == item.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -302,17 +302,17 @@ namespace TDH.Services.Money
                                 _md.percent_setting = item.PercentSetting;
                                 _md.update_by = item.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                context.MN_GROUP_SETTING.Attach(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                _context.MN_GROUP_SETTING.Attach(_md);
+                                _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
                                 //
                                 if (_md.year_month % 100 == DateTime.Now.Month)
                                 {
-                                    var _gr = context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
+                                    var _gr = _context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
                                     _gr.percent_setting = _md.percent_setting;
-                                    context.MN_GROUP.Attach(_gr);
-                                    context.Entry(_gr).State = System.Data.Entity.EntityState.Modified;
+                                    _context.MN_GROUP.Attach(_gr);
+                                    _context.Entry(_gr).State = System.Data.Entity.EntityState.Modified;
                                 }
-                                context.SaveChanges();
+                                _context.SaveChanges();
                             }
                             trans.Commit();
                         }
@@ -346,17 +346,17 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            var _list = context.MN_GROUP.Where(m => !m.deleted);
+                            var _list = _context.MN_GROUP.Where(m => !m.deleted);
                             foreach (var item in _list)
                             {
                                 //Check if exists
-                                if (context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == item.id && m.year_month == yearMonth) != null)
+                                if (_context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == item.id && m.year_month == yearMonth) != null)
                                 {
                                     continue;
                                 }
@@ -372,9 +372,9 @@ namespace TDH.Services.Money
                                     create_by = userID,
                                     create_date = DateTime.Now
                                 };
-                                context.MN_GROUP_SETTING.Add(_st);
-                                context.Entry(_st).State = System.Data.Entity.EntityState.Added;
-                                context.SaveChanges();
+                                _context.MN_GROUP_SETTING.Add(_st);
+                                _context.Entry(_st).State = System.Data.Entity.EntityState.Added;
+                                _context.SaveChanges();
                             }
                             trans.Commit();
                         }

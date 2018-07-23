@@ -38,9 +38,9 @@ namespace TDH.Services.Money
                 DataTableResponse<GroupModel> _itemResponse = new DataTableResponse<GroupModel>();
                 //List of data
                 List<GroupModel> _list = new List<GroupModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in context.MN_GROUP
+                    var _lData = (from m in _context.MN_GROUP
                                   where !m.deleted &&
                                         m.is_input == (request.Parameter1 == "" ? m.is_input : request.Parameter1 == "0" ? false : true) //by Type (income of payment)
                                   select new
@@ -69,12 +69,12 @@ namespace TDH.Services.Money
                     decimal _moneyCur = 0;
                     foreach (var item in _lData)
                     {
-                        _count = context.MN_CATEGORY.Count(m => m.group_id == item.id && !m.deleted);
+                        _count = _context.MN_CATEGORY.Count(m => m.group_id == item.id && !m.deleted);
                         _percentSet = 0;
                         _percentCur = 0;
                         _moneySet = 0;
                         _moneyCur = 0;
-                        var _grSetting = context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == item.id && m.year_month.ToString() == request.Parameter2); //By month year
+                        var _grSetting = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == item.id && m.year_month.ToString() == request.Parameter2); //By month year
                         if (_grSetting != null)
                         {
                             _percentSet = _grSetting.percent_setting;
@@ -144,9 +144,9 @@ namespace TDH.Services.Money
             try
             {
                 List<GroupModel> _return = new List<GroupModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.MN_GROUP
+                    var _list = (from m in _context.MN_GROUP
                                  where !m.deleted && m.publish
                                  orderby m.ordering descending
                                  select new
@@ -180,9 +180,9 @@ namespace TDH.Services.Money
             try
             {
                 List<GroupModel> _return = new List<GroupModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.MN_GROUP
+                    var _list = (from m in _context.MN_GROUP
                                  where !m.deleted && m.publish && m.is_input == IsInput
                                  orderby m.ordering descending
                                  select new
@@ -214,9 +214,9 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    MN_GROUP _md = context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    MN_GROUP _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
@@ -255,9 +255,9 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
@@ -269,7 +269,7 @@ namespace TDH.Services.Money
                             }
                             else
                             {
-                                _md = context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -284,17 +284,17 @@ namespace TDH.Services.Money
                             {
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
-                                context.MN_GROUP.Add(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                                _context.MN_GROUP.Add(_md);
+                                _context.Entry(_md).State = System.Data.Entity.EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                context.MN_GROUP.Attach(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                _context.MN_GROUP.Attach(_md);
+                                _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
                             }
-                            context.SaveChanges();
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -333,13 +333,13 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            MN_GROUP _md = context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            MN_GROUP _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -347,9 +347,9 @@ namespace TDH.Services.Money
                             _md.publish = model.Publish;
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
-                            context.MN_GROUP.Attach(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
-                            context.SaveChanges();
+                            _context.MN_GROUP.Attach(_md);
+                            _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -381,13 +381,13 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            MN_GROUP _md = context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            MN_GROUP _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -395,9 +395,9 @@ namespace TDH.Services.Money
                             _md.deleted = true;
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
-                            context.MN_GROUP.Attach(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
-                            context.SaveChanges();
+                            _context.MN_GROUP.Attach(_md);
+                            _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -429,14 +429,14 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    MN_GROUP _md = context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    MN_GROUP _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _group = context.MN_CATEGORY.FirstOrDefault(m => m.group_id == model.ID && !m.deleted);
+                    var _group = _context.MN_CATEGORY.FirstOrDefault(m => m.group_id == model.ID && !m.deleted);
                     if (_group != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);

@@ -38,9 +38,9 @@ namespace TDH.Services.Money
                 DataTableResponse<AccountTypeModel> _itemResponse = new DataTableResponse<AccountTypeModel>();
                 //List of data
                 List<AccountTypeModel> _list = new List<AccountTypeModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in context.MN_ACCOUNT_TYPE
+                    var _lData = (from m in _context.MN_ACCOUNT_TYPE
                                   where !m.deleted
                                   select new
                                   {
@@ -63,7 +63,7 @@ namespace TDH.Services.Money
                     int _count = 0;
                     foreach (var item in _lData)
                     {
-                        _count = context.MN_ACCOUNT.Count(m => m.account_type_id == item.id);
+                        _count = _context.MN_ACCOUNT.Count(m => m.account_type_id == item.id);
                         _list.Add(new AccountTypeModel()
                         {
                             ID = item.id,
@@ -119,9 +119,9 @@ namespace TDH.Services.Money
             try
             {
                 List<AccountTypeModel> _return = new List<AccountTypeModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.MN_ACCOUNT_TYPE
+                    var _list = (from m in _context.MN_ACCOUNT_TYPE
                                  where !m.deleted && m.publish
                                  orderby m.ordering descending
                                  select new
@@ -153,9 +153,9 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    MN_ACCOUNT_TYPE _md = context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    MN_ACCOUNT_TYPE _md = _context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
@@ -186,9 +186,9 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
@@ -199,7 +199,7 @@ namespace TDH.Services.Money
                             }
                             else
                             {
-                                _md = context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = _context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -212,17 +212,17 @@ namespace TDH.Services.Money
                             {
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
-                                context.MN_ACCOUNT_TYPE.Add(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                                _context.MN_ACCOUNT_TYPE.Add(_md);
+                                _context.Entry(_md).State = System.Data.Entity.EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                context.MN_ACCOUNT_TYPE.Attach(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                _context.MN_ACCOUNT_TYPE.Attach(_md);
+                                _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
                             }
-                            context.SaveChanges();
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -261,13 +261,13 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            MN_ACCOUNT_TYPE _md = context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            MN_ACCOUNT_TYPE _md = _context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -275,9 +275,9 @@ namespace TDH.Services.Money
                             _md.publish = model.Publish;
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
-                            context.MN_ACCOUNT_TYPE.Attach(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
-                            context.SaveChanges();
+                            _context.MN_ACCOUNT_TYPE.Attach(_md);
+                            _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -309,13 +309,13 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            MN_ACCOUNT_TYPE _md = context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            MN_ACCOUNT_TYPE _md = _context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -323,9 +323,9 @@ namespace TDH.Services.Money
                             _md.deleted = true;
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
-                            context.MN_ACCOUNT_TYPE.Attach(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
-                            context.SaveChanges();
+                            _context.MN_ACCOUNT_TYPE.Attach(_md);
+                            _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -357,14 +357,14 @@ namespace TDH.Services.Money
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    MN_ACCOUNT_TYPE _md = context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    MN_ACCOUNT_TYPE _md = _context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _account = context.MN_ACCOUNT.FirstOrDefault(m => m.account_type_id == model.ID && !m.deleted);
+                    var _account = _context.MN_ACCOUNT.FirstOrDefault(m => m.account_type_id == model.ID && !m.deleted);
                     if (_account != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);

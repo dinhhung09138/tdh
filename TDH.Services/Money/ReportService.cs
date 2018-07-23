@@ -35,9 +35,9 @@ namespace TDH.Services.Money
                 try
                 {
                     List<ReportCollectionByYearModel> _listResult = new List<ReportCollectionByYearModel>();
-                    using (var context = new TDHEntities())
+                    using (var _context = new TDHEntities())
                     {
-                        var _list = (from m in context.FNC_REPORT_SUMMARY()
+                        var _list = (from m in _context.FNC_REPORT_SUMMARY()
                                      orderby m.year ascending
                                      select m).ToList();
                         foreach (var item in _list)
@@ -72,9 +72,9 @@ namespace TDH.Services.Money
                 try
                 {
                     List<ReportCollectionByYearModel> _listResult = new List<ReportCollectionByYearModel>();
-                    using (var context = new TDHEntities())
+                    using (var _context = new TDHEntities())
                     {
-                        var _list = (from m in context.FNC_REPORT_SUMMARY_BY_YEAR(year)
+                        var _list = (from m in _context.FNC_REPORT_SUMMARY_BY_YEAR(year)
                                      orderby m.month ascending
                                      select m).ToList();
                         foreach (var item in _list)

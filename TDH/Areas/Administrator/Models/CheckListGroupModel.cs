@@ -6,7 +6,7 @@ using System.Web;
 
 namespace TDH.Areas.Administrator.Models
 {
-    public class CheckListGroup: Utils.Database.BaseModel
+    public class CheckListGroup : Utils.Database.BaseModel
     {
         public Guid ID { get; set; }
 
@@ -16,7 +16,7 @@ namespace TDH.Areas.Administrator.Models
 
         public DateTime updateDate { get; set; }
         [Required]
-        public Boolean deleted { get; set; }
+        public bool deleted { get; set; }
         public DateTime deleteDate { get; set; }
 
     }

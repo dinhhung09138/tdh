@@ -364,7 +364,6 @@
 
         function loadPage(url, title) {
             loading($('.content-wrapper'), 'show');
-            document.title = title;
             $('#main_layout').load(url, function (response, status, xhr) { loading($('.content-wrapper'), 'hide'); });
             //setTimeout(function () { loading($('.content-wrapper'), 'hide') }, 700);
         }

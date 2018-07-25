@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TDH.Models;
 using Utils.JqueryDatatable;
-using TDH.Areas.Administrator.Models;
 using Utils;
 using TDH.Areas.Administrator.Common;
+using TDH.Model.Money;
 
 namespace TDH.Areas.Administrator.Services
 {
@@ -32,9 +32,9 @@ namespace TDH.Areas.Administrator.Services
             try
             {
                 //Declare response data to json object
-                DataTableResponse<MoneyCategoryModel> _itemResponse = new DataTableResponse<MoneyCategoryModel>();
+                DataTableResponse<CategoryModel> _itemResponse = new DataTableResponse<CategoryModel>();
                 //List of data
-                List<MoneyCategoryModel> _list = new List<MoneyCategoryModel>();
+                List<CategoryModel> _list = new List<CategoryModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _lData = (from m in context.MN_CATEGORY
@@ -77,7 +77,7 @@ namespace TDH.Areas.Administrator.Services
                             _moneySet = _cateSetting.money_setting;
                             _moneyCur = _cateSetting.money_current;
                         }
-                        _list.Add(new MoneyCategoryModel()
+                        _list.Add(new CategoryModel()
                         {
                             ID = item.id,
                             Name = item.name,
@@ -92,7 +92,7 @@ namespace TDH.Areas.Administrator.Services
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
-                    IOrderedEnumerable<MoneyCategoryModel> _sortList = null;
+                    IOrderedEnumerable<CategoryModel> _sortList = null;
                     if (request.order != null)
                     {
                         foreach (var col in request.order)
@@ -134,11 +134,11 @@ namespace TDH.Areas.Administrator.Services
         /// Get all item without deleted
         /// </summary>
         /// <returns></returns>
-        public List<MoneyCategoryModel> GetAll(Guid userID)
+        public List<CategoryModel> GetAll(Guid userID)
         {
             try
             {
-                List<MoneyCategoryModel> _return = new List<MoneyCategoryModel>();
+                List<CategoryModel> _return = new List<CategoryModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _list = (from m in context.MN_CATEGORY
@@ -152,7 +152,7 @@ namespace TDH.Areas.Administrator.Services
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyCategoryModel() { ID = item.id, Name = item.name });
+                        _return.Add(new CategoryModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -169,11 +169,11 @@ namespace TDH.Areas.Administrator.Services
         /// Get all item without deleted
         /// </summary>
         /// <returns></returns>
-        public List<MoneyCategoryModel> GetAll(Guid userID, bool isInput)
+        public List<CategoryModel> GetAll(Guid userID, bool isInput)
         {
             try
             {
-                List<MoneyCategoryModel> _return = new List<MoneyCategoryModel>();
+                List<CategoryModel> _return = new List<CategoryModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _list = (from m in context.MN_CATEGORY
@@ -187,7 +187,7 @@ namespace TDH.Areas.Administrator.Services
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyCategoryModel() { ID = item.id, Name = item.name });
+                        _return.Add(new CategoryModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -215,9 +215,9 @@ namespace TDH.Areas.Administrator.Services
             try
             {
                 //Declare response data to json object
-                DataTableResponse<MoneyCategoryHistoryModel> _itemResponse = new DataTableResponse<MoneyCategoryHistoryModel>();
+                DataTableResponse<CategoryHistoryModel> _itemResponse = new DataTableResponse<CategoryHistoryModel>();
                 //List of data
-                List<MoneyCategoryHistoryModel> _list = new List<MoneyCategoryHistoryModel>();
+                List<CategoryHistoryModel> _list = new List<CategoryHistoryModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _lData = (from m in context.V_CATEGORY_HISTORY
@@ -245,7 +245,7 @@ namespace TDH.Areas.Administrator.Services
                     //Add to list
                     foreach (var item in _lData)
                     {
-                        _list.Add(new MoneyCategoryHistoryModel()
+                        _list.Add(new CategoryHistoryModel()
                         {
                             Title = item.title,
                             Date = item.date.Value,
@@ -274,8 +274,8 @@ namespace TDH.Areas.Administrator.Services
         /// Get item
         /// </summary>
         /// <param name="model"></param>
-        /// <returns>MoneyCategoryModel. Throw exception if not found or get some error</returns>
-        public MoneyCategoryModel GetItemByID(MoneyCategoryModel model)
+        /// <returns>CategoryModel. Throw exception if not found or get some error</returns>
+        public CategoryModel GetItemByID(CategoryModel model)
         {
             try
             {
@@ -289,7 +289,7 @@ namespace TDH.Areas.Administrator.Services
                     var _gr = context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
                     var _lSetting = context.MN_CATEGORY_SETTING.Where(m => m.category_id == model.ID && m.year_month.ToString().Contains(DateTime.Now.Year.ToString())).OrderByDescending(m => m.year_month);
                     //
-                    MoneyCategoryModel _return = new MoneyCategoryModel()
+                    CategoryModel _return = new CategoryModel()
                     {
                         ID = _md.id,
                         Name = _md.name,
@@ -306,7 +306,7 @@ namespace TDH.Areas.Administrator.Services
                     //
                     foreach (var item in _lSetting)
                     {
-                        _return.Setting.Add(new MoneyCategorySettingModel()
+                        _return.Setting.Add(new CategorySettingModel()
                         {
                             Month = item.year_month % 100,
                             Year = item.year_month / 100,
@@ -334,7 +334,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Save(MoneyCategoryModel model)
+        public ResponseStatusCodeHelper Save(CategoryModel model)
         {
             try
             {
@@ -411,7 +411,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Publish(MoneyCategoryModel model)
+        public ResponseStatusCodeHelper Publish(CategoryModel model)
         {
             try
             {
@@ -459,7 +459,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Delete(MoneyCategoryModel model)
+        public ResponseStatusCodeHelper Delete(CategoryModel model)
         {
             try
             {
@@ -508,7 +508,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper CheckDelete(MoneyCategoryModel model)
+        public ResponseStatusCodeHelper CheckDelete(CategoryModel model)
         {
             try
             {

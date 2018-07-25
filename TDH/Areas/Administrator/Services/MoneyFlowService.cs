@@ -6,6 +6,7 @@ using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using Utils;
 using TDH.Areas.Administrator.Common;
+using TDH.Model.Money;
 
 namespace TDH.Areas.Administrator.Services
 {
@@ -32,9 +33,9 @@ namespace TDH.Areas.Administrator.Services
             try
             {
                 //Declare response data to json object
-                DataTableResponse<MoneyFlowModel> _itemResponse = new DataTableResponse<MoneyFlowModel>();
+                DataTableResponse<FlowModel> _itemResponse = new DataTableResponse<FlowModel>();
                 //List of data
-                List<MoneyFlowModel> _list = new List<MoneyFlowModel>();
+                List<FlowModel> _list = new List<FlowModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _lData = (from m in context.V_MONEY_FLOW
@@ -69,7 +70,7 @@ namespace TDH.Areas.Administrator.Services
                     //Add to list
                     foreach (var item in _lData)
                     {
-                        _list.Add(new MoneyFlowModel()
+                        _list.Add(new FlowModel()
                         {
                             ID = item.id,
                             Title = item.title,
@@ -105,7 +106,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper SaveIncome(MoneyIncomeModel model)
+        public ResponseStatusCodeHelper SaveIncome(IncomeModel model)
         {
             try
             {
@@ -289,7 +290,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper SavePayment(MoneyPaymentModel model)
+        public ResponseStatusCodeHelper SavePayment(PaymentModel model)
         {
             try
             {
@@ -473,7 +474,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper SaveTransfer(MoneyTransferModel model)
+        public ResponseStatusCodeHelper SaveTransfer(TransferModel model)
         {
             try
             {

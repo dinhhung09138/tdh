@@ -6,6 +6,8 @@ using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using Utils;
 using TDH.Areas.Administrator.Common;
+using TDH.Model.Money;
+
 namespace TDH.Areas.Administrator.Services
 {
     public class MoneyGroupService
@@ -31,9 +33,9 @@ namespace TDH.Areas.Administrator.Services
             try
             {
                 //Declare response data to json object
-                DataTableResponse<MoneyGroupModel> _itemResponse = new DataTableResponse<MoneyGroupModel>();
+                DataTableResponse<GroupModel> _itemResponse = new DataTableResponse<GroupModel>();
                 //List of data
-                List<MoneyGroupModel> _list = new List<MoneyGroupModel>();
+                List<GroupModel> _list = new List<GroupModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _lData = (from m in context.MN_GROUP
@@ -79,7 +81,7 @@ namespace TDH.Areas.Administrator.Services
                             _moneyCur = _grSetting.money_current;
                         }
                         //
-                        _list.Add(new MoneyGroupModel()
+                        _list.Add(new GroupModel()
                         {
                             ID = item.id,
                             Name = item.name,
@@ -97,7 +99,7 @@ namespace TDH.Areas.Administrator.Services
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
-                    IOrderedEnumerable<MoneyGroupModel> _sortList = null;
+                    IOrderedEnumerable<GroupModel> _sortList = null;
                     if (request.order != null)
                     {
                         foreach (var col in request.order)
@@ -136,11 +138,11 @@ namespace TDH.Areas.Administrator.Services
         /// Get all item without deleted
         /// </summary>
         /// <returns></returns>
-        public List<MoneyGroupModel> GetAll(Guid userID)
+        public List<GroupModel> GetAll(Guid userID)
         {
             try
             {
-                List<MoneyGroupModel> _return = new List<MoneyGroupModel>();
+                List<GroupModel> _return = new List<GroupModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _list = (from m in context.MN_GROUP
@@ -153,7 +155,7 @@ namespace TDH.Areas.Administrator.Services
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyGroupModel() { ID = item.id, Name = item.name });
+                        _return.Add(new GroupModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -172,11 +174,11 @@ namespace TDH.Areas.Administrator.Services
         /// <param name="userID">User id</param>
         /// <param name="IsInput">true: input mean payment, false: income money</param>
         /// <returns></returns>
-        public List<MoneyGroupModel> GetAll(Guid userID, bool IsInput)
+        public List<GroupModel> GetAll(Guid userID, bool IsInput)
         {
             try
             {
-                List<MoneyGroupModel> _return = new List<MoneyGroupModel>();
+                List<GroupModel> _return = new List<GroupModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _list = (from m in context.MN_GROUP
@@ -189,7 +191,7 @@ namespace TDH.Areas.Administrator.Services
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyGroupModel() { ID = item.id, Name = item.name });
+                        _return.Add(new GroupModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -206,8 +208,8 @@ namespace TDH.Areas.Administrator.Services
         /// Get item
         /// </summary>
         /// <param name="model"></param>
-        /// <returns>MoneyGroupModel. Throw exception if not found or get some error</returns>
-        public MoneyGroupModel GetItemByID(MoneyGroupModel model)
+        /// <returns>GroupModel. Throw exception if not found or get some error</returns>
+        public GroupModel GetItemByID(GroupModel model)
         {
             try
             {
@@ -218,7 +220,7 @@ namespace TDH.Areas.Administrator.Services
                     {
                         throw new FieldAccessException();
                     }
-                    return new MoneyGroupModel()
+                    return new GroupModel()
                     {
                         ID = _md.id,
                         Name = _md.name,
@@ -248,7 +250,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Save(MoneyGroupModel model)
+        public ResponseStatusCodeHelper Save(GroupModel model)
         {
             try
             {
@@ -327,7 +329,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Publish(MoneyGroupModel model)
+        public ResponseStatusCodeHelper Publish(GroupModel model)
         {
             try
             {
@@ -375,7 +377,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Delete(MoneyGroupModel model)
+        public ResponseStatusCodeHelper Delete(GroupModel model)
         {
             try
             {
@@ -424,7 +426,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper CheckDelete(MoneyGroupModel model)
+        public ResponseStatusCodeHelper CheckDelete(GroupModel model)
         {
             try
             {

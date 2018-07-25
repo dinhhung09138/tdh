@@ -7,6 +7,7 @@ using TDH.Areas.Administrator.Models;
 using Utils;
 using TDH.Areas.Administrator.Common;
 using System.Threading.Tasks;
+using TDH.Model.Money;
 
 namespace TDH.Areas.Administrator.Services
 {
@@ -27,13 +28,13 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public async Task<List<MoneyReportCollectionByYearModel>> Summary(Guid userID)
+        public async Task<List<ReportCollectionByYearModel>> Summary(Guid userID)
         {
-            Task<List<MoneyReportCollectionByYearModel>> _return = Task.Run(() =>
+            Task<List<ReportCollectionByYearModel>> _return = Task.Run(() =>
             {
                 try
                 {
-                    List<MoneyReportCollectionByYearModel> _listResult = new List<MoneyReportCollectionByYearModel>();
+                    List<ReportCollectionByYearModel> _listResult = new List<ReportCollectionByYearModel>();
                     using (var context = new chacd26d_trandinhhungEntities())
                     {
                         var _list = (from m in context.FNC_REPORT_SUMMARY()
@@ -41,7 +42,7 @@ namespace TDH.Areas.Administrator.Services
                                      select m).ToList();
                         foreach (var item in _list)
                         {
-                            _listResult.Add(new MoneyReportCollectionByYearModel() { Year = item.year, Income = item.input, Payment = item.output, Total = item.final });
+                            _listResult.Add(new ReportCollectionByYearModel() { Year = item.year, Income = item.input, Payment = item.output, Total = item.final });
                         }
                     }
                     return _listResult;
@@ -57,8 +58,8 @@ namespace TDH.Areas.Administrator.Services
             return _return.Result;
 
 
-            //Task<List<MoneyReportCollectionByYearModel>> _return = Task.Run(() => {
-            //    List<MoneyReportCollectionByYearModel> _listResult = new List<MoneyReportCollectionByYearModel>();
+            //Task<List<ReportCollectionByYearModel>> _return = Task.Run(() => {
+            //    List<ReportCollectionByYearModel> _listResult = new List<ReportCollectionByYearModel>();
             //    using (var context = new chacd26d_trandinhhungEntities())
             //    {
             //        var _list = (from m in context.FNC_REPORT_SUMMARY_BY_YEAR(year)
@@ -66,7 +67,7 @@ namespace TDH.Areas.Administrator.Services
             //                     select m).ToList();
             //        foreach (var item in _list)
             //        {
-            //            _listResult.Add(new MoneyReportCollectionByYearModel() { Year = item.year, Month = item.month, Income = item.input, Payment = item.output, Total = item.final });
+            //            _listResult.Add(new ReportCollectionByYearModel() { Year = item.year, Month = item.month, Income = item.input, Payment = item.output, Total = item.final });
             //        }
             //    }
             //    return _listResult;
@@ -82,13 +83,13 @@ namespace TDH.Areas.Administrator.Services
         /// <param name="year">year</param>
         /// <param name="userID">user's id</param>
         /// <returns></returns>
-        public async Task<List<MoneyReportCollectionByYearModel>> SummaryByYear(int year, Guid userID)
+        public async Task<List<ReportCollectionByYearModel>> SummaryByYear(int year, Guid userID)
         {
-            Task<List<MoneyReportCollectionByYearModel>> _return = Task.Run(() =>
+            Task<List<ReportCollectionByYearModel>> _return = Task.Run(() =>
             {
                 try
                 {
-                    List<MoneyReportCollectionByYearModel> _listResult = new List<MoneyReportCollectionByYearModel>();
+                    List<ReportCollectionByYearModel> _listResult = new List<ReportCollectionByYearModel>();
                     using (var context = new chacd26d_trandinhhungEntities())
                     {
                         var _list = (from m in context.FNC_REPORT_SUMMARY_BY_YEAR(year)
@@ -96,7 +97,7 @@ namespace TDH.Areas.Administrator.Services
                                      select m).ToList();
                         foreach (var item in _list)
                         {
-                            _listResult.Add(new MoneyReportCollectionByYearModel() { Year = item.year, Month = item.month, Income = item.input, Payment = item.output, Total = item.final });
+                            _listResult.Add(new ReportCollectionByYearModel() { Year = item.year, Month = item.month, Income = item.input, Payment = item.output, Total = item.final });
                         }
                     }
                     return _listResult;
@@ -112,8 +113,8 @@ namespace TDH.Areas.Administrator.Services
             return _return.Result;
 
 
-            //Task<List<MoneyReportCollectionByYearModel>> _return = Task.Run(() => {
-            //    List<MoneyReportCollectionByYearModel> _listResult = new List<MoneyReportCollectionByYearModel>();
+            //Task<List<ReportCollectionByYearModel>> _return = Task.Run(() => {
+            //    List<ReportCollectionByYearModel> _listResult = new List<ReportCollectionByYearModel>();
             //    using (var context = new chacd26d_trandinhhungEntities())
             //    {
             //        var _list = (from m in context.FNC_REPORT_SUMMARY_BY_YEAR(year)
@@ -121,7 +122,7 @@ namespace TDH.Areas.Administrator.Services
             //                     select m).ToList();
             //        foreach (var item in _list)
             //        {
-            //            _listResult.Add(new MoneyReportCollectionByYearModel() { Year = item.year, Month = item.month, Income = item.input, Payment = item.output, Total = item.final });
+            //            _listResult.Add(new ReportCollectionByYearModel() { Year = item.year, Month = item.month, Income = item.input, Payment = item.output, Total = item.final });
             //        }
             //    }
             //    return _listResult;

@@ -6,6 +6,7 @@ using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using Utils;
 using TDH.Areas.Administrator.Common;
+using TDH.Model.Money;
 
 namespace TDH.Areas.Administrator.Services
 {
@@ -32,9 +33,9 @@ namespace TDH.Areas.Administrator.Services
             try
             {
                 //Declare response data to json object
-                DataTableResponse<MoneyAccountTypeModel> _itemResponse = new DataTableResponse<MoneyAccountTypeModel>();
+                DataTableResponse<AccountTypeModel> _itemResponse = new DataTableResponse<AccountTypeModel>();
                 //List of data
-                List<MoneyAccountTypeModel> _list = new List<MoneyAccountTypeModel>();
+                List<AccountTypeModel> _list = new List<AccountTypeModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _lData = (from m in context.MN_ACCOUNT_TYPE
@@ -61,7 +62,7 @@ namespace TDH.Areas.Administrator.Services
                     foreach (var item in _lData)
                     {
                         _count = context.MN_ACCOUNT.Count(m => m.account_type_id == item.id);
-                        _list.Add(new MoneyAccountTypeModel()
+                        _list.Add(new AccountTypeModel()
                         {
                             ID = item.id,
                             Name = item.name,
@@ -72,7 +73,7 @@ namespace TDH.Areas.Administrator.Services
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
-                    IOrderedEnumerable<MoneyAccountTypeModel> _sortList = null;
+                    IOrderedEnumerable<AccountTypeModel> _sortList = null;
                     if (request.order != null)
                     {
                         foreach (var col in request.order)
@@ -111,11 +112,11 @@ namespace TDH.Areas.Administrator.Services
         /// Get all item without deleted
         /// </summary>
         /// <returns></returns>
-        public List<MoneyAccountTypeModel> GetAll(Guid userID)
+        public List<AccountTypeModel> GetAll(Guid userID)
         {
             try
             {
-                List<MoneyAccountTypeModel> _return = new List<MoneyAccountTypeModel>();
+                List<AccountTypeModel> _return = new List<AccountTypeModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _list = (from m in context.MN_ACCOUNT_TYPE
@@ -128,7 +129,7 @@ namespace TDH.Areas.Administrator.Services
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyAccountTypeModel() { ID = item.id, Name = item.name });
+                        _return.Add(new AccountTypeModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -145,8 +146,8 @@ namespace TDH.Areas.Administrator.Services
         /// Get item
         /// </summary>
         /// <param name="model"></param>
-        /// <returns>MoneyAccountTypeModel. Throw exception if not found or get some error</returns>
-        public MoneyAccountTypeModel GetItemByID(MoneyAccountTypeModel model)
+        /// <returns>AccountTypeModel. Throw exception if not found or get some error</returns>
+        public AccountTypeModel GetItemByID(AccountTypeModel model)
         {
             try
             {
@@ -157,7 +158,7 @@ namespace TDH.Areas.Administrator.Services
                     {
                         throw new FieldAccessException();
                     }
-                    return new MoneyAccountTypeModel()
+                    return new AccountTypeModel()
                     {
                         ID = _md.id,
                         Name = _md.name,
@@ -179,7 +180,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Save(MoneyAccountTypeModel model)
+        public ResponseStatusCodeHelper Save(AccountTypeModel model)
         {
             try
             {
@@ -255,7 +256,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Publish(MoneyAccountTypeModel model)
+        public ResponseStatusCodeHelper Publish(AccountTypeModel model)
         {
             try
             {
@@ -303,7 +304,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Delete(MoneyAccountTypeModel model)
+        public ResponseStatusCodeHelper Delete(AccountTypeModel model)
         {
             try
             {
@@ -352,7 +353,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper CheckDelete(MoneyAccountTypeModel model)
+        public ResponseStatusCodeHelper CheckDelete(AccountTypeModel model)
         {
             try
             {

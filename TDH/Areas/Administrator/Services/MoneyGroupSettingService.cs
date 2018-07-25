@@ -6,6 +6,7 @@ using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using Utils;
 using TDH.Areas.Administrator.Common;
+using TDH.Model.Money;
 
 namespace TDH.Areas.Administrator.Services
 {
@@ -25,11 +26,11 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="userID">User id</param>
         /// <returns></returns>
-        public List<MoneyGroupSettingModel> GetAll(Guid userID)
+        public List<GroupSettingModel> GetAll(Guid userID)
         {
             try
             {
-                List<MoneyGroupSettingModel> _return = new List<MoneyGroupSettingModel>();
+                List<GroupSettingModel> _return = new List<GroupSettingModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _list = (from m in context.MN_GROUP_SETTING
@@ -47,7 +48,7 @@ namespace TDH.Areas.Administrator.Services
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyGroupSettingModel()
+                        _return.Add(new GroupSettingModel()
                         {
                             ID = item.id,
                             GroupID = item.group_id,
@@ -77,11 +78,11 @@ namespace TDH.Areas.Administrator.Services
         /// <param name="userID">User id</param>
         /// <param name="groupID">Group id</param>
         /// <returns></returns>
-        public List<MoneyGroupSettingModel> GetAll(Guid userID, Guid groupID)
+        public List<GroupSettingModel> GetAll(Guid userID, Guid groupID)
         {
             try
             {
-                List<MoneyGroupSettingModel> _return = new List<MoneyGroupSettingModel>();
+                List<GroupSettingModel> _return = new List<GroupSettingModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _list = (from m in context.MN_GROUP_SETTING
@@ -99,7 +100,7 @@ namespace TDH.Areas.Administrator.Services
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyGroupSettingModel()
+                        _return.Add(new GroupSettingModel()
                         {
                             ID = item.id,
                             GroupID = item.group_id,
@@ -130,11 +131,11 @@ namespace TDH.Areas.Administrator.Services
         /// <param name="groupID">Group id</param>
         /// <param name="yearMonth">Year month</param>
         /// <returns></returns>
-        public List<MoneyGroupSettingModel> GetAll(Guid userID, Guid groupID, decimal yearMonth)
+        public List<GroupSettingModel> GetAll(Guid userID, Guid groupID, decimal yearMonth)
         {
             try
             {
-                List<MoneyGroupSettingModel> _return = new List<MoneyGroupSettingModel>();
+                List<GroupSettingModel> _return = new List<GroupSettingModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _list = (from m in context.MN_GROUP_SETTING
@@ -152,7 +153,7 @@ namespace TDH.Areas.Administrator.Services
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyGroupSettingModel()
+                        _return.Add(new GroupSettingModel()
                         {
                             ID = item.id,
                             GroupID = item.group_id,
@@ -182,11 +183,11 @@ namespace TDH.Areas.Administrator.Services
         /// <param name="userID">User id</param>
         /// <param name="yearMonth">Year month</param>
         /// <returns></returns>
-        public List<MoneyGroupSettingModel> GetAll(Guid userID, decimal yearMonth)
+        public List<GroupSettingModel> GetAll(Guid userID, decimal yearMonth)
         {
             try
             {
-                List<MoneyGroupSettingModel> _return = new List<MoneyGroupSettingModel>();
+                List<GroupSettingModel> _return = new List<GroupSettingModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     Save(yearMonth, userID);
@@ -208,7 +209,7 @@ namespace TDH.Areas.Administrator.Services
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyGroupSettingModel()
+                        _return.Add(new GroupSettingModel()
                         {
                             ID = item.id,
                             GroupID = item.group_id,
@@ -240,7 +241,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>CategoryModel. Throw exception if not found or get some error</returns>
-        public MoneyGroupSettingModel GetItemByID(MoneyGroupSettingModel model)
+        public GroupSettingModel GetItemByID(GroupSettingModel model)
         {
             try
             {
@@ -252,7 +253,7 @@ namespace TDH.Areas.Administrator.Services
                         throw new FieldAccessException();
                     }
                     var _group = context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
-                    return new MoneyGroupSettingModel()
+                    return new GroupSettingModel()
                     {
                         ID = _md.id,
                         GroupID = _md.group_id,
@@ -280,7 +281,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Save(List<MoneyGroupSettingModel> model)
+        public ResponseStatusCodeHelper Save(List<GroupSettingModel> model)
         {
             try
             {

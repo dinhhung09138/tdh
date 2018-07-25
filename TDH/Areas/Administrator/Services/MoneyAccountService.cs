@@ -6,6 +6,7 @@ using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using Utils;
 using TDH.Areas.Administrator.Common;
+using TDH.Model.Money;
 
 namespace TDH.Areas.Administrator.Services
 {
@@ -32,9 +33,9 @@ namespace TDH.Areas.Administrator.Services
             try
             {
                 //Declare response data to json object
-                DataTableResponse<MoneyAccountModel> _itemResponse = new DataTableResponse<MoneyAccountModel>();
+                DataTableResponse<AccountModel> _itemResponse = new DataTableResponse<AccountModel>();
                 //List of data
-                List<MoneyAccountModel> _list = new List<MoneyAccountModel>();
+                List<AccountModel> _list = new List<AccountModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _lData = (from m in context.MN_ACCOUNT
@@ -73,7 +74,7 @@ namespace TDH.Areas.Administrator.Services
                             _input = _setting.input;
                             _out = _setting.output;
                         }
-                        _list.Add(new MoneyAccountModel()
+                        _list.Add(new AccountModel()
                         {
                             ID = item.id,
                             Name = item.name,
@@ -89,7 +90,7 @@ namespace TDH.Areas.Administrator.Services
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
-                    IOrderedEnumerable<MoneyAccountModel> _sortList = null;
+                    IOrderedEnumerable<AccountModel> _sortList = null;
                     if (request.order != null)
                     {
                         foreach (var col in request.order)
@@ -128,11 +129,11 @@ namespace TDH.Areas.Administrator.Services
         /// Get all item without deleted
         /// </summary>
         /// <returns></returns>
-        public List<MoneyAccountModel> GetAll(Guid userID)
+        public List<AccountModel> GetAll(Guid userID)
         {
             try
             {
-                List<MoneyAccountModel> _return = new List<MoneyAccountModel>();
+                List<AccountModel> _return = new List<AccountModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _list = (from m in context.MN_ACCOUNT
@@ -146,7 +147,7 @@ namespace TDH.Areas.Administrator.Services
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyAccountModel() { ID = item.id, Name = item.name });
+                        _return.Add(new AccountModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -163,11 +164,11 @@ namespace TDH.Areas.Administrator.Services
         /// Get all item without deleted
         /// </summary>
         /// <returns></returns>
-        public List<MoneyAccountModel> GetAllWithFullMoney(Guid userID)
+        public List<AccountModel> GetAllWithFullMoney(Guid userID)
         {
             try
             {
-                List<MoneyAccountModel> _return = new List<MoneyAccountModel>();
+                List<AccountModel> _return = new List<AccountModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _list = (from m in context.MN_ACCOUNT
@@ -181,7 +182,7 @@ namespace TDH.Areas.Administrator.Services
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new MoneyAccountModel() { ID = item.id, Name = item.name });
+                        _return.Add(new AccountModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -198,8 +199,8 @@ namespace TDH.Areas.Administrator.Services
         /// Get item
         /// </summary>
         /// <param name="model"></param>
-        /// <returns>MoneyAccountModel. Throw exception if not found or get some error</returns>
-        public MoneyAccountModel GetItemByID(MoneyAccountModel model)
+        /// <returns>AccountModel. Throw exception if not found or get some error</returns>
+        public AccountModel GetItemByID(AccountModel model)
         {
             try
             {
@@ -213,7 +214,7 @@ namespace TDH.Areas.Administrator.Services
                     MN_ACCOUNT_TYPE _type = context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == _md.account_type_id);
                     var _lSetting = context.MN_ACCOUNT_SETTING.Where(m => m.account_id == model.ID && m.yearmonth.ToString().Contains(DateTime.Now.Year.ToString())).OrderByDescending(m => m.yearmonth);
                     //
-                    var _return = new MoneyAccountModel()
+                    var _return = new AccountModel()
                     {
                         ID = _md.id,
                         Name = _md.name,
@@ -227,7 +228,7 @@ namespace TDH.Areas.Administrator.Services
                     };
                     foreach (var item in _lSetting)
                     {
-                        _return.Setting.Add(new MoneyAccountSettingModel() {
+                        _return.Setting.Add(new AccountSettingModel() {
                             Month = item.yearmonth % 100,
                             Year = item.yearmonth / 100,
                             Input = item.input,
@@ -261,9 +262,9 @@ namespace TDH.Areas.Administrator.Services
             try
             {
                 //Declare response data to json object
-                DataTableResponse<MoneyAccountHistoryModel> _itemResponse = new DataTableResponse<MoneyAccountHistoryModel>();
+                DataTableResponse<AccountHistoryModel> _itemResponse = new DataTableResponse<AccountHistoryModel>();
                 //List of data
-                List<MoneyAccountHistoryModel> _list = new List<MoneyAccountHistoryModel>();
+                List<AccountHistoryModel> _list = new List<AccountHistoryModel>();
                 using (var context = new chacd26d_trandinhhungEntities())
                 {
                     var _lData = (from m in context.V_ACCOUNT_HISTORY
@@ -292,7 +293,7 @@ namespace TDH.Areas.Administrator.Services
                     //Add to list
                     foreach (var item in _lData)
                     {
-                        _list.Add(new MoneyAccountHistoryModel()
+                        _list.Add(new AccountHistoryModel()
                         {
                             Title = item.title,
                             Date = item.date.Value,
@@ -322,7 +323,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Save(MoneyAccountModel model)
+        public ResponseStatusCodeHelper Save(AccountModel model)
         {
             try
             {
@@ -398,7 +399,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Publish(MoneyAccountModel model)
+        public ResponseStatusCodeHelper Publish(AccountModel model)
         {
             try
             {
@@ -446,7 +447,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Delete(MoneyAccountModel model)
+        public ResponseStatusCodeHelper Delete(AccountModel model)
         {
             try
             {
@@ -495,7 +496,7 @@ namespace TDH.Areas.Administrator.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper CheckDelete(MoneyAccountModel model)
+        public ResponseStatusCodeHelper CheckDelete(AccountModel model)
         {
             try
             {

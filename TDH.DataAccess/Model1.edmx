@@ -657,15 +657,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="fee" Type="numeric" Precision="18" Scale="1" Nullable="false" />
           <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="V_REPORT_SUMMARY_BY_YEAR">
-          <Property Name="input" Type="numeric" Precision="38" Scale="1" />
-          <Property Name="output" Type="numeric" Precision="38" Scale="1" />
-          <Property Name="year" Type="varchar" MaxLength="4" />
-          <Property Name="month" Type="varchar" MaxLength="6" />
-          <Property Name="count" Type="bigint" />
-        </EntityType>-->
         <Association Name="FK_CATEGORY_NAVIGATION">
           <End Role="NAVIGATION" Type="Self.NAVIGATION" Multiplicity="1">
             <OnDelete Action="Cascade" />

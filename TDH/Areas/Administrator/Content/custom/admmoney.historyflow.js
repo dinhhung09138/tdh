@@ -172,21 +172,22 @@ $(document).on('change', '#ddlSelect', function (e) {
 });
 
 function income() {
-    var currentTime = new Date()
-    var month = currentTime.getMonth() + 1;
-    var day = currentTime.getDate();
-    var year = currentTime.getFullYear();
-    $('#txtIncomeDate').val(day + '/' + (month < 10 ? '0' + month : month) + '/' + year);
+    $(".datePicker").datepicker("update", new Date());
     $('#txtIncomeTitle').val('');
     $('#txtIncomeMoney').val('');
+    incomeMoney.set(0);
     $('#cbIncomeCategory').val('');
     $('#cbIncomeAccount').val('');
     $('#txtIncomePurpose').val('');
+    $('#txtIncomeTitle').focus();
+    loading($('#btnSaveIncome'), 'hide');
+    loading($('#btnSaveIncomeContinue'), 'hide');
     $('#incomeModel').modal('show');
 }
 
-function saveIncome() {
+function saveIncome(ctn) {
     loading($('#btnSaveIncome'), 'show');
+    loading($('#btnSaveIncomeContinue'), 'show');
     $('#frmIncome').parsley().validate();
     if ($('#frmIncome').parsley().isValid() === true) {
         $.ajax({
@@ -204,16 +205,24 @@ function saveIncome() {
             }),
             success: function (response) {
                 table.ajax.reload();
-                $('#incomeModel').modal('hide');
-                loading($('#btnSaveIncome'), 'hide');
+                if (ctn === false) {
+                    $('#incomeModel').modal('hide');
+                    loading($('#btnSaveIncome'), 'hide');
+                    loading($('#btnSaveIncomeContinue'), 'hide');
+                } else {
+                    income();
+                }
+                
             },
             error: function (xhr, status, error) {
                 console.log(error);
                 loading($('#btnSaveIncome'), 'hide');
+                loading($('#btnSaveIncomeContinue'), 'hide');
             }
         });
     } else {
         loading($('#btnSaveIncome'), 'hide');
+        loading($('#btnSaveIncomeContinue'), 'hide');
     }
 }
 
@@ -222,21 +231,22 @@ $('#incomeModel').on('shown.bs.modal', function (e) {
 });
 
 function payment() {
-    var currentTime = new Date()
-    var month = currentTime.getMonth() + 1;
-    var day = currentTime.getDate();
-    var year = currentTime.getFullYear();
-    $('#txtPaymentDate').val(day + '/' + (month < 10 ? '0' + month : month) + '/' + year);
+    $(".datePicker").datepicker("update", new Date());
     $('#txtPaymentTitle').val('');
     $('#txtPaymentMoney').val('');
+    paymentMoney.set(0);
     $('#cbPaymentCategory').val('');
     $('#cbPaymentAccount').val('');
     $('#txtPaymentPurpose').val('');
+    $('#txtPaymentTitle').focus();
+    loading($('#btnSavePayment'), 'hide');
+    loading($('#btnSavePaymentContinue'), 'hide');
     $('#paymentModel').modal('show');
 }
 
-function savePayment() {
+function savePayment(ctn) {
     loading($('#btnSavePayment'), 'show');
+    loading($('#btnSavePaymentContinue'), 'show');
     $('#frmPayment').parsley().validate();
     if ($('#frmPayment').parsley().isValid() === true) {
         $.ajax({
@@ -254,16 +264,23 @@ function savePayment() {
             }),
             success: function (response) {
                 table.ajax.reload();
-                $('#paymentModel').modal('hide');
-                loading($('#btnSavePayment'), 'hide');
+                if (ctn === true) {
+                    payment();
+                } else {
+                    $('#paymentModel').modal('hide');
+                    loading($('#btnSavePayment'), 'hide');
+                    loading($('#btnSavePaymentContinue'), 'hide');
+                }
             },
             error: function (xhr, status, error) {
                 console.log(error);
                 loading($('#btnSavePayment'), 'hide');
+                loading($('#btnSavePaymentContinue'), 'hide');
             }
         });
     } else {
         loading($('#btnSavePayment'), 'hide');
+        loading($('#btnSavePaymentContinue'), 'hide');
     }
 }
 
@@ -272,22 +289,24 @@ $('#paymentModel').on('shown.bs.modal', function (e) {
 });
 
 function transfer() {
-    var currentTime = new Date()
-    var month = currentTime.getMonth() + 1;
-    var day = currentTime.getDate();
-    var year = currentTime.getFullYear();
-    $('#txtTransferDate').val(day + '/' + (month < 10 ? '0' + month : month) + '/' + year);
+    $(".datePicker").datepicker("update", new Date());
     $('#txtTransferTitle').val('');
     $('#txtTransferMoney').val('');
+    transferMoney.set(0);
     $('#txtTransferFee').val('');
+    transferFee.set(0);
     $('#cbTransferAccountFrom').val('');
     $('#cbTransferAccountTo').val('');
     $('#txtTransferPurpose').val('');
+    $('#txtTransferTitle').focus();
+    loading($('#btnSaveTransfer'), 'hide');
+    loading($('#btnSaveTransferContinue'), 'hide');
     $('#transferModel').modal('show');
 }
 
-function saveTransfer() {
+function saveTransfer(ctn) {
     loading($('#btnSaveTransfer'), 'show');
+    loading($('#btnSaveTransferContinue'), 'show');
     $('#frmTransfer').parsley().validate();
     if ($('#frmTransfer').parsley().isValid() === true) {
         $.ajax({
@@ -306,16 +325,23 @@ function saveTransfer() {
             }),
             success: function (response) {
                 table.ajax.reload();
-                $('#transferModel').modal('hide');
-                loading($('#btnSaveTransfer'), 'hide');
+                if (ctn === true) {
+                    transfer();
+                } else {
+                    $('#transferModel').modal('hide');
+                    loading($('#btnSaveTransfer'), 'hide');
+                    loading($('#btnSaveTransferContinue'), 'show');
+                }
             },
             error: function (xhr, status, error) {
                 console.log(error);
                 loading($('#btnSaveTransfer'), 'hide');
+                loading($('#btnSaveTransferContinue'), 'show');
             }
         });
     } else {
         loading($('#btnSaveTransfer'), 'hide');
+        loading($('#btnSaveTransferContinue'), 'show');
     }
 }
 

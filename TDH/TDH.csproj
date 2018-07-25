@@ -9484,6 +9484,24 @@
       <LastGenOutput>Message.Designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TDH.Common\TDH.Common.csproj">
+      <Project>{81636123-6bc1-4c99-bad6-7c4c2c567505}</Project>
+      <Name>TDH.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TDH.DataAccess\TDH.DataAccess.csproj">
+      <Project>{e8809bad-267d-41c9-89f5-1d2a4a37d530}</Project>
+      <Name>TDH.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TDH.Model\TDH.Model.csproj">
+      <Project>{d4c844ff-99f5-4f7e-954d-b88e5f90f576}</Project>
+      <Name>TDH.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TDH.Services\TDH.Services.csproj">
+      <Project>{47c49bf9-e45d-4b25-aee8-e52b8b4a8e54}</Project>
+      <Name>TDH.Services</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

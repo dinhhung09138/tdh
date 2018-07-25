@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 using Utils;
 using Utils.JqueryDatatable;
-using TDH.Areas.Administrator.Models;
-using TDH.Areas.Administrator.Filters;
-using System.Threading.Tasks;
+using TDH.Common;
+using TDH.Common.Fillters;
+using TDH.Services.Money;
+using TDH.Model.Money;
 
 namespace TDH.Areas.Administrator.Controllers
 {
@@ -42,11 +44,15 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Report", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Report", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Get data for summary report
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> SummaryReport()
         {
@@ -54,7 +60,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyReportService _service = new Services.MoneyReportService();
+                ReportService _service = new ReportService();
 
                 #endregion
 
@@ -68,11 +74,16 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "SummaryReport", UserID, ex);
+                Log.WriteLog(FILE_NAME, "SummaryReport", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Get data for summary report
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> SummaryReportByYear(int year)
         {
@@ -80,7 +91,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyReportService _service = new Services.MoneyReportService();
+                ReportService _service = new ReportService();
 
                 #endregion
 
@@ -94,21 +105,20 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "SummaryReportByYear", UserID, ex);
+                Log.WriteLog(FILE_NAME, "SummaryReportByYear", UserID, ex);
                 throw new HttpException();
             }
         }
         
 
         #endregion
-
-
+        
         #region " [ Account Type ]  "
 
         /// <summary>
         /// AccountType form
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult AccountType()
         {
@@ -118,11 +128,18 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "AccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "AccountType", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// AccountType form
+        /// Post method
+        /// 
+        /// </summary>
+        /// <param name="requestData">jquery datatable request</param>
+        /// <returns>DataTableResponse<AccountTypeModel></returns>
         [HttpPost]
         public JsonResult AccountType(CustomDataTableRequestHelper requestData)
         {
@@ -130,7 +147,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountTypeService _service = new Services.MoneyAccountTypeService();
+                AccountTypeService _service = new AccountTypeService();
 
                 #endregion
 
@@ -146,19 +163,24 @@ namespace TDH.Areas.Administrator.Controllers
                 //
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
-                    DataTableResponse<MoneyAccountTypeModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<MoneyAccountTypeModel>;
+                    DataTableResponse<AccountTypeModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<AccountTypeModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
                 //
-                return this.Json(new DataTableResponse<MoneyAccountTypeModel>(), JsonRequestBehavior.AllowGet);
+                return this.Json(new DataTableResponse<AccountTypeModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "AccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "AccountType", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Create AccountType form
+        /// 
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult CreateAccountType()
         {
@@ -166,31 +188,36 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountTypeService _service = new Services.MoneyAccountTypeService();
+                AccountTypeService _service = new AccountTypeService();
 
                 #endregion
 
                 //Call to service
-                MoneyAccountTypeModel model = new MoneyAccountTypeModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
+                AccountTypeModel model = new AccountTypeModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
                 //
                 return PartialView(model);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateAccountType", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Create AccountType form
+        /// Post method
+        /// </summary>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateAccountType(MoneyAccountTypeModel model)
+        public ActionResult CreateAccountType(AccountTypeModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountTypeService _service = new Services.MoneyAccountTypeService();
+                AccountTypeService _service = new AccountTypeService();
 
                 #endregion
 
@@ -209,11 +236,17 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateAccountType", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Edit AccountType form
+        /// 
+        /// </summary>
+        /// <param name="id">the identifier</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpGet]
         public ActionResult EditAccountType(string id)
         {
@@ -221,33 +254,39 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountTypeService _service = new Services.MoneyAccountTypeService();
+                AccountTypeService _service = new AccountTypeService();
                 //
                 ViewBag.id = id;
 
                 #endregion
 
                 //Call to service
-                MoneyAccountTypeModel model = _service.GetItemByID(new MoneyAccountTypeModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+                AccountTypeModel model = _service.GetItemByID(new AccountTypeModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 //
                 return PartialView(model);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditAccountType", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Edit AccountType form
+        /// Post method
+        /// </summary>
+        /// <param name="model">AccountTypeModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAccountType(MoneyAccountTypeModel model)
+        public ActionResult EditAccountType(AccountTypeModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountTypeService _service = new Services.MoneyAccountTypeService();
+                AccountTypeService _service = new AccountTypeService();
 
                 #endregion
 
@@ -265,19 +304,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditAccountType", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Publish AccountType method
+        /// </summary>
+        /// <param name="model">AccountTypeModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult PublishAccountType(MoneyAccountTypeModel model)
+        public ActionResult PublishAccountType(AccountTypeModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountTypeService _service = new Services.MoneyAccountTypeService();
+                AccountTypeService _service = new AccountTypeService();
 
                 #endregion
 
@@ -294,19 +338,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "PublishAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "PublishAccountType", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Delete AccountType method
+        /// </summary>
+        /// <param name="model">AccountTypeModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult DeleteAccountType(MoneyAccountTypeModel model)
+        public ActionResult DeleteAccountType(AccountTypeModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountTypeService _service = new Services.MoneyAccountTypeService();
+                AccountTypeService _service = new AccountTypeService();
 
                 #endregion
 
@@ -323,19 +372,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DeleteAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DeleteAccountType", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Delete AccountType method
+        /// </summary>
+        /// <param name="model">AccountTypeModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDeleteAccountType(MoneyAccountTypeModel model)
+        public ActionResult CheckDeleteAccountType(AccountTypeModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountTypeService _service = new Services.MoneyAccountTypeService();
+                AccountTypeService _service = new AccountTypeService();
 
                 #endregion
 
@@ -350,7 +404,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CheckDeleteAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDeleteAccountType", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -362,7 +416,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// <summary>
         /// Account form
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Account()
         {
@@ -372,11 +426,18 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Account", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Account", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Account form
+        /// Post method
+        /// 
+        /// </summary>
+        /// <param name="requestData">jquery datatable request</param>
+        /// <returns>DataTableResponse<AccountModel></returns>
         [HttpPost]
         public JsonResult Account(CustomDataTableRequestHelper requestData)
         {
@@ -384,7 +445,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountService _service = new Services.MoneyAccountService();
+                AccountService _service = new AccountService();
 
                 #endregion
 
@@ -400,19 +461,26 @@ namespace TDH.Areas.Administrator.Controllers
                 //
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
-                    DataTableResponse<MoneyAccountModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<MoneyAccountModel>;
+                    DataTableResponse<AccountModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<AccountModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
                 //
-                return this.Json(new DataTableResponse<MoneyAccountModel>(), JsonRequestBehavior.AllowGet);
+                return this.Json(new DataTableResponse<AccountModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Account", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Account", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// AccountHistory form
+        /// </summary>
+        /// <param name="id">the account identifier</param>
+        /// <param name="name">acocunt name</param>
+        /// <param name="yearMonth">yearMonth</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult AccountHistory(string id, string name, string yearMonth)
         {
@@ -434,11 +502,17 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "AccountHistory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "AccountHistory", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// AccountHistory form
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<AccountHistoryModel></returns>
         [HttpPost]
         public JsonResult AccountHistory(CustomDataTableRequestHelper requestData)
         {
@@ -446,7 +520,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountService _service = new Services.MoneyAccountService();
+                AccountService _service = new AccountService();
 
                 #endregion
 
@@ -473,20 +547,23 @@ namespace TDH.Areas.Administrator.Controllers
                 //
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
-                    DataTableResponse<MoneyAccountHistoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<MoneyAccountHistoryModel>;
+                    DataTableResponse<AccountHistoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<AccountHistoryModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
                 //
-                return this.Json(new DataTableResponse<MoneyAccountHistoryModel>(), JsonRequestBehavior.AllowGet);
+                return this.Json(new DataTableResponse<AccountHistoryModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "AccountHistory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "AccountHistory", UserID, ex);
                 throw new HttpException();
             }
         }
 
-
+        /// <summary>
+        /// Create Account form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult CreateAccount()
         {
@@ -494,34 +571,40 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountTypeService _typeServices = new Services.MoneyAccountTypeService();
-                Services.MoneyAccountService _service = new Services.MoneyAccountService();
+                AccountTypeService _typeServices = new AccountTypeService();
+                AccountService _service = new AccountService();
                 //
                 ViewBag.type = _typeServices.GetAll(UserID);
 
                 #endregion
 
                 //Call to service
-                MoneyAccountModel model = new MoneyAccountModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
+                AccountModel model = new AccountModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
                 //
                 return PartialView(model);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateAccount", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateAccount", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Create Account form
+        /// Post method
+        /// </summary>
+        /// <param name="model">AccountModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateAccount(MoneyAccountModel model)
+        public ActionResult CreateAccount(AccountModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountService _service = new Services.MoneyAccountService();
+                AccountService _service = new AccountService();
 
                 #endregion
 
@@ -540,11 +623,16 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateAccount", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateAccount", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Edit Account form
+        /// </summary>
+        /// <param name="id">the account identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult EditAccount(string id)
         {
@@ -552,8 +640,8 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountTypeService _typeServices = new Services.MoneyAccountTypeService();
-                Services.MoneyAccountService _service = new Services.MoneyAccountService();
+                AccountTypeService _typeServices = new AccountTypeService();
+                AccountService _service = new AccountService();
                 //
                 ViewBag.type = _typeServices.GetAll(UserID);
 
@@ -562,26 +650,32 @@ namespace TDH.Areas.Administrator.Controllers
                 #endregion
 
                 //Call to service
-                MoneyAccountModel model = _service.GetItemByID(new MoneyAccountModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+                AccountModel model = _service.GetItemByID(new AccountModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 //
                 return PartialView(model);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditAccount", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditAccount", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Edit Account form
+        /// Post method
+        /// </summary>
+        /// <param name="model">AccountModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAccount(MoneyAccountModel model)
+        public ActionResult EditAccount(AccountModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountService _service = new Services.MoneyAccountService();
+                AccountService _service = new AccountService();
 
                 #endregion
 
@@ -599,19 +693,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditAccount", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditAccount", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Publish Account method
+        /// </summary>
+        /// <param name="model">AccountModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult PublishAccount(MoneyAccountModel model)
+        public ActionResult PublishAccount(AccountModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountService _service = new Services.MoneyAccountService();
+                AccountService _service = new AccountService();
 
                 #endregion
 
@@ -628,19 +727,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "PublishAccount", UserID, ex);
+                Log.WriteLog(FILE_NAME, "PublishAccount", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Delete Account method
+        /// </summary>
+        /// <param name="model">AccountModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult DeleteAccount(MoneyAccountModel model)
+        public ActionResult DeleteAccount(AccountModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountService _service = new Services.MoneyAccountService();
+                AccountService _service = new AccountService();
 
                 #endregion
 
@@ -657,19 +761,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DeleteAccount", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DeleteAccount", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Delete Account method
+        /// </summary>
+        /// <param name="model">AccountModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDeleteAccount(MoneyAccountModel model)
+        public ActionResult CheckDeleteAccount(AccountModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyAccountService _service = new Services.MoneyAccountService();
+                AccountService _service = new AccountService();
 
                 #endregion
 
@@ -684,7 +793,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CheckDeleteAccount", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDeleteAccount", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -696,7 +805,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// <summary>
         /// Group form
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Group()
         {
@@ -706,11 +815,17 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Group", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Group", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Group form
+        /// Post method
+        /// </summary>
+        /// <param name="requestData"></param>
+        /// <returns>DataTableResponse<GroupModel></returns>
         [HttpPost]
         public JsonResult Group(CustomDataTableRequestHelper requestData)
         {
@@ -718,7 +833,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupService _service = new Services.MoneyGroupService();
+                GroupService _service = new GroupService();
 
                 #endregion
 
@@ -742,19 +857,23 @@ namespace TDH.Areas.Administrator.Controllers
                 //
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
-                    DataTableResponse<MoneyGroupModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<MoneyGroupModel>;
+                    DataTableResponse<GroupModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<GroupModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
                 //
-                return this.Json(new DataTableResponse<MoneyGroupModel>(), JsonRequestBehavior.AllowGet);
+                return this.Json(new DataTableResponse<GroupModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Group", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Group", UserID, ex);
                 throw new HttpException();
             }
         }
-        
+
+        /// <summary>
+        /// Create Group form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult CreateGroup()
         {
@@ -767,26 +886,32 @@ namespace TDH.Areas.Administrator.Controllers
                 #endregion
 
                 //Call to service
-                MoneyGroupModel model = new MoneyGroupModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
+                GroupModel model = new GroupModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
                 //
                 return PartialView(model);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateGroup", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Create Group form
+        /// Post method
+        /// </summary>
+        /// <param name="model">GroupModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateGroup(MoneyGroupModel model)
+        public ActionResult CreateGroup(GroupModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupService _service = new Services.MoneyGroupService();
+                GroupService _service = new GroupService();
 
                 #endregion
 
@@ -805,11 +930,16 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateGroup", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Edit group form
+        /// </summary>
+        /// <param name="id">The group identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult EditGroup(string id)
         {
@@ -817,29 +947,29 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupService _service = new Services.MoneyGroupService();
+                GroupService _service = new GroupService();
                 //
                 ViewBag.id = id;
 
                 #endregion
 
                 //Call to service
-                MoneyGroupModel model = _service.GetItemByID(new MoneyGroupModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+                GroupModel model = _service.GetItemByID(new GroupModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 //
                 return PartialView(model);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditGroup", UserID, ex);
                 throw new HttpException();
             }
         }
 
         /// <summary>
-        /// Get all group to set in a month
+        /// All group data for setting form in a month
         /// </summary>
-        /// <param name="year"></param>
-        /// <returns></returns>
+        /// <param name="year">Year</param>
+        /// <returns>List<GroupSettingModel></returns>
         [HttpPost]
         public ActionResult GetGroupSettingInfo(decimal year)
         {
@@ -847,35 +977,36 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupSettingService _service = new Services.MoneyGroupSettingService();
+                GroupSettingService _service = new GroupSettingService();
                 
                 #endregion
 
                 //Call to service
-                List< MoneyGroupSettingModel> model = _service.GetAll(UserID, year);
+                List<GroupSettingModel> model = _service.GetAll(UserID, year);
                 //
                 return this.Json(model, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "GroupSettingInfo", UserID, ex);
+                Log.WriteLog(FILE_NAME, "GroupSettingInfo", UserID, ex);
                 throw new HttpException();
             }
         }
 
         /// <summary>
-        /// All group to set in a month
+        /// All group data for setting form in a month
+        /// Post method
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
+        /// <param name="model">List<GroupSettingModel></param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult SaveGroupSettingInfo(List<MoneyGroupSettingModel> model)
+        public ActionResult SaveGroupSettingInfo(List<GroupSettingModel> model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupSettingService _service = new Services.MoneyGroupSettingService();
+                GroupSettingService _service = new GroupSettingService();
 
                 #endregion
 
@@ -896,20 +1027,26 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "GroupSettingInfo", UserID, ex);
+                Log.WriteLog(FILE_NAME, "GroupSettingInfo", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Edit group form
+        /// Post method
+        /// </summary>
+        /// <param name="model">GroupModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditGroup(MoneyGroupModel model)
+        public ActionResult EditGroup(GroupModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupService _service = new Services.MoneyGroupService();
+                GroupService _service = new GroupService();
 
                 #endregion
 
@@ -927,19 +1064,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditGroup", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Publish Group method
+        /// </summary>
+        /// <param name="model">GroupModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult PublishGroup(MoneyGroupModel model)
+        public ActionResult PublishGroup(GroupModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupService _service = new Services.MoneyGroupService();
+                GroupService _service = new GroupService();
 
                 #endregion
 
@@ -956,19 +1098,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "PublishGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "PublishGroup", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Delete Group method
+        /// </summary>
+        /// <param name="model">GroupModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult DeleteGroup(MoneyGroupModel model)
+        public ActionResult DeleteGroup(GroupModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupService _service = new Services.MoneyGroupService();
+                GroupService _service = new GroupService();
 
                 #endregion
 
@@ -985,19 +1132,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DeleteGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DeleteGroup", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Check delete Group method
+        /// </summary>
+        /// <param name="model">GroupModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDeleteGroup(MoneyGroupModel model)
+        public ActionResult CheckDeleteGroup(GroupModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupService _service = new Services.MoneyGroupService();
+                GroupService _service = new GroupService();
 
                 #endregion
 
@@ -1012,7 +1164,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CheckDeleteGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDeleteGroup", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -1024,7 +1176,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// <summary>
         /// Category form
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Category()
         {
@@ -1032,7 +1184,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupService _groupServices = new Services.MoneyGroupService();
+                GroupService _groupServices = new GroupService();
                 //
                 ViewBag.group = _groupServices.GetAll(UserID);
 
@@ -1042,11 +1194,17 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Category", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Category", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Category form
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<CategoryModel></returns>
         [HttpPost]
         public JsonResult Category(CustomDataTableRequestHelper requestData)
         {
@@ -1054,7 +1212,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
                 
-                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -1078,19 +1236,26 @@ namespace TDH.Areas.Administrator.Controllers
                 //
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
-                    DataTableResponse<MoneyCategoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<MoneyCategoryModel>;
+                    DataTableResponse<CategoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<CategoryModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
                 //
-                return this.Json(new DataTableResponse<MoneyCategoryModel>(), JsonRequestBehavior.AllowGet);
+                return this.Json(new DataTableResponse<CategoryModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Category", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Category", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// All setting data by category in a month
+        /// </summary>
+        /// <param name="id">the category identifier</param>
+        /// <param name="name">Category name</param>
+        /// <param name="yearMonth">year month</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult CategoryHistory(string id, string name, string yearMonth)
         {
@@ -1112,11 +1277,17 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CategoryHistory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CategoryHistory", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// All setting data by category in a month
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<CategoryHistoryModel></returns>
         [HttpPost]
         public JsonResult CategoryHistory(CustomDataTableRequestHelper requestData)
         {
@@ -1124,7 +1295,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -1146,19 +1317,23 @@ namespace TDH.Areas.Administrator.Controllers
                 //
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
-                    DataTableResponse<MoneyCategoryHistoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<MoneyCategoryHistoryModel>;
+                    DataTableResponse<CategoryHistoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<CategoryHistoryModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
                 //
-                return this.Json(new DataTableResponse<MoneyCategoryHistoryModel>(), JsonRequestBehavior.AllowGet);
+                return this.Json(new DataTableResponse<CategoryHistoryModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CategoryHistory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CategoryHistory", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Create category form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult CreateCategory()
         {
@@ -1166,33 +1341,39 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupService _groupServices = new Services.MoneyGroupService();
-                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+                GroupService _groupServices = new GroupService();
+               CategoryService _service = new CategoryService();
                 //
                 ViewBag.group = _groupServices.GetAll(UserID);
 
                 #endregion
                 //
-                MoneyCategoryModel model = new MoneyCategoryModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
+                CategoryModel model = new CategoryModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
                 //
                 return PartialView(model);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateCategory", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Create category form
+        /// Post form
+        /// </summary>
+        /// <param name="model">CategoryModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateCategory(MoneyCategoryModel model)
+        public ActionResult CreateCategory(CategoryModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -1211,11 +1392,16 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateCategory", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Edit category form
+        /// </summary>
+        /// <param name="id">The category identifier</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpGet]
         public ActionResult EditCategory(string id)
         {
@@ -1223,8 +1409,8 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupService _groupServices = new Services.MoneyGroupService();
-                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+                GroupService _groupServices = new GroupService();
+                CategoryService _service = new CategoryService();
                 //
                 ViewBag.group = _groupServices.GetAll(UserID);
 
@@ -1233,26 +1419,32 @@ namespace TDH.Areas.Administrator.Controllers
                 #endregion
 
                 //Call to service
-                MoneyCategoryModel model = _service.GetItemByID(new MoneyCategoryModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+                CategoryModel model = _service.GetItemByID(new CategoryModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 //
                 return PartialView(model);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditCategory", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Edit category form
+        /// Post method
+        /// </summary>
+        /// <param name="model">CategoryModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditCategory(MoneyCategoryModel model)
+        public ActionResult EditCategory(CategoryModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -1270,19 +1462,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditCategory", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Publish category method
+        /// </summary>
+        /// <param name="model">CategoryModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult PublishCategory(MoneyCategoryModel model)
+        public ActionResult PublishCategory(CategoryModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -1299,19 +1496,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "PublishCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "PublishCategory", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Delete category method
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult DeleteCategory(MoneyCategoryModel model)
+        public ActionResult DeleteCategory(CategoryModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -1328,19 +1530,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DeleteAccount", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DeleteAccount", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Check delete category method
+        /// </summary>
+        /// <param name="model">CategoryModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDeleteCategory(MoneyCategoryModel model)
+        public ActionResult CheckDeleteCategory(CategoryModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyCategoryService _service = new Services.MoneyCategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -1355,7 +1562,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CheckDeleteCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDeleteCategory", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -1364,13 +1571,17 @@ namespace TDH.Areas.Administrator.Controllers
 
         #region " [ Income, Payment, Transfer ] "
 
+        /// <summary>
+        /// Flow history form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult FlowHistory()
         {
             #region " [ Declaration ] "
 
-            Services.MoneyCategoryService _categoryServices = new Services.MoneyCategoryService();
-            Services.MoneyAccountService _accountServices = new Services.MoneyAccountService();
+            CategoryService _categoryServices = new CategoryService();
+            AccountService _accountServices = new AccountService();
             //
             ViewBag.incomeCategory = _categoryServices.GetAll(UserID, true);
             ViewBag.paymentCategory = _categoryServices.GetAll(UserID, false);
@@ -1382,6 +1593,12 @@ namespace TDH.Areas.Administrator.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Flow history form
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<FlowModel></returns>
         [HttpPost]
         public ActionResult FlowHistory(CustomDataTableRequestHelper requestData)
         {
@@ -1389,7 +1606,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyFlowService _service = new Services.MoneyFlowService();
+                FlowService _service = new FlowService();
 
                 #endregion
 
@@ -1406,27 +1623,32 @@ namespace TDH.Areas.Administrator.Controllers
                 //
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
-                    DataTableResponse<MoneyFlowModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<MoneyFlowModel>;
+                    DataTableResponse<FlowModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<FlowModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
                 //
-                return this.Json(new DataTableResponse<MoneyFlowModel>(), JsonRequestBehavior.AllowGet);
+                return this.Json(new DataTableResponse<FlowModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "FlowHistory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "FlowHistory", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Save money income method
+        /// </summary>
+        /// <param name="model">IncomeModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult SaveIncome(MoneyIncomeModel model)
+        public ActionResult SaveIncome(IncomeModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyFlowService _service = new Services.MoneyFlowService();
+                FlowService _service = new FlowService();
 
                 #endregion
 
@@ -1447,19 +1669,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "SaveIncome", UserID, ex);
+                Log.WriteLog(FILE_NAME, "SaveIncome", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Save payment money method
+        /// </summary>
+        /// <param name="model">PaymentModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult SavePayment(MoneyPaymentModel model)
+        public ActionResult SavePayment(PaymentModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyFlowService _service = new Services.MoneyFlowService();
+                FlowService _service = new FlowService();
 
                 #endregion
 
@@ -1480,19 +1707,24 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "SavePayment", UserID, ex);
+                Log.WriteLog(FILE_NAME, "SavePayment", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Save transfer money method
+        /// </summary>
+        /// <param name="model">TransferModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult SaveTransfer(MoneyTransferModel model)
+        public ActionResult SaveTransfer(TransferModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyFlowService _service = new Services.MoneyFlowService();
+                FlowService _service = new FlowService();
 
                 #endregion
 
@@ -1513,7 +1745,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "SaveTransfer", UserID, ex);
+                Log.WriteLog(FILE_NAME, "SaveTransfer", UserID, ex);
                 throw new HttpException();
             }
         }

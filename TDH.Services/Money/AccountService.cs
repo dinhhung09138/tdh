@@ -7,7 +7,7 @@ using TDH.Model.Money;
 using Utils;
 using Utils.JqueryDatatable;
 
-namespace Money
+namespace TDH.Services.Money
 {
     /// <summary>
     /// Account service

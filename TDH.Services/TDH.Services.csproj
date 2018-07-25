@@ -59,9 +59,11 @@
     <Compile Include="Money\GroupSettingService.cs" />
     <Compile Include="Money\ReportService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\ErrorLogService.cs" />
+    <Compile Include="System\RoleService.cs" />
+    <Compile Include="System\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="System\" />
     <Folder Include="Working\" />
   </ItemGroup>
   <ItemGroup>

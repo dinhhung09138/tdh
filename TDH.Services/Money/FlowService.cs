@@ -99,7 +99,6 @@ namespace TDH.Services.Money
                 Log.WriteLog(FILE_NAME, "List", userID, ex);
                 throw new ApplicationException();
             }
-
             return _return;
         }
 

@@ -1,33 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Utils.JqueryDatatable;
-using Utils;
+using System.Text;
+using System.Threading.Tasks;
 using TDH.Common;
 using TDH.DataAccess;
-using TDH.Model.Money;
+using TDH.Model.System;
+using Utils;
+using Utils.JqueryDatatable;
 
-namespace TDH.Services.Money
+namespace System
 {
-    /// <summary>
-    /// Group service
-    /// </summary>
-    public class GroupService
+    public class RoleService
     {
+
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/GroupService.cs";
-
+        private readonly string FILE_NAME = "Services/RoleService.cs";
+        
         #endregion
 
         /// <summary>
         /// Get list data using jquery datatable
         /// </summary>
         /// <param name="request">Jquery datatable request</param>
-        /// <param name="userID">The user identifier</param>
+        /// <param name="userID">User identifier</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -35,22 +35,12 @@ namespace TDH.Services.Money
             try
             {
                 //Declare response data to json object
-                DataTableResponse<GroupModel> _itemResponse = new DataTableResponse<GroupModel>();
+                DataTableResponse<RoleModel> _itemResponse = new DataTableResponse<RoleModel>();
                 //List of data
-                List<GroupModel> _list = new List<GroupModel>();
-                using (var _context = new TDHEntities())
+                List<RoleModel> _list = new List<RoleModel>();
+                using (var context = new TDHEntities())
                 {
-                    var _lData = (from m in _context.MN_GROUP
-                                  where !m.deleted &&
-                                        m.is_input == (request.Parameter1 == "" ? m.is_input : request.Parameter1 == "0" ? false : true) //by Type (income of payment)
-                                  select new
-                                  {
-                                      m.id,
-                                      m.name,
-                                      m.notes,
-                                      m.is_input,
-                                      m.publish
-                                  }).ToList();
+                    var _lData = context.ROLEs.Where(m => !m.deleted).Select(m => new { m.id, m.name, m.description, m.publish }).ToList();
 
                     _itemResponse.draw = request.draw;
                     _itemResponse.recordsTotal = _lData.Count;
@@ -58,50 +48,25 @@ namespace TDH.Services.Money
                     if (request.search != null && !string.IsNullOrWhiteSpace(request.search.Value))
                     {
                         string searchValue = request.search.Value.ToLower();
-                        _lData = _lData.Where(m => m.name.ToLower().Contains(searchValue) ||
-                                                   m.notes.ToLower().Contains(searchValue)).ToList();
+                        _lData = _lData.Where(m => m.description.ToLower().Contains(searchValue) ||
+                                         m.name.ToLower().Contains(searchValue)).ToList();
                     }
-                    //Add to list
                     int _count = 0;
-                    byte _percentSet = 0;
-                    byte _percentCur = 0;
-                    decimal _moneySet = 0;
-                    decimal _moneyCur = 0;
                     foreach (var item in _lData)
                     {
-                        _count = _context.MN_CATEGORY.Count(m => m.group_id == item.id && !m.deleted);
-                        _percentSet = 0;
-                        _percentCur = 0;
-                        _moneySet = 0;
-                        _moneyCur = 0;
-                        var _grSetting = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == item.id && m.year_month.ToString() == request.Parameter2); //By month year
-                        if (_grSetting != null)
-                        {
-                            _percentSet = _grSetting.percent_setting;
-                            _percentCur = _grSetting.percent_current;
-                            _moneySet = _grSetting.money_setting;
-                            _moneyCur = _grSetting.money_current;
-                        }
-                        //
-                        _list.Add(new GroupModel()
+                        _count = context.USER_ROLE.Count(m => m.role_id == item.id);
+                        _list.Add(new RoleModel()
                         {
                             ID = item.id,
                             Name = item.name,
-                            Notes = item.notes,
-                            IsInput = item.is_input,
-                            PercentCurrent = _percentCur,
-                            PercentSetting = _percentSet,
-                            MoneyCurrent = _moneyCur,
-                            MoneyCurrentString = _moneyCur.NumberToString(),
-                            MoneySetting = _moneySet,
-                            MoneySettingString = _moneySet.NumberToString(),
+                            Description = item.description,
                             Publish = item.publish,
                             Count = _count,
                             CountString = _count.NumberToString()
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
-                    IOrderedEnumerable<GroupModel> _sortList = null;
+                    IOrderedEnumerable<RoleModel> _sortList = null;
                     if (request.order != null)
                     {
                         foreach (var col in request.order)
@@ -111,8 +76,8 @@ namespace TDH.Services.Money
                                 case "Name":
                                     _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Name) : _sortList.Sort(col.Dir, m => m.Name);
                                     break;
-                                case "Notes":
-                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Notes) : _sortList.Sort(col.Dir, m => m.Notes);
+                                case "Description":
+                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Description) : _sortList.Sort(col.Dir, m => m.Description);
                                     break;
                             }
                         }
@@ -139,61 +104,18 @@ namespace TDH.Services.Money
         /// Get all item without deleted
         /// </summary>
         /// <param name="userID">The user identifier</param>
-        /// <returns>List<GroupModel></returns>
-        public List<GroupModel> GetAll(Guid userID)
+        /// <returns>List<RoleModel></returns>
+        public List<RoleModel> GetAll(Guid userID)
         {
             try
             {
-                List<GroupModel> _return = new List<GroupModel>();
-                using (var _context = new TDHEntities())
+                List<RoleModel> _return = new List<RoleModel>();
+                using (var context = new TDHEntities())
                 {
-                    var _list = (from m in _context.MN_GROUP
-                                 where !m.deleted && m.publish
-                                 orderby m.ordering descending
-                                 select new
-                                 {
-                                     m.id,
-                                     m.name
-                                 }).ToList();
+                    var _list = context.ROLEs.Where(m => !m.deleted).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new GroupModel() { ID = item.id, Name = item.name });
-                    }
-                }
-                return _return;
-            }
-            catch (Exception ex)
-            {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
-            }
-        }
-
-        /// <summary>
-        /// Get all item without deleted
-        /// </summary>
-        /// <param name="userID">The user identifier</param>
-        /// <param name="IsInput">true: input mean payment, false: income money</param>
-        /// <returns>List<GroupModel></returns>
-        public List<GroupModel> GetAll(Guid userID, bool IsInput)
-        {
-            try
-            {
-                List<GroupModel> _return = new List<GroupModel>();
-                using (var _context = new TDHEntities())
-                {
-                    var _list = (from m in _context.MN_GROUP
-                                 where !m.deleted && m.publish && m.is_input == IsInput
-                                 orderby m.ordering descending
-                                 select new
-                                 {
-                                     m.id,
-                                     m.name
-                                 }).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new GroupModel() { ID = item.id, Name = item.name });
+                        _return.Add(new RoleModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -209,34 +131,50 @@ namespace TDH.Services.Money
         /// <summary>
         /// Get item
         /// </summary>
-        /// <param name="model">Group model</param>
-        /// <returns>MoneyGroupModel. Throw exception if not found or get some error</returns>
-        public GroupModel GetItemByID(GroupModel model)
+        /// <param name="model">Role Model</param>
+        /// <returns>RoleModel. Throw exception if not found or get some error</returns>
+        public RoleModel GetItemByID(RoleModel model)
         {
+            RoleModel _return = new RoleModel() { ID = Guid.NewGuid(), Insert = model.Insert };
             try
             {
-                using (var _context = new TDHEntities())
+                using (var context = new TDHEntities())
                 {
-                    MN_GROUP _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                    if (_md == null)
+                    List<FUNCTION> _lFunc = context.FUNCTIONs.OrderByDescending(m => m.ordering).ToList();
+                    foreach (var item in _lFunc)
                     {
-                        throw new FieldAccessException();
+                        _return.Detail.Add(new RoleDetailModel()
+                        {
+                            FunctionCode = item.code,
+                            FunctionName = item.name,
+                            View = false,
+                            Add = false,
+                            Edit = false,
+                            Delete = false
+                        });
                     }
-                    return new GroupModel()
+
+                    ROLE _md = context.ROLEs.FirstOrDefault(m => m.id == model.ID);
+                    if (_md != null)
                     {
-                        ID = _md.id,
-                        Name = _md.name,
-                        Notes = _md.notes,
-                        IsInput = _md.is_input,
-                        PercentSetting = _md.percent_setting,
-                        PercentCurrent = _md.percent_current,
-                        MoneyCurrent = _md.money_current,
-                        MoneyCurrentString = _md.money_current.NumberToString(),
-                        MoneySetting = _md.money_setting,
-                        MoneySettingString = _md.money_setting.NumberToString(),
-                        Ordering = _md.ordering,
-                        Publish = _md.publish
-                    };
+                        _return.ID = _md.id;
+                        _return.Name = _md.name;
+                        _return.Description = _md.description;
+                        _return.Publish = _md.publish;
+                        //
+                        var _lPers = context.ROLE_DETAIL.Where(m => m.role_id == _md.id).ToList();
+                        foreach (var item in _lPers)
+                        {
+                            var _tmp = _return.Detail.FirstOrDefault(m => m.FunctionCode == item.function_code);
+                            if (_tmp != null)
+                            {
+                                _tmp.Add = item.add;
+                                _tmp.View = item.view;
+                                _tmp.Edit = item.edit;
+                                _tmp.Delete = item.delete;
+                            }
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -245,57 +183,76 @@ namespace TDH.Services.Money
                 Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
                 throw new ApplicationException();
             }
+            return _return;
         }
 
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model">Group model</param>
+        /// <param name="model">Role Model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Save(GroupModel model)
+        public ResponseStatusCodeHelper Save(RoleModel model)
         {
             try
             {
-                using (var _context = new TDHEntities())
+                using (var context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    using (var trans = context.Database.BeginTransaction())
                     {
                         try
                         {
-                            MN_GROUP _md = new MN_GROUP();
+                            ROLE _md = new ROLE();
                             if (model.Insert)
                             {
                                 _md.id = Guid.NewGuid();
-                                _md.is_input = model.IsInput;
                             }
                             else
                             {
-                                _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = context.ROLEs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
                                 }
                             }
                             _md.name = model.Name;
-                            _md.notes = model.Notes;
-                            _md.ordering = model.Ordering;
+                            _md.description = model.Description;
                             _md.publish = model.Publish;
-                            //Setting value don't allow change when create or edit
                             if (model.Insert)
                             {
-                                _md.create_by = model.CreateBy;
-                                _md.create_date = DateTime.Now;
-                                _context.MN_GROUP.Add(_md);
-                                _context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                                _md.created_by = model.CreateBy;
+                                _md.created_date = DateTime.Now;
+                                context.ROLEs.Add(_md);
+                                context.Entry(_md).State = Data.Entity.EntityState.Added;
                             }
                             else
                             {
-                                _md.update_by = model.UpdateBy;
-                                _md.update_date = DateTime.Now;
-                                _context.MN_GROUP.Attach(_md);
-                                _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                _md.updated_by = model.UpdateBy;
+                                _md.updated_date = DateTime.Now;
+                                context.ROLEs.Attach(_md);
+                                context.Entry(_md).State = Data.Entity.EntityState.Modified;
+                                //
+                                var _lDetaiPerm = context.ROLE_DETAIL.Where(m => m.role_id == _md.id);
+                                if (_lDetaiPerm.Count() > 0)
+                                {
+                                    context.ROLE_DETAIL.RemoveRange(_lDetaiPerm);
+                                }
                             }
-                            _context.SaveChanges();
+                            foreach (var item in model.Detail)
+                            {
+                                ROLE_DETAIL _dt = new ROLE_DETAIL()
+                                {
+                                    id = Guid.NewGuid(),
+                                    function_code = item.FunctionCode,
+                                    role_id = _md.id,
+                                    view = item.View,
+                                    add = item.Add,
+                                    edit = item.Edit,
+                                    delete = item.Delete
+                                };
+                                context.ROLE_DETAIL.Add(_dt);
+                                context.Entry(_dt).State = System.Data.Entity.EntityState.Added;
+                            }
+                            context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -328,29 +285,29 @@ namespace TDH.Services.Money
         /// <summary>
         /// Publish
         /// </summary>
-        /// <param name="model">Group model</param>
+        /// <param name="model">Role Model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Publish(GroupModel model)
+        public ResponseStatusCodeHelper Publish(RoleModel model)
         {
             try
             {
-                using (var _context = new TDHEntities())
+                using (var context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    using (var trans = context.Database.BeginTransaction())
                     {
                         try
                         {
-                            MN_GROUP _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            ROLE _md = context.ROLEs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
                             }
                             _md.publish = model.Publish;
-                            _md.update_by = model.UpdateBy;
-                            _md.update_date = DateTime.Now;
-                            _context.MN_GROUP.Attach(_md);
-                            _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
-                            _context.SaveChanges();
+                            _md.updated_by = model.UpdateBy;
+                            _md.updated_date = DateTime.Now;
+                            context.ROLEs.Attach(_md);
+                            context.Entry(_md).State = Data.Entity.EntityState.Modified;
+                            context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -376,29 +333,29 @@ namespace TDH.Services.Money
         /// <summary>
         /// Delete
         /// </summary>
-        /// <param name="model">Group model</param>
+        /// <param name="model">Role Model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Delete(GroupModel model)
+        public ResponseStatusCodeHelper Delete(RoleModel model)
         {
             try
             {
-                using (var _context = new TDHEntities())
+                using (var context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    using (var trans = context.Database.BeginTransaction())
                     {
                         try
                         {
-                            MN_GROUP _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            ROLE _md = context.ROLEs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
                             }
                             _md.deleted = true;
-                            _md.delete_by = model.DeleteBy;
-                            _md.delete_date = DateTime.Now;
-                            _context.MN_GROUP.Attach(_md);
-                            _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
-                            _context.SaveChanges();
+                            _md.deleted_by = model.DeleteBy;
+                            _md.deleted_date = DateTime.Now;
+                            context.ROLEs.Attach(_md);
+                            context.Entry(_md).State = Data.Entity.EntityState.Modified;
+                            context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -413,7 +370,6 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                 Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
                 throw new ApplicationException();
             }
@@ -422,23 +378,23 @@ namespace TDH.Services.Money
         }
 
         /// <summary>
-        /// Check Delete
+        /// Check delete
         /// </summary>
-        /// <param name="model">Group model</param>
+        /// <param name="model">Role Model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper CheckDelete(GroupModel model)
+        public ResponseStatusCodeHelper CheckDelete(RoleModel model)
         {
             try
             {
-                using (var _context = new TDHEntities())
+                using (var context = new TDHEntities())
                 {
-                    MN_GROUP _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    ROLE _md = context.ROLEs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _group = _context.MN_CATEGORY.FirstOrDefault(m => m.group_id == model.ID && !m.deleted);
-                    if (_group != null)
+                    var _user = context.USER_ROLE.FirstOrDefault(m => m.role_id == _md.id);
+                    if (_user != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
@@ -452,6 +408,50 @@ namespace TDH.Services.Money
                 throw new ApplicationException();
             }
             return ResponseStatusCodeHelper.OK;
+        }
+
+        /// <summary>
+        /// Check access into method
+        /// </summary>
+        /// <param name="userID">User identifier</param>
+        /// <param name="functionCode">Function code</param>
+        /// <returns>RoleDetailModel</returns>
+        public RoleDetailModel AllowAccess(Guid userID, string functionCode)
+        {
+            try
+            {
+                using (var context = new TDHEntities())
+                {
+                    var _permision = (from dt in context.ROLE_DETAIL
+                                      join r in context.ROLEs on dt.role_id equals r.id
+                                      join ur in context.USER_ROLE on r.id equals ur.role_id
+                                      where ur.user_id == userID && dt.function_code == functionCode && !r.deleted && r.publish
+                                      select dt).FirstOrDefault();
+                    if (_permision != null)
+                    {
+                        return new RoleDetailModel()
+                        {
+                            View = _permision.view,
+                            Add = _permision.add,
+                            Edit = _permision.edit,
+                            Delete = _permision.delete
+                        };
+                    }
+                    return new RoleDetailModel()
+                    {
+                        View = false,
+                        Add = false,
+                        Edit = false,
+                        Delete = false
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, "AllowAccess", userID, ex);
+                throw new ApplicationException();
+            }
         }
     }
 }

@@ -119,11 +119,13 @@ $(document).ready(function () {
             },
             {
                 data: 'Money',
-                width: '100px'
+                width: '100px',
+                className: 'text-right'
             },
             {
                 data: 'Fee',
-                width: '100px'
+                width: '100px',
+                className: 'text-right'
             },
             {
                 data: 'DateString',

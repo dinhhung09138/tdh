@@ -16,10 +16,8 @@ namespace TDH.Areas.Administrator.Controllers
     /// Money controller
     /// </summary>
     [AjaxExecuteFilterAttribute]
-    public class AdmMoneyController : BaseController
+    public class AdmMoneyController : TDH.Common.BaseController
     {
-
-
         #region " [ Properties ] "
 
         /// <summary>
@@ -881,7 +879,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.MoneyGroupService _service = new Services.MoneyGroupService();
+                GroupService _service = new GroupService();
 
                 #endregion
 

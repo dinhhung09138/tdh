@@ -260,15 +260,6 @@
     <Compile Include="Areas\Administrator\Services\HomeCategoryService.cs" />
     <Compile Include="Areas\Administrator\Services\HomeNavigationService.cs" />
     <Compile Include="Areas\Administrator\Services\IdeaService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyAccountService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyAccountSettingService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyAccountTypeService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyCategoryService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyCategorySettingService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyFlowService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyGroupService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyGroupSettingService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyReportService.cs" />
     <Compile Include="Areas\Administrator\Services\NavigationService.cs" />
     <Compile Include="Areas\Administrator\Services\CategoryService.cs" />
     <Compile Include="Areas\Administrator\Services\PostService.cs" />

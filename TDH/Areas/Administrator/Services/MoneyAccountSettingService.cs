@@ -12,14 +12,6 @@ namespace TDH.Areas.Administrator.Services
     //TODO
     public class MoneyAccountSettingService
     {
-        #region " [ Properties ] "
-
-        /// <summary>
-        /// File name
-        /// </summary>
-        private readonly string FILE_NAME = "Administrator/Services/MoneyAccountSettingService.cs";
-
-        #endregion
         
 
     }

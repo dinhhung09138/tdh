@@ -7,7 +7,7 @@ using TDH.Model.System;
 using Utils;
 using Utils.JqueryDatatable;
 
-namespace System
+namespace TDH.Services.System
 {
     /// <summary>
     /// Eror log service

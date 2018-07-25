@@ -5,6 +5,7 @@ using Utils;
 using TDH.Common;
 using TDH.DataAccess;
 using TDH.Model.Money;
+using System.Data.Entity;
 
 namespace TDH.Services.Money
 {
@@ -303,14 +304,14 @@ namespace TDH.Services.Money
                                 _md.update_by = item.UpdateBy;
                                 _md.update_date = DateTime.Now;
                                 _context.MN_GROUP_SETTING.Attach(_md);
-                                _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                _context.Entry(_md).State = EntityState.Modified;
                                 //
                                 if (_md.year_month % 100 == DateTime.Now.Month)
                                 {
                                     var _gr = _context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
                                     _gr.percent_setting = _md.percent_setting;
                                     _context.MN_GROUP.Attach(_gr);
-                                    _context.Entry(_gr).State = System.Data.Entity.EntityState.Modified;
+                                    _context.Entry(_gr).State = EntityState.Modified;
                                 }
                                 _context.SaveChanges();
                             }
@@ -373,7 +374,7 @@ namespace TDH.Services.Money
                                     create_date = DateTime.Now
                                 };
                                 _context.MN_GROUP_SETTING.Add(_st);
-                                _context.Entry(_st).State = System.Data.Entity.EntityState.Added;
+                                _context.Entry(_st).State = EntityState.Added;
                                 _context.SaveChanges();
                             }
                             trans.Commit();

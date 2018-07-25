@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using TDH.Common;
 using TDH.DataAccess;
@@ -8,7 +9,7 @@ using TDH.Model.System;
 using Utils;
 using Utils.JqueryDatatable;
 
-namespace System
+namespace TDH.Services.System
 {
 
     /// <summary>
@@ -203,7 +204,7 @@ namespace System
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
                                 _context.USERs.Add(_md);
-                                _context.Entry(_md).State = Data.Entity.EntityState.Added;
+                                _context.Entry(_md).State = EntityState.Added;
                                 //
                                 USER_ROLE role = new USER_ROLE()
                                 {
@@ -212,18 +213,18 @@ namespace System
                                     role_id = model.RoleID
                                 };
                                 _context.USER_ROLE.Add(role);
-                                _context.Entry(role).State = Data.Entity.EntityState.Added;
+                                _context.Entry(role).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
                                 _context.USERs.Attach(_md);
-                                _context.Entry(_md).State = Data.Entity.EntityState.Modified;
+                                _context.Entry(_md).State = EntityState.Modified;
                                 var role = _context.USER_ROLE.FirstOrDefault(m => m.user_id == model.ID);
                                 role.role_id = model.RoleID;
                                 _context.USER_ROLE.Attach(role);
-                                _context.Entry(role).State = Data.Entity.EntityState.Modified;
+                                _context.Entry(role).State = EntityState.Modified;
                             }
                             _context.SaveChanges();
                             trans.Commit();
@@ -279,7 +280,7 @@ namespace System
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
                             _context.USERs.Attach(_md);
-                            _context.Entry(_md).State = Data.Entity.EntityState.Modified;
+                            _context.Entry(_md).State = EntityState.Modified;
                             _context.SaveChanges();
                             trans.Commit();
                         }
@@ -327,7 +328,7 @@ namespace System
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
                             _context.USERs.Attach(_md);
-                            _context.Entry(_md).State = Data.Entity.EntityState.Modified;
+                            _context.Entry(_md).State = EntityState.Modified;
                             //Role
                             var _lRole = _context.USER_ROLE.Where(m => m.user_id == model.ID);
                             if (_lRole.Count() > 0)
@@ -377,7 +378,7 @@ namespace System
                     }
                     _md.last_login = DateTime.Now;
                     _context.USERs.Attach(_md);
-                    _context.Entry(_md).State = Data.Entity.EntityState.Modified;
+                    _context.Entry(_md).State = EntityState.Modified;
                     _context.SaveChanges();
                     //
                     return new UserModel()

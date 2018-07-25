@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using TDH.Common;
 using TDH.DataAccess;
@@ -369,14 +370,14 @@ namespace TDH.Services.Money
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
                                 _context.MN_CATEGORY.Add(_md);
-                                _context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                                _context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
                                 _context.MN_CATEGORY.Attach(_md);
-                                _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                _context.Entry(_md).State = EntityState.Modified;
                             }
                             _context.SaveChanges();
                             trans.Commit();
@@ -432,7 +433,7 @@ namespace TDH.Services.Money
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
                             _context.MN_CATEGORY.Attach(_md);
-                            _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            _context.Entry(_md).State = EntityState.Modified;
                             _context.SaveChanges();
                             trans.Commit();
                         }
@@ -480,7 +481,7 @@ namespace TDH.Services.Money
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
                             _context.MN_CATEGORY.Attach(_md);
-                            _context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            _context.Entry(_md).State = EntityState.Modified;
                             _context.SaveChanges();
                             trans.Commit();
                         }

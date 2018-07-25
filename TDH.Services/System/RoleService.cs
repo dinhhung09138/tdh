@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using TDH.Model.System;
 using Utils;
 using Utils.JqueryDatatable;
 
-namespace System
+namespace TDH.Services.System
 {
     public class RoleService
     {
@@ -222,14 +223,14 @@ namespace System
                                 _md.created_by = model.CreateBy;
                                 _md.created_date = DateTime.Now;
                                 context.ROLEs.Add(_md);
-                                context.Entry(_md).State = Data.Entity.EntityState.Added;
+                                context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.updated_by = model.UpdateBy;
                                 _md.updated_date = DateTime.Now;
                                 context.ROLEs.Attach(_md);
-                                context.Entry(_md).State = Data.Entity.EntityState.Modified;
+                                context.Entry(_md).State = EntityState.Modified;
                                 //
                                 var _lDetaiPerm = context.ROLE_DETAIL.Where(m => m.role_id == _md.id);
                                 if (_lDetaiPerm.Count() > 0)
@@ -250,7 +251,7 @@ namespace System
                                     delete = item.Delete
                                 };
                                 context.ROLE_DETAIL.Add(_dt);
-                                context.Entry(_dt).State = System.Data.Entity.EntityState.Added;
+                                context.Entry(_dt).State = EntityState.Added;
                             }
                             context.SaveChanges();
                             trans.Commit();
@@ -306,7 +307,7 @@ namespace System
                             _md.updated_by = model.UpdateBy;
                             _md.updated_date = DateTime.Now;
                             context.ROLEs.Attach(_md);
-                            context.Entry(_md).State = Data.Entity.EntityState.Modified;
+                            context.Entry(_md).State = EntityState.Modified;
                             context.SaveChanges();
                             trans.Commit();
                         }
@@ -354,7 +355,7 @@ namespace System
                             _md.deleted_by = model.DeleteBy;
                             _md.deleted_date = DateTime.Now;
                             context.ROLEs.Attach(_md);
-                            context.Entry(_md).State = Data.Entity.EntityState.Modified;
+                            context.Entry(_md).State = EntityState.Modified;
                             context.SaveChanges();
                             trans.Commit();
                         }

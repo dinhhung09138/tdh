@@ -11,14 +11,6 @@ namespace TDH.Areas.Administrator.Services
 {
     public class MoneyCategorySettingService
     {
-        #region " [ Properties ] "
-
-        /// <summary>
-        /// File name
-        /// </summary>
-        private readonly string FILE_NAME = "Administrator/Services/CategoryService.cs";
-
-        #endregion
         
     }
 }

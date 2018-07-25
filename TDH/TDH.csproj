@@ -248,12 +248,9 @@
     <Compile Include="Areas\Administrator\Models\PostModel.cs" />
     <Compile Include="Areas\Administrator\Models\ReportCommentModel.cs" />
     <Compile Include="Areas\Administrator\Models\ReportModel.cs" />
-    <Compile Include="Areas\Administrator\Models\RoleDetailModel.cs" />
-    <Compile Include="Areas\Administrator\Models\RoleModel.cs" />
     <Compile Include="Areas\Administrator\Models\SideBarViewModel.cs" />
     <Compile Include="Areas\Administrator\Models\TargetModel.cs" />
     <Compile Include="Areas\Administrator\Models\TargetTaskModel.cs" />
-    <Compile Include="Areas\Administrator\Models\UserModel.cs" />
     <Compile Include="Areas\Administrator\Services\AboutService.cs" />
     <Compile Include="Areas\Administrator\Services\ConfigurationService.cs" />
     <Compile Include="Areas\Administrator\Services\ErrorLogService.cs" />
@@ -264,9 +261,7 @@
     <Compile Include="Areas\Administrator\Services\CategoryService.cs" />
     <Compile Include="Areas\Administrator\Services\PostService.cs" />
     <Compile Include="Areas\Administrator\Services\ReportService.cs" />
-    <Compile Include="Areas\Administrator\Services\RoleService.cs" />
     <Compile Include="Areas\Administrator\Services\TargetService.cs" />
-    <Compile Include="Areas\Administrator\Services\UserService.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

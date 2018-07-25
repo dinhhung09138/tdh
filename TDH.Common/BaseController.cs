@@ -64,16 +64,16 @@ namespace TDH.Common
             }
             base.OnActionExecuting(filterContext);
 
-            var areaName = "";
+            var _areaName = "";
             if (filterContext.RouteData.DataTokens["area"] != null)
             {
-                areaName = filterContext.RouteData.DataTokens["area"].ToString().ToLower();
+                _areaName = filterContext.RouteData.DataTokens["area"].ToString().ToLower();
             }
-            var controllerName = filterContext.RouteData.Values["controller"].ToString().ToLower();
-            var actionName = filterContext.RouteData.Values["action"].ToString().ToLower();
+            var _controllerName = filterContext.RouteData.Values["controller"].ToString().ToLower();
+            var _actionName = filterContext.RouteData.Values["action"].ToString().ToLower();
             
-            string _functionCode = GetFunctionCode(areaName, controllerName, actionName);
-            var _type = GetFunctionType(areaName, controllerName, actionName);
+            string _functionCode = GetFunctionCode(_areaName, _controllerName, _actionName);
+            var _type = GetFunctionType(_areaName, _controllerName, _actionName);
             var _permision = AllowAccess(_user.UserID, _functionCode);
             switch (_type)
             {
@@ -611,11 +611,11 @@ namespace TDH.Common
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _permision = (from dt in context.ROLE_DETAIL
-                                      join r in context.ROLEs on dt.role_id equals r.id
-                                      join ur in context.USER_ROLE on r.id equals ur.role_id
+                    var _permision = (from dt in _context.ROLE_DETAIL
+                                      join r in _context.ROLEs on dt.role_id equals r.id
+                                      join ur in _context.USER_ROLE on r.id equals ur.role_id
                                       where ur.user_id == userID && dt.function_code == functionCode && !r.deleted && r.publish
                                       select dt).FirstOrDefault();
                     if (_permision != null)

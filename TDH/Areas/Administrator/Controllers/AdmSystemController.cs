@@ -4,9 +4,10 @@ using System.Web;
 using System.Web.Mvc;
 using Utils;
 using Utils.JqueryDatatable;
-using TDH.Areas.Administrator.Models;
-using TDH.Areas.Administrator.Filters;
-
+using TDH.Common;
+using TDH.Services.System;
+using TDH.Common.Fillters;
+using TDH.Model.System;
 
 namespace TDH.Areas.Administrator.Controllers
 {
@@ -14,7 +15,7 @@ namespace TDH.Areas.Administrator.Controllers
     /// System controller
     /// </summary>
     [AjaxExecuteFilterAttribute]
-    public class AdmSystemController : BaseController
+    public class AdmSystemController : TDH.Common.BaseController
     {
 
         #region " [ Properties ] "
@@ -31,7 +32,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// <summary>
         /// Role form
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Role()
         {
@@ -41,11 +42,16 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Role", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Role", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Role form
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<RoleModel></returns>
         [HttpPost]
         public JsonResult Role(CustomDataTableRequestHelper requestData)
         {
@@ -53,7 +59,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.RoleService _service = new Services.RoleService();
+                RoleService _service = new RoleService();
 
                 #endregion
 
@@ -77,11 +83,15 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Role", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Role", UserID, ex);
                 throw new HttpException();
             }
         }
 
+        /// <summary>
+        /// Create role form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult CreateRole()
         {
@@ -89,7 +99,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.RoleService _service = new Services.RoleService();
+                RoleService _service = new RoleService();
 
                 #endregion
 
@@ -100,7 +110,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateRole", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -113,7 +123,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.RoleService _service = new Services.RoleService();
+                RoleService _service = new RoleService();
 
                 #endregion
 
@@ -162,7 +172,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateRole", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -174,7 +184,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.RoleService _service = new Services.RoleService();
+                RoleService _service = new RoleService();
                 //
                 ViewBag.id = id;
 
@@ -187,7 +197,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditRole", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -200,7 +210,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.RoleService _service = new Services.RoleService();
+                RoleService _service = new RoleService();
 
                 #endregion
 
@@ -250,7 +260,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditRole", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -262,7 +272,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.RoleService _service = new Services.RoleService();
+                RoleService _service = new RoleService();
 
                 #endregion
 
@@ -279,7 +289,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "PublishRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "PublishRole", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -291,7 +301,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.RoleService _service = new Services.RoleService();
+                RoleService _service = new RoleService();
 
                 #endregion
 
@@ -308,7 +318,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DeleteRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DeleteRole", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -320,7 +330,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.RoleService _service = new Services.RoleService();
+                RoleService _service = new RoleService();
 
                 #endregion
 
@@ -335,7 +345,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CheckDeleteRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDeleteRole", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -359,7 +369,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "User", UserID, ex);
+                Log.WriteLog(FILE_NAME, "User", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -371,7 +381,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.UserService _service = new Services.UserService();
+                UserService _service = new UserService();
                
                 #endregion
 
@@ -394,7 +404,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "User", UserID, ex);
+                Log.WriteLog(FILE_NAME, "User", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -406,7 +416,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.RoleService _rService = new Services.RoleService();
+                RoleService _rService = new RoleService();
                 //
                 ViewBag.Role = _rService.GetAll(UserID);
                 UserModel model = new UserModel()
@@ -424,7 +434,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateUser", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -437,7 +447,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.UserService _service = new Services.UserService();
+                UserService _service = new UserService();
 
                 #endregion
 
@@ -455,7 +465,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateUser", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -467,8 +477,8 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.RoleService _rService = new Services.RoleService();
-                Services.UserService _service = new Services.UserService();
+                RoleService _rService = new RoleService();
+                UserService _service = new UserService();
                 //
                 ViewBag.id = id;
                 ViewBag.Role = _rService.GetAll(UserID);
@@ -483,7 +493,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditUser", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -496,7 +506,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.UserService _service = new Services.UserService();
+                UserService _service = new UserService();
 
                 #endregion
 
@@ -514,7 +524,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditUser", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -526,7 +536,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.UserService _service = new Services.UserService();
+                UserService _service = new UserService();
                 
                 #endregion
 
@@ -543,7 +553,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "PublishUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "PublishUser", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -555,7 +565,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.UserService _service = new Services.UserService();
+                UserService _service = new UserService();
                
                 #endregion
                
@@ -572,7 +582,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DeleteUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DeleteUser", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -590,7 +600,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "ErrorLog", UserID, ex);
+                Log.WriteLog(FILE_NAME, "ErrorLog", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -602,7 +612,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.ErrorLogService _service = new Services.ErrorLogService();
+                ErrorLogService _service = new ErrorLogService();
 
                 #endregion
 
@@ -623,7 +633,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "ErrorLog", UserID, ex);
+                Log.WriteLog(FILE_NAME, "ErrorLog", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -635,7 +645,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.ErrorLogService _service = new Services.ErrorLogService();
+                ErrorLogService _service = new ErrorLogService();
                 //
                 ViewBag.id = id;
 
@@ -648,7 +658,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DetailErroLog", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DetailErroLog", UserID, ex);
                 throw new HttpException();
             }
         }

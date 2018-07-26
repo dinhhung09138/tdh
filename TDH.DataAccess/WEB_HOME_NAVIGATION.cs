@@ -12,12 +12,12 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class HOME_CATEGORY
+    public partial class WEB_HOME_NAVIGATION
     {
         public System.Guid id { get; set; }
-        public System.Guid category_id { get; set; }
+        public System.Guid navigation_id { get; set; }
         public short ordering { get; set; }
     
-        public virtual CATEGORY CATEGORY { get; set; }
+        public virtual WEB_NAVIGATION WEB_NAVIGATION { get; set; }
     }
 }

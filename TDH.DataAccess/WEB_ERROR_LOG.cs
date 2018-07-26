@@ -12,20 +12,17 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class REPORT_COMMENT
+    public partial class WEB_ERROR_LOG
     {
         public System.Guid id { get; set; }
-        public System.Guid report_id { get; set; }
-        public string title { get; set; }
-        public string content { get; set; }
-        public System.Guid create_by { get; set; }
+        public string file_name { get; set; }
+        public string method_name { get; set; }
+        public string source { get; set; }
+        public string stack_trace { get; set; }
+        public string inner_exception { get; set; }
+        public string message { get; set; }
+        public System.DateTime date { get; set; }
+        public Nullable<System.Guid> create_by { get; set; }
         public System.DateTime create_date { get; set; }
-        public Nullable<System.Guid> update_by { get; set; }
-        public Nullable<System.DateTime> update_date { get; set; }
-        public bool deleted { get; set; }
-        public Nullable<System.Guid> delete_by { get; set; }
-        public Nullable<System.DateTime> delete_date { get; set; }
-    
-        public virtual REPORT REPORT { get; set; }
     }
 }

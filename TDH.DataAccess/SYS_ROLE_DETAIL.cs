@@ -12,10 +12,17 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class CONFIGURATION
+    public partial class SYS_ROLE_DETAIL
     {
-        public string key { get; set; }
-        public string description { get; set; }
-        public string value { get; set; }
+        public System.Guid id { get; set; }
+        public System.Guid role_id { get; set; }
+        public string function_code { get; set; }
+        public bool view { get; set; }
+        public bool add { get; set; }
+        public bool edit { get; set; }
+        public bool delete { get; set; }
+    
+        public virtual SYS_FUNCTION SYS_FUNCTION { get; set; }
+        public virtual SYS_ROLE SYS_ROLE { get; set; }
     }
 }

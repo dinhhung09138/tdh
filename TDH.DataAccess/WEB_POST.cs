@@ -12,20 +12,16 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class NAVIGATION
+    public partial class WEB_POST
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public NAVIGATION()
-        {
-            this.CATEGORies = new HashSet<CATEGORY>();
-            this.HOME_NAVIGATION = new HashSet<HOME_NAVIGATION>();
-            this.POSTs = new HashSet<POST>();
-        }
-    
         public System.Guid id { get; set; }
+        public Nullable<System.Guid> category_id { get; set; }
+        public Nullable<System.Guid> navigation_id { get; set; }
+        public bool is_navigation { get; set; }
         public string title { get; set; }
         public string alias { get; set; }
         public string description { get; set; }
+        public string content { get; set; }
         public string image { get; set; }
         public short ordering { get; set; }
         public bool publish { get; set; }
@@ -47,13 +43,10 @@ namespace TDH.DataAccess
         public bool deleted { get; set; }
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
-        public bool no_child { get; set; }
+        public int view { get; set; }
+        public int comment { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CATEGORY> CATEGORies { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HOME_NAVIGATION> HOME_NAVIGATION { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<POST> POSTs { get; set; }
+        public virtual WEB_CATEGORY WEB_CATEGORY { get; set; }
+        public virtual WEB_NAVIGATION WEB_NAVIGATION { get; set; }
     }
 }

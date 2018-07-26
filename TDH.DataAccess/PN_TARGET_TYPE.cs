@@ -12,23 +12,27 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class FUNCTION
+    public partial class PN_TARGET_TYPE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FUNCTION()
+        public PN_TARGET_TYPE()
         {
-            this.ROLE_DETAIL = new HashSet<ROLE_DETAIL>();
+            this.PN_TARGET = new HashSet<PN_TARGET>();
         }
     
-        public string code { get; set; }
+        public System.Guid id { get; set; }
         public string name { get; set; }
-        public string area { get; set; }
-        public string controller { get; set; }
-        public string action { get; set; }
         public short ordering { get; set; }
-        public string title { get; set; }
+        public bool publish { get; set; }
+        public System.Guid created_by { get; set; }
+        public System.DateTime created_date { get; set; }
+        public Nullable<System.Guid> updated_by { get; set; }
+        public Nullable<System.DateTime> updated_date { get; set; }
+        public bool deleted { get; set; }
+        public Nullable<System.Guid> deleted_by { get; set; }
+        public Nullable<System.DateTime> deleted_date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ROLE_DETAIL> ROLE_DETAIL { get; set; }
+        public virtual ICollection<PN_TARGET> PN_TARGET { get; set; }
     }
 }

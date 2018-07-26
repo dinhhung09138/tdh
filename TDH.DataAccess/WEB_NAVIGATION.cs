@@ -12,16 +12,20 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class POST
+    public partial class WEB_NAVIGATION
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public WEB_NAVIGATION()
+        {
+            this.WEB_CATEGORY = new HashSet<WEB_CATEGORY>();
+            this.WEB_HOME_NAVIGATION = new HashSet<WEB_HOME_NAVIGATION>();
+            this.WEB_POST = new HashSet<WEB_POST>();
+        }
+    
         public System.Guid id { get; set; }
-        public Nullable<System.Guid> category_id { get; set; }
-        public Nullable<System.Guid> navigation_id { get; set; }
-        public bool is_navigation { get; set; }
         public string title { get; set; }
         public string alias { get; set; }
         public string description { get; set; }
-        public string content { get; set; }
         public string image { get; set; }
         public short ordering { get; set; }
         public bool publish { get; set; }
@@ -43,10 +47,13 @@ namespace TDH.DataAccess
         public bool deleted { get; set; }
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
-        public int view { get; set; }
-        public int comment { get; set; }
+        public bool no_child { get; set; }
     
-        public virtual CATEGORY CATEGORY { get; set; }
-        public virtual NAVIGATION NAVIGATION { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WEB_CATEGORY> WEB_CATEGORY { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WEB_HOME_NAVIGATION> WEB_HOME_NAVIGATION { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WEB_POST> WEB_POST { get; set; }
     }
 }

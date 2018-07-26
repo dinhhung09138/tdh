@@ -12,24 +12,21 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class TARGET
+    public partial class SYS_USER
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TARGET()
+        public SYS_USER()
         {
-            this.TARGET1 = new HashSet<TARGET>();
-            this.TARGET_TASK = new HashSet<TARGET_TASK>();
+            this.SYS_USER_ROLE = new HashSet<SYS_USER_ROLE>();
         }
     
         public System.Guid id { get; set; }
-        public Nullable<System.Guid> parent_id { get; set; }
-        public string title { get; set; }
-        public string result { get; set; }
-        public bool done { get; set; }
-        public System.DateTime estimate_date { get; set; }
-        public Nullable<System.DateTime> finish_date { get; set; }
-        public short task_count { get; set; }
-        public short level { get; set; }
+        public string full_name { get; set; }
+        public string SYS_USER_name { get; set; }
+        public string password { get; set; }
+        public bool locked { get; set; }
+        public string notes { get; set; }
+        public Nullable<System.DateTime> last_login { get; set; }
         public System.Guid create_by { get; set; }
         public System.DateTime create_date { get; set; }
         public Nullable<System.Guid> update_by { get; set; }
@@ -39,9 +36,6 @@ namespace TDH.DataAccess
         public Nullable<System.DateTime> delete_date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TARGET> TARGET1 { get; set; }
-        public virtual TARGET TARGET2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TARGET_TASK> TARGET_TASK { get; set; }
+        public virtual ICollection<SYS_USER_ROLE> SYS_USER_ROLE { get; set; }
     }
 }

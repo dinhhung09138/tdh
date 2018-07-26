@@ -12,13 +12,12 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class USER_ROLE
+    public partial class WEB_HOME_CATEGORY
     {
         public System.Guid id { get; set; }
-        public System.Guid user_id { get; set; }
-        public System.Guid role_id { get; set; }
+        public System.Guid category_id { get; set; }
+        public short ordering { get; set; }
     
-        public virtual ROLE ROLE { get; set; }
-        public virtual USER USER { get; set; }
+        public virtual WEB_CATEGORY WEB_CATEGORY { get; set; }
     }
 }

@@ -12,13 +12,13 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class CATEGORY
+    public partial class WEB_CATEGORY
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CATEGORY()
+        public WEB_CATEGORY()
         {
-            this.HOME_CATEGORY = new HashSet<HOME_CATEGORY>();
-            this.POSTs = new HashSet<POST>();
+            this.WEB_HOME_CATEGORY = new HashSet<WEB_HOME_CATEGORY>();
+            this.WEB_POST = new HashSet<WEB_POST>();
         }
     
         public System.Guid id { get; set; }
@@ -49,10 +49,10 @@ namespace TDH.DataAccess
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
     
-        public virtual NAVIGATION NAVIGATION { get; set; }
+        public virtual WEB_NAVIGATION WEB_NAVIGATION { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HOME_CATEGORY> HOME_CATEGORY { get; set; }
+        public virtual ICollection<WEB_HOME_CATEGORY> WEB_HOME_CATEGORY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<POST> POSTs { get; set; }
+        public virtual ICollection<WEB_POST> WEB_POST { get; set; }
     }
 }

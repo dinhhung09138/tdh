@@ -12,30 +12,27 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class USER
+    public partial class PN_TASK_STATUS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public USER()
+        public PN_TASK_STATUS()
         {
-            this.USER_ROLE = new HashSet<USER_ROLE>();
+            this.PN_TASK = new HashSet<PN_TASK>();
         }
     
         public System.Guid id { get; set; }
-        public string full_name { get; set; }
-        public string user_name { get; set; }
-        public string password { get; set; }
-        public bool locked { get; set; }
-        public string notes { get; set; }
-        public Nullable<System.DateTime> last_login { get; set; }
-        public System.Guid create_by { get; set; }
-        public System.DateTime create_date { get; set; }
-        public Nullable<System.Guid> update_by { get; set; }
-        public Nullable<System.DateTime> update_date { get; set; }
+        public string name { get; set; }
+        public short ordering { get; set; }
+        public bool publish { get; set; }
+        public System.Guid created_by { get; set; }
+        public System.DateTime created_date { get; set; }
+        public Nullable<System.Guid> updated_by { get; set; }
+        public Nullable<System.DateTime> updated_date { get; set; }
         public bool deleted { get; set; }
-        public Nullable<System.Guid> delete_by { get; set; }
-        public Nullable<System.DateTime> delete_date { get; set; }
+        public Nullable<System.Guid> deleted_by { get; set; }
+        public Nullable<System.DateTime> deleted_date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USER_ROLE> USER_ROLE { get; set; }
+        public virtual ICollection<PN_TASK> PN_TASK { get; set; }
     }
 }

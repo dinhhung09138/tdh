@@ -12,17 +12,13 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class ROLE_DETAIL
+    public partial class SYS_USER_ROLE
     {
         public System.Guid id { get; set; }
+        public System.Guid user_id { get; set; }
         public System.Guid role_id { get; set; }
-        public string function_code { get; set; }
-        public bool view { get; set; }
-        public bool add { get; set; }
-        public bool edit { get; set; }
-        public bool delete { get; set; }
     
-        public virtual FUNCTION FUNCTION { get; set; }
-        public virtual ROLE ROLE { get; set; }
+        public virtual SYS_ROLE SYS_ROLE { get; set; }
+        public virtual SYS_USER SYS_USER { get; set; }
     }
 }

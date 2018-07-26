@@ -12,7 +12,7 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class ABOUT
+    public partial class WEB_ABOUT
     {
         public System.Guid id { get; set; }
         public string content { get; set; }

@@ -12,20 +12,23 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class IDEA_DETAIL
+    public partial class PN_REPORT
     {
         public System.Guid id { get; set; }
-        public System.Guid idea_id { get; set; }
+        public System.DateTime date { get; set; }
         public string title { get; set; }
         public string content { get; set; }
-        public System.Guid create_by { get; set; }
-        public System.DateTime create_date { get; set; }
-        public Nullable<System.Guid> update_by { get; set; }
-        public Nullable<System.DateTime> update_date { get; set; }
+        public System.Guid kind_id { get; set; }
+        public short ordering { get; set; }
+        public bool publish { get; set; }
+        public System.Guid created_by { get; set; }
+        public System.DateTime created_date { get; set; }
+        public Nullable<System.Guid> updated_by { get; set; }
+        public Nullable<System.DateTime> updated_date { get; set; }
         public bool deleted { get; set; }
-        public Nullable<System.Guid> delete_by { get; set; }
-        public Nullable<System.DateTime> delete_date { get; set; }
+        public Nullable<System.Guid> deleted_by { get; set; }
+        public Nullable<System.DateTime> deleted_date { get; set; }
     
-        public virtual IDEA IDEA { get; set; }
+        public virtual PN_REPORT_KIND PN_REPORT_KIND { get; set; }
     }
 }

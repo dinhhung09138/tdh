@@ -12,26 +12,27 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class REPORT
+    public partial class PN_TARGET_PRIORITY
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public REPORT()
+        public PN_TARGET_PRIORITY()
         {
-            this.REPORT_COMMENT = new HashSet<REPORT_COMMENT>();
+            this.PN_TARGET = new HashSet<PN_TARGET>();
         }
     
         public System.Guid id { get; set; }
-        public string title { get; set; }
-        public string content { get; set; }
-        public System.Guid create_by { get; set; }
-        public System.DateTime create_date { get; set; }
-        public Nullable<System.Guid> update_by { get; set; }
-        public Nullable<System.DateTime> update_date { get; set; }
+        public string name { get; set; }
+        public short ordering { get; set; }
+        public bool publish { get; set; }
+        public System.Guid created_by { get; set; }
+        public System.DateTime created_date { get; set; }
+        public Nullable<System.Guid> updated_by { get; set; }
+        public Nullable<System.DateTime> updated_date { get; set; }
         public bool deleted { get; set; }
-        public Nullable<System.Guid> delete_by { get; set; }
-        public Nullable<System.DateTime> delete_date { get; set; }
+        public Nullable<System.Guid> deleted_by { get; set; }
+        public Nullable<System.DateTime> deleted_date { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<REPORT_COMMENT> REPORT_COMMENT { get; set; }
+        public virtual ICollection<PN_TARGET> PN_TARGET { get; set; }
     }
 }

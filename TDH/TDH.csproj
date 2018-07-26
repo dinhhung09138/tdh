@@ -218,6 +218,7 @@
     <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
     <Compile Include="Areas\Administrator\Common\Configuration.cs" />
     <Compile Include="Areas\Administrator\Common\Notifier.cs" />
+    <Compile Include="Areas\Administrator\Controllers\AdmCheckListController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdmErrorController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdmMoneyController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdmWorkingController.cs" />
@@ -9356,6 +9357,7 @@
     <Content Include="Areas\Administrator\Views\AdmMoney\AccountHistory.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmMoney\CategoryHistory.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmMoney\Report.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmCheckList\CheckList.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

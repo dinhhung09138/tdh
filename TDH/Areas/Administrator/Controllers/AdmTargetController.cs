@@ -12,7 +12,7 @@ using TDH.Areas.Administrator.Filters;
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    public class AdmTargetController : BaseController
+    public class AdmTargetController : TDH.Common.BaseController
     {
         #region " [ Properties ] "
 

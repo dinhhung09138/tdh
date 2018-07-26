@@ -13,7 +13,7 @@ using TDH.Areas.Administrator.Filters;
 namespace TDH.Areas.Administrator.Controllers
 {
     [AjaxExecuteFilter]
-    public class AdmWorkingController : BaseController
+    public class AdmWorkingController : TDH.Common.BaseController
     {
         #region " [ Properties ] "
 

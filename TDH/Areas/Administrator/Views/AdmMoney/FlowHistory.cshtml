@@ -50,7 +50,7 @@
     </div>
 </div>
 <div class="modal fade" id="incomeModel" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="card card-success">
@@ -72,42 +72,34 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">                                    
                                     Ngày thu
                                 </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    <input id="txtIncomeDate" type="text" class="form-control datePicker" maxlength="10" readonly data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Số tiền
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
+                                    <input id="txtIncomeDate" type="text" class="form-control datePicker" maxlength="10" readonly data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
+                                </div>
+                                <div class="col-md-6 col-xs-12">
                                     <input id="txtIncomeMoney" type="text" class="form-control" maxlength="15" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="3" />
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Hình thức thu vào
                                 </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    @Html.DropDownList("cbIncomeCategory", new SelectList(ViewBag.incomeCategory, "ID", "Name"), "Chọn hình thức thu vào", new { @class = "form-control", @tabindex="4" })
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Tài khoản thu vào
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
+                                    @Html.DropDownList("cbIncomeCategory", new SelectList(ViewBag.incomeCategory, "ID", "Name"), "Chọn hình thức thu vào", new { @class = "form-control", @tabindex = "4" })
+                                </div>
+                                <div class="col-md-6 col-xs-12">
                                     @Html.DropDownList("cbIncomeAccount", new SelectList(ViewBag.account, "ID", "Name"), "Chọn tài khoản thu vào", new { @class = "form-control", @tabindex = "5" })
                                 </div>
                             </div>
@@ -127,14 +119,15 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="7">Hủy</button>
-                <button type="button" id="btnSaveIncome" class="btn btn-primary" onclick="saveIncome();" tabindex="8">Lưu</button>
+                <button type="button" id="btnSaveIncome" class="btn btn-primary" onclick="saveIncome(false);" tabindex="8">Lưu</button>
+                <button type="button" id="btnSaveIncomeContinue" class="btn btn-primary" onclick="saveIncome(true);" tabindex="9">Lưu và thêm mới</button>
             </div>
         </div>
 
     </div>
 </div>
 <div class="modal fade" id="paymentModel" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="card card-success">
@@ -156,42 +149,34 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Ngày chi
                                 </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    <input id="txtPaymentDate" type="text" class="form-control datePicker" maxlength="10" readonly data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Số tiền
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
+                                    <input id="txtPaymentDate" type="text" class="form-control datePicker" maxlength="10" readonly data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
+                                </div>
+                                <div class="col-md-6 col-xs-12">
                                     <input id="txtPaymentMoney" type="text" class="form-control" maxlength="15" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="3" />
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Hình thức chi
                                 </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    @Html.DropDownList("cbPaymentCategory", new SelectList(ViewBag.paymentCategory, "ID", "Name"), "Chọn hình thức chi", new { @class = "form-control", @tabindex = "4" })
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Tài khoản chi
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
+                                    @Html.DropDownList("cbPaymentCategory", new SelectList(ViewBag.paymentCategory, "ID", "Name"), "Chọn hình thức chi", new { @class = "form-control", @tabindex = "4" })
+                                </div>
+                                <div class="col-md-6 col-xs-12">
                                     @Html.DropDownList("cbPaymentAccount", new SelectList(ViewBag.accountHasMoney, "ID", "Name"), "Chọn tài khoản chi", new { @class = "form-control", @tabindex = "5" })
                                 </div>
                             </div>
@@ -211,14 +196,15 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="7">Hủy</button>
-                <button type="button" id="btnSavePayment" class="btn btn-primary" onclick="savePayment();" tabindex="8">Lưu</button>
+                <button type="button" id="btnSavePayment" class="btn btn-primary" onclick="savePayment(false);" tabindex="8">Lưu</button>
+                <button type="button" id="btnSavePaymentContinue" class="btn btn-primary" onclick="savePayment(true);" tabindex="9">Lưu và thêm mới</button>
             </div>
         </div>
 
     </div>
 </div>
 <div class="modal fade" id="transferModel" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="card card-success">
@@ -240,52 +226,50 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Ngày chuyển khoản
                                 </div>
+                                <div class="col-md-6 col-xs-12">
+                                    
+                                </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     <input id="txtTransferDate" type="text" class="form-control datePicker" maxlength="10" readonly data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
                                 </div>
+                                <div class="col-md-6 col-xs-12">
+                                    
+                                </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Số tiền
                                 </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    <input id="txtTransferMoney" type="text" class="form-control" maxlength="15" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="3" />
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Phí chuyển khoản
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
+                                    <input id="txtTransferMoney" type="text" class="form-control" maxlength="15" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="3" />
+                                </div>
+                                <div class="col-md-6 col-xs-12">
                                     <input id="txtTransferFee" type="text" class="form-control" maxlength="9" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="4" />
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Tài khoản chuyển tiền
                                 </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
-                                    @Html.DropDownList("cbTransferAccountFrom", new SelectList(ViewBag.accountHasMoney, "ID", "Name"), "Chọn tài khoản chuyển tiền", new { @class = "form-control", @tabindex = "5" })
-                                </div>
-                            </div>
-                            <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
                                     Tài khoản nhận tiền
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-12">
+                                <div class="col-md-6 col-xs-12">
+                                    @Html.DropDownList("cbTransferAccountFrom", new SelectList(ViewBag.accountHasMoney, "ID", "Name"), "Chọn tài khoản chuyển tiền", new { @class = "form-control", @tabindex = "5" })
+                                </div>
+                                <div class="col-md-6 col-xs-12">
                                     @Html.DropDownList("cbTransferAccountTo", new SelectList(ViewBag.account, "ID", "Name"), "Chọn tài khoản nhận tiền", new { @class = "form-control", @tabindex = "6" })
                                 </div>
                             </div>
@@ -305,7 +289,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="8">Hủy</button>
-                <button type="button" id="btnSaveTransfer" class="btn btn-primary" onclick="saveTransfer();" tabindex="9">Lưu</button>
+                <button type="button" id="btnSaveTransfer" class="btn btn-primary" onclick="saveTransfer(false);" tabindex="9">Lưu</button>
+                <button type="button" id="btnSaveTransferContinue" class="btn btn-primary" onclick="saveTransfer(true);" tabindex="10">Lưu và thêm mới</button>
             </div>
         </div>
 

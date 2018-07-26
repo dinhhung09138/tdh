@@ -14,11 +14,18 @@ namespace TDH.Models
     public partial class FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result
     {
         public string name { get; set; }
-        public int month { get; set; }
-        public int year { get; set; }
-        public byte percent_setting { get; set; }
-        public byte percent_current { get; set; }
-        public decimal money_setting { get; set; }
-        public decimal money_current { get; set; }
+        public string cate_name { get; set; }
+        public decimal t1 { get; set; }
+        public decimal t2 { get; set; }
+        public decimal t3 { get; set; }
+        public decimal t4 { get; set; }
+        public decimal t5 { get; set; }
+        public decimal t6 { get; set; }
+        public decimal t7 { get; set; }
+        public decimal t8 { get; set; }
+        public decimal t9 { get; set; }
+        public decimal t10 { get; set; }
+        public decimal t11 { get; set; }
+        public decimal t12 { get; set; }
     }
 }

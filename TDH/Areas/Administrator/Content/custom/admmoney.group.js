@@ -221,7 +221,8 @@ $(document).ready(function () {
         var month = $(this).val().substring(5, 8);
         var year = $(this).val().substring(0, 4);
         getSpendSetting(parseInt(year + month));
-    });
+        });
+    
 });
 
 $(document).on('change', '#ddlSelect', function (e) {
@@ -386,3 +387,7 @@ function groupSetting(id) {
     });
     $('#groupSettingModel').modal('show');
 }
+
+$('#settingModel').on('shown.bs.modal', function () {
+    loading($('.content-wrapper'), 'hide');
+})

@@ -231,62 +231,19 @@
     <Compile Include="Areas\Administrator\Filters\AjaxExecuteFilterAttribute.cs" />
     <Compile Include="Areas\Administrator\Filters\AuthorizationFilterAttribute.cs" />
     <Compile Include="Areas\Administrator\Filters\ExceptionFilterAttribute.cs" />
-    <Compile Include="Areas\Administrator\Models\AboutModel.cs" />
-    <Compile Include="Areas\Administrator\Models\ConfigurationModel.cs" />
+    <Compile Include="Areas\Administrator\Models\CheckListGroupModel.cs" />
+    <Compile Include="Areas\Administrator\Models\CheckListItemDetailModel.cs" />
+    <Compile Include="Areas\Administrator\Models\CheckListItemModel.cs" />
     <Compile Include="Areas\Administrator\Models\DailyTaskModel.cs" />
-    <Compile Include="Areas\Administrator\Models\ErrorLogModel.cs" />
-    <Compile Include="Areas\Administrator\Models\HomeCategoryModel.cs" />
-    <Compile Include="Areas\Administrator\Models\HomeNavigationModel.cs" />
     <Compile Include="Areas\Administrator\Models\IdeaDetailModel.cs" />
     <Compile Include="Areas\Administrator\Models\IdeaModel.cs" />
-    <Compile Include="Areas\Administrator\Models\LoginModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyAccountHistoryModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyAccountModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyAccountSettingModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyAccountTypeModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyCategoryHistoryModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyCategoryModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyCategorySettingModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyFlowModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyGroupModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyGroupSettingModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyIncomeModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyPaymentModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyReportCollectionByYearModel.cs" />
-    <Compile Include="Areas\Administrator\Models\MoneyTransferModel.cs" />
-    <Compile Include="Areas\Administrator\Models\NavigationModel.cs" />
-    <Compile Include="Areas\Administrator\Models\CategoryModel.cs" />
-    <Compile Include="Areas\Administrator\Models\PostModel.cs" />
     <Compile Include="Areas\Administrator\Models\ReportCommentModel.cs" />
     <Compile Include="Areas\Administrator\Models\ReportModel.cs" />
-    <Compile Include="Areas\Administrator\Models\RoleDetailModel.cs" />
-    <Compile Include="Areas\Administrator\Models\RoleModel.cs" />
-    <Compile Include="Areas\Administrator\Models\SideBarViewModel.cs" />
     <Compile Include="Areas\Administrator\Models\TargetModel.cs" />
     <Compile Include="Areas\Administrator\Models\TargetTaskModel.cs" />
-    <Compile Include="Areas\Administrator\Models\UserModel.cs" />
-    <Compile Include="Areas\Administrator\Services\AboutService.cs" />
-    <Compile Include="Areas\Administrator\Services\ConfigurationService.cs" />
-    <Compile Include="Areas\Administrator\Services\ErrorLogService.cs" />
-    <Compile Include="Areas\Administrator\Services\HomeCategoryService.cs" />
-    <Compile Include="Areas\Administrator\Services\HomeNavigationService.cs" />
     <Compile Include="Areas\Administrator\Services\IdeaService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyAccountService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyAccountSettingService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyAccountTypeService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyCategoryService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyCategorySettingService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyFlowService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyGroupService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyGroupSettingService.cs" />
-    <Compile Include="Areas\Administrator\Services\MoneyReportService.cs" />
-    <Compile Include="Areas\Administrator\Services\NavigationService.cs" />
-    <Compile Include="Areas\Administrator\Services\CategoryService.cs" />
-    <Compile Include="Areas\Administrator\Services\PostService.cs" />
     <Compile Include="Areas\Administrator\Services\ReportService.cs" />
-    <Compile Include="Areas\Administrator\Services\RoleService.cs" />
     <Compile Include="Areas\Administrator\Services\TargetService.cs" />
-    <Compile Include="Areas\Administrator\Services\UserService.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -5938,11 +5895,6 @@
     <Content Include="Areas\Administrator\Content\vendors\animate.css\gulpfile.js" />
     <Content Include="Areas\Administrator\Content\vendors\autoNumeric\autoNumeric.js" />
     <Content Include="Areas\Administrator\Content\vendors\autoNumeric\autoNumeric.min.js" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\build.js" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\dist\autosize.js" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\dist\autosize.min.js" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\example\index.html" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\src\autosize.js" />
     <Content Include="Areas\Administrator\Content\vendors\bootstrap-daterangepicker\daterangepicker.css" />
     <Content Include="Areas\Administrator\Content\vendors\bootstrap-daterangepicker\daterangepicker.js" />
     <Content Include="Areas\Administrator\Content\vendors\bootstrap-daterangepicker\demo.html" />
@@ -7091,20 +7043,6 @@
     <Content Include="Areas\Administrator\Content\vendors\jquery-sparkline\src\vcanvas-base.js" />
     <Content Include="Areas\Administrator\Content\vendors\jquery-sparkline\src\vcanvas-canvas.js" />
     <Content Include="Areas\Administrator\Content\vendors\jquery-sparkline\src\vcanvas-vml.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\dist\angular.easypiechart.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\dist\angular.easypiechart.min.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\dist\easypiechart.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\dist\easypiechart.min.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\dist\jquery.easypiechart.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\dist\jquery.easypiechart.min.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\Gruntfile.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\src\angular.directive.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\src\easypiechart.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\src\jquery.plugin.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\src\renderer\canvas.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\test\polyfills\bind.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\test\unit\angular.directive.js" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\test\unit\jquery.js" />
     <Content Include="Areas\Administrator\Content\vendors\jquery.hotkeys\jquery.hotkeys.js" />
     <Content Include="Areas\Administrator\Content\vendors\jquery.inputmask\dist\inputmask\inputmask.date.extensions.js" />
     <Content Include="Areas\Administrator\Content\vendors\jquery.inputmask\dist\inputmask\inputmask.dependencyLib.jquery.js" />
@@ -8694,13 +8632,6 @@
     <Content Include="Areas\Administrator\Content\vendors\animate.css\animate-config.json" />
     <Content Include="Areas\Administrator\Content\vendors\animate.css\bower.json" />
     <Content Include="Areas\Administrator\Content\vendors\animate.css\package.json" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\.bower.json" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\.gitignore" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\bower.json" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\changelog.md" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\LICENSE.md" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\package.json" />
-    <Content Include="Areas\Administrator\Content\vendors\autosize\readme.md" />
     <Content Include="Areas\Administrator\Content\vendors\bootstrap-daterangepicker\.bower.json" />
     <Content Include="Areas\Administrator\Content\vendors\bootstrap-daterangepicker\bower.json" />
     <Content Include="Areas\Administrator\Content\vendors\bootstrap-daterangepicker\daterangepicker.scss" />
@@ -8966,25 +8897,6 @@
     <Content Include="Areas\Administrator\Content\vendors\jquery-sparkline\Makefile" />
     <Content Include="Areas\Administrator\Content\vendors\jquery-sparkline\README.md" />
     <Content Include="Areas\Administrator\Content\vendors\jquery-sparkline\sparkline.jquery.json" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\.bower.json" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\.gitignore" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\.travis.yml" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\bower.json" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\changelog.md" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\docs\bagdes.md" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\docs\browser-support.md" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\docs\callbacks.md" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\docs\credits.md" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\docs\features.md" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\docs\get-started.md" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\docs\options.md" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\docs\plugin-api.md" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\docs\README.tmpl.md" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\docs\test.md" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\karma.conf.coffee" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\LICENSE" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\package.json" />
-    <Content Include="Areas\Administrator\Content\vendors\jquery.easy-pie-chart\Readme.md" />
     <Content Include="Areas\Administrator\Content\vendors\jquery.hotkeys\.bower.json" />
     <Content Include="Areas\Administrator\Content\vendors\jquery.hotkeys\bower.json" />
     <Content Include="Areas\Administrator\Content\vendors\jquery.hotkeys\README.md" />
@@ -9525,6 +9437,20 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>Message.Designer.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TDH.Common\TDH.Common.csproj">
+      <Project>{81636123-6bc1-4c99-bad6-7c4c2c567505}</Project>
+      <Name>TDH.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TDH.Model\TDH.Model.csproj">
+      <Project>{d4c844ff-99f5-4f7e-954d-b88e5f90f576}</Project>
+      <Name>TDH.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TDH.Services\TDH.Services.csproj">
+      <Project>{47c49bf9-e45d-4b25-aee8-e52b8b4a8e54}</Project>
+      <Name>TDH.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

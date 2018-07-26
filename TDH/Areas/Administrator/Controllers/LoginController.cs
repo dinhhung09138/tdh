@@ -1,14 +1,17 @@
-﻿using TDH.Areas.Administrator.Models;
-using TDH.Areas.Administrator.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TDH.Model.System;
+using TDH.Services.System;
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    public class LoginController : BaseController
+    /// <summary>
+    /// Login controller
+    /// </summary>
+    public class LoginController : TDH.Common.BaseController
     {
         [AllowAnonymous]
         public ActionResult Index()

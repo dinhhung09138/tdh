@@ -6,10 +6,12 @@ using System.Web.Mvc;
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    public class DashboardController : BaseController
+    public class DashboardController : TDH.Common.BaseController
     {
-        // GET: Admin/Dashboard
-        [AllowAnonymous]
+        /// <summary>
+        /// Main dashboard form
+        /// </summary>
+        /// <returns>View</returns>
         public ActionResult Index()
         {
             return View();

@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TDH.Common.Fillters;
+using TDH.Model.Website;
+using TDH.Services.Website;
 using Utils;
 using Utils.JqueryDatatable;
-using TDH.Areas.Administrator.Models;
-using TDH.Areas.Administrator.Filters;
 
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    [AjaxExecuteFilter]
-    public class AdmSettingController : BaseController
+    /// <summary>
+    /// Setting controller
+    /// </summary>
+    [AjaxExecuteFilterAttribute]
+    public class AdmSettingController : TDH.Common.BaseController
     {
         #region " [ Properties ] "
 
@@ -25,6 +29,10 @@ namespace TDH.Areas.Administrator.Controllers
 
         #region " [ Navigation ] "
 
+        /// <summary>
+        /// Navigation form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Navigation()
         {
@@ -39,6 +47,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Navigation form
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns> DataTableResponse<HomeNavigationModel></returns>
         [HttpPost]
         public JsonResult Navigation(CustomDataTableRequestHelper requestData)
         {
@@ -46,7 +60,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.HomeNavigationService _service = new Services.HomeNavigationService();
+                HomeNavigationService _service = new HomeNavigationService();
 
                 #endregion
 
@@ -74,6 +88,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Save navigation
+        /// Post method
+        /// </summary>
+        /// <param name="model">Home navigation model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult SaveNavigation(HomeNavigationModel model)
         {
@@ -81,7 +101,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.HomeNavigationService _service = new Services.HomeNavigationService();
+                HomeNavigationService _service = new HomeNavigationService();
 
                 #endregion
 
@@ -103,11 +123,15 @@ namespace TDH.Areas.Administrator.Controllers
                 throw new HttpException();
             }
         }
-        
+
         #endregion
 
         #region " [ Category ] "
 
+        /// <summary>
+        /// Category form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Category()
         {
@@ -122,6 +146,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Category form
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">jquery datatable request</param>
+        /// <returns>DataTableResponse<HomeCategoryModel></returns>
         [HttpPost]
         public JsonResult Category(CustomDataTableRequestHelper requestData)
         {
@@ -129,7 +159,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.HomeCategoryService _service = new Services.HomeCategoryService();
+                HomeCategoryService _service = new HomeCategoryService();
 
                 #endregion
 
@@ -147,7 +177,7 @@ namespace TDH.Areas.Administrator.Controllers
                     DataTableResponse<HomeCategoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<HomeCategoryModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
-                //
+                
                 return this.Json(new DataTableResponse<HomeCategoryModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -156,7 +186,12 @@ namespace TDH.Areas.Administrator.Controllers
                 throw new HttpException();
             }
         }
-        
+
+        /// <summary>
+        /// Save category
+        /// </summary>
+        /// <param name="model">Home category model</param>
+        /// <returns>DataTableResponse<CategoryModel></returns>
         [HttpPost]
         public ActionResult SaveCategory(HomeCategoryModel model)
         {
@@ -164,7 +199,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.HomeCategoryService _service = new Services.HomeCategoryService();
+                HomeCategoryService _service = new HomeCategoryService();
 
                 #endregion
 
@@ -191,6 +226,10 @@ namespace TDH.Areas.Administrator.Controllers
 
         #region " [ Configuration ] "
 
+        /// <summary>
+        /// Configuration form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Configuration()
         {
@@ -205,6 +244,13 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Configuration form
+        /// Post method
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<ConfigurationModel></returns>
         [HttpPost]
         public JsonResult Configuration(CustomDataTableRequestHelper requestData)
         {
@@ -212,7 +258,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.ConfigurationService _service = new Services.ConfigurationService();
+                ConfigurationService _service = new ConfigurationService();
 
                 #endregion
 
@@ -230,7 +276,7 @@ namespace TDH.Areas.Administrator.Controllers
                     DataTableResponse<ConfigurationModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<ConfigurationModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
-                //
+                
                 return this.Json(new DataTableResponse<ConfigurationModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -240,6 +286,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit cofiguration
+        /// </summary>
+        /// <param name="id">Configuration identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult EditConfiguration(string id)
         {
@@ -247,8 +298,8 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.ConfigurationService _service = new Services.ConfigurationService();
-                //
+                ConfigurationService _service = new ConfigurationService();
+                
                 ViewBag.id = id;
 
                 #endregion
@@ -264,6 +315,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit cofiguration
+        /// Post method
+        /// </summary>
+        /// <param name="model">Configuration model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -273,7 +330,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.ConfigurationService _service = new Services.ConfigurationService();
+                ConfigurationService _service = new ConfigurationService();
 
                 #endregion
 

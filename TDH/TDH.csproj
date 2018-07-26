@@ -242,6 +242,9 @@
     <Compile Include="Areas\Administrator\Models\ReportModel.cs" />
     <Compile Include="Areas\Administrator\Models\TargetModel.cs" />
     <Compile Include="Areas\Administrator\Models\TargetTaskModel.cs" />
+    <Compile Include="Areas\Administrator\Services\CheckListGroupService.cs" />
+    <Compile Include="Areas\Administrator\Services\CheckListItemDetailService.cs" />
+    <Compile Include="Areas\Administrator\Services\CheckListItemService.cs" />
     <Compile Include="Areas\Administrator\Services\IdeaService.cs" />
     <Compile Include="Areas\Administrator\Services\ReportService.cs" />
     <Compile Include="Areas\Administrator\Services\TargetService.cs" />

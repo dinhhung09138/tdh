@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TDH.Common.Fillters;
+using TDH.Model.Website;
+using TDH.Services.Website;
 using Utils;
 using Utils.JqueryDatatable;
-using TDH.Areas.Administrator.Models;
-using TDH.Areas.Administrator.Filters;
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    [AjaxExecuteFilter]
-    public class AdmPostController : BaseController
+    /// <summary>
+    /// Post controller
+    /// </summary>
+    [AjaxExecuteFilterAttribute]
+    public class AdmPostController : TDH.Common.BaseController
     {
         #region " [ Properties ] "
 
@@ -24,12 +28,15 @@ namespace TDH.Areas.Administrator.Controllers
 
         #region " [ Navigation ] "
 
+        /// <summary>
+        /// Navigation form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Navigation()
         {
             try
             {
-                //
                 return PartialView();
             }
             catch (Exception ex)
@@ -39,6 +46,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Navigation form
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<NavigationModel></returns>
         [HttpPost]
         public JsonResult Navigation(CustomDataTableRequestHelper requestData)
         {
@@ -46,7 +59,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -74,6 +87,10 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Create category form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult CreateNavigation()
         {
@@ -89,8 +106,7 @@ namespace TDH.Areas.Administrator.Controllers
                 };
 
                 #endregion
-
-                //
+                
                 return PartialView(model);
             }
             catch (Exception ex)
@@ -100,6 +116,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Create category form
+        /// Post method
+        /// </summary>
+        /// <param name="model">Navigation model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateNavigation(NavigationModel model)
@@ -108,7 +130,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -131,6 +153,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit navigation
+        /// </summary>
+        /// <param name="id">Navigation identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult EditNavigation(string id)
         {
@@ -139,15 +166,15 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
-                //
+                NavigationService _service = new NavigationService();
+                
                 ViewBag.id = id;
 
                 #endregion
 
                 //Call to service
                 NavigationModel model = _service.GetItemByID(new NavigationModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
-                //
+                
                 return PartialView(model);
             }
             catch (Exception ex)
@@ -157,6 +184,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit navigation
+        /// Post method
+        /// </summary>
+        /// <param name="model">Navigation model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditNavigation(NavigationModel model)
@@ -165,7 +198,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -188,6 +221,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Publish navigation
+        /// </summary>
+        /// <param name="model">Navigation model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult PublishNavigation(NavigationModel model)
         {
@@ -195,7 +233,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -216,7 +254,12 @@ namespace TDH.Areas.Administrator.Controllers
                 throw new HttpException();
             }
         }
-        
+
+        /// <summary>
+        /// Delete navigation
+        /// </summary>
+        /// <param name="model">Navigation model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult DeleteNavigation(NavigationModel model)
         {
@@ -224,7 +267,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -246,6 +289,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Check delete navigation
+        /// </summary>
+        /// <param name="model">Navigation model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult CheckDeleteNavigation(NavigationModel model)
         {
@@ -253,7 +301,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -277,6 +325,10 @@ namespace TDH.Areas.Administrator.Controllers
 
         #region " [ Category ] "
 
+        /// <summary>
+        /// Category form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Category()
         {
@@ -284,11 +336,11 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _nServices = new Services.NavigationService();
+                NavigationService _nServices = new NavigationService();
                 ViewBag.navigation = _nServices.GetAll(UserID);
 
                 #endregion
-                //
+                
                 return PartialView();
             }
             catch (Exception ex)
@@ -298,6 +350,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Category form
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">jquery datatable request</param>
+        /// <returns>DataTableResponse<CategoryModel></returns>
         [HttpPost]
         public JsonResult Category(CustomDataTableRequestHelper requestData)
         {
@@ -305,7 +363,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -327,7 +385,7 @@ namespace TDH.Areas.Administrator.Controllers
                     DataTableResponse<CategoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<CategoryModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
-                //
+                
                 return this.Json(new DataTableResponse<CategoryModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -337,6 +395,10 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Create category form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult CreateCategory()
         {
@@ -344,8 +406,8 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _nServices = new Services.NavigationService();
-                //
+                NavigationService _nServices = new NavigationService();
+                
                 ViewBag.navigation = _nServices.GetAll(UserID);
                 CategoryModel model = new CategoryModel()
                 {
@@ -355,8 +417,7 @@ namespace TDH.Areas.Administrator.Controllers
                 };
 
                 #endregion
-
-                //
+                
                 return PartialView(model);
             }
             catch (Exception ex)
@@ -366,6 +427,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Create category form
+        /// Post method
+        /// </summary>
+        /// <param name="model">Category model</param>
+        /// <returns>DataTableResponse<CategoryModel></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateCategory(CategoryModel model)
@@ -374,7 +441,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -397,6 +464,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit category form
+        /// </summary>
+        /// <param name="id">Category identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult EditCategory(string id)
         {
@@ -405,9 +477,9 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _nServices = new Services.NavigationService();
-                Services.CategoryService _service = new Services.CategoryService();
-                //
+                NavigationService _nServices = new NavigationService();
+                CategoryService _service = new CategoryService();
+                
                 ViewBag.id = id;
                 ViewBag.navigation = _nServices.GetAll(UserID);
 
@@ -415,7 +487,7 @@ namespace TDH.Areas.Administrator.Controllers
 
                 //Call to service
                 CategoryModel model = _service.GetItemByID(new CategoryModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
-                //
+                
                 return PartialView(model);
             }
             catch (Exception ex)
@@ -425,6 +497,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit category form
+        /// Post method
+        /// </summary>
+        /// <param name="model">Category model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditCategory(CategoryModel model)
@@ -433,7 +511,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -456,6 +534,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Publish caterogy
+        /// </summary>
+        /// <param name="model">Category model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult PublishCategory(CategoryModel model)
         {
@@ -463,7 +546,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -485,6 +568,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Set category show on navigation
+        /// </summary>
+        /// <param name="model">Category model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult OnNavigationCategory(CategoryModel model)
         {
@@ -492,7 +580,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -514,6 +602,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete caterogy
+        /// </summary>
+        /// <param name="model">Category model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult DeleteCategory(CategoryModel model)
         {
@@ -521,7 +614,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -543,6 +636,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Check delete caterogy
+        /// </summary>
+        /// <param name="model">Category model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult CheckDeleteCategory(CategoryModel model)
         {
@@ -550,9 +648,8 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
                
-
                 #endregion
 
                 #region " [ Main process ] "
@@ -575,6 +672,10 @@ namespace TDH.Areas.Administrator.Controllers
 
         #region " [ Post ] "
 
+        /// <summary>
+        /// News form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult News()
         {
@@ -589,6 +690,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// News form
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<PostModel></returns>
         [HttpPost]
         public JsonResult News(CustomDataTableRequestHelper requestData)
         {
@@ -596,7 +703,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.PostService _service = new Services.PostService();
+                PostService _service = new PostService();
 
                 #endregion
 
@@ -614,7 +721,7 @@ namespace TDH.Areas.Administrator.Controllers
                     DataTableResponse<PostModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<PostModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
-                //
+                
                 return this.Json(new DataTableResponse<PostModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -624,6 +731,10 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Create news form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult CreateNews()
         {
@@ -631,10 +742,10 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _nServices = new Services.NavigationService();
-                //
+                NavigationService _nServices = new NavigationService();
+                
                 ViewBag.navigation = _nServices.GetAll(UserID);
-                Services.CategoryService _cServices = new Services.CategoryService();
+                CategoryService _cServices = new CategoryService();
                 ViewBag.cate = _cServices.GetAll(UserID);
                 PostModel model = new PostModel()
                 {
@@ -644,8 +755,7 @@ namespace TDH.Areas.Administrator.Controllers
                 };
 
                 #endregion
-
-                //
+                
                 return PartialView(model);
             }
             catch (Exception ex)
@@ -655,6 +765,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Create news form
+        /// Post method
+        /// </summary>
+        /// <param name="model">Post model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -664,7 +780,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.PostService _service = new Services.PostService();
+                PostService _service = new PostService();
 
                 #endregion
 
@@ -687,6 +803,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit news form
+        /// </summary>
+        /// <param name="id">The news identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult EditNews(string id)
         {
@@ -694,10 +815,10 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _nServices = new Services.NavigationService();
-                Services.CategoryService _cServices = new Services.CategoryService();
-                Services.PostService _service = new Services.PostService();
-                //
+                NavigationService _nServices = new NavigationService();
+                CategoryService _cServices = new CategoryService();
+                PostService _service = new PostService();
+                
                 ViewBag.id = id;
                 ViewBag.navigation = _nServices.GetAll(UserID);
                 ViewBag.cate = _cServices.GetAll(UserID);
@@ -706,7 +827,7 @@ namespace TDH.Areas.Administrator.Controllers
 
                 //Call to service
                 PostModel model = _service.GetItemByID(new PostModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
-                //
+                
                 return PartialView(model);
             }
             catch (Exception ex)
@@ -716,6 +837,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit news form
+        /// Post method
+        /// </summary>
+        /// <param name="model">Post model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -725,7 +852,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.PostService _service = new Services.PostService();
+                PostService _service = new PostService();
 
                 #endregion
 
@@ -749,6 +876,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Publish news
+        /// </summary>
+        /// <param name="model">Post model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult PublishNews(PostModel model)
         {
@@ -756,7 +888,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.PostService _service = new Services.PostService();
+                PostService _service = new PostService();
 
                 #endregion
 
@@ -778,6 +910,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete news
+        /// </summary>
+        /// <param name="model">Post model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult DeleteNews(PostModel model)
         {
@@ -785,7 +922,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.PostService _service = new Services.PostService();
+                PostService _service = new PostService();
 
                 #endregion
 
@@ -811,6 +948,10 @@ namespace TDH.Areas.Administrator.Controllers
 
         #region " [ About ] "
 
+        /// <summary>
+        /// About form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult About()
         {
@@ -818,11 +959,11 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.AboutService _service = new Services.AboutService();
+                AboutService _service = new AboutService();
                 var _model = _service.GetItemByID(new AboutModel() { CreateBy = UserID, Insert = false });
 
                 #endregion
-                //
+                
                 return PartialView(_model);
             }
             catch (Exception ex)
@@ -831,7 +972,13 @@ namespace TDH.Areas.Administrator.Controllers
                 throw new HttpException();
             }
         }
-        
+
+        /// <summary>
+        /// About form
+        /// Post method
+        /// </summary>
+        /// <param name="model">About model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -841,7 +988,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.AboutService _service = new Services.AboutService();
+                AboutService _service = new AboutService();
 
                 #endregion
 

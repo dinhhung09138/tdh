@@ -1,4 +1,4 @@
-﻿@using TDH.Areas.Administrator.Models;
+﻿@using TDH.Model;
 <aside class="main-sidebar elevation-4 sidebar-light-info">
     <a href="/administrator/dashboard/index" class="brand-link bg-info">
         <img src="/Areas/Administrator/Content/images/tran-dinh-hung.jpg" alt="Mr. Hưng" class="brand-image img-circle elevation-3"
@@ -161,6 +161,7 @@
                     </li>
 
                     <li class="header">TCCN</li>
+                    <li class="header">TÀI CHÍNH CÁ NHÂN</li>
                     var _lFinance = _listSidebar.Where(m => m.Code.Contains("money_")).ToList();
                     if (_lFinance.Count() > 0)
                     {
@@ -168,7 +169,7 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fa fa-tasks"></i>
                                 <p>
-                                    Công việc - Nhiệm vụ
+                                    QUẢN LÝ CHI TIÊU
                                     <i class="right fa fa-angle-left"></i>
                                 </p>
                             </a>

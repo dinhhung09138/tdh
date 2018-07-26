@@ -15,3 +15,27 @@ packages/
 \.vs/TDH/v15/Server/sqlite3/storage\.ide-shm
 
 \.vs/TDH/v15/Server/sqlite3/storage\.ide-wal
+
+TDH\.Services/obj/Debug/
+
+TDH\.DataAccess/obj/Debug/
+
+TDH\.Common/bin/Debug/
+
+TDH\.Common/obj/Debug/
+
+TDH\.DataAccess/bin/Debug/
+
+TDH\.Model/obj/Debug/
+
+TDH\.Model/bin/Debug/
+
+TDH\.Services/bin/Debug/
+
+TDH\.DataAccess/obj/Release/
+
+TDH\.Common/obj/Release/
+
+TDH\.Services/obj/Release/
+
+TDH\.Model/obj/Release/

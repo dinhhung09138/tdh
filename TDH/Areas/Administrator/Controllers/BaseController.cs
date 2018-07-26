@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Web;
 using System.Web.Mvc;
+using TDH.Common;
+using TDH.Services.System;
 using Utils;
 
 namespace TDH.Areas.Administrator.Controllers
@@ -61,25 +63,25 @@ namespace TDH.Areas.Administrator.Controllers
             var controllerName = filterContext.RouteData.Values["controller"].ToString().ToLower();
             var actionName = filterContext.RouteData.Values["action"].ToString().ToLower();
 
-            Services.RoleService _roleService = new Services.RoleService();
+            RoleService _roleService = new RoleService();
             string _functionCode = GetFunctionCode(areaName, controllerName, actionName);
             var _type = GetFunctionType(areaName, controllerName, actionName);
             var _permision = _roleService.AllowAccess(_user.UserID, _functionCode);
             switch (_type)
             {
-                case Services.RoleService.actionType.View:
+                case ActionType.View:
                     if (_permision.View == false)
                         throw new MemberAccessException();
                     break;
-                case Services.RoleService.actionType.Create:
+                case ActionType.Create:
                     if (_permision.Add == false)
                     throw new MemberAccessException();
                     break;
-                case Services.RoleService.actionType.Edit:
+                case ActionType.Edit:
                     if (_permision.Edit == false)
                         throw new MemberAccessException();
                     break;
-                case Services.RoleService.actionType.Delete:
+                case ActionType.Delete:
                     if (_permision.Delete == false)
                         throw new MemberAccessException();
                     break;
@@ -174,7 +176,7 @@ namespace TDH.Areas.Administrator.Controllers
         [AllowAnonymous]
         public ActionResult AdminSidebar()
         {
-            Services.UserService _uService = new Services.UserService();
+            UserService _uService = new UserService();
             ViewBag.sidebar = _uService.GetSidebar(UserID);
             return PartialView();
         }
@@ -390,7 +392,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// <param name="controllerName">controller name</param>
         /// <param name="actionName">method name</param>
         /// <returns></returns>
-        private Services.RoleService.actionType GetFunctionType(string areaName, string controllerName, string actionName)
+        private ActionType GetFunctionType(string areaName, string controllerName, string actionName)
         {
             switch (areaName)
             {
@@ -406,17 +408,17 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "configuration":
                                 case "category":
                                 case "navigation":
-                                    return Services.RoleService.actionType.View;
+                                    return ActionType.View;
                                 case "createbanner":
-                                    return Services.RoleService.actionType.Create;
+                                    return ActionType.Create;
                                 case "editbanner":
                                 case "publishbanner":
                                 case "editconfiguration":
                                 case "savecategory":
                                 case "savenavigation":
-                                    return Services.RoleService.actionType.Edit;
+                                    return ActionType.Edit;
                                 case "deletebanner":
-                                    return Services.RoleService.actionType.Delete;
+                                    return ActionType.Delete;
                             }
 
                             #endregion
@@ -431,23 +433,23 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "user":
                                 case "errorlog":
                                 case "detailerrolog":
-                                    return Services.RoleService.actionType.View;
+                                    return ActionType.View;
                                 case "createrole":
                                 case "createemployee":
                                 case "createuser":
-                                    return Services.RoleService.actionType.Create;
+                                    return ActionType.Create;
                                 case "editrole":
                                 case "publishrole":
                                 case "editemployee":
                                 case "publishemployee":
                                 case "edituser":
                                 case "publishuser":
-                                    return Services.RoleService.actionType.Edit;
+                                    return ActionType.Edit;
                                 case "deleterole":
                                 case "checkdeleterole":
                                 case "deleteemployee":
                                 case "deleteuser":
-                                    return Services.RoleService.actionType.Delete;
+                                    return ActionType.Delete;
                             }
 
                             #endregion
@@ -461,11 +463,11 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "category":
                                 case "navigation":
                                 case "about":
-                                    return Services.RoleService.actionType.View;
+                                    return ActionType.View;
                                 case "createnews":
                                 case "createcategory":
                                 case "createnavigation":
-                                    return Services.RoleService.actionType.Create;
+                                    return ActionType.Create;
                                 case "editnews":
                                 case "publishnews":
                                 case "editcategory":
@@ -473,13 +475,13 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "editnavigation":
                                 case "publishnavigation":
                                 case "onnavigationcategory":
-                                    return Services.RoleService.actionType.Edit;
+                                    return ActionType.Edit;
                                 case "deletenews":
                                 case "deletecategory":
                                 case "checkdeletecategory":
                                 case "deletenavigation":
                                 case "checkdeletenavigation":
-                                    return Services.RoleService.actionType.Delete;
+                                    return ActionType.Delete;
                             }
 
                             #endregion
@@ -492,11 +494,11 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "navigation":
                                 case "category":
                                 case "product":
-                                    return Services.RoleService.actionType.View;
+                                    return ActionType.View;
                                 case "createnavigation":
                                 case "createcategory":
                                 case "createproduct":
-                                    return Services.RoleService.actionType.Create;
+                                    return ActionType.Create;
                                 case "editnavigation":
                                 case "publishnavigation":
                                 case "editcategory":
@@ -504,13 +506,13 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "editproduct":
                                 case "publishproduct":
                                 case "stopbusinessproduct":
-                                    return Services.RoleService.actionType.Edit;
+                                    return ActionType.Edit;
                                 case "deletenavigation":
                                 case "checkdeletenavigation":
                                 case "deletecategory":
                                 case "checkdeletecategory":
                                 case "deleteproduct":
-                                    return Services.RoleService.actionType.Delete;
+                                    return ActionType.Delete;
                             }
 
                             #endregion
@@ -526,14 +528,14 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "dailytask":
                                 case "savetarget":
                                 case "detailidea":
-                                    return Services.RoleService.actionType.View;
+                                    return ActionType.View;
                                 case "createidea":
-                                    return Services.RoleService.actionType.Create;
+                                    return ActionType.Create;
                                 case "editidea":
-                                    return Services.RoleService.actionType.Edit;
+                                    return ActionType.Edit;
                                 case "deleteidea":
                                 case "checkdeleteidea":
-                                    return Services.RoleService.actionType.Delete;
+                                    return ActionType.Delete;
                             }
 
                             #endregion
@@ -545,15 +547,15 @@ namespace TDH.Areas.Administrator.Controllers
                             {
                                 case "report":
                                 case "detailreport":
-                                    return Services.RoleService.actionType.View;
+                                    return ActionType.View;
                                 case "createreport":
                                 case "savereportcomment":
-                                    return Services.RoleService.actionType.Create;
+                                    return ActionType.Create;
                                 case "editreport":
-                                    return Services.RoleService.actionType.Edit;
+                                    return ActionType.Edit;
                                 case "deletereport":
                                 case "checkdeletereport":
-                                    return Services.RoleService.actionType.Delete;
+                                    return ActionType.Delete;
                             }
 
                             #endregion
@@ -574,7 +576,7 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "category":
                                 case "categoryhistory":
                                 case "flowhistory":
-                                    return Services.RoleService.actionType.View;
+                                    return ActionType.View;
                                 case "createaccounttype":
                                 case "createaccount":
                                 case "creategroup":
@@ -582,7 +584,7 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "saveincome":
                                 case "savepayment":
                                 case "savetransfer":
-                                    return Services.RoleService.actionType.Create;
+                                    return ActionType.Create;
                                 case "editaccounttype":
                                 case "publishaccounttype":
                                 case "editaccount":
@@ -592,7 +594,7 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "savegroupsettinginfo":
                                 case "editcategory":
                                 case "publishcategory":
-                                    return Services.RoleService.actionType.Edit;
+                                    return ActionType.Edit;
                                 case "checkdeleteaccounttype":
                                 case "deleteaccounttype":
                                 case "checkdeleteaccount":
@@ -601,7 +603,7 @@ namespace TDH.Areas.Administrator.Controllers
                                 case "deletegroup":
                                 case "checkdeletecategory":
                                 case "deletecategory":
-                                    return Services.RoleService.actionType.Delete;
+                                    return ActionType.Delete;
                             }
 
                             #endregion
@@ -611,7 +613,7 @@ namespace TDH.Areas.Administrator.Controllers
                     }
                     break;
             }
-            return Services.RoleService.actionType.None;
+            return ActionType.None;
         }
 
         #endregion

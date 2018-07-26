@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using TDH.ViewModel;
-using TDH.Services;
 using TDH.Filters;
+using TDH.Services;
 
 namespace TDH.Controllers
 {
@@ -32,7 +31,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "Index", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
         
@@ -48,7 +47,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "Navigation", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -63,7 +62,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "Banner", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -77,7 +76,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "ConnectedToMe", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -91,7 +90,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "SidebarGalary", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -105,7 +104,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "NewsLetter", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -123,7 +122,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "LastedNews", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -141,7 +140,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "TopView", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -155,7 +154,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "FooterPostByNavigation", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -169,7 +168,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "PopuplarCategory", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 

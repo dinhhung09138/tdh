@@ -22,7 +22,6 @@ namespace TDH.DataAccess
     
         public System.Guid id { get; set; }
         public string full_name { get; set; }
-        public string SYS_USER_name { get; set; }
         public string password { get; set; }
         public bool locked { get; set; }
         public string notes { get; set; }
@@ -34,6 +33,7 @@ namespace TDH.DataAccess
         public bool deleted { get; set; }
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
+        public string user_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SYS_USER_ROLE> SYS_USER_ROLE { get; set; }

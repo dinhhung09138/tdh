@@ -50,7 +50,7 @@ namespace TDH.Services.System
                                   select new
                                   {
                                       m.id,
-                                      m.SYS_USER_name,
+                                      m.user_name,
                                       m.full_name,
                                       m.last_login,
                                       m.locked,
@@ -63,7 +63,7 @@ namespace TDH.Services.System
                     if (request.search != null && !string.IsNullOrWhiteSpace(request.search.Value))
                     {
                         string searchValue = request.search.Value.ToLower();
-                        _lData = _lData.Where(m => m.SYS_USER_name.ToLower().Contains(searchValue) ||
+                        _lData = _lData.Where(m => m.user_name.ToLower().Contains(searchValue) ||
                                          m.full_name.ToLower().Contains(searchValue) ||
                                          m.role_name.ToLower().Contains(searchValue) ||
                                          m.last_login.ToString().ToLower().Contains(searchValue)).ToList();
@@ -76,7 +76,7 @@ namespace TDH.Services.System
                             ID = item.id,
                             Locked = item.locked,
                             FullName = item.full_name,
-                            UserName = item.SYS_USER_name,
+                            UserName = item.user_name,
                             LastLoginString = item.last_login == null ? "" : ((DateTime)item.last_login).DateToString("dd/MM/yyyy hh:mm"),
                             RoleName = item.role_name
                         });
@@ -147,7 +147,7 @@ namespace TDH.Services.System
                     {
                         ID = _md.id,
                         FullName = _md.full_name,
-                        UserName = _md.SYS_USER_name,
+                        UserName = _md.user_name,
                         Locked = _md.locked,
                         RoleID = _role.id,
                         RoleName = _role.name
@@ -181,7 +181,7 @@ namespace TDH.Services.System
                             if (model.Insert)
                             {
                                 _md.id = Guid.NewGuid();
-                                _md.SYS_USER_name = model.UserName;
+                                _md.user_name = model.UserName;
                                 _md.notes = model.Notes;
                                 _md.password = Utils.Security.PasswordSecurityHelper.GetHashedPassword(model.Password);
                             }
@@ -371,7 +371,7 @@ namespace TDH.Services.System
                 using (var _context = new TDHEntities())
                 {
                     string _password = Utils.Security.PasswordSecurityHelper.GetHashedPassword(model.Password);
-                    SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.SYS_USER_name == model.UserName && m.password == _password && !m.deleted && !m.locked);
+                    SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.user_name == model.UserName && m.password == _password && !m.deleted && !m.locked);
                     if (_md == null)
                     {
                         return _return;
@@ -384,7 +384,7 @@ namespace TDH.Services.System
                     return new UserModel()
                     {
                         ID = _md.id,
-                        UserName = _md.SYS_USER_name,
+                        UserName = _md.user_name,
                     };
                 }
             }

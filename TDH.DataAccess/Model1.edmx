@@ -488,7 +488,6 @@
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="full_name" Type="nvarchar" MaxLength="60" Nullable="false" />
-          <Property Name="SYS_USER_name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="locked" Type="bit" Nullable="false" />
           <Property Name="notes" Type="nvarchar" MaxLength="1024" />
@@ -500,6 +499,7 @@
           <Property Name="deleted" Type="bit" Nullable="false" />
           <Property Name="delete_by" Type="uniqueidentifier" />
           <Property Name="delete_date" Type="datetime" />
+          <Property Name="user_name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="SYS_USER_ROLE">
           <Key>
@@ -2524,7 +2524,6 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="full_name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="SYS_USER_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="locked" Type="Boolean" Nullable="false" />
           <Property Name="notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
@@ -2537,6 +2536,7 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="SYS_USER_ROLE" Relationship="TDHModel.FK_SYS_USER_ROLE_user_id" FromRole="SYS_USER" ToRole="SYS_USER_ROLE" />
+          <Property Name="user_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SYS_USER_ROLE">
           <Key>
@@ -3660,6 +3660,7 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
           <EntitySetMapping Name="SYS_USER">
             <EntityTypeMapping TypeName="TDHModel.SYS_USER">
               <MappingFragment StoreEntitySet="SYS_USER">
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
                 <ScalarProperty Name="delete_date" ColumnName="delete_date" />
                 <ScalarProperty Name="delete_by" ColumnName="delete_by" />
                 <ScalarProperty Name="deleted" ColumnName="deleted" />
@@ -3671,7 +3672,6 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
                 <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="locked" ColumnName="locked" />
                 <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="SYS_USER_name" ColumnName="SYS_USER_name" />
                 <ScalarProperty Name="full_name" ColumnName="full_name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>

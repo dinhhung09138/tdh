@@ -396,12 +396,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Log.cs" />
-    <Compile Include="Services\PageService.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModel\CategoryViewModel.cs" />
-    <Compile Include="ViewModel\MetaViewModel.cs" />
-    <Compile Include="ViewModel\NavigationViewModel.cs" />
-    <Compile Include="ViewModel\PostViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Administrator\Content\build\js\AdminLTE.js" />

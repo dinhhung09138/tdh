@@ -38,7 +38,7 @@ namespace TDH.Services.Website
                 List<ConfigurationModel> _list = new List<ConfigurationModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _lData = _context.CONFIGURATIONs.ToList();
+                    var _lData = _context.WEB_CONFIGURATION.ToList();
 
                     _itemResponse.draw = request.draw;
                     _itemResponse.recordsTotal = _lData.Count;
@@ -109,7 +109,7 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    CONFIGURATION _md = _context.CONFIGURATIONs.FirstOrDefault(m => m.key == model.Key);
+                    WEB_CONFIGURATION _md = _context.WEB_CONFIGURATION.FirstOrDefault(m => m.key == model.Key);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
@@ -145,7 +145,7 @@ namespace TDH.Services.Website
                     {
                         try
                         {
-                            CONFIGURATION _md = _context.CONFIGURATIONs.FirstOrDefault(m => m.key == model.Key);
+                            WEB_CONFIGURATION _md = _context.WEB_CONFIGURATION.FirstOrDefault(m => m.key == model.Key);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -153,7 +153,7 @@ namespace TDH.Services.Website
                             _md.key = model.Key;
                             _md.description = model.Description;
                             _md.value = model.Value;
-                            _context.CONFIGURATIONs.Attach(_md);
+                            _context.WEB_CONFIGURATION.Attach(_md);
                             _context.Entry(_md).State = EntityState.Modified;
                             _context.SaveChanges();
                             trans.Commit();

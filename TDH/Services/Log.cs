@@ -33,7 +33,7 @@ namespace TDH.Services
                     _md.create_date = DateTime.Now;
                     _md.create_by = userID;
                     context.ERROR_LOG.Add(_md);
-                    context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                    //context.Entry(_md).State = System.Data.Entity.EntityState.Added;
                     context.SaveChanges();
                 }
             }

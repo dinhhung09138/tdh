@@ -41,7 +41,7 @@ namespace TDH.Services.Website
                 List<HomeNavigationModel> _list = new List<HomeNavigationModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in _context.NAVIGATIONs
+                    var _lData = (from m in _context.WEB_NAVIGATION
                                   where !m.deleted && m.publish
                                   select new
                                   {
@@ -64,7 +64,7 @@ namespace TDH.Services.Website
                     {
                         _selected = false;
                         _ordering = 0;
-                        var _cate = _context.HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == item.id);
+                        var _cate = _context.WEB_HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == item.id);
                         if (_cate != null)
                         {
                             _selected = true;
@@ -129,26 +129,26 @@ namespace TDH.Services.Website
                     {
                         try
                         {
-                            HOME_NAVIGATION _md = _md = _context.HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
+                            WEB_HOME_NAVIGATION _md = _md = _context.WEB_HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
                             if (!model.Selected)
                             {
                                 return Delete(model);
                             }
                             if (_md == null)
                             {
-                                _md = new HOME_NAVIGATION()
+                                _md = new WEB_HOME_NAVIGATION()
                                 {
                                     id = Guid.NewGuid(),
                                     navigation_id = model.NavigationID,
                                     ordering = 1
                                 };
-                                _context.HOME_NAVIGATION.Add(_md);
+                                _context.WEB_HOME_NAVIGATION.Add(_md);
                                 _context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.ordering = model.Ordering;
-                                _context.HOME_NAVIGATION.Attach(_md);
+                                _context.WEB_HOME_NAVIGATION.Attach(_md);
                                 _context.Entry(_md).State = EntityState.Modified;
                             }
                             _context.SaveChanges();
@@ -189,12 +189,12 @@ namespace TDH.Services.Website
                     {
                         try
                         {
-                            HOME_NAVIGATION _md = _context.HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
+                            WEB_HOME_NAVIGATION _md = _context.WEB_HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
                             }
-                            _context.HOME_NAVIGATION.Remove(_md);
+                            _context.WEB_HOME_NAVIGATION.Remove(_md);
                             _context.Entry(_md).State = EntityState.Deleted;
                             _context.SaveChanges();
                             trans.Commit();

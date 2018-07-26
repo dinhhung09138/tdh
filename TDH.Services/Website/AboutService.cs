@@ -33,10 +33,10 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    ABOUT _md = _context.ABOUTs.FirstOrDefault(m => !m.deleted);
+                    WEB_ABOUT _md = _context.WEB_ABOUT.FirstOrDefault(m => !m.deleted);
                     if (_md == null)
                     {
-                        _md = new ABOUT()
+                        _md = new WEB_ABOUT()
                         {
                             id = Guid.NewGuid(),
                             content = "",
@@ -57,7 +57,7 @@ namespace TDH.Services.Website
                             create_date = DateTime.Now,
                             deleted = false,
                         };
-                        _context.ABOUTs.Add(_md);
+                        _context.WEB_ABOUT.Add(_md);
                         _context.Entry(_md).State = EntityState.Added;
                         _context.SaveChanges();
                     }
@@ -105,14 +105,14 @@ namespace TDH.Services.Website
                     {
                         try
                         {
-                            ABOUT _md = new ABOUT();
+                            WEB_ABOUT _md = new WEB_ABOUT();
                             if (model.Insert)
                             {
                                 _md.id = Guid.NewGuid();
                             }
                             else
                             {
-                                _md = _context.ABOUTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = _context.WEB_ABOUT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -135,14 +135,14 @@ namespace TDH.Services.Website
                             {
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
-                                _context.ABOUTs.Add(_md);
+                                _context.WEB_ABOUT.Add(_md);
                                 _context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                _context.ABOUTs.Attach(_md);
+                                _context.WEB_ABOUT.Attach(_md);
                                 _context.Entry(_md).State = EntityState.Modified;
                             }
                             _context.SaveChanges();

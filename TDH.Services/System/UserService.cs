@@ -43,14 +43,14 @@ namespace TDH.Services.System
                 List<UserModel> _list = new List<UserModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in _context.USERs
-                                  join ur in _context.USER_ROLE on m.id equals ur.user_id
-                                  join r in _context.ROLEs on ur.role_id equals r.id
+                    var _lData = (from m in _context.SYS_USER
+                                  join ur in _context.SYS_USER_ROLE on m.id equals ur.user_id
+                                  join r in _context.SYS_ROLE on ur.role_id equals r.id
                                   where !m.deleted
                                   select new
                                   {
                                       m.id,
-                                      m.user_name,
+                                      m.SYS_USER_name,
                                       m.full_name,
                                       m.last_login,
                                       m.locked,
@@ -63,7 +63,7 @@ namespace TDH.Services.System
                     if (request.search != null && !string.IsNullOrWhiteSpace(request.search.Value))
                     {
                         string searchValue = request.search.Value.ToLower();
-                        _lData = _lData.Where(m => m.user_name.ToLower().Contains(searchValue) ||
+                        _lData = _lData.Where(m => m.SYS_USER_name.ToLower().Contains(searchValue) ||
                                          m.full_name.ToLower().Contains(searchValue) ||
                                          m.role_name.ToLower().Contains(searchValue) ||
                                          m.last_login.ToString().ToLower().Contains(searchValue)).ToList();
@@ -76,7 +76,7 @@ namespace TDH.Services.System
                             ID = item.id,
                             Locked = item.locked,
                             FullName = item.full_name,
-                            UserName = item.user_name,
+                            UserName = item.SYS_USER_name,
                             LastLoginString = item.last_login == null ? "" : ((DateTime)item.last_login).DateToString("dd/MM/yyyy hh:mm"),
                             RoleName = item.role_name
                         });
@@ -134,20 +134,20 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    USER _md = _context.USERs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _role = (from m in _context.ROLEs
-                                 join r in _context.USER_ROLE on m.id equals r.role_id
+                    var _role = (from m in _context.SYS_ROLE
+                                 join r in _context.SYS_USER_ROLE on m.id equals r.role_id
                                  where r.user_id == _md.id
                                  select new { m.id, m.name }).FirstOrDefault();
                     return new UserModel()
                     {
                         ID = _md.id,
                         FullName = _md.full_name,
-                        UserName = _md.user_name,
+                        UserName = _md.SYS_USER_name,
                         Locked = _md.locked,
                         RoleID = _role.id,
                         RoleName = _role.name
@@ -177,17 +177,17 @@ namespace TDH.Services.System
                     {
                         try
                         {
-                            USER _md = new USER();
+                            SYS_USER _md = new SYS_USER();
                             if (model.Insert)
                             {
                                 _md.id = Guid.NewGuid();
-                                _md.user_name = model.UserName;
+                                _md.SYS_USER_name = model.UserName;
                                 _md.notes = model.Notes;
                                 _md.password = Utils.Security.PasswordSecurityHelper.GetHashedPassword(model.Password);
                             }
                             else
                             {
-                                _md = _context.USERs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -203,27 +203,27 @@ namespace TDH.Services.System
                             {
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
-                                _context.USERs.Add(_md);
+                                _context.SYS_USER.Add(_md);
                                 _context.Entry(_md).State = EntityState.Added;
                                 //
-                                USER_ROLE role = new USER_ROLE()
+                                SYS_USER_ROLE role = new SYS_USER_ROLE()
                                 {
                                     id = Guid.NewGuid(),
                                     user_id = _md.id,
                                     role_id = model.RoleID
                                 };
-                                _context.USER_ROLE.Add(role);
+                                _context.SYS_USER_ROLE.Add(role);
                                 _context.Entry(role).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                _context.USERs.Attach(_md);
+                                _context.SYS_USER.Attach(_md);
                                 _context.Entry(_md).State = EntityState.Modified;
-                                var role = _context.USER_ROLE.FirstOrDefault(m => m.user_id == model.ID);
+                                var role = _context.SYS_USER_ROLE.FirstOrDefault(m => m.user_id == model.ID);
                                 role.role_id = model.RoleID;
-                                _context.USER_ROLE.Attach(role);
+                                _context.SYS_USER_ROLE.Attach(role);
                                 _context.Entry(role).State = EntityState.Modified;
                             }
                             _context.SaveChanges();
@@ -271,7 +271,7 @@ namespace TDH.Services.System
                     {
                         try
                         {
-                            USER _md = _context.USERs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -279,7 +279,7 @@ namespace TDH.Services.System
                             _md.locked = model.Locked;
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
-                            _context.USERs.Attach(_md);
+                            _context.SYS_USER.Attach(_md);
                             _context.Entry(_md).State = EntityState.Modified;
                             _context.SaveChanges();
                             trans.Commit();
@@ -319,7 +319,7 @@ namespace TDH.Services.System
                     {
                         try
                         {
-                            USER _md = _context.USERs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -327,13 +327,13 @@ namespace TDH.Services.System
                             _md.deleted = true;
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
-                            _context.USERs.Attach(_md);
+                            _context.SYS_USER.Attach(_md);
                             _context.Entry(_md).State = EntityState.Modified;
                             //Role
-                            var _lRole = _context.USER_ROLE.Where(m => m.user_id == model.ID);
+                            var _lRole = _context.SYS_USER_ROLE.Where(m => m.user_id == model.ID);
                             if (_lRole.Count() > 0)
                             {
-                                _context.USER_ROLE.RemoveRange(_lRole);
+                                _context.SYS_USER_ROLE.RemoveRange(_lRole);
                             }
                             _context.SaveChanges();
                             trans.Commit();
@@ -371,20 +371,20 @@ namespace TDH.Services.System
                 using (var _context = new TDHEntities())
                 {
                     string _password = Utils.Security.PasswordSecurityHelper.GetHashedPassword(model.Password);
-                    USER _md = _context.USERs.FirstOrDefault(m => m.user_name == model.UserName && m.password == _password && !m.deleted && !m.locked);
+                    SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.SYS_USER_name == model.UserName && m.password == _password && !m.deleted && !m.locked);
                     if (_md == null)
                     {
                         return _return;
                     }
                     _md.last_login = DateTime.Now;
-                    _context.USERs.Attach(_md);
+                    _context.SYS_USER.Attach(_md);
                     _context.Entry(_md).State = EntityState.Modified;
                     _context.SaveChanges();
                     //
                     return new UserModel()
                     {
                         ID = _md.id,
-                        UserName = _md.user_name,
+                        UserName = _md.SYS_USER_name,
                     };
                 }
             }
@@ -407,11 +407,11 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from u in _context.USERs
-                                 join ur in _context.USER_ROLE on u.id equals ur.user_id
-                                 join r in _context.ROLEs on ur.role_id equals r.id
-                                 join dt in _context.ROLE_DETAIL on r.id equals dt.role_id
-                                 join f in _context.FUNCTIONs on dt.function_code equals f.code
+                    var _list = (from u in _context.SYS_USER
+                                 join ur in _context.SYS_USER_ROLE on u.id equals ur.user_id
+                                 join r in _context.SYS_ROLE on ur.role_id equals r.id
+                                 join dt in _context.SYS_ROLE_DETAIL on r.id equals dt.role_id
+                                 join f in _context.SYS_FUNCTION on dt.function_code equals f.code
                                  where dt.view && u.id == userID && r.publish & !r.deleted
                                  orderby f.ordering descending
                                  select new { f.code, f.title, f.area, f.controller, f.action }).ToList();

@@ -41,7 +41,7 @@ namespace TDH.Services.System
                 List<ErrorLogModel> _list = new List<ErrorLogModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _lData = _context.ERROR_LOG.Select(m => new { m.id, m.file_name, m.method_name, m.message, m.create_date }).OrderByDescending(m => m.create_date).ToList();
+                    var _lData = _context.WEB_ERROR_LOG.Select(m => new { m.id, m.file_name, m.method_name, m.message, m.create_date }).OrderByDescending(m => m.create_date).ToList();
 
                     _itemResponse.draw = request.draw;
                     _itemResponse.recordsTotal = _lData.Count;
@@ -118,7 +118,7 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _item = _context.ERROR_LOG.FirstOrDefault(m => m.id == model.ID);
+                    var _item = _context.WEB_ERROR_LOG.FirstOrDefault(m => m.id == model.ID);
                     if (_item != null)
                     {
                         _return = new ErrorLogModel()

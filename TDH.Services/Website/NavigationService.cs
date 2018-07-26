@@ -43,7 +43,7 @@ namespace TDH.Services.Website
                 List<NavigationModel> _list = new List<NavigationModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _lData = _context.NAVIGATIONs.Where(m => !m.deleted).OrderBy(m => m.ordering).Select(m => new
+                    var _lData = _context.WEB_NAVIGATION.Where(m => !m.deleted).OrderBy(m => m.ordering).Select(m => new
                     {
                         m.id,
                         m.title,
@@ -67,7 +67,7 @@ namespace TDH.Services.Website
                     int _count = 0;
                     foreach (var item in _lData)
                     {
-                        _count = _context.CATEGORies.Count(m => m.navigation_id == item.id && !m.deleted);
+                        _count = _context.WEB_CATEGORY.Count(m => m.navigation_id == item.id && !m.deleted);
                         _list.Add(new NavigationModel()
                         {
                             ID = item.id,
@@ -131,7 +131,7 @@ namespace TDH.Services.Website
                 List<NavigationModel> _return = new List<NavigationModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _list = _context.NAVIGATIONs.Where(m => !m.deleted).OrderByDescending(m => m.ordering).ToList();
+                    var _list = _context.WEB_NAVIGATION.Where(m => !m.deleted).OrderByDescending(m => m.ordering).ToList();
                     foreach (var item in _list)
                     {
                         _return.Add(new NavigationModel() { ID = item.id, Title = item.title });
@@ -159,7 +159,7 @@ namespace TDH.Services.Website
                 List<NavigationModel> _return = new List<NavigationModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _list = _context.NAVIGATIONs.Where(m => !m.deleted && m.no_child).OrderByDescending(m => m.ordering).ToList();
+                    var _list = _context.WEB_NAVIGATION.Where(m => !m.deleted && m.no_child).OrderByDescending(m => m.ordering).ToList();
                     foreach (var item in _list)
                     {
                         _return.Add(new NavigationModel() { ID = item.id, Title = item.title });
@@ -187,7 +187,7 @@ namespace TDH.Services.Website
                 List<NavigationModel> _return = new List<NavigationModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _list = _context.NAVIGATIONs.Where(m => !m.deleted && !m.no_child).OrderByDescending(m => m.ordering).ToList();
+                    var _list = _context.WEB_NAVIGATION.Where(m => !m.deleted && !m.no_child).OrderByDescending(m => m.ordering).ToList();
                     foreach (var item in _list)
                     {
                         _return.Add(new NavigationModel() { ID = item.id, Title = item.title });
@@ -214,7 +214,7 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    NAVIGATION _md = _context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    WEB_NAVIGATION _md = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
@@ -266,14 +266,14 @@ namespace TDH.Services.Website
                     {
                         try
                         {
-                            NAVIGATION _md = new NAVIGATION();
+                            WEB_NAVIGATION _md = new WEB_NAVIGATION();
                             if (model.Insert)
                             {
                                 _md.id = Guid.NewGuid();
                             }
                             else
                             {
-                                _md = _context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -301,14 +301,14 @@ namespace TDH.Services.Website
                             {
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
-                                _context.NAVIGATIONs.Add(_md);
+                                _context.WEB_NAVIGATION.Add(_md);
                                 _context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                _context.NAVIGATIONs.Attach(_md);
+                                _context.WEB_NAVIGATION.Attach(_md);
                                 _context.Entry(_md).State = EntityState.Modified;
                             }
                             _context.SaveChanges();
@@ -356,7 +356,7 @@ namespace TDH.Services.Website
                     {
                         try
                         {
-                            NAVIGATION _md = _context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            WEB_NAVIGATION _md = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -364,7 +364,7 @@ namespace TDH.Services.Website
                             _md.publish = model.Publish;
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
-                            _context.NAVIGATIONs.Attach(_md);
+                            _context.WEB_NAVIGATION.Attach(_md);
                             _context.Entry(_md).State = EntityState.Modified;
                             _context.SaveChanges();
                             trans.Commit();
@@ -404,7 +404,7 @@ namespace TDH.Services.Website
                     {
                         try
                         {
-                            NAVIGATION _md = _context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            WEB_NAVIGATION _md = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -412,7 +412,7 @@ namespace TDH.Services.Website
                             _md.deleted = true;
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
-                            _context.NAVIGATIONs.Attach(_md);
+                            _context.WEB_NAVIGATION.Attach(_md);
                             _context.Entry(_md).State = EntityState.Modified;
                             _context.SaveChanges();
                             trans.Commit();
@@ -448,12 +448,12 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    NAVIGATION _md = _context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    WEB_NAVIGATION _md = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _cate = _context.CATEGORies.FirstOrDefault(m => m.navigation_id == model.ID && !m.deleted);
+                    var _cate = _context.WEB_CATEGORY.FirstOrDefault(m => m.navigation_id == model.ID && !m.deleted);
                     if (_cate != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);

@@ -10,6 +10,9 @@ using Utils;
 
 namespace TDH.Services.Website
 {
+    /// <summary>
+    /// Post service
+    /// </summary>
     public class PostService
     {
         #region " [ Properties ] "
@@ -24,8 +27,8 @@ namespace TDH.Services.Website
         /// <summary>
         /// Get list data using jquery datatable
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="userID">User id</param>
+        /// <param name="request">Jquery datatable request</param>
+        /// <param name="userID">User identifier</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -36,9 +39,9 @@ namespace TDH.Services.Website
                 DataTableResponse<PostModel> _itemResponse = new DataTableResponse<PostModel>();
                 //List of data
                 List<PostModel> _list = new List<PostModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in context.POSTs
+                    var _lData = (from m in _context.POSTs
                                   where !m.deleted
                                   orderby m.create_date descending
                                   select new
@@ -61,12 +64,12 @@ namespace TDH.Services.Website
                         _cateTitle = "";
                         if (item.is_navigation)
                         {
-                            NAVIGATION _nav = context.NAVIGATIONs.FirstOrDefault(m => m.id == item.navigation_id);
+                            NAVIGATION _nav = _context.NAVIGATIONs.FirstOrDefault(m => m.id == item.navigation_id);
                             _cateTitle = _nav.title;
                         }
                         else
                         {
-                            CATEGORY _cate = context.CATEGORies.FirstOrDefault(m => m.id == item.category_id);
+                            CATEGORY _cate = _context.CATEGORies.FirstOrDefault(m => m.id == item.category_id);
                             _cateTitle = _cate.title;
                         }
                         _list.Add(new PostModel()
@@ -127,22 +130,21 @@ namespace TDH.Services.Website
                 Log.WriteLog(FILE_NAME, "List", userID, ex);
                 throw new ApplicationException();
             }
-
             return _return;
         }
 
         /// <summary>
         /// Get item
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Post model</param>
         /// <returns>PostModel. Throw exception if not found or get some error</returns>
         public PostModel GetItemByID(PostModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    POST _md = context.POSTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    POST _md = _context.POSTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
@@ -185,15 +187,15 @@ namespace TDH.Services.Website
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Post model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(PostModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
@@ -204,7 +206,7 @@ namespace TDH.Services.Website
                             }
                             else
                             {
-                                _md = context.POSTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = _context.POSTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -243,17 +245,17 @@ namespace TDH.Services.Website
                             {
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
-                                context.POSTs.Add(_md);
-                                context.Entry(_md).State = EntityState.Added;
+                                _context.POSTs.Add(_md);
+                                _context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                context.POSTs.Attach(_md);
-                                context.Entry(_md).State = EntityState.Modified;
+                                _context.POSTs.Attach(_md);
+                                _context.Entry(_md).State = EntityState.Modified;
                             }
-                            context.SaveChanges();
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -264,7 +266,6 @@ namespace TDH.Services.Website
                             throw new ApplicationException();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -287,19 +288,19 @@ namespace TDH.Services.Website
         /// <summary>
         /// Publish
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Post model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Publish(PostModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            POST _md = context.POSTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            POST _md = _context.POSTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -307,9 +308,9 @@ namespace TDH.Services.Website
                             _md.publish = model.Publish;
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
-                            context.POSTs.Attach(_md);
-                            context.Entry(_md).State = EntityState.Modified;
-                            context.SaveChanges();
+                            _context.POSTs.Attach(_md);
+                            _context.Entry(_md).State = EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -335,19 +336,19 @@ namespace TDH.Services.Website
         /// <summary>
         /// Delete
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Post model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Delete(PostModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            POST _md = context.POSTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            POST _md = _context.POSTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -355,9 +356,9 @@ namespace TDH.Services.Website
                             _md.deleted = true;
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
-                            context.POSTs.Attach(_md);
-                            context.Entry(_md).State = EntityState.Modified;
-                            context.SaveChanges();
+                            _context.POSTs.Attach(_md);
+                            _context.Entry(_md).State = EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -379,6 +380,5 @@ namespace TDH.Services.Website
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
-
     }
 }

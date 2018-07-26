@@ -12,6 +12,9 @@ using Utils.JqueryDatatable;
 
 namespace TDH.Services.System
 {
+    /// <summary>
+    /// Role service
+    /// </summary>
     public class RoleService
     {
 

@@ -12,6 +12,9 @@ using Utils.JqueryDatatable;
 
 namespace TDH.Services.Website
 {
+    /// <summary>
+    /// Navigation service
+    /// </summary>
     public class NavigationService
     {
         #region " [ Properties ] "
@@ -26,8 +29,8 @@ namespace TDH.Services.Website
         /// <summary>
         /// Get list data using jquery datatable
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="userID">User id</param>
+        /// <param name="request">Jquery datatable request</param>
+        /// <param name="userID">User identifier</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -38,9 +41,9 @@ namespace TDH.Services.Website
                 DataTableResponse<NavigationModel> _itemResponse = new DataTableResponse<NavigationModel>();
                 //List of data
                 List<NavigationModel> _list = new List<NavigationModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lData = context.NAVIGATIONs.Where(m => !m.deleted).OrderBy(m => m.ordering).Select(m => new
+                    var _lData = _context.NAVIGATIONs.Where(m => !m.deleted).OrderBy(m => m.ordering).Select(m => new
                     {
                         m.id,
                         m.title,
@@ -64,7 +67,7 @@ namespace TDH.Services.Website
                     int _count = 0;
                     foreach (var item in _lData)
                     {
-                        _count = context.CATEGORies.Count(m => m.navigation_id == item.id && !m.deleted);
+                        _count = _context.CATEGORies.Count(m => m.navigation_id == item.id && !m.deleted);
                         _list.Add(new NavigationModel()
                         {
                             ID = item.id,
@@ -113,22 +116,22 @@ namespace TDH.Services.Website
                 Log.WriteLog(FILE_NAME, "List", userID, ex);
                 throw new ApplicationException();
             }
-
             return _return;
         }
 
         /// <summary>
         /// Get all item without deleted
         /// </summary>
-        /// <returns></returns>
+        /// <param name="userID">The user identifier</param>
+        /// <returns>List<NavigationModel></returns>
         public List<NavigationModel> GetAll(Guid userID)
         {
             try
             {
                 List<NavigationModel> _return = new List<NavigationModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = context.NAVIGATIONs.Where(m => !m.deleted).OrderByDescending(m => m.ordering).ToList();
+                    var _list = _context.NAVIGATIONs.Where(m => !m.deleted).OrderByDescending(m => m.ordering).ToList();
                     foreach (var item in _list)
                     {
                         _return.Add(new NavigationModel() { ID = item.id, Title = item.title });
@@ -147,15 +150,16 @@ namespace TDH.Services.Website
         /// <summary>
         /// Get all item with no child item and without deleted
         /// </summary>
-        /// <returns></returns>
+        /// <param name="userID">The user identifier</param>
+        /// <returns>List<NavigationModel></returns>
         public List<NavigationModel> GetAllWithChild(Guid userID)
         {
             try
             {
                 List<NavigationModel> _return = new List<NavigationModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = context.NAVIGATIONs.Where(m => !m.deleted && m.no_child).OrderByDescending(m => m.ordering).ToList();
+                    var _list = _context.NAVIGATIONs.Where(m => !m.deleted && m.no_child).OrderByDescending(m => m.ordering).ToList();
                     foreach (var item in _list)
                     {
                         _return.Add(new NavigationModel() { ID = item.id, Title = item.title });
@@ -174,15 +178,16 @@ namespace TDH.Services.Website
         /// <summary>
         /// Get all item with no child item and without deleted
         /// </summary>
-        /// <returns></returns>
+        /// <param name="userID">The user identifier</param>
+        /// <returns>List<NavigationModel></returns>
         public List<NavigationModel> GetAllWithNoChild(Guid userID)
         {
             try
             {
                 List<NavigationModel> _return = new List<NavigationModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = context.NAVIGATIONs.Where(m => !m.deleted && !m.no_child).OrderByDescending(m => m.ordering).ToList();
+                    var _list = _context.NAVIGATIONs.Where(m => !m.deleted && !m.no_child).OrderByDescending(m => m.ordering).ToList();
                     foreach (var item in _list)
                     {
                         _return.Add(new NavigationModel() { ID = item.id, Title = item.title });
@@ -201,15 +206,15 @@ namespace TDH.Services.Website
         /// <summary>
         /// Get item
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Navigation model</param>
         /// <returns>NavigationModel. Throw exception if not found or get some error</returns>
         public NavigationModel GetItemByID(NavigationModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    NAVIGATION _md = context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    NAVIGATION _md = _context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
@@ -249,15 +254,15 @@ namespace TDH.Services.Website
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(NavigationModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
@@ -268,7 +273,7 @@ namespace TDH.Services.Website
                             }
                             else
                             {
-                                _md = context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = _context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -296,17 +301,17 @@ namespace TDH.Services.Website
                             {
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
-                                context.NAVIGATIONs.Add(_md);
-                                context.Entry(_md).State = EntityState.Added;
+                                _context.NAVIGATIONs.Add(_md);
+                                _context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                context.NAVIGATIONs.Attach(_md);
-                                context.Entry(_md).State = EntityState.Modified;
+                                _context.NAVIGATIONs.Attach(_md);
+                                _context.Entry(_md).State = EntityState.Modified;
                             }
-                            context.SaveChanges();
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -317,7 +322,6 @@ namespace TDH.Services.Website
                             throw new ApplicationException();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -340,19 +344,19 @@ namespace TDH.Services.Website
         /// <summary>
         /// Publish
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Publish(NavigationModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            NAVIGATION _md = context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            NAVIGATION _md = _context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -360,9 +364,9 @@ namespace TDH.Services.Website
                             _md.publish = model.Publish;
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
-                            context.NAVIGATIONs.Attach(_md);
-                            context.Entry(_md).State = EntityState.Modified;
-                            context.SaveChanges();
+                            _context.NAVIGATIONs.Attach(_md);
+                            _context.Entry(_md).State = EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -388,19 +392,19 @@ namespace TDH.Services.Website
         /// <summary>
         /// Delete
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Delete(NavigationModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            NAVIGATION _md = context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            NAVIGATION _md = _context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -408,9 +412,9 @@ namespace TDH.Services.Website
                             _md.deleted = true;
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
-                            context.NAVIGATIONs.Attach(_md);
-                            context.Entry(_md).State = EntityState.Modified;
-                            context.SaveChanges();
+                            _context.NAVIGATIONs.Attach(_md);
+                            _context.Entry(_md).State = EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -421,7 +425,6 @@ namespace TDH.Services.Website
                             throw new ApplicationException();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -437,20 +440,20 @@ namespace TDH.Services.Website
         /// <summary>
         /// Check Delete item
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper CheckDelete(NavigationModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    NAVIGATION _md = context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    NAVIGATION _md = _context.NAVIGATIONs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _cate = context.CATEGORies.FirstOrDefault(m => m.navigation_id == model.ID && !m.deleted);
+                    var _cate = _context.CATEGORies.FirstOrDefault(m => m.navigation_id == model.ID && !m.deleted);
                     if (_cate != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
@@ -466,6 +469,5 @@ namespace TDH.Services.Website
             }
             return ResponseStatusCodeHelper.OK;
         }
-
     }
 }

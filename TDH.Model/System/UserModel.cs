@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TDH.Model.System
 {
+    /// <summary>
+    /// User model
+    /// </summary>
     public class UserModel : Utils.Database.BaseModel
     {
         /// <summary>

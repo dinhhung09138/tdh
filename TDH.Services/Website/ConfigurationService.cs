@@ -24,8 +24,8 @@ namespace TDH.Services.Website
         /// <summary>
         /// Get list data using jquery datatable
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="userID">User id</param>
+        /// <param name="request">Jquery datatable request</param>
+        /// <param name="userID">User identifier</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -36,9 +36,9 @@ namespace TDH.Services.Website
                 DataTableResponse<ConfigurationModel> _itemResponse = new DataTableResponse<ConfigurationModel>();
                 //List of data
                 List<ConfigurationModel> _list = new List<ConfigurationModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lData = context.CONFIGURATIONs.ToList();
+                    var _lData = _context.CONFIGURATIONs.ToList();
 
                     _itemResponse.draw = request.draw;
                     _itemResponse.recordsTotal = _lData.Count;
@@ -95,22 +95,21 @@ namespace TDH.Services.Website
                 Log.WriteLog(FILE_NAME, "List", userID, ex);
                 throw new ApplicationException();
             }
-
             return _return;
         }
 
         /// <summary>
         /// Get item
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns>RoleModel. Throw exception if not found or get some error</returns>
+        /// <param name="model">Configuration model</param>
+        /// <returns>ConfigurationModel. Throw exception if not found or get some error</returns>
         public ConfigurationModel GetItemByID(ConfigurationModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    CONFIGURATION _md = context.CONFIGURATIONs.FirstOrDefault(m => m.key == model.Key);
+                    CONFIGURATION _md = _context.CONFIGURATIONs.FirstOrDefault(m => m.key == model.Key);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
@@ -134,19 +133,19 @@ namespace TDH.Services.Website
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Configuration model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(ConfigurationModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            CONFIGURATION _md = context.CONFIGURATIONs.FirstOrDefault(m => m.key == model.Key);
+                            CONFIGURATION _md = _context.CONFIGURATIONs.FirstOrDefault(m => m.key == model.Key);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -154,9 +153,9 @@ namespace TDH.Services.Website
                             _md.key = model.Key;
                             _md.description = model.Description;
                             _md.value = model.Value;
-                            context.CONFIGURATIONs.Attach(_md);
-                            context.Entry(_md).State = EntityState.Modified;
-                            context.SaveChanges();
+                            _context.CONFIGURATIONs.Attach(_md);
+                            _context.Entry(_md).State = EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -167,7 +166,6 @@ namespace TDH.Services.Website
                             throw new ApplicationException();
                         }
                     }
-
                 }
             }
             catch (Exception ex)

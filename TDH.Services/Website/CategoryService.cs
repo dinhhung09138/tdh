@@ -10,6 +10,9 @@ using Utils.JqueryDatatable;
 
 namespace TDH.Services.Website
 {
+    /// <summary>
+    /// Category services class
+    /// </summary>
     public class CategoryService
     {
         #region " [ Properties ] "
@@ -24,8 +27,8 @@ namespace TDH.Services.Website
         /// <summary>
         /// Get list data using jquery datatable
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="userID">User id</param>
+        /// <param name="request">Jquery datatable request</param>
+        /// <param name="userID">User identifier</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -36,10 +39,10 @@ namespace TDH.Services.Website
                 DataTableResponse<CategoryModel> _itemResponse = new DataTableResponse<CategoryModel>();
                 //List of data
                 List<CategoryModel> _list = new List<CategoryModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in context.CATEGORies
-                                  join n in context.NAVIGATIONs on m.navigation_id equals n.id
+                    var _lData = (from m in _context.CATEGORies
+                                  join n in _context.NAVIGATIONs on m.navigation_id equals n.id
                                   where !n.deleted && !m.deleted && request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.navigation_id.ToString())
                                   select new
                                   {
@@ -68,7 +71,7 @@ namespace TDH.Services.Website
                     int _count = 0;
                     foreach (var item in _lData)
                     {
-                        _count = context.POSTs.Count(m => m.category_id == item.id && !m.deleted);
+                        _count = _context.POSTs.Count(m => m.category_id == item.id && !m.deleted);
                         _list.Add(new CategoryModel()
                         {
                             ID = item.id,
@@ -121,23 +124,23 @@ namespace TDH.Services.Website
                 Log.WriteLog(FILE_NAME, "List", userID, ex);
                 throw new ApplicationException();
             }
-
             return _return;
         }
 
         /// <summary>
         /// Get all item without deleted
         /// </summary>
-        /// <returns></returns>
+        /// <param name="userID">The user identifier</param>
+        /// <returns>List<CategoryModel></returns>
         public List<CategoryModel> GetAll(Guid userID)
         {
             try
             {
                 List<CategoryModel> _return = new List<CategoryModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.CATEGORies
-                                 join n in context.NAVIGATIONs on m.navigation_id equals n.id
+                    var _list = (from m in _context.CATEGORies
+                                 join n in _context.NAVIGATIONs on m.navigation_id equals n.id
                                  where n.publish && !n.deleted && !m.deleted && m.publish
                                  orderby m.ordering descending
                                  select new
@@ -163,20 +166,20 @@ namespace TDH.Services.Website
         /// <summary>
         /// Get item
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Category model</param>
         /// <returns>CategoryModel. Throw exception if not found or get some error</returns>
         public CategoryModel GetItemByID(CategoryModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    CATEGORY _md = context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    CATEGORY _md = _context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _nav = context.NAVIGATIONs.FirstOrDefault(m => m.id == _md.navigation_id);
+                    var _nav = _context.NAVIGATIONs.FirstOrDefault(m => m.id == _md.navigation_id);
                     return new CategoryModel()
                     {
                         ID = _md.id,
@@ -214,15 +217,15 @@ namespace TDH.Services.Website
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(CategoryModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
@@ -233,7 +236,7 @@ namespace TDH.Services.Website
                             }
                             else
                             {
-                                _md = context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = _context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -262,17 +265,17 @@ namespace TDH.Services.Website
                             {
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
-                                context.CATEGORies.Add(_md);
-                                context.Entry(_md).State = EntityState.Added;
+                                _context.CATEGORies.Add(_md);
+                                _context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                context.CATEGORies.Attach(_md);
-                                context.Entry(_md).State = EntityState.Modified;
+                                _context.CATEGORies.Attach(_md);
+                                _context.Entry(_md).State = EntityState.Modified;
                             }
-                            context.SaveChanges();
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -283,7 +286,6 @@ namespace TDH.Services.Website
                             throw new ApplicationException();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -306,19 +308,19 @@ namespace TDH.Services.Website
         /// <summary>
         /// Publish
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Publish(CategoryModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            CATEGORY _md = context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            CATEGORY _md = _context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -326,9 +328,9 @@ namespace TDH.Services.Website
                             _md.publish = model.Publish;
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
-                            context.CATEGORies.Attach(_md);
-                            context.Entry(_md).State = EntityState.Modified;
-                            context.SaveChanges();
+                            _context.CATEGORies.Attach(_md);
+                            _context.Entry(_md).State = EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -354,19 +356,19 @@ namespace TDH.Services.Website
         /// <summary>
         /// Publish
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper OnNavigation(CategoryModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            CATEGORY _md = context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            CATEGORY _md = _context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -374,9 +376,9 @@ namespace TDH.Services.Website
                             _md.show_on_nav = model.ShowOnNav;
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
-                            context.CATEGORies.Attach(_md);
-                            context.Entry(_md).State = EntityState.Modified;
-                            context.SaveChanges();
+                            _context.CATEGORies.Attach(_md);
+                            _context.Entry(_md).State = EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -402,19 +404,19 @@ namespace TDH.Services.Website
         /// <summary>
         /// Delete
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Delete(CategoryModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            CATEGORY _md = context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            CATEGORY _md = _context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -422,9 +424,9 @@ namespace TDH.Services.Website
                             _md.deleted = true;
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
-                            context.CATEGORies.Attach(_md);
-                            context.Entry(_md).State = EntityState.Modified;
-                            context.SaveChanges();
+                            _context.CATEGORies.Attach(_md);
+                            _context.Entry(_md).State = EntityState.Modified;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -435,7 +437,6 @@ namespace TDH.Services.Website
                             throw new ApplicationException();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -451,21 +452,21 @@ namespace TDH.Services.Website
         /// <summary>
         /// Check Delete
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper CheckDelete(CategoryModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
 
-                    CATEGORY _md = context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    CATEGORY _md = _context.CATEGORies.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _product = context.POSTs.FirstOrDefault(m => m.category_id == model.ID && !m.deleted);
+                    var _product = _context.POSTs.FirstOrDefault(m => m.category_id == model.ID && !m.deleted);
                     if (_product != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
@@ -481,6 +482,5 @@ namespace TDH.Services.Website
             }
             return ResponseStatusCodeHelper.OK;
         }
-
     }
 }

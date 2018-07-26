@@ -10,6 +10,9 @@ using Utils.JqueryDatatable;
 
 namespace TDH.Services.Website
 {
+    /// <summary>
+    /// Home navigation service
+    /// </summary>
     public class HomeNavigationService
     {
         #region " [ Properties ] "
@@ -24,8 +27,8 @@ namespace TDH.Services.Website
         /// <summary>
         /// Get list data using jquery datatable
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="userID">User id</param>
+        /// <param name="request">Jquery datatable request</param>
+        /// <param name="userID">User identififer</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -36,9 +39,9 @@ namespace TDH.Services.Website
                 DataTableResponse<HomeNavigationModel> _itemResponse = new DataTableResponse<HomeNavigationModel>();
                 //List of data
                 List<HomeNavigationModel> _list = new List<HomeNavigationModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in context.NAVIGATIONs
+                    var _lData = (from m in _context.NAVIGATIONs
                                   where !m.deleted && m.publish
                                   select new
                                   {
@@ -61,7 +64,7 @@ namespace TDH.Services.Website
                     {
                         _selected = false;
                         _ordering = 0;
-                        var _cate = context.HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == item.id);
+                        var _cate = _context.HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == item.id);
                         if (_cate != null)
                         {
                             _selected = true;
@@ -108,26 +111,25 @@ namespace TDH.Services.Website
                 Log.WriteLog(FILE_NAME, "List", userID, ex);
                 throw new ApplicationException();
             }
-
             return _return;
         }
 
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Home navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(HomeNavigationModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            HOME_NAVIGATION _md = _md = context.HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
+                            HOME_NAVIGATION _md = _md = _context.HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
                             if (!model.Selected)
                             {
                                 return Delete(model);
@@ -140,16 +142,16 @@ namespace TDH.Services.Website
                                     navigation_id = model.NavigationID,
                                     ordering = 1
                                 };
-                                context.HOME_NAVIGATION.Add(_md);
-                                context.Entry(_md).State = EntityState.Added;
+                                _context.HOME_NAVIGATION.Add(_md);
+                                _context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.ordering = model.Ordering;
-                                context.HOME_NAVIGATION.Attach(_md);
-                                context.Entry(_md).State = EntityState.Modified;
+                                _context.HOME_NAVIGATION.Attach(_md);
+                                _context.Entry(_md).State = EntityState.Modified;
                             }
-                            context.SaveChanges();
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -160,7 +162,6 @@ namespace TDH.Services.Website
                             throw new ApplicationException();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -176,26 +177,26 @@ namespace TDH.Services.Website
         /// <summary>
         /// Delete
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Home navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Delete(HomeNavigationModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            HOME_NAVIGATION _md = context.HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
+                            HOME_NAVIGATION _md = _context.HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
                             }
-                            context.HOME_NAVIGATION.Remove(_md);
-                            context.Entry(_md).State = EntityState.Deleted;
-                            context.SaveChanges();
+                            _context.HOME_NAVIGATION.Remove(_md);
+                            _context.Entry(_md).State = EntityState.Deleted;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -205,7 +206,6 @@ namespace TDH.Services.Website
                             throw new ApplicationException();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -217,6 +217,5 @@ namespace TDH.Services.Website
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
-
     }
 }

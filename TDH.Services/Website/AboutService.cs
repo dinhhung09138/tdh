@@ -8,6 +8,9 @@ using Utils;
 
 namespace TDH.Services.Website
 {
+    /// <summary>
+    /// About service
+    /// </summary>
     public class AboutService
     {
         #region " [ Properties ] "
@@ -22,15 +25,15 @@ namespace TDH.Services.Website
         /// <summary>
         /// Get item
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">About model</param>
         /// <returns>AboutModel. Throw exception if not found or get some error</returns>
         public AboutModel GetItemByID(AboutModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    ABOUT _md = context.ABOUTs.FirstOrDefault(m => !m.deleted);
+                    ABOUT _md = _context.ABOUTs.FirstOrDefault(m => !m.deleted);
                     if (_md == null)
                     {
                         _md = new ABOUT()
@@ -54,9 +57,9 @@ namespace TDH.Services.Website
                             create_date = DateTime.Now,
                             deleted = false,
                         };
-                        context.ABOUTs.Add(_md);
-                        context.Entry(_md).State = EntityState.Added;
-                        context.SaveChanges();
+                        _context.ABOUTs.Add(_md);
+                        _context.Entry(_md).State = EntityState.Added;
+                        _context.SaveChanges();
                     }
                     return new AboutModel()
                     {
@@ -90,15 +93,15 @@ namespace TDH.Services.Website
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">About model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(AboutModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
@@ -109,7 +112,7 @@ namespace TDH.Services.Website
                             }
                             else
                             {
-                                _md = context.ABOUTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = _context.ABOUTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -132,17 +135,17 @@ namespace TDH.Services.Website
                             {
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
-                                context.ABOUTs.Add(_md);
-                                context.Entry(_md).State = EntityState.Added;
+                                _context.ABOUTs.Add(_md);
+                                _context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
-                                context.ABOUTs.Attach(_md);
-                                context.Entry(_md).State = EntityState.Modified;
+                                _context.ABOUTs.Attach(_md);
+                                _context.Entry(_md).State = EntityState.Modified;
                             }
-                            context.SaveChanges();
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -153,7 +156,6 @@ namespace TDH.Services.Website
                             throw new ApplicationException();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -172,6 +174,5 @@ namespace TDH.Services.Website
             }
             return ResponseStatusCodeHelper.Success;
         }
-
     }
 }

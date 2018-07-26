@@ -10,6 +10,9 @@ using Utils.JqueryDatatable;
 
 namespace TDH.Services.Website
 {
+    /// <summary>
+    /// Home category service
+    /// </summary>
     public class HomeCategoryService
     {
         #region " [ Properties ] "
@@ -24,8 +27,8 @@ namespace TDH.Services.Website
         /// <summary>
         /// Get list data using jquery datatable
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="userID">User id</param>
+        /// <param name="request">Jquery datatable request</param>
+        /// <param name="userID">User identififer</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -36,10 +39,10 @@ namespace TDH.Services.Website
                 DataTableResponse<HomeCategoryModel> _itemResponse = new DataTableResponse<HomeCategoryModel>();
                 //List of data
                 List<HomeCategoryModel> _list = new List<HomeCategoryModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in context.CATEGORies
-                                  join n in context.NAVIGATIONs on m.navigation_id equals n.id
+                    var _lData = (from m in _context.CATEGORies
+                                  join n in _context.NAVIGATIONs on m.navigation_id equals n.id
                                   where !n.deleted && !m.deleted && n.publish
                                   select new
                                   {
@@ -64,7 +67,7 @@ namespace TDH.Services.Website
                     {
                         _selected = false;
                         _ordering = 0;
-                        var _cate = context.HOME_CATEGORY.FirstOrDefault(m => m.category_id == item.id);
+                        var _cate = _context.HOME_CATEGORY.FirstOrDefault(m => m.category_id == item.id);
                         if (_cate != null)
                         {
                             _selected = true;
@@ -115,26 +118,25 @@ namespace TDH.Services.Website
                 Log.WriteLog(FILE_NAME, "List", userID, ex);
                 throw new ApplicationException();
             }
-
             return _return;
         }
 
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Home category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(HomeCategoryModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            HOME_CATEGORY _md = _md = context.HOME_CATEGORY.FirstOrDefault(m => m.category_id == model.CategoryID);
+                            HOME_CATEGORY _md = _md = _context.HOME_CATEGORY.FirstOrDefault(m => m.category_id == model.CategoryID);
                             if (!model.Selected)
                             {
                                 return Delete(model);
@@ -147,16 +149,16 @@ namespace TDH.Services.Website
                                     category_id = model.CategoryID,
                                     ordering = 1
                                 };
-                                context.HOME_CATEGORY.Add(_md);
-                                context.Entry(_md).State = EntityState.Added;
+                                _context.HOME_CATEGORY.Add(_md);
+                                _context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.ordering = model.Ordering;
-                                context.HOME_CATEGORY.Attach(_md);
-                                context.Entry(_md).State = EntityState.Modified;
+                                _context.HOME_CATEGORY.Attach(_md);
+                                _context.Entry(_md).State = EntityState.Modified;
                             }
-                            context.SaveChanges();
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -167,7 +169,6 @@ namespace TDH.Services.Website
                             throw new ApplicationException();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -183,26 +184,26 @@ namespace TDH.Services.Website
         /// <summary>
         /// Delete
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Home category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Delete(HomeCategoryModel model)
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            HOME_CATEGORY _md = context.HOME_CATEGORY.FirstOrDefault(m => m.category_id == model.CategoryID);
+                            HOME_CATEGORY _md = _context.HOME_CATEGORY.FirstOrDefault(m => m.category_id == model.CategoryID);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
                             }
-                            context.HOME_CATEGORY.Remove(_md);
-                            context.Entry(_md).State = EntityState.Deleted;
-                            context.SaveChanges();
+                            _context.HOME_CATEGORY.Remove(_md);
+                            _context.Entry(_md).State = EntityState.Deleted;
+                            _context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
@@ -213,7 +214,6 @@ namespace TDH.Services.Website
                             throw new ApplicationException();
                         }
                     }
-
                 }
             }
             catch (Exception ex)
@@ -225,6 +225,5 @@ namespace TDH.Services.Website
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
-
     }
 }

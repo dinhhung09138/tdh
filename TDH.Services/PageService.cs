@@ -47,7 +47,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "getHomeMetaContent", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Source };
             }
         }
 
@@ -82,7 +82,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetListNavigation", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Source };
             }
         }
 
@@ -119,7 +119,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetListNavigationShowOnHomePage", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Source };
             }
         }
 
@@ -157,7 +157,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetListCategoryShowOnHomePage", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Source };
             }
         }
 
@@ -199,7 +199,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetListCategoryOnFooter", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Source };
             }
         }
 
@@ -233,10 +233,10 @@ namespace TDH.Services
                     return _list;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Get2NavigationOnFooter", Guid.NewGuid(), e);
-                throw new UserException();
+                Log.WriteLog(FILE_NAME, "Get2NavigationOnFooter", Guid.NewGuid(), ex);
+                throw new UserException(ex.Message) { Source = ex.Source };
             }
         }
 
@@ -256,7 +256,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetBannerInfor", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
         #endregion
@@ -298,7 +298,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetNavigationInfor", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -338,7 +338,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetCategoryInfor", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -382,7 +382,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetPostInfor", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -406,7 +406,7 @@ namespace TDH.Services
                                              .FirstOrDefault();
                     if (_item == null || _item.is_navigation)
                     {
-                        throw new UserException();
+                        throw new UserException("Item not found");
                     }
                     return new PostViewModel()
                     {
@@ -429,7 +429,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetPostInfor", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -476,7 +476,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetTop4LastedNews", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -523,7 +523,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetTop2Views", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -566,7 +566,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetListCategoryDataByNavigation", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -607,7 +607,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "CheckIsCategoryPage", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -650,7 +650,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetListPostDataByCategory", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -693,7 +693,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "Top6LastedPostByNavigationID", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -732,7 +732,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "Top6LastedPostByCategoryID", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -755,7 +755,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "GetShortIntroAboutMe", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 
@@ -795,7 +795,7 @@ namespace TDH.Services
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "About", Guid.NewGuid(), ex);
-                throw new UserException() { Source = ex.Message };
+                throw new UserException(ex.Message) { Source = ex.Message };
             }
         }
 

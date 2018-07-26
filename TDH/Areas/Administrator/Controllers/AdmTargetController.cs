@@ -8,7 +8,7 @@ using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using Microsoft.AspNet.SignalR.Client;
 using System.Threading.Tasks;
-using TDH.Areas.Administrator.Filters;
+using TDH.Common;
 
 namespace TDH.Areas.Administrator.Controllers
 {
@@ -31,7 +31,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "OverView", UserID, ex);
+                Log.WriteLog(FILE_NAME, "OverView", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -52,7 +52,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "SaveTarget", UserID, ex);
+                Log.WriteLog(FILE_NAME, "SaveTarget", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -65,7 +65,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Dashboard", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Dashboard", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -78,7 +78,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DailyTask", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DailyTask", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -94,7 +94,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Idea", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Idea", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -129,7 +129,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Idea", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Idea", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -154,7 +154,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateIdea", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateIdea", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -186,7 +186,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateIdea", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateIdea", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -210,7 +210,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditIdea", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditIdea", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -242,7 +242,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditIdea", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditIdea", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -271,7 +271,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DeleteIdea", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DeleteIdea", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -303,7 +303,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CheckDeleteIdea", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDeleteIdea", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -334,7 +334,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DetailIdea", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DetailIdea", UserID, ex);
                 throw new HttpException();
             }
         }

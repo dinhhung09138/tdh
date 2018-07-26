@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TDH.Common;
 using TDH.Common.Fillters;
 using TDH.Model.Website;
 using TDH.Services.Website;
@@ -42,7 +43,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Navigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Navigation", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -83,7 +84,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Navigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Navigation", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -119,7 +120,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "SaveNavigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "SaveNavigation", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -141,7 +142,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Category", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Category", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -182,7 +183,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Category", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Category", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -217,7 +218,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "SaveCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "SaveCategory", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -239,7 +240,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Configuration", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Configuration", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -281,7 +282,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Configuration", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Configuration", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -310,7 +311,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditConfiguration", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditConfiguration", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -345,7 +346,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditConfiguration", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditConfiguration", UserID, ex);
                 throw new HttpException();
             }
         }

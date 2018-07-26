@@ -8,11 +8,12 @@ using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using Microsoft.AspNet.SignalR.Client;
 using System.Threading.Tasks;
-using TDH.Areas.Administrator.Filters;
+using TDH.Common.Fillters;
+using TDH.Common;
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    [AjaxExecuteFilter]
+    [AjaxExecuteFilterAttribute]
     public class AdmWorkingController : TDH.Common.BaseController
     {
         #region " [ Properties ] "
@@ -36,7 +37,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Report", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Report", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -71,7 +72,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "Report", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Report", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -96,7 +97,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateReport", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateReport", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -128,7 +129,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CreateReport", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CreateReport", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -153,7 +154,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditReport", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditReport", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -185,7 +186,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "EditReport", UserID, ex);
+                Log.WriteLog(FILE_NAME, "EditReport", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -214,7 +215,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DeleteReport", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DeleteReport", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -246,7 +247,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "CheckDeleteReport", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDeleteReport", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -278,7 +279,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "DetailReport", UserID, ex);
+                Log.WriteLog(FILE_NAME, "DetailReport", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -311,7 +312,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                TDH.Services.Log.WriteLog(FILE_NAME, "SaveReportComment", UserID, ex);
+                Log.WriteLog(FILE_NAME, "SaveReportComment", UserID, ex);
                 throw new HttpException();
             }
         }

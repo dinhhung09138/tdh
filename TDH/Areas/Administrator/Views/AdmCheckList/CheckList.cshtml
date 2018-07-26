@@ -1,0 +1,528 @@
+﻿
+@{
+                /**/
+
+                ViewBag.Title = "CheckList";
+                Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+</script>
+
+
+<div id="checkList" class="container">
+    <div class="row">
+        <div class="col-sm-11">
+            <h2>CheckList</h2>
+        </div>
+        <div class="col-sm-1" style="margin-top:5px;margin-right:-50px">
+            <button type="button" class="btn btn-success"><i class="fa fa-plus" data-target="#addGroupCheckList" data-toggle="modal"></i></button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        Nhom A
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-success"><i class="fa fa-plus" data-target="#addCheckList" data-toggle="modal"></i></button>
+                        <button type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-danger"><i class="fa fa-remove" data-target="#removeModal" data-toggle="modal"></i></button>
+
+                        <div id="removeModal" class="modal fade" tabindex="-1" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Bạn có muốn xóa không</h4>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                        <button type="button" class="btn btn-danger">Xóa</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="todo-list">
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 1</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit" data-target="#editCheckList" data-toggle="modal"></i>
+                                <i class="fa fa-trash-o" data-target="#deleteCheckList" data-toggle="modal"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 2</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 3</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 4</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 5</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        Nhom B
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-success"><i class="fa fa-plus" data-target="#addCheckList" data-toggle="modal"></i></button>
+                        <button type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-danger"><i class="fa fa-remove" data-target="#removeModal" data-toggle="modal"></i></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="todo-list">
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 1</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 2</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 3</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 4</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 5</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        Nhom C
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-success"><i class="fa fa-plus" data-target="#addCheckList" data-toggle="modal"></i></button>
+                        <button type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-danger"><i class="fa fa-remove" data-target="#removeModal" data-toggle="modal"></i></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="todo-list">
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 1</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 2</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 3</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 4</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 5</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="ion ion-clipboard mr-1"></i>
+                        Nhom D
+                    </h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-success"><i class="fa fa-plus" data-target="#addCheckList" data-toggle="modal"></i></button>
+                        <button type="button" class="btn btn-warning"><i class="fa fa-pencil"></i></button>
+                        <button type="button" class="btn btn-danger"><i class="fa fa-remove" data-target="#removeModal" data-toggle="modal"></i></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <ul class="todo-list">
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 1</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 2</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 3</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 4</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li>
+                            <!-- drag handle -->
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <!-- checkbox -->
+                            <input type="checkbox" value="" name="">
+                            <!-- todo text -->
+                            <span class="text">Check list 5</span>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*popup add group checkList*@
+<div id="addGroupCheckList" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Thêm tên nhóm CheckList mới</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Tên nhóm checklist</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-success">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@*popup add checkList*@
+<div id="addCheckList" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Thêm CheckList mới</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Tên checklist</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-success">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@*popup add checkList*@
+<div id="editCheckList" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Sửa CheckList</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Tên checklist</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-success">Save</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@*popup delete checkList*@
+<div id="deleteCheckList" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Bạn có muốn xóa không</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

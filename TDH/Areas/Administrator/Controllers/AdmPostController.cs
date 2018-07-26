@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TDH.Common.Fillters;
+using TDH.Model.Website;
+using TDH.Services.Website;
 using Utils;
 using Utils.JqueryDatatable;
-using TDH.Areas.Administrator.Models;
-using TDH.Areas.Administrator.Filters;
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    [AjaxExecuteFilter]
-    public class AdmPostController : BaseController
+    [AjaxExecuteFilterAttribute]
+    public class AdmPostController : TDH.Common.BaseController
     {
         #region " [ Properties ] "
 
@@ -46,7 +47,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -108,7 +109,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -139,7 +140,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
                 //
                 ViewBag.id = id;
 
@@ -165,7 +166,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -195,7 +196,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -224,7 +225,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -253,7 +254,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _service = new Services.NavigationService();
+                NavigationService _service = new NavigationService();
 
                 #endregion
 
@@ -284,7 +285,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _nServices = new Services.NavigationService();
+                NavigationService _nServices = new NavigationService();
                 ViewBag.navigation = _nServices.GetAll(UserID);
 
                 #endregion
@@ -305,7 +306,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -344,7 +345,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _nServices = new Services.NavigationService();
+                NavigationService _nServices = new NavigationService();
                 //
                 ViewBag.navigation = _nServices.GetAll(UserID);
                 CategoryModel model = new CategoryModel()
@@ -374,7 +375,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -405,8 +406,8 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _nServices = new Services.NavigationService();
-                Services.CategoryService _service = new Services.CategoryService();
+                NavigationService _nServices = new NavigationService();
+                CategoryService _service = new CategoryService();
                 //
                 ViewBag.id = id;
                 ViewBag.navigation = _nServices.GetAll(UserID);
@@ -433,7 +434,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -463,7 +464,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -492,7 +493,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -521,7 +522,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
 
                 #endregion
 
@@ -550,7 +551,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.CategoryService _service = new Services.CategoryService();
+                CategoryService _service = new CategoryService();
                
 
                 #endregion
@@ -596,7 +597,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.PostService _service = new Services.PostService();
+                PostService _service = new PostService();
 
                 #endregion
 
@@ -631,10 +632,10 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _nServices = new Services.NavigationService();
+                NavigationService _nServices = new NavigationService();
                 //
                 ViewBag.navigation = _nServices.GetAll(UserID);
-                Services.CategoryService _cServices = new Services.CategoryService();
+                CategoryService _cServices = new CategoryService();
                 ViewBag.cate = _cServices.GetAll(UserID);
                 PostModel model = new PostModel()
                 {
@@ -664,7 +665,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.PostService _service = new Services.PostService();
+                PostService _service = new PostService();
 
                 #endregion
 
@@ -694,9 +695,9 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.NavigationService _nServices = new Services.NavigationService();
-                Services.CategoryService _cServices = new Services.CategoryService();
-                Services.PostService _service = new Services.PostService();
+                NavigationService _nServices = new NavigationService();
+                CategoryService _cServices = new CategoryService();
+                PostService _service = new PostService();
                 //
                 ViewBag.id = id;
                 ViewBag.navigation = _nServices.GetAll(UserID);
@@ -725,7 +726,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.PostService _service = new Services.PostService();
+                PostService _service = new PostService();
 
                 #endregion
 
@@ -756,7 +757,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.PostService _service = new Services.PostService();
+                PostService _service = new PostService();
 
                 #endregion
 
@@ -785,7 +786,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.PostService _service = new Services.PostService();
+                PostService _service = new PostService();
 
                 #endregion
 
@@ -818,7 +819,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.AboutService _service = new Services.AboutService();
+                AboutService _service = new AboutService();
                 var _model = _service.GetItemByID(new AboutModel() { CreateBy = UserID, Insert = false });
 
                 #endregion
@@ -841,7 +842,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.AboutService _service = new Services.AboutService();
+                AboutService _service = new AboutService();
 
                 #endregion
 

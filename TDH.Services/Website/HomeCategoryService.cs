@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
-using TDH.Models;
-using Utils.JqueryDatatable;
-using TDH.Areas.Administrator.Models;
+using TDH.Common;
+using TDH.DataAccess;
+using TDH.Model.Website;
 using Utils;
-using TDH.Areas.Administrator.Common;
+using Utils.JqueryDatatable;
 
-namespace TDH.Areas.Administrator.Services
+namespace TDH.Services.Website
 {
     public class HomeCategoryService
     {
@@ -16,7 +17,7 @@ namespace TDH.Areas.Administrator.Services
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Administrator/Services/HomeCategoryService.cs";
+        private readonly string FILE_NAME = "Services/HomeCategoryService.cs";
 
         #endregion
 
@@ -35,7 +36,7 @@ namespace TDH.Areas.Administrator.Services
                 DataTableResponse<HomeCategoryModel> _itemResponse = new DataTableResponse<HomeCategoryModel>();
                 //List of data
                 List<HomeCategoryModel> _list = new List<HomeCategoryModel>();
-                using (var context = new chacd26d_trandinhhungEntities())
+                using (var context = new TDHEntities())
                 {
                     var _lData = (from m in context.CATEGORies
                                   join n in context.NAVIGATIONs on m.navigation_id equals n.id
@@ -64,7 +65,7 @@ namespace TDH.Areas.Administrator.Services
                         _selected = false;
                         _ordering = 0;
                         var _cate = context.HOME_CATEGORY.FirstOrDefault(m => m.category_id == item.id);
-                        if(_cate != null)
+                        if (_cate != null)
                         {
                             _selected = true;
                             _ordering = _cate.ordering;
@@ -110,14 +111,14 @@ namespace TDH.Areas.Administrator.Services
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "List", userID, ex);
+                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, "List", userID, ex);
                 throw new ApplicationException();
             }
 
             return _return;
         }
-        
+
         /// <summary>
         /// Save
         /// </summary>
@@ -127,7 +128,7 @@ namespace TDH.Areas.Administrator.Services
         {
             try
             {
-                using (var context = new chacd26d_trandinhhungEntities())
+                using (var context = new TDHEntities())
                 {
                     using (var trans = context.Database.BeginTransaction())
                     {
@@ -138,7 +139,7 @@ namespace TDH.Areas.Administrator.Services
                             {
                                 return Delete(model);
                             }
-                            if(_md == null)
+                            if (_md == null)
                             {
                                 _md = new HOME_CATEGORY()
                                 {
@@ -147,22 +148,22 @@ namespace TDH.Areas.Administrator.Services
                                     ordering = 1
                                 };
                                 context.HOME_CATEGORY.Add(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                                context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.ordering = model.Ordering;
                                 context.HOME_CATEGORY.Attach(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                context.Entry(_md).State = EntityState.Modified;
                             }
                             context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
+                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            TDH.Services.Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
+                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
                             throw new ApplicationException();
                         }
                     }
@@ -171,14 +172,14 @@ namespace TDH.Areas.Administrator.Services
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
+                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
                 throw new ApplicationException();
             }
-            Notifier.Notification(model.CreateBy, Resources.Message.UpdateSuccess, Notifier.TYPE.Success);
+            Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
-        
+
         /// <summary>
         /// Delete
         /// </summary>
@@ -188,7 +189,7 @@ namespace TDH.Areas.Administrator.Services
         {
             try
             {
-                using (var context = new chacd26d_trandinhhungEntities())
+                using (var context = new TDHEntities())
                 {
                     using (var trans = context.Database.BeginTransaction())
                     {
@@ -200,15 +201,15 @@ namespace TDH.Areas.Administrator.Services
                                 throw new FieldAccessException();
                             }
                             context.HOME_CATEGORY.Remove(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Deleted;
+                            context.Entry(_md).State = EntityState.Deleted;
                             context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
+                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            TDH.Services.Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
+                            Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
                             throw new ApplicationException();
                         }
                     }
@@ -217,13 +218,13 @@ namespace TDH.Areas.Administrator.Services
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
+                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
                 throw new ApplicationException();
             }
-            Notifier.Notification(model.CreateBy, Resources.Message.DeleteSuccess, Notifier.TYPE.Success);
+            Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
-        
+
     }
 }

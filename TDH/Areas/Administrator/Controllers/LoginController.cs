@@ -8,7 +8,7 @@ using TDH.Services.System;
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    public class LoginController : BaseController
+    public class LoginController : TDH.Common.BaseController
     {
         [AllowAnonymous]
         public ActionResult Index()

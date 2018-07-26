@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TDH.Common.Fillters;
+using TDH.Model.Website;
+using TDH.Services.Website;
 using Utils;
 using Utils.JqueryDatatable;
-using TDH.Areas.Administrator.Models;
-using TDH.Areas.Administrator.Filters;
 
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    [AjaxExecuteFilter]
-    public class AdmSettingController : BaseController
+    [AjaxExecuteFilterAttribute]
+    public class AdmSettingController : TDH.Common.BaseController
     {
         #region " [ Properties ] "
 
@@ -46,7 +47,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.HomeNavigationService _service = new Services.HomeNavigationService();
+                HomeNavigationService _service = new HomeNavigationService();
 
                 #endregion
 
@@ -81,7 +82,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.HomeNavigationService _service = new Services.HomeNavigationService();
+                HomeNavigationService _service = new HomeNavigationService();
 
                 #endregion
 
@@ -129,7 +130,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.HomeCategoryService _service = new Services.HomeCategoryService();
+                HomeCategoryService _service = new HomeCategoryService();
 
                 #endregion
 
@@ -164,7 +165,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.HomeCategoryService _service = new Services.HomeCategoryService();
+                HomeCategoryService _service = new HomeCategoryService();
 
                 #endregion
 
@@ -212,7 +213,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.ConfigurationService _service = new Services.ConfigurationService();
+                ConfigurationService _service = new ConfigurationService();
 
                 #endregion
 
@@ -247,7 +248,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.ConfigurationService _service = new Services.ConfigurationService();
+                ConfigurationService _service = new ConfigurationService();
                 //
                 ViewBag.id = id;
 
@@ -273,7 +274,7 @@ namespace TDH.Areas.Administrator.Controllers
             {
                 #region " [ Declaration ] "
 
-                Services.ConfigurationService _service = new Services.ConfigurationService();
+                ConfigurationService _service = new ConfigurationService();
 
                 #endregion
 

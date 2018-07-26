@@ -63,6 +63,13 @@
     <Compile Include="System\ErrorLogService.cs" />
     <Compile Include="System\RoleService.cs" />
     <Compile Include="System\UserService.cs" />
+    <Compile Include="Website\AboutService.cs" />
+    <Compile Include="Website\CategoryService.cs" />
+    <Compile Include="Website\ConfigurationService.cs" />
+    <Compile Include="Website\HomeCategoryService.cs" />
+    <Compile Include="Website\HomeNavigationService.cs" />
+    <Compile Include="Website\NavigationService.cs" />
+    <Compile Include="Website\PostService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Working\" />

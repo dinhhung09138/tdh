@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
-using TDH.Models;
+using TDH.Common;
 using Utils.JqueryDatatable;
-using TDH.Areas.Administrator.Models;
+using TDH.Model.Website;
+using TDH.DataAccess;
 using Utils;
-using TDH.Areas.Administrator.Common;
 
-namespace TDH.Areas.Administrator.Services
+namespace TDH.Services.Website
 {
     public class PostService
     {
@@ -16,7 +17,7 @@ namespace TDH.Areas.Administrator.Services
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Administrator/Services/PostService.cs";
+        private readonly string FILE_NAME = "Services/PostService.cs";
 
         #endregion
 
@@ -35,7 +36,7 @@ namespace TDH.Areas.Administrator.Services
                 DataTableResponse<PostModel> _itemResponse = new DataTableResponse<PostModel>();
                 //List of data
                 List<PostModel> _list = new List<PostModel>();
-                using (var context = new chacd26d_trandinhhungEntities())
+                using (var context = new TDHEntities())
                 {
                     var _lData = (from m in context.POSTs
                                   where !m.deleted
@@ -53,7 +54,7 @@ namespace TDH.Areas.Administrator.Services
                                   }).ToList();
 
                     _itemResponse.draw = request.draw;
-                    _itemResponse.recordsTotal = _lData.Count;                   
+                    _itemResponse.recordsTotal = _lData.Count;
                     string _cateTitle = "";
                     foreach (var item in _lData)
                     {
@@ -122,8 +123,8 @@ namespace TDH.Areas.Administrator.Services
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "List", userID, ex);
+                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, "List", userID, ex);
                 throw new ApplicationException();
             }
 
@@ -139,7 +140,7 @@ namespace TDH.Areas.Administrator.Services
         {
             try
             {
-                using (var context = new chacd26d_trandinhhungEntities())
+                using (var context = new TDHEntities())
                 {
                     POST _md = context.POSTs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
@@ -175,8 +176,8 @@ namespace TDH.Areas.Administrator.Services
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
+                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
                 throw new ApplicationException();
             }
         }
@@ -190,7 +191,7 @@ namespace TDH.Areas.Administrator.Services
         {
             try
             {
-                using (var context = new chacd26d_trandinhhungEntities())
+                using (var context = new TDHEntities())
                 {
                     using (var trans = context.Database.BeginTransaction())
                     {
@@ -219,7 +220,7 @@ namespace TDH.Areas.Administrator.Services
                             {
                                 _md.category_id = model.CategoryID;
                                 _md.navigation_id = null;
-                            }                            
+                            }
                             _md.title = model.Title;
                             _md.alias = model.MetaTitle.TitleToAlias();
                             _md.description = model.Description;
@@ -243,23 +244,23 @@ namespace TDH.Areas.Administrator.Services
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
                                 context.POSTs.Add(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                                context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
                                 context.POSTs.Attach(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                context.Entry(_md).State = EntityState.Modified;
                             }
                             context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
+                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            TDH.Services.Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
+                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
                             throw new ApplicationException();
                         }
                     }
@@ -268,17 +269,17 @@ namespace TDH.Areas.Administrator.Services
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
+                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
                 throw new ApplicationException();
             }
             if (model.Insert)
             {
-                Notifier.Notification(model.CreateBy, Resources.Message.InsertSuccess, Notifier.TYPE.Success);
+                Notifier.Notification(model.CreateBy, Message.InsertSuccess, Notifier.TYPE.Success);
             }
             else
             {
-                Notifier.Notification(model.CreateBy, Resources.Message.UpdateSuccess, Notifier.TYPE.Success);
+                Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             }
             return ResponseStatusCodeHelper.Success;
         }
@@ -292,7 +293,7 @@ namespace TDH.Areas.Administrator.Services
         {
             try
             {
-                using (var context = new chacd26d_trandinhhungEntities())
+                using (var context = new TDHEntities())
                 {
                     using (var trans = context.Database.BeginTransaction())
                     {
@@ -307,15 +308,15 @@ namespace TDH.Areas.Administrator.Services
                             _md.update_by = model.UpdateBy;
                             _md.update_date = DateTime.Now;
                             context.POSTs.Attach(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            context.Entry(_md).State = EntityState.Modified;
                             context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
+                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            TDH.Services.Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
+                            Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
                             throw new ApplicationException();
                         }
                     }
@@ -323,11 +324,11 @@ namespace TDH.Areas.Administrator.Services
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
+                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
                 throw new ApplicationException();
             }
-            Notifier.Notification(model.CreateBy, Resources.Message.UpdateSuccess, Notifier.TYPE.Success);
+            Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
 
@@ -340,7 +341,7 @@ namespace TDH.Areas.Administrator.Services
         {
             try
             {
-                using (var context = new chacd26d_trandinhhungEntities())
+                using (var context = new TDHEntities())
                 {
                     using (var trans = context.Database.BeginTransaction())
                     {
@@ -355,15 +356,15 @@ namespace TDH.Areas.Administrator.Services
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
                             context.POSTs.Attach(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            context.Entry(_md).State = EntityState.Modified;
                             context.SaveChanges();
                             trans.Commit();
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
+                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            TDH.Services.Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
+                            Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
                             throw new ApplicationException();
                         }
                     }
@@ -371,11 +372,11 @@ namespace TDH.Areas.Administrator.Services
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
+                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
                 throw new ApplicationException();
             }
-            Notifier.Notification(model.CreateBy, Resources.Message.DeleteSuccess, Notifier.TYPE.Success);
+            Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
 

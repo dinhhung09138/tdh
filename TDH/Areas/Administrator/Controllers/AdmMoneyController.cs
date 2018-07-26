@@ -32,7 +32,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// <summary>
         /// Report form
         /// </summary>
-        /// <returns></returns>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Report()
         {
@@ -50,7 +50,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// <summary>
         /// Get data for summary report
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Task<ActionResult></returns>
         [HttpPost]
         public async Task<ActionResult> SummaryReport()
         {
@@ -81,7 +81,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// Get data for summary report
         /// </summary>
         /// <param name="year"></param>
-        /// <returns></returns>
+        /// <returns>Task<ActionResult></returns>
         [HttpPost]
         public async Task<ActionResult> SummaryReportByYear(int year)
         {
@@ -133,8 +133,7 @@ namespace TDH.Areas.Administrator.Controllers
 
         /// <summary>
         /// AccountType form
-        /// Post method
-        /// 
+        /// Post method 
         /// </summary>
         /// <param name="requestData">jquery datatable request</param>
         /// <returns>DataTableResponse<AccountTypeModel></returns>
@@ -176,7 +175,6 @@ namespace TDH.Areas.Administrator.Controllers
 
         /// <summary>
         /// Create AccountType form
-        /// 
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
@@ -206,6 +204,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// Create AccountType form
         /// Post method
         /// </summary>
+        /// <param name="model">Account type model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]

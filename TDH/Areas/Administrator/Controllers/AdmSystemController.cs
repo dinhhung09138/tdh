@@ -78,7 +78,7 @@ namespace TDH.Areas.Administrator.Controllers
                     DataTableResponse<RoleModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<RoleModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
-                //
+                
                 return this.Json(new DataTableResponse<RoleModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -105,7 +105,7 @@ namespace TDH.Areas.Administrator.Controllers
 
                 //Call to service
                 RoleModel model = _service.GetItemByID(new RoleModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true });
-                //
+                
                 return PartialView(model);
             }
             catch (Exception ex)
@@ -115,6 +115,13 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Create role form
+        /// Post method
+        /// </summary>
+        /// <param name="model">Role model</param>
+        /// <param name="fc">Form collection</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateRole(RoleModel model, FormCollection fc)
@@ -133,6 +140,7 @@ namespace TDH.Areas.Administrator.Controllers
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
+
                 #region " [ Permision procesing ] "
 
                 var _lFunction = fc["functionCode"].ToString();
@@ -177,6 +185,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit role form
+        /// </summary>
+        /// <param name="id">Role identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult EditRole(string id)
         {
@@ -185,14 +198,14 @@ namespace TDH.Areas.Administrator.Controllers
                 #region " [ Declaration ] "
 
                 RoleService _service = new RoleService();
-                //
+                
                 ViewBag.id = id;
 
                 #endregion
 
                 //Call to service
                 RoleModel model = _service.GetItemByID(new RoleModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
-                //
+                
                 return PartialView(model);
             }
             catch (Exception ex)
@@ -202,6 +215,13 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit role form
+        /// Post method
+        /// </summary>
+        /// <param name="model">Role model</param>
+        /// <param name="fc">Form collection</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditRole(RoleModel model, FormCollection fc)
@@ -265,6 +285,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Publish role
+        /// </summary>
+        /// <param name="model">Role model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult PublishRole(RoleModel model)
         {
@@ -294,6 +319,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete role
+        /// </summary>
+        /// <param name="model">Role model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult DeleteRole(RoleModel model)
         {
@@ -323,6 +353,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Check delete role
+        /// </summary>
+        /// <param name="model">Role model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult CheckDeleteRole(RoleModel model)
         {
@@ -354,6 +389,10 @@ namespace TDH.Areas.Administrator.Controllers
         
         #region " [ User ]  "
 
+        /// <summary>
+        /// User form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public new ActionResult User()
         {
@@ -364,7 +403,7 @@ namespace TDH.Areas.Administrator.Controllers
                 ViewBag.currentID = UserID;
 
                 #endregion
-                //
+                
                 return PartialView();
             }
             catch (Exception ex)
@@ -374,6 +413,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// User form
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">jquery datatable request</param>
+        /// <returns>DataTableResponse<UserModel></returns>
         [HttpPost]
         public new JsonResult User(CustomDataTableRequestHelper requestData)
         {
@@ -399,7 +444,7 @@ namespace TDH.Areas.Administrator.Controllers
                     DataTableResponse<UserModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<UserModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
-                //
+                
                 return this.Json(new DataTableResponse<UserModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -409,6 +454,10 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Create user form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult CreateUser()
         {
@@ -417,7 +466,7 @@ namespace TDH.Areas.Administrator.Controllers
                 #region " [ Declaration ] "
 
                 RoleService _rService = new RoleService();
-                //
+                
                 ViewBag.Role = _rService.GetAll(UserID);
                 UserModel model = new UserModel()
                 {
@@ -428,8 +477,7 @@ namespace TDH.Areas.Administrator.Controllers
                 ViewBag.currentID = UserID;
 
                 #endregion
-
-                //
+                
                 return PartialView(model);
             }
             catch (Exception ex)
@@ -439,6 +487,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Create user form
+        /// Post method
+        /// </summary>
+        /// <param name="model">User model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateUser(UserModel model)
@@ -470,6 +524,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit user form
+        /// </summary>
+        /// <param name="id">User identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult EditUser(string id)
         {
@@ -479,7 +538,7 @@ namespace TDH.Areas.Administrator.Controllers
 
                 RoleService _rService = new RoleService();
                 UserService _service = new UserService();
-                //
+                
                 ViewBag.id = id;
                 ViewBag.Role = _rService.GetAll(UserID);
                 ViewBag.currentID = UserID;
@@ -488,7 +547,7 @@ namespace TDH.Areas.Administrator.Controllers
                 
                 //Call to service
                 UserModel model = _service.GetItemByID(new UserModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
-                //
+                
                 return PartialView(model);
             }
             catch (Exception ex)
@@ -498,6 +557,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit user form
+        /// Post method
+        /// </summary>
+        /// <param name="model">User model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditUser(UserModel model)
@@ -529,6 +594,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Publish user
+        /// </summary>
+        /// <param name="model">User model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult PublishUser(UserModel model)
         {
@@ -558,6 +628,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete user
+        /// </summary>
+        /// <param name="model">User model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         public ActionResult DeleteUser(UserModel model)
         {
@@ -591,6 +666,10 @@ namespace TDH.Areas.Administrator.Controllers
 
         #region " [ Error Log ] "
 
+        /// <summary>
+        /// Error log form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult ErrorLog()
         {
@@ -605,6 +684,12 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Error log form
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<ErrorLogModel></returns>
         [HttpPost]
         public JsonResult ErrorLog(CustomDataTableRequestHelper requestData)
         {
@@ -622,13 +707,13 @@ namespace TDH.Areas.Administrator.Controllers
 
                 //Call to service
                 Dictionary<string, object> _return = _service.List(requestData, UserID);
-                //
+                
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
                     DataTableResponse<ErrorLogModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<ErrorLogModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
-                //
+                
                 return this.Json(new DataTableResponse<ErrorLogModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -638,6 +723,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        /// <summary>
+        /// Detail error log
+        /// </summary>
+        /// <param name="id">log identifier</param>
+        /// <returns>View</returns>
         [HttpPost]
         public JsonResult DetailErroLog(string id)
         {
@@ -653,7 +743,7 @@ namespace TDH.Areas.Administrator.Controllers
 
                 //Call to service
                 ErrorLogModel model = _service.GetItemByID(new ErrorLogModel() { ID = new Guid(id), CreateBy = UserID });
-                //
+                
                 return this.Json(model, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -664,7 +754,6 @@ namespace TDH.Areas.Administrator.Controllers
         }
 
         #endregion
-
-
+        
     }
 }

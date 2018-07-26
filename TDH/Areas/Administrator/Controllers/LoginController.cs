@@ -8,6 +8,9 @@ using TDH.Services.System;
 
 namespace TDH.Areas.Administrator.Controllers
 {
+    /// <summary>
+    /// Login controller
+    /// </summary>
     public class LoginController : TDH.Common.BaseController
     {
         [AllowAnonymous]

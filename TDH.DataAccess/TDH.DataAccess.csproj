@@ -152,6 +152,9 @@
     <Compile Include="SYS_FUNCTION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="SYS_MODULE.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="SYS_ROLE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

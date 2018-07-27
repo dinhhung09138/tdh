@@ -437,5 +437,50 @@ namespace TDH.Services.System
             }
             return _return;
         }
+
+        /// <summary>
+        /// Get sidebar data, permission based on user identifier
+        /// </summary>
+        /// <param name="userID">The user identifier</param>
+        /// <param name="moduleCode">Module code</param>
+        /// <returns>List<SideBarViewModel></returns>
+        public List<SideBarViewModel> GetSidebar(Guid userID, string moduleCode)
+        {
+            List<SideBarViewModel> _return = new List<SideBarViewModel>();
+            try
+            {
+                using (var _context = new TDHEntities())
+                {
+                    var _list = (from u in _context.SYS_USER
+                                 join ur in _context.SYS_USER_ROLE on u.id equals ur.user_id
+                                 join r in _context.SYS_ROLE on ur.role_id equals r.id
+                                 join dt in _context.SYS_ROLE_DETAIL on r.id equals dt.role_id
+                                 join f in _context.SYS_FUNCTION on dt.function_code equals f.code
+                                 where dt.view && u.id == userID && r.publish && !r.deleted && f.code.Contains(moduleCode)
+                                 orderby f.ordering descending
+                                 select new { f.code, f.title, f.area, f.controller, f.action }).ToList();
+
+                    foreach (var item in _list)
+                    {
+                        _return.Add(new SideBarViewModel()
+                        {
+                            Code = item.code,
+                            Title = item.title,
+                            Area = item.area,
+                            Controller = item.controller,
+                            Action = item.action
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, "GetSidebar", userID, ex);
+                throw new ApplicationException();
+            }
+            return _return;
+        }
     }
 }
+

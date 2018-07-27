@@ -7,10 +7,18 @@ namespace TDH.Areas.Administrator.Controllers
 {
     public class BaseController : TDH.Common.BaseController
     {
+        /// <summary>
+        /// Module navigation
+        /// </summary>
+        /// <param name="moduleCode">module name</param>
+        /// <returns>View</returns>
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult ModuleNavigation(string moduleName)
+        public ActionResult ModuleNavigation(string moduleCode)
         {
+            UserService _uService = new UserService();
+            ViewBag.moduleCode = moduleCode;
+            ViewBag.sidebar = _uService.GetSidebar(UserID, moduleCode);
             return PartialView();
         }
 

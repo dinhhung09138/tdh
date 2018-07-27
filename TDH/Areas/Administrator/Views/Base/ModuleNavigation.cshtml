@@ -1,1 +1,20 @@
-﻿
+﻿@using TDH.Model;
+@{
+    var _listSidebar = ViewBag.sidebar as List<SideBarViewModel>;
+    if (ViewBag.moduleCode == "money")
+    {
+        if (_listSidebar.Count > 0)
+        {
+            
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                @foreach (var item in _listSidebar)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link pg_ld" data-toggle="tab" href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" 
+                           role="tab" aria-controls="@item.Action" aria-selected="true">@item.Title</a>
+                    </li>
+                }
+            </ul>
+        }
+    }
+}

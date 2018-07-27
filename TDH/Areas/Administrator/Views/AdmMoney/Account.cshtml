@@ -3,6 +3,7 @@
 <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
         <h3 class="card-title">Tài khoản</h3>

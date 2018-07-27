@@ -1,7 +1,8 @@
 ﻿@using TDH.Model;
 @{
     var _listSidebar = ViewBag.sidebar as List<SideBarViewModel>;
-    if (ViewBag.moduleCode == "money")
+    if (ViewBag.moduleCode == "money" ||
+        ViewBag.moduleCode == "system")
     {
         if (_listSidebar.Count > 0)
         {

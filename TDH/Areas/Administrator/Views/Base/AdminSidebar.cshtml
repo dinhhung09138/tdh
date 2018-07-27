@@ -71,32 +71,7 @@
                             </ul>
                         </li>
                     }
-                    var _lSystem = _listSidebar.Where(m => m.Code.Contains("system_")).ToList();
-                    if (_lSystem.Count() > 0)
-                    {
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-cogs"></i>
-                                <p>
-                                    Hệ thống
-                                    <i class="right fa fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                @{
-                                    foreach (var item in _lSystem)
-                                    {
-                                        <li class="nav-item">
-                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" class="nav-link pg_ld">
-                                                <i class="fa fa-circle-o nav-icon"></i>
-                                                <p>@item.Title</p>
-                                            </a>
-                                        </li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-                    }
+                    
                     <li class="header">Ý TƯỞNG - CÔNG VIỆC</li>
                     var _lTarget = _listSidebar.Where(m => m.Code.Contains("target_")).ToList();
                     if (_lTarget.Count() > 0)
@@ -159,7 +134,16 @@
                             </p>
                         </a>
                     </li>
-                    
+                    var _lSystem = _listSidebar.Where(m => m.Code.Contains("system_")).ToList();
+                    if (_lSystem.Count() > 0)
+                    {
+                        <li class="nav-item">
+                            <a href="javascript:;" data-url="/administrator/admsystem/index" class="nav-link pg_ld">
+                                <i class="nav-icon fa fa-cogs"></i>
+                                <p>HỆ THỐNG</p>
+                            </a>
+                        </li>
+                    }
                     var _lFinance = _listSidebar.Where(m => m.Code.Contains("money_")).ToList();
                     if (_lFinance.Count() > 0)
                     {

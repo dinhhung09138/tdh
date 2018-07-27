@@ -453,6 +453,17 @@
           <Property Name="action" Type="varchar" MaxLength="50" />
           <Property Name="ordering" Type="smallint" Nullable="false" />
           <Property Name="title" Type="nvarchar" MaxLength="30" />
+          <Property Name="module_code" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_MODULE">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="default_action" Type="varchar" MaxLength="60" />
+          <Property Name="icon" Type="nvarchar" MaxLength="20" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="SYS_ROLE">
           <Key>
@@ -773,15 +784,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="fee" Type="numeric" Precision="18" Scale="1" Nullable="false" />
           <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="V_REPORT_SUMMARY_BY_YEAR">
-          <Property Name="input" Type="numeric" Precision="38" Scale="1" />
-          <Property Name="output" Type="numeric" Precision="38" Scale="1" />
-          <Property Name="year" Type="varchar" MaxLength="4" />
-          <Property Name="month" Type="varchar" MaxLength="6" />
-          <Property Name="count" Type="bigint" />
-        </EntityType>-->
         <Association Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
           <End Role="MN_ACCOUNT_TYPE" Type="Self.MN_ACCOUNT_TYPE" Multiplicity="1" />
           <End Role="MN_ACCOUNT" Type="Self.MN_ACCOUNT" Multiplicity="*" />
@@ -1064,6 +1066,18 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SYS_FUNCTION_SYS_MODULE">
+          <End Role="SYS_MODULE" Type="Self.SYS_MODULE" Multiplicity="1" />
+          <End Role="SYS_FUNCTION" Type="Self.SYS_FUNCTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_MODULE">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="SYS_FUNCTION">
+              <PropertyRef Name="module_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SYS_ROLE_DETAIL_function">
           <End Role="SYS_FUNCTION" Type="Self.SYS_FUNCTION" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -1323,6 +1337,7 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
           <EntitySet Name="PN_TASK_STATUS" EntityType="Self.PN_TASK_STATUS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_TASK_TYPE" EntityType="Self.PN_TASK_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_FUNCTION" EntityType="Self.SYS_FUNCTION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_MODULE" EntityType="Self.SYS_MODULE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_ROLE" EntityType="Self.SYS_ROLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_ROLE_DETAIL" EntityType="Self.SYS_ROLE_DETAIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_USER" EntityType="Self.SYS_USER" Schema="dbo" store:Type="Tables" />
@@ -1462,6 +1477,10 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
           <AssociationSet Name="FK_PN_TASK_PN_TASK_TYPE" Association="Self.FK_PN_TASK_PN_TASK_TYPE">
             <End Role="PN_TASK_TYPE" EntitySet="PN_TASK_TYPE" />
             <End Role="PN_TASK" EntitySet="PN_TASK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_FUNCTION_SYS_MODULE" Association="Self.FK_SYS_FUNCTION_SYS_MODULE">
+            <End Role="SYS_MODULE" EntitySet="SYS_MODULE" />
+            <End Role="SYS_FUNCTION" EntitySet="SYS_FUNCTION" />
           </AssociationSet>
           <AssociationSet Name="FK_SYS_ROLE_DETAIL_function" Association="Self.FK_SYS_ROLE_DETAIL_function">
             <End Role="SYS_FUNCTION" EntitySet="SYS_FUNCTION" />
@@ -1741,6 +1760,11 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
           <AssociationSet Name="FK_WEB_POST_WEB_NAVIGATION" Association="TDHModel.FK_WEB_POST_WEB_NAVIGATION">
             <End Role="WEB_NAVIGATION" EntitySet="WEB_NAVIGATION" />
             <End Role="WEB_POST" EntitySet="WEB_POST" />
+          </AssociationSet>
+          <EntitySet Name="SYS_MODULE" EntityType="TDHModel.SYS_MODULE" />
+          <AssociationSet Name="FK_SYS_FUNCTION_SYS_MODULE" Association="TDHModel.FK_SYS_FUNCTION_SYS_MODULE">
+            <End Role="SYS_MODULE" EntitySet="SYS_MODULE" />
+            <End Role="SYS_FUNCTION" EntitySet="SYS_FUNCTION" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
@@ -2485,6 +2509,8 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SYS_ROLE_DETAIL" Relationship="TDHModel.FK_SYS_ROLE_DETAIL_function" FromRole="SYS_FUNCTION" ToRole="SYS_ROLE_DETAIL" />
+          <Property Name="module_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SYS_MODULE" Relationship="TDHModel.FK_SYS_FUNCTION_SYS_MODULE" FromRole="SYS_FUNCTION" ToRole="SYS_MODULE" />
         </EntityType>
         <EntityType Name="SYS_ROLE">
           <Key>
@@ -3013,6 +3039,29 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
             </Principal>
             <Dependent Role="WEB_POST">
               <PropertyRef Name="navigation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SYS_MODULE">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="default_action" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="icon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="SYS_FUNCTION" Relationship="TDHModel.FK_SYS_FUNCTION_SYS_MODULE" FromRole="SYS_MODULE" ToRole="SYS_FUNCTION" />
+        </EntityType>
+        <Association Name="FK_SYS_FUNCTION_SYS_MODULE">
+          <End Type="TDHModel.SYS_MODULE" Role="SYS_MODULE" Multiplicity="1" />
+          <End Type="TDHModel.SYS_FUNCTION" Role="SYS_FUNCTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_MODULE">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="SYS_FUNCTION">
+              <PropertyRef Name="module_code" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3617,6 +3666,7 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
           <EntitySetMapping Name="SYS_FUNCTION">
             <EntityTypeMapping TypeName="TDHModel.SYS_FUNCTION">
               <MappingFragment StoreEntitySet="SYS_FUNCTION">
+                <ScalarProperty Name="module_code" ColumnName="module_code" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="ordering" ColumnName="ordering" />
                 <ScalarProperty Name="action" ColumnName="action" />
@@ -3878,6 +3928,17 @@ warning 6013: The table/view 'chacd26d_trandinhhung.dbo.V_REPORT_SUMMARY_BY_YEAR
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="category_id" ColumnName="category_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_MODULE">
+            <EntityTypeMapping TypeName="TDHModel.SYS_MODULE">
+              <MappingFragment StoreEntitySet="SYS_MODULE">
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="default_action" ColumnName="default_action" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="code" ColumnName="code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

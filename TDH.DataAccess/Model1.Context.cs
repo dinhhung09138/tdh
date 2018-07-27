@@ -69,6 +69,7 @@ namespace TDH.DataAccess
         public virtual DbSet<WEB_POST> WEB_POST { get; set; }
         public virtual DbSet<V_ACCOUNT_HISTORY> V_ACCOUNT_HISTORY { get; set; }
         public virtual DbSet<V_CATEGORY_HISTORY> V_CATEGORY_HISTORY { get; set; }
+        public virtual DbSet<SYS_MODULE> SYS_MODULE { get; set; }
     
         [DbFunction("TDHEntities", "FNC_REPORT_INCOME_BY_CATEGORY")]
         public virtual IQueryable<FNC_REPORT_INCOME_BY_CATEGORY_Result> FNC_REPORT_INCOME_BY_CATEGORY()

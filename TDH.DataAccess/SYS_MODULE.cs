@@ -12,25 +12,21 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class SYS_FUNCTION
+    public partial class SYS_MODULE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SYS_FUNCTION()
+        public SYS_MODULE()
         {
-            this.SYS_ROLE_DETAIL = new HashSet<SYS_ROLE_DETAIL>();
+            this.SYS_FUNCTION = new HashSet<SYS_FUNCTION>();
         }
     
         public string code { get; set; }
-        public string name { get; set; }
-        public string area { get; set; }
-        public string controller { get; set; }
-        public string action { get; set; }
-        public short ordering { get; set; }
         public string title { get; set; }
-        public string module_code { get; set; }
+        public string default_action { get; set; }
+        public string icon { get; set; }
+        public short ordering { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SYS_ROLE_DETAIL> SYS_ROLE_DETAIL { get; set; }
-        public virtual SYS_MODULE SYS_MODULE { get; set; }
+        public virtual ICollection<SYS_FUNCTION> SYS_FUNCTION { get; set; }
     }
 }

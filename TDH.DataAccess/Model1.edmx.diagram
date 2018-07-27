@@ -81,6 +81,8 @@
         <AssociationConnector Association="TDHModel.FK_WEB_POST_WEB_CATEGORY" />
         <AssociationConnector Association="TDHModel.FK_WEB_HOME_NAVIGATION_navigation_id" />
         <AssociationConnector Association="TDHModel.FK_WEB_POST_WEB_NAVIGATION" />
+        <EntityTypeShape EntityType="TDHModel.SYS_MODULE" Width="1.5" PointX="6.125" PointY="34.875" />
+        <AssociationConnector Association="TDHModel.FK_SYS_FUNCTION_SYS_MODULE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

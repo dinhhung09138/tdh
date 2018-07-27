@@ -45,12 +45,12 @@
         <EntityTypeShape EntityType="TDHModel.PN_TASK" Width="1.5" PointX="23.375" PointY="13" />
         <EntityTypeShape EntityType="TDHModel.PN_TASK_STATUS" Width="1.5" PointX="21.125" PointY="24.125" />
         <EntityTypeShape EntityType="TDHModel.PN_TASK_TYPE" Width="1.5" PointX="21.125" PointY="9" />
-        <EntityTypeShape EntityType="TDHModel.SYS_FUNCTION" Width="1.5" PointX="8.375" PointY="7.5" />
+        <EntityTypeShape EntityType="TDHModel.SYS_FUNCTION" Width="1.5" PointX="8.875" PointY="7.5" />
         <EntityTypeShape EntityType="TDHModel.SYS_ROLE" Width="1.5" PointX="5.375" PointY="2.125" />
         <EntityTypeShape EntityType="TDHModel.SYS_ROLE_DETAIL" Width="1.5" PointX="10.625" PointY="2.5" />
         <EntityTypeShape EntityType="TDHModel.SYS_USER" Width="1.5" PointX="5.375" PointY="6.875" />
         <EntityTypeShape EntityType="TDHModel.SYS_USER_ROLE" Width="1.5" PointX="7.625" PointY="2.875" />
-        <EntityTypeShape EntityType="TDHModel.WEB_ABOUT" Width="1.5" PointX="10.375" PointY="6.75" />
+        <EntityTypeShape EntityType="TDHModel.WEB_ABOUT" Width="1.5" PointX="11" PointY="6.75" />
         <EntityTypeShape EntityType="TDHModel.WEB_CATEGORY" Width="1.5" PointX="25.625" PointY="22" />
         <EntityTypeShape EntityType="TDHModel.WEB_CONFIGURATION" Width="1.5" PointX="10.375" PointY="12.75" />
         <EntityTypeShape EntityType="TDHModel.WEB_ERROR_LOG" Width="1.5" PointX="13.375" PointY="0.75" />
@@ -81,7 +81,7 @@
         <AssociationConnector Association="TDHModel.FK_WEB_POST_WEB_CATEGORY" />
         <AssociationConnector Association="TDHModel.FK_WEB_HOME_NAVIGATION_navigation_id" />
         <AssociationConnector Association="TDHModel.FK_WEB_POST_WEB_NAVIGATION" />
-        <EntityTypeShape EntityType="TDHModel.SYS_MODULE" Width="1.5" PointX="6.125" PointY="34.875" />
+        <EntityTypeShape EntityType="TDHModel.SYS_MODULE" Width="1.5" PointX="7" PointY="8.25" />
         <AssociationConnector Association="TDHModel.FK_SYS_FUNCTION_SYS_MODULE" />
       </Diagram>
     </edmx:Diagrams>

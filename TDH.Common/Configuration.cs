@@ -29,7 +29,7 @@ namespace TDH.Common
             {
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.CONFIGURATIONs.FirstOrDefault(m => m.key == key);
+                    var _item = context.WEB_CONFIGURATION.FirstOrDefault(m => m.key == key);
                     if (_item != null)
                     {
                         return _item.value;

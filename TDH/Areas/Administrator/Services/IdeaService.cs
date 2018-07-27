@@ -5,7 +5,7 @@ using TDH.Models;
 using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using Utils;
-using TDH.Areas.Administrator.Common;
+using TDH.Common;
 
 namespace TDH.Areas.Administrator.Services
 {
@@ -102,7 +102,7 @@ namespace TDH.Areas.Administrator.Services
             catch (Exception ex)
             {
                 Notifier.Notification(userID, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "List", userID, ex);
+                Log.WriteLog(FILE_NAME, "List", userID, ex);
                 throw new ApplicationException();
             }
 
@@ -131,7 +131,7 @@ namespace TDH.Areas.Administrator.Services
             catch (Exception ex)
             {
                 Notifier.Notification(userID, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
+                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
                 throw new ApplicationException();
             }
         }
@@ -164,7 +164,7 @@ namespace TDH.Areas.Administrator.Services
             catch (Exception ex)
             {
                 Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
+                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
                 throw new ApplicationException();
             }
         }
@@ -220,7 +220,7 @@ namespace TDH.Areas.Administrator.Services
                         {
                             Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            TDH.Services.Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
+                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
                             throw new ApplicationException();
                         }
                     }
@@ -230,7 +230,7 @@ namespace TDH.Areas.Administrator.Services
             catch (Exception ex)
             {
                 Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
+                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
                 throw new ApplicationException();
             }
             if (model.Insert)
@@ -275,7 +275,7 @@ namespace TDH.Areas.Administrator.Services
                         catch (Exception ex)
                         {
                             trans.Rollback();
-                            TDH.Services.Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
+                            Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
                             throw new ApplicationException();
                         }
                     }
@@ -285,7 +285,7 @@ namespace TDH.Areas.Administrator.Services
             catch (Exception ex)
             {
                 Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
+                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
                 throw new ApplicationException();
             }
             Notifier.Notification(model.CreateBy, Resources.Message.DeleteSuccess, Notifier.TYPE.Success);
@@ -313,7 +313,7 @@ namespace TDH.Areas.Administrator.Services
             catch (Exception ex)
             {
                 Notifier.Notification(model.CreateBy, Resources.Message.Error, Notifier.TYPE.Error);
-                TDH.Services.Log.WriteLog(FILE_NAME, "CheckDelete", model.CreateBy, ex);
+                Log.WriteLog(FILE_NAME, "CheckDelete", model.CreateBy, ex);
                 throw new ApplicationException();
             }
             return ResponseStatusCodeHelper.NG;

@@ -44,7 +44,7 @@ namespace TDH.Services.System
                 List<RoleModel> _list = new List<RoleModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _lData = context.ROLEs.Where(m => !m.deleted).Select(m => new { m.id, m.name, m.description, m.publish }).ToList();
+                    var _lData = context.SYS_ROLE.Where(m => !m.deleted).Select(m => new { m.id, m.name, m.description, m.publish }).ToList();
 
                     _itemResponse.draw = request.draw;
                     _itemResponse.recordsTotal = _lData.Count;
@@ -58,7 +58,7 @@ namespace TDH.Services.System
                     int _count = 0;
                     foreach (var item in _lData)
                     {
-                        _count = context.USER_ROLE.Count(m => m.role_id == item.id);
+                        _count = context.SYS_USER_ROLE.Count(m => m.role_id == item.id);
                         _list.Add(new RoleModel()
                         {
                             ID = item.id,
@@ -116,7 +116,7 @@ namespace TDH.Services.System
                 List<RoleModel> _return = new List<RoleModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _list = context.ROLEs.Where(m => !m.deleted).ToList();
+                    var _list = context.SYS_ROLE.Where(m => !m.deleted).ToList();
                     foreach (var item in _list)
                     {
                         _return.Add(new RoleModel() { ID = item.id, Name = item.name });
@@ -144,7 +144,7 @@ namespace TDH.Services.System
             {
                 using (var context = new TDHEntities())
                 {
-                    List<FUNCTION> _lFunc = context.FUNCTIONs.OrderByDescending(m => m.ordering).ToList();
+                    List<SYS_FUNCTION> _lFunc = context.SYS_FUNCTION.OrderByDescending(m => m.ordering).ToList();
                     foreach (var item in _lFunc)
                     {
                         _return.Detail.Add(new RoleDetailModel()
@@ -158,7 +158,7 @@ namespace TDH.Services.System
                         });
                     }
 
-                    ROLE _md = context.ROLEs.FirstOrDefault(m => m.id == model.ID);
+                    SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID);
                     if (_md != null)
                     {
                         _return.ID = _md.id;
@@ -166,7 +166,7 @@ namespace TDH.Services.System
                         _return.Description = _md.description;
                         _return.Publish = _md.publish;
                         //
-                        var _lPers = context.ROLE_DETAIL.Where(m => m.role_id == _md.id).ToList();
+                        var _lPers = context.SYS_ROLE_DETAIL.Where(m => m.role_id == _md.id).ToList();
                         foreach (var item in _lPers)
                         {
                             var _tmp = _return.Detail.FirstOrDefault(m => m.FunctionCode == item.function_code);
@@ -205,14 +205,14 @@ namespace TDH.Services.System
                     {
                         try
                         {
-                            ROLE _md = new ROLE();
+                            SYS_ROLE _md = new SYS_ROLE();
                             if (model.Insert)
                             {
                                 _md.id = Guid.NewGuid();
                             }
                             else
                             {
-                                _md = context.ROLEs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
                                     throw new FieldAccessException();
@@ -225,25 +225,25 @@ namespace TDH.Services.System
                             {
                                 _md.created_by = model.CreateBy;
                                 _md.created_date = DateTime.Now;
-                                context.ROLEs.Add(_md);
+                                context.SYS_ROLE.Add(_md);
                                 context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.updated_by = model.UpdateBy;
                                 _md.updated_date = DateTime.Now;
-                                context.ROLEs.Attach(_md);
+                                context.SYS_ROLE.Attach(_md);
                                 context.Entry(_md).State = EntityState.Modified;
                                 //
-                                var _lDetaiPerm = context.ROLE_DETAIL.Where(m => m.role_id == _md.id);
+                                var _lDetaiPerm = context.SYS_ROLE_DETAIL.Where(m => m.role_id == _md.id);
                                 if (_lDetaiPerm.Count() > 0)
                                 {
-                                    context.ROLE_DETAIL.RemoveRange(_lDetaiPerm);
+                                    context.SYS_ROLE_DETAIL.RemoveRange(_lDetaiPerm);
                                 }
                             }
                             foreach (var item in model.Detail)
                             {
-                                ROLE_DETAIL _dt = new ROLE_DETAIL()
+                                SYS_ROLE_DETAIL _dt = new SYS_ROLE_DETAIL()
                                 {
                                     id = Guid.NewGuid(),
                                     function_code = item.FunctionCode,
@@ -253,7 +253,7 @@ namespace TDH.Services.System
                                     edit = item.Edit,
                                     delete = item.Delete
                                 };
-                                context.ROLE_DETAIL.Add(_dt);
+                                context.SYS_ROLE_DETAIL.Add(_dt);
                                 context.Entry(_dt).State = EntityState.Added;
                             }
                             context.SaveChanges();
@@ -301,7 +301,7 @@ namespace TDH.Services.System
                     {
                         try
                         {
-                            ROLE _md = context.ROLEs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -309,7 +309,7 @@ namespace TDH.Services.System
                             _md.publish = model.Publish;
                             _md.updated_by = model.UpdateBy;
                             _md.updated_date = DateTime.Now;
-                            context.ROLEs.Attach(_md);
+                            context.SYS_ROLE.Attach(_md);
                             context.Entry(_md).State = EntityState.Modified;
                             context.SaveChanges();
                             trans.Commit();
@@ -349,7 +349,7 @@ namespace TDH.Services.System
                     {
                         try
                         {
-                            ROLE _md = context.ROLEs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                            SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
@@ -357,7 +357,7 @@ namespace TDH.Services.System
                             _md.deleted = true;
                             _md.deleted_by = model.DeleteBy;
                             _md.deleted_date = DateTime.Now;
-                            context.ROLEs.Attach(_md);
+                            context.SYS_ROLE.Attach(_md);
                             context.Entry(_md).State = EntityState.Modified;
                             context.SaveChanges();
                             trans.Commit();
@@ -392,12 +392,12 @@ namespace TDH.Services.System
             {
                 using (var context = new TDHEntities())
                 {
-                    ROLE _md = context.ROLEs.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _user = context.USER_ROLE.FirstOrDefault(m => m.role_id == _md.id);
+                    var _user = context.SYS_USER_ROLE.FirstOrDefault(m => m.role_id == _md.id);
                     if (_user != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
@@ -426,9 +426,9 @@ namespace TDH.Services.System
             {
                 using (var context = new TDHEntities())
                 {
-                    var _permision = (from dt in context.ROLE_DETAIL
-                                      join r in context.ROLEs on dt.role_id equals r.id
-                                      join ur in context.USER_ROLE on r.id equals ur.role_id
+                    var _permision = (from dt in context.SYS_ROLE_DETAIL
+                                      join r in context.SYS_ROLE on dt.role_id equals r.id
+                                      join ur in context.SYS_USER_ROLE on r.id equals ur.role_id
                                       where ur.user_id == userID && dt.function_code == functionCode && !r.deleted && r.publish
                                       select dt).FirstOrDefault();
                     if (_permision != null)

@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using TDH.Common.Fillters;
 
 namespace TDH
 {
@@ -8,7 +9,7 @@ namespace TDH
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            filters.Add(new Areas.Administrator.Filters.ExceptionFilterAttribute());
+            filters.Add(new ExceptionFilterAttribute());
         }
     }
 }

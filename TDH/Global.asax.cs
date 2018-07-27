@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using TDH.Common;
 
 namespace TDH
 {
@@ -25,7 +26,7 @@ namespace TDH
             HttpException httpException = exception as HttpException;
             if (httpException != null)
             {
-                Services.Log.WriteLog("Global.asax.cs", "Application_Error", new Guid(), exception);
+                Log.WriteLog("Global.asax.cs", "Application_Error", new Guid(), exception);
                 Server.ClearError();
                 Response.Redirect("/error");
             }

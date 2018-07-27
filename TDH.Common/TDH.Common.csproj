@@ -70,6 +70,7 @@
     <Compile Include="Fillters\AjaxExecuteFilterAttribute.cs" />
     <Compile Include="Fillters\AuthorizationFilterAttribute.cs" />
     <Compile Include="Fillters\ExceptionFilterAttribute.cs" />
+    <Compile Include="Fillters\UserException.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Notifier.cs" />

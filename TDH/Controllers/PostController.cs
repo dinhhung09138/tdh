@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TDH.Common;
 using TDH.Filters;
 using TDH.Services;
 
@@ -48,7 +49,7 @@ namespace TDH.Controllers
             catch(Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "Navigation", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -71,7 +72,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "Navigation", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -88,7 +89,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "Post", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -101,7 +102,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "About", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -121,7 +122,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "LastedPost", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 
@@ -135,7 +136,7 @@ namespace TDH.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "SameCategory", Guid.NewGuid(), ex);
-                throw new UserException();
+                throw new UserException(ex.Message);
             }
         }
 

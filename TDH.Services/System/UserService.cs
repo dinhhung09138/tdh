@@ -399,33 +399,36 @@ namespace TDH.Services.System
         /// Get sidebar data, permission based on user identifier
         /// </summary>
         /// <param name="userID">The user identifier</param>
-        /// <returns>List<SideBarViewModel></returns>
-        public List<SideBarViewModel> GetSidebar(Guid userID)
+        /// <returns>List<ModuleSideBarViewModel></returns>
+        public List<ModuleSideBarViewModel> GetSidebar(Guid userID)
         {
-            List<SideBarViewModel> _return = new List<SideBarViewModel>();
+            List<ModuleSideBarViewModel> _return = new List<ModuleSideBarViewModel>();
             try
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from u in _context.SYS_USER
-                                 join ur in _context.SYS_USER_ROLE on u.id equals ur.user_id
-                                 join r in _context.SYS_ROLE on ur.role_id equals r.id
-                                 join dt in _context.SYS_ROLE_DETAIL on r.id equals dt.role_id
-                                 join f in _context.SYS_FUNCTION on dt.function_code equals f.code
-                                 where dt.view && u.id == userID && r.publish & !r.deleted
-                                 orderby f.ordering descending
-                                 select new { f.code, f.title, f.area, f.controller, f.action }).ToList();
+                    var _listFunction = (from u in _context.SYS_USER
+                                         join ur in _context.SYS_USER_ROLE on u.id equals ur.user_id
+                                         join r in _context.SYS_ROLE on ur.role_id equals r.id
+                                         join dt in _context.SYS_ROLE_DETAIL on r.id equals dt.role_id
+                                         join f in _context.SYS_FUNCTION on dt.function_code equals f.code
+                                         where dt.view && u.id == userID && r.publish & !r.deleted
+                                         orderby f.ordering descending
+                                         select new { f.module_code }).Distinct().ToList();
+
+                    var _list = _context.SYS_MODULE.OrderByDescending(m => m.ordering).ToList();
 
                     foreach (var item in _list)
                     {
-                        _return.Add(new SideBarViewModel()
+                        if (_listFunction.Count(m => m.module_code == item.code && m.module_code != "none") > 0)
                         {
-                            Code = item.code,
-                            Title = item.title,
-                            Area = item.area,
-                            Controller = item.controller,
-                            Action = item.action
-                        });
+                            _return.Add(new ModuleSideBarViewModel()
+                            {
+                                Icon = item.icon,
+                                Title = item.title,
+                                DefaultUrl = item.default_action
+                            });
+                        }
                     }
                 }
             }

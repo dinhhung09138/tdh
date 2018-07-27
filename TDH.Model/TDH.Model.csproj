@@ -68,6 +68,10 @@
     <Compile Include="System\RoleDetailModel.cs" />
     <Compile Include="System\RoleModel.cs" />
     <Compile Include="System\UserModel.cs" />
+    <Compile Include="ViewModel\WebSite\CategoryViewModel.cs" />
+    <Compile Include="ViewModel\WebSite\MetaViewModel.cs" />
+    <Compile Include="ViewModel\WebSite\NavigationViewModel.cs" />
+    <Compile Include="ViewModel\WebSite\PostViewModel.cs" />
     <Compile Include="Website\AboutModel.cs" />
     <Compile Include="Website\CategoryModel.cs" />
     <Compile Include="Website\ConfigurationModel.cs" />

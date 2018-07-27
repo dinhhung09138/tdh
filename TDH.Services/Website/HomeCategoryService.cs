@@ -41,8 +41,8 @@ namespace TDH.Services.Website
                 List<HomeCategoryModel> _list = new List<HomeCategoryModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in _context.CATEGORies
-                                  join n in _context.NAVIGATIONs on m.navigation_id equals n.id
+                    var _lData = (from m in _context.WEB_CATEGORY
+                                  join n in _context.WEB_NAVIGATION on m.navigation_id equals n.id
                                   where !n.deleted && !m.deleted && n.publish
                                   select new
                                   {
@@ -67,7 +67,7 @@ namespace TDH.Services.Website
                     {
                         _selected = false;
                         _ordering = 0;
-                        var _cate = _context.HOME_CATEGORY.FirstOrDefault(m => m.category_id == item.id);
+                        var _cate = _context.WEB_HOME_CATEGORY.FirstOrDefault(m => m.category_id == item.id);
                         if (_cate != null)
                         {
                             _selected = true;
@@ -136,26 +136,26 @@ namespace TDH.Services.Website
                     {
                         try
                         {
-                            HOME_CATEGORY _md = _md = _context.HOME_CATEGORY.FirstOrDefault(m => m.category_id == model.CategoryID);
+                            WEB_HOME_CATEGORY _md = _md = _context.WEB_HOME_CATEGORY.FirstOrDefault(m => m.category_id == model.CategoryID);
                             if (!model.Selected)
                             {
                                 return Delete(model);
                             }
                             if (_md == null)
                             {
-                                _md = new HOME_CATEGORY()
+                                _md = new WEB_HOME_CATEGORY()
                                 {
                                     id = Guid.NewGuid(),
                                     category_id = model.CategoryID,
                                     ordering = 1
                                 };
-                                _context.HOME_CATEGORY.Add(_md);
+                                _context.WEB_HOME_CATEGORY.Add(_md);
                                 _context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.ordering = model.Ordering;
-                                _context.HOME_CATEGORY.Attach(_md);
+                                _context.WEB_HOME_CATEGORY.Attach(_md);
                                 _context.Entry(_md).State = EntityState.Modified;
                             }
                             _context.SaveChanges();
@@ -196,12 +196,12 @@ namespace TDH.Services.Website
                     {
                         try
                         {
-                            HOME_CATEGORY _md = _context.HOME_CATEGORY.FirstOrDefault(m => m.category_id == model.CategoryID);
+                            WEB_HOME_CATEGORY _md = _context.WEB_HOME_CATEGORY.FirstOrDefault(m => m.category_id == model.CategoryID);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
                             }
-                            _context.HOME_CATEGORY.Remove(_md);
+                            _context.WEB_HOME_CATEGORY.Remove(_md);
                             _context.Entry(_md).State = EntityState.Deleted;
                             _context.SaveChanges();
                             trans.Commit();

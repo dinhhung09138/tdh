@@ -2,6 +2,7 @@
 <link href="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
 <link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
 <input type="hidden" id="id" value="@ViewBag.cateID" />
 <div id="toolbarSearch" class="row">
     <div class="col-md-6">

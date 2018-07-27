@@ -40,5 +40,10 @@ namespace TDH.Common
         /// Update success
         /// </summary>
         public static readonly string UpdateSuccess = "Cập nhật dữ liệu thành công";
+
+        /// <summary>
+        /// Item not found
+        /// </summary>
+        public static readonly string ItemNotFound = "Nội dung không được tìm thấy";
     }
 }

@@ -1,5 +1,6 @@
 ﻿@model TDH.Model.Money.AccountModel
 <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
         <h3 class="card-title">Thêm tài khoản</h3>

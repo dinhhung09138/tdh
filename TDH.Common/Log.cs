@@ -25,7 +25,7 @@ namespace TDH.Common
             {
                 using (var context = new TDHEntities())
                 {
-                    ERROR_LOG _md = new ERROR_LOG();
+                    WEB_ERROR_LOG _md = new WEB_ERROR_LOG();
                     _md.id = Guid.NewGuid();
                     _md.file_name = fileName;
                     _md.method_name = methodName;
@@ -36,7 +36,7 @@ namespace TDH.Common
                     _md.date = DateTime.Now;
                     _md.create_date = DateTime.Now;
                     _md.create_by = userID;
-                    context.ERROR_LOG.Add(_md);
+                    context.WEB_ERROR_LOG.Add(_md);
                     context.Entry(_md).State = System.Data.Entity.EntityState.Added;
                     context.SaveChanges();
                 }

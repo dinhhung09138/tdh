@@ -35,7 +35,7 @@
                                     foreach (var item in _lSetting)
                                     {
                                         <li class="nav-item">
-                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" data-title="Thiết lập - @item.Title" class="nav-link pg_ld">
+                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" class="nav-link pg_ld">
                                                 <i class="fa fa-circle-o nav-icon"></i>
                                                 <p>@item.Title</p>
                                             </a>
@@ -61,7 +61,7 @@
                                     foreach (var item in _lNews)
                                     {
                                         <li class="nav-item">
-                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" data-title="Bài viết - @item.Title" class="nav-link pg_ld">
+                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" class="nav-link pg_ld">
                                                 <i class="fa fa-circle-o nav-icon"></i>
                                                 <p>@item.Title</p>
                                             </a>
@@ -71,32 +71,7 @@
                             </ul>
                         </li>
                     }
-                    var _lSystem = _listSidebar.Where(m => m.Code.Contains("system_")).ToList();
-                    if (_lSystem.Count() > 0)
-                    {
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-cogs"></i>
-                                <p>
-                                    Hệ thống
-                                    <i class="right fa fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                @{
-                                    foreach (var item in _lSystem)
-                                    {
-                                        <li class="nav-item">
-                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" data-title="Hệ thống - @item.Title" class="nav-link pg_ld">
-                                                <i class="fa fa-circle-o nav-icon"></i>
-                                                <p>@item.Title</p>
-                                            </a>
-                                        </li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-                    }
+                    
                     <li class="header">Ý TƯỞNG - CÔNG VIỆC</li>
                     var _lTarget = _listSidebar.Where(m => m.Code.Contains("target_")).ToList();
                     if (_lTarget.Count() > 0)
@@ -114,7 +89,7 @@
                                     foreach (var item in _lTarget)
                                     {
                                         <li class="nav-item">
-                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" data-title="Ý tưởng - Mục tiêu - @item.Title" class="nav-link pg_ld">
+                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" class="nav-link pg_ld">
                                                 <i class="fa fa-circle-o nav-icon"></i>
                                                 <p>@item.Title</p>
                                             </a>
@@ -140,7 +115,7 @@
                                     foreach (var item in _lWorking)
                                     {
                                         <li class="nav-item">
-                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" data-title="Công việc - @item.Title" class="nav-link pg_ld">
+                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" class="nav-link pg_ld">
                                                 <i class="fa fa-circle-o nav-icon"></i>
                                                 <p>@item.Title</p>
                                             </a>
@@ -159,33 +134,24 @@
                             </p>
                         </a>
                     </li>
-
-                    <li class="header">TCCN</li>
-                    <li class="header">TÀI CHÍNH CÁ NHÂN</li>
+                    var _lSystem = _listSidebar.Where(m => m.Code.Contains("system_")).ToList();
+                    if (_lSystem.Count() > 0)
+                    {
+                        <li class="nav-item">
+                            <a href="javascript:;" data-url="/administrator/admsystem/index" class="nav-link pg_ld">
+                                <i class="nav-icon fa fa-cogs"></i>
+                                <p>HỆ THỐNG</p>
+                            </a>
+                        </li>
+                    }
                     var _lFinance = _listSidebar.Where(m => m.Code.Contains("money_")).ToList();
                     if (_lFinance.Count() > 0)
                     {
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-tasks"></i>
-                                <p>
-                                    QUẢN LÝ CHI TIÊU
-                                    <i class="right fa fa-angle-left"></i>
-                                </p>
+                        <li class="nav-item">
+                            <a href="javascript:;" data-url="/administrator/admmoney/index" class="nav-link pg_ld">
+                                <i class="nav-icon fa fa-money"></i>
+                                <p>TÀI CHÍNH CÁ NHÂN</p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                @{
-                                    foreach (var item in _lFinance)
-                                    {
-                                        <li class="nav-item">
-                                            <a href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" data-title="TCCN - @item.Title" class="nav-link pg_ld">
-                                                <i class="fa fa-circle-o nav-icon"></i>
-                                                <p>@item.Title</p>
-                                            </a>
-                                        </li>
-                                    }
-                                }
-                            </ul>
                         </li>
                     }
                 }

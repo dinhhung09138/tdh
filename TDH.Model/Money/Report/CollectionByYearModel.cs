@@ -1,10 +1,10 @@
 ﻿
-namespace TDH.Model.Money
+namespace TDH.Model.Money.Report
 {
     /// <summary>
     /// Collection report by year model
     /// </summary>
-    public class ReportCollectionByYearModel
+    public class CollectionByYearModel
     {
         /// <summary>
         /// Year

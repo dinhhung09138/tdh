@@ -245,7 +245,7 @@ function deleteItem() {
 }
 
 function history(id, name) {
-    loading($('.content-wrapper'), 'show');
+    loading($('body'), 'show');
     $.ajax({
         url: '/administrator/admmoney/accounthistory/',
         type: 'get',
@@ -256,7 +256,7 @@ function history(id, name) {
             document.title = 'Lịch sử giao dịch: ' + name;
             $('#main_layout').empty();
             $('#main_layout').append(response);
-            setTimeout(function () { loading($('.content-wrapper'), 'hide') }, 700);      
+            setTimeout(function () { loading($('body'), 'hide') }, 700);      
         }
     }); 
 }

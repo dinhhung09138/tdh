@@ -14,7 +14,7 @@
 });
 
 var beginSubmit = function () {
-    loading($('.content-wrapper'), 'show');
+    loading($('body'), 'show');
 };
 
 var onSuccess = function (response, status, e) {
@@ -25,7 +25,7 @@ var OnFailure = function (response) {
 };
 
 function history(id, name, yearMonth) {
-    loading($('.content-wrapper'), 'show');
+    loading($('body'), 'show');
     $.ajax({
         url: '/administrator/admmoney/categoryhistory/',
         type: 'get',
@@ -36,7 +36,7 @@ function history(id, name, yearMonth) {
             document.title = 'Lịch sử giao dịch: ' + name;
             $('#main_layout').empty();
             $('#main_layout').append(response);
-            setTimeout(function () { loading($('.content-wrapper'), 'hide') }, 700);      
+            setTimeout(function () { loading($('body'), 'hide') }, 700);      
         }
     }); 
 }

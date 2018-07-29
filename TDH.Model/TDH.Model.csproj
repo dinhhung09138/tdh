@@ -60,7 +60,8 @@
     <Compile Include="Money\GroupSettingModel.cs" />
     <Compile Include="Money\IncomeModel.cs" />
     <Compile Include="Money\PaymentModel.cs" />
-    <Compile Include="Money\ReportCollectionByYearModel.cs" />
+    <Compile Include="Money\Report\IncomeByYearModel.cs" />
+    <Compile Include="Money\Report\CollectionByYearModel.cs" />
     <Compile Include="Money\TransferModel.cs" />
     <Compile Include="PersonalWorking\CheckListGroupModel.cs" />
     <Compile Include="PersonalWorking\CheckListItemDetailModel.cs" />

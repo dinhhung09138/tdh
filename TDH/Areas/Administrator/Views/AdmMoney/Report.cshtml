@@ -2,7 +2,61 @@
 <link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
 <link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+<style>
+   
+</style>
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+        </div>
+        <div class="card card-success">
+            <div class="card-header with-border no-bg">
+                <h5 class="card-title">Tổng quan thu chi</h5>
+                <div class="card-tools">
+                </div>
+            </div>
+            <div class="card-body" style="display: block;">
+                <div class="row">
+                    <div id="divSummary" class="col-md-12" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-success">
+            <div class="card-header with-border no-bg">
+                <h5 class="card-title">Báo cáo tình hình thu chi các tháng năm</h5>
+                <div class="card-tools">
+                    <input type="text" id="monthSelectByYear" class="form-control form-control-sm" value="@DateTime.Now.ToString("yyyy")" readonly />
+                </div>
+            </div>
+            <div class="card-body" style="display: block;">
+                <div class="row">
+                    <div id="divSummaryByYear" class="col-md-12" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-success">
+            <div class="card-header with-border no-bg">
+                <h3 class="card-title">Các nguồn thu nhập trong năm</h3>
+                <div class="card-tools pull-right">
+
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="divIncomeSummaryByCategory" class="col-md-12" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        
+    </div>
+</div>
 <div class="card card-success">
     <div class="card-header with-border no-bg">
         <h3 class="card-title">Báo cáo chi tiêu</h3>
@@ -22,13 +76,7 @@
                     </div>
                     <div class="card-body" style="display: block;">
                         <div class="row">
-                            <div id="divIncomeSummaryByCategory" class="col-md-12" style="height: 300px;"></div>
-                        </div>
-                        <div class="row">
-                            <div id="divSummary" class="col-md-12" style="height: 300px;"></div>
-                        </div>
-                        <div class="row">
-                            <div id="divSummaryByYear" class="col-md-12" style="height: 300px;"></div>
+                            <div id="divIncomeSummaryByCategory1" class="col-md-12" style="height: 300px;"></div>
                         </div>
                         <div class="row">
                             <p>Các nguồn thu trong năm, tính theo từng tháng</p>
@@ -256,6 +304,22 @@
         </div>
     </div>
 </div>
+<div class="card">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="home">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+        <div role="tabpanel" class="tab-pane" id="profile">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</div>
+        <div role="tabpanel" class="tab-pane" id="messages">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+        <div role="tabpanel" class="tab-pane" id="settings">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passage..</div>
+    </div>
+</div>
+
 <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
 <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
 <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
@@ -268,94 +332,7 @@
 <script>
     //
     google.charts.setOnLoadCallback(drawVisualization);
-
-    function drawIncomeSummaryByCategoryChart() {
-
-        var chartDiv = document.getElementById('divIncomeSummaryByCategory');
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('number', 'Tháng');
-        data.addColumn('number', "Thu vào");
-        data.addColumn('number', "Chi ra");
-        data.addColumn('number', "Còn lại");
-
-        function loadDataSummaryByYearChart(callback) {
-            $.ajax({
-                url: '/administrator/admmoney/summaryreportbyyear',
-                type: 'POST',
-                cache: false,
-                async: true,
-                xhrFields: {
-                    withCredentials: true,
-                },
-                dataType: 'json',
-                data: ({ year: 2018 }),
-                success: function (response) {
-                    $.each(response, function (idx, item) {
-                        data.addRow([item.Month, item.Income, item.Payment, item.Total]);
-                    });
-                    console.log(data);
-                    callback();
-                },
-                error: function (xhr, status, error) {
-                }
-            });
-        }
-
-        var options = {
-            legend: { position: 'bottom' },
-            chart: {
-                title: 'Báo cáo tình hình thu chi trong năm',
-                subtitle: ''
-            },
-            chartArea: {
-                width: '100%'
-            },
-            //width: 900,
-            //height: 500,
-            series: {
-                // Gives each series an axis name that matches the Y-axis below.
-                0: {
-                    axis: 'dvt', color: '28a745'
-                },
-                1: {
-                    color: 'dc3545'
-                },
-                2: {
-                    color: '007bff'
-                }
-            },
-            axes: {
-                // Adds labels to each axis; they don't have to match the axis names.
-                y: {
-                    dvt: { label: '(vnd)' }
-                }
-            }
-        };
-
-        function drawChart() {
-            var chart = new google.charts.Line(chartDiv);
-            chart.draw(data, options);
-        }
-
-        loadDataSummaryByYearChart(drawChart);
-
-        if (document.addEventListener) {
-            window.addEventListener('resize', drawChart);
-        }
-        else if (document.attachEvent) {
-            window.attachEvent('onresize', drawChart);
-        }
-        else {
-            window.resize = drawChart;
-        }
-    }
-    //
-    //
-    $(document).ready(function () {
-        //loadDataSummaryByYearChart();
-    });
-
+    
     function drawVisualization() {
         // Some raw data (not necessarily accurate)
         var data = google.visualization.arrayToDataTable([
@@ -375,7 +352,7 @@
             series: { 5: { type: 'line' } }
         };
 
-        var chart = new google.visualization.ComboChart(document.getElementById('divIncomeSummaryByCategory'));
+        var chart = new google.visualization.ComboChart(document.getElementById('divIncomeSummaryByCategory1'));
         chart.draw(data, options);
     }
 </script>

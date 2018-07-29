@@ -10,7 +10,7 @@
         cursor: pointer;
     }
 </style>
-
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "website" })
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <div class="card card-success">
     <div class="card-header with-border no-bg">

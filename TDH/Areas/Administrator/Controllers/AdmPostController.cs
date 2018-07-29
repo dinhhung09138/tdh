@@ -27,6 +27,16 @@ namespace TDH.Areas.Administrator.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Defalt view when user access
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
+        public ActionResult Index()
+        {
+            return PartialView();
+        }
+
         #region " [ Navigation ] "
 
         /// <summary>

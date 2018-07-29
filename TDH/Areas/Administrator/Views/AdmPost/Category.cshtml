@@ -1,6 +1,7 @@
 ﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
 <link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "website" })
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
 @Html.DropDownList("navigationSelection", new SelectList(ViewBag.navigation,"ID", "Title"), "Chọn danh mục", new { @class="form-control form-control-sm" })

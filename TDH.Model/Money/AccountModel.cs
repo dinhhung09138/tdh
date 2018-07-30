@@ -43,6 +43,38 @@ namespace TDH.Model.Money
         public string MonthStartString { get; set; } = "";
 
         /// <summary>
+        /// Total income
+        /// </summary>
+        public decimal Input { get; set; } = 0;
+
+        /// <summary>
+        /// Total payment
+        /// </summary>
+        public decimal Output { get; set; } = 0;
+
+        /// <summary>
+        /// Maximum payment for credit card
+        /// </summary>
+        public decimal MaxPayment { get; set; } = 0;
+
+        /// <summary>
+        /// Maximum payment for credit card
+        /// Format as tring
+        /// </summary>
+        public string MaxPaymentString { get; set; } = "";
+
+        /// <summary>
+        /// Total money account borrow or spend from credit card
+        /// </summary>
+        public decimal BorrowMoney { get; set; } = 0;
+
+        /// <summary>
+        /// Total money account borrow or spend from credit card
+        /// Format as string
+        /// </summary>
+        public string BorrowMoneyString { get; set; } = "";
+
+        /// <summary>
         /// Money receive in month
         /// </summary>
         public decimal MonthInput { get; set; } = 0;

@@ -25,6 +25,7 @@
           <Property Name="deleted" Type="bit" Nullable="false" />
           <Property Name="delete_by" Type="uniqueidentifier" />
           <Property Name="delete_date" Type="datetime" />
+          <Property Name="max_payment" Type="decimal" Precision="18" Scale="0" Nullable="false" />
         </EntityType>
         <EntityType Name="MN_ACCOUNT_SETTING">
           <Key>
@@ -1803,6 +1804,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <NavigationProperty Name="MN_PAYMENT" Relationship="TDHModel.FK_MN_PAYMENT_MN_ACCOUNT" FromRole="MN_ACCOUNT" ToRole="MN_PAYMENT" />
           <NavigationProperty Name="MN_TRANSFER" Relationship="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_FROM" FromRole="MN_ACCOUNT" ToRole="MN_TRANSFER" />
           <NavigationProperty Name="MN_TRANSFER1" Relationship="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_TO" FromRole="MN_ACCOUNT" ToRole="MN_TRANSFER" />
+          <Property Name="max_payment" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="MN_ACCOUNT_SETTING">
           <Key>
@@ -3143,6 +3145,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <EntitySetMapping Name="MN_ACCOUNT">
             <EntityTypeMapping TypeName="TDHModel.MN_ACCOUNT">
               <MappingFragment StoreEntitySet="MN_ACCOUNT">
+                <ScalarProperty Name="max_payment" ColumnName="max_payment" />
                 <ScalarProperty Name="delete_date" ColumnName="delete_date" />
                 <ScalarProperty Name="delete_by" ColumnName="delete_by" />
                 <ScalarProperty Name="deleted" ColumnName="deleted" />

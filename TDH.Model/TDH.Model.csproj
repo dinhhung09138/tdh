@@ -51,6 +51,7 @@
     <Compile Include="Money\AccountHistoryModel.cs" />
     <Compile Include="Money\AccountModel.cs" />
     <Compile Include="Money\AccountSettingModel.cs" />
+    <Compile Include="Money\AccountType.cs" />
     <Compile Include="Money\AccountTypeModel.cs" />
     <Compile Include="Money\CategoryHistoryModel.cs" />
     <Compile Include="Money\CategoryModel.cs" />

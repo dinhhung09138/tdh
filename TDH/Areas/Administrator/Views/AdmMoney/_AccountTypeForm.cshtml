@@ -13,10 +13,25 @@
 </div>
 <div class="row form-group">
     <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Loại TK <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div>
+        <select id="type" name="type" class="form-control" tabindex="2">
+            <option value="0" selected="@Model.Type">Tiền mặt</option>
+            <option value="1">Thẻ ghi nợ</option>
+            <option value="2">Thẻ tín dụng</option>
+            <option value="3">Tài khoản vay</option>
+            <option value="4">Tài khoản cho vay</option>
+            <option value="5">Tài khoản tiết kiệm</option>
+        </select>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
         Thứ tự <span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextBoxFor(m => m.Ordering, new { @class = "form-control", @maxlength = 2, @required = true, @tabindex = "2" })
+        @Html.TextBoxFor(m => m.Ordering, new { @class = "form-control", @maxlength = 2, @required = true, @tabindex = "3" })
         @Html.ValidationMessageFor(m => m.Ordering)
     </div>
 </div>
@@ -25,7 +40,7 @@
         Hiển thị <span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "3" })
+        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "4" })
     </div>
 </div>
 <div class="row form-group">
@@ -35,8 +50,8 @@
         @{
             if (ViewBag.Add == true || ViewBag.Edit == true)
             {
-                <a href="javascript:;" data-url="/administrator/admmoney/accounttype" data-title="Loại tài khoản" class="btn btn-default pg_ld" tabindex="4">Quay lại</a>
-                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="5">Lưu</button>
+                <a href="javascript:;" data-url="/administrator/admmoney/accounttype" data-title="Loại tài khoản" class="btn btn-default pg_ld" tabindex="5">Quay lại</a>
+                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="6">Lưu</button>
             }
         }
     </div>

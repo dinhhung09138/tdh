@@ -143,6 +143,19 @@ $(document).ready(function () {
                 }
             },
             {
+                data: 'Total',
+                orderable: false,
+                searchable: false,
+                className: 'text-right',
+                width: '110px',
+                render: function (obj, type, data, meta) {
+                    if (data.Total > 0) {
+                        return '<span style="color: #359746;">' + data.TotalString + "</span>";
+                    }
+                    return '<span style="color: #dc3545;">' + data.TotalString + "</span>";
+                }
+            },
+            {
                 orderable: false,
                 width: '70px',
                 className: 'ctn-center',

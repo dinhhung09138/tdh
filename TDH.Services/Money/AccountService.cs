@@ -51,7 +51,8 @@ namespace TDH.Services.Money
                                       m.name,
                                       m.input,
                                       m.output,
-                                      type_name = n.name
+                                      type_name = n.name,
+                                      n.type
                                   }).ToList();
 
                     _itemResponse.draw = request.draw;
@@ -82,6 +83,7 @@ namespace TDH.Services.Money
                             ID = item.id,
                             Name = item.name,
                             AccountTypeName = item.type_name,
+                            AccountType = item.type,
                             MonthInput = _input,
                             MonthInputString = _input.NumberToString(),
                             MonthOutput = _out,

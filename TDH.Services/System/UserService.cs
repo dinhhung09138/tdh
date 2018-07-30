@@ -459,7 +459,7 @@ namespace TDH.Services.System
                                  join r in _context.SYS_ROLE on ur.role_id equals r.id
                                  join dt in _context.SYS_ROLE_DETAIL on r.id equals dt.role_id
                                  join f in _context.SYS_FUNCTION on dt.function_code equals f.code
-                                 where dt.view && u.id == userID && r.publish && !r.deleted && f.code.Contains(moduleCode)
+                                 where dt.view && u.id == userID && r.publish && !r.deleted && f.module_code == moduleCode
                                  orderby f.ordering descending
                                  select new { f.code, f.title, f.area, f.controller, f.action }).ToList();
 

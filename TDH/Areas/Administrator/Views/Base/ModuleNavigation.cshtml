@@ -18,4 +18,47 @@
             </ul>
         }
     }
+    if (ViewBag.moduleCode == "website")
+    {
+        if (_listSidebar.Count > 0)
+        {
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                @{
+                    var _setting = _listSidebar.Where(m => m.Code.Contains("setting")).ToList();
+                    if (_setting.Count() > 0)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Thiết lập</a>
+                            <div class="dropdown-menu">
+                                @{
+                                    foreach (var item in _setting)
+                                    {
+                                        <a class="dropdown-item pg_ld"  href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action">@item.Title</a>
+                                        <div class="dropdown-divider"></div>
+                                    }
+                                }
+                            </div>
+                        </li>
+                    }
+                    var _post = _listSidebar.Where(m => m.Code.Contains("post")).ToList();
+                    if (_post.Count() > 0)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bài đăng</a>
+                            <div class="dropdown-menu">
+                                @{
+                                    foreach (var item in _post)
+                                    {
+                                        <a class="dropdown-item pg_ld" href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action">@item.Title</a>
+                                        <div class="dropdown-divider"></div>
+                                    }
+                                }
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        }
+    }
 }

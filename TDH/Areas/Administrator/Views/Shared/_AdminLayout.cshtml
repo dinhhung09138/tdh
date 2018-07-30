@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>@ViewBag.Title</title>
+    <title>Trần Đình Hưng</title>
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/font-awesome/css/font-awesome.min.css">
@@ -38,6 +38,23 @@
         body {
             font-size: 13px !important;
             font-family: sans-serif;
+        }
+        .card-header {
+            border-bottom-color: #359746;
+        }
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+            color: #fff;
+            background-color: #359746;
+        }
+        .nav-pills .nav-item:hover {
+            color: #359746;
+            border-top-color: #359746;
+        }
+        .nav-pills .nav-link a:hover {
+            color: #359746;
+        }
+        .nav-pills .nav-link {
+            color: #359746;
         }
         .field-validation-error {
             color: red;
@@ -180,6 +197,19 @@
         body.modal-open {
             padding-right: 0 !important;
         }
+        /* bootstrap hack: fix content width inside hidden tabs */
+        .tab-content > .tab-pane,
+        .pill-content > .pill-pane {
+            display: block; /* undo display:none          */
+            height: 0; /* height:0 is also invisible */
+            overflow-y: hidden; /* no-overflow                */
+        }
+
+        .tab-content > .active,
+        .pill-content > .active {
+            height: auto; /* let the content decide it  */
+        }
+        /* bootstrap hack end */
     </style>
 </head>
 <body class="hold-transition sidebar-mini">

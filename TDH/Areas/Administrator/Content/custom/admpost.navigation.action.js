@@ -37,7 +37,7 @@ $(document).on('click', '#selectImgTwitter', function () {
     finder.popup();
 });
 var beginSubmit = function () {
-    loading($('.content-wrapper'), 'show');
+    loading($('body'), 'show');
 };
 
 var onSuccess = function (response, status, e) {

@@ -62,6 +62,7 @@
           <Property Name="deleted" Type="bit" Nullable="false" />
           <Property Name="delete_by" Type="uniqueidentifier" />
           <Property Name="delete_date" Type="datetime" />
+          <Property Name="type" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="MN_CATEGORY">
           <Key>
@@ -1841,6 +1842,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="MN_ACCOUNT" Relationship="TDHModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" FromRole="MN_ACCOUNT_TYPE" ToRole="MN_ACCOUNT" />
+          <Property Name="type" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="MN_CATEGORY">
           <Key>
@@ -3185,6 +3187,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <EntitySetMapping Name="MN_ACCOUNT_TYPE">
             <EntityTypeMapping TypeName="TDHModel.MN_ACCOUNT_TYPE">
               <MappingFragment StoreEntitySet="MN_ACCOUNT_TYPE">
+                <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="delete_date" ColumnName="delete_date" />
                 <ScalarProperty Name="delete_by" ColumnName="delete_by" />
                 <ScalarProperty Name="deleted" ColumnName="deleted" />

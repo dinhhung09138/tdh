@@ -90,6 +90,12 @@ namespace TDH.Model.Money
         public string TotalString { get; set; } = "";
 
         /// <summary>
+        /// Account type
+        /// cash,debit, credit, borrow, loan, saving,..
+        /// </summary>
+        public short AccountType { get; set; } = 0;
+
+        /// <summary>
         /// List of detail setting
         /// </summary>
         public List<AccountSettingModel> Setting { get; set; } = new List<AccountSettingModel>();

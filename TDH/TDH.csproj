@@ -9353,6 +9353,7 @@
     <Content Include="Areas\Administrator\Views\Base\ModuleNavigation.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmMoney\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmSystem\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmPost\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

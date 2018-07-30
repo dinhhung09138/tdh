@@ -25,6 +25,8 @@ namespace TDH.Areas.Administrator.Controllers
         /// </summary>
         private readonly string FILE_NAME = "Administrator.Controllers/AdmMoneyController.cs";
 
+
+
         #endregion
 
         /// <summary>
@@ -58,7 +60,8 @@ namespace TDH.Areas.Administrator.Controllers
         }
 
         /// <summary>
-        /// Get data for summary report
+        /// Summary dashboard
+        /// Get data for summary report (income, payment)
         /// </summary>
         /// <returns>Task<ActionResult></returns>
         [HttpPost]
@@ -88,7 +91,9 @@ namespace TDH.Areas.Administrator.Controllers
         }
 
         /// <summary>
+        /// Summary dashboard
         /// Get data for summary report
+        /// Report (income, payment) by month in a year
         /// </summary>
         /// <param name="year"></param>
         /// <returns>Task<ActionResult></returns>
@@ -117,10 +122,42 @@ namespace TDH.Areas.Administrator.Controllers
                 throw new HttpException();
             }
         }
-        
+
+        /// <summary>
+        /// Income report
+        /// 
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns>Task<ActionResult></returns>
+        [HttpPost]
+        public async Task<ActionResult> IncomeByYearReport(int year)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                ReportService _service = new ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                var _model = await _service.SummaryIncomeByYear(year, UserID);
+
+                #endregion
+
+                return this.Json(_model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog(FILE_NAME, "IncomeByYearReport", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
 
         #endregion
-        
+
         #region " [ Account Type ]  "
 
         /// <summary>

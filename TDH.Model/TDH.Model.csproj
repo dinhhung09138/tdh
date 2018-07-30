@@ -51,6 +51,7 @@
     <Compile Include="Money\AccountHistoryModel.cs" />
     <Compile Include="Money\AccountModel.cs" />
     <Compile Include="Money\AccountSettingModel.cs" />
+    <Compile Include="Money\AccountType.cs" />
     <Compile Include="Money\AccountTypeModel.cs" />
     <Compile Include="Money\CategoryHistoryModel.cs" />
     <Compile Include="Money\CategoryModel.cs" />
@@ -60,7 +61,8 @@
     <Compile Include="Money\GroupSettingModel.cs" />
     <Compile Include="Money\IncomeModel.cs" />
     <Compile Include="Money\PaymentModel.cs" />
-    <Compile Include="Money\ReportCollectionByYearModel.cs" />
+    <Compile Include="Money\Report\IncomeByYearModel.cs" />
+    <Compile Include="Money\Report\CollectionByYearModel.cs" />
     <Compile Include="Money\TransferModel.cs" />
     <Compile Include="PersonalWorking\CheckListGroupModel.cs" />
     <Compile Include="PersonalWorking\CheckListItemDetailModel.cs" />

@@ -389,5 +389,5 @@ function groupSetting(id) {
 }
 
 $('#settingModel').on('shown.bs.modal', function () {
-    loading($('.content-wrapper'), 'hide');
+    loading($('body'), 'hide');
 })

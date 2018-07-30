@@ -316,6 +316,7 @@ namespace TDH.Common
                                 case "report":
                                 case "summaryreport":
                                 case "summaryreportbyyear":
+                                case "incomebyyearreport":
                                     return "money_report";
                                 case "accounttype":
                                 case "createaccounttype":
@@ -549,6 +550,7 @@ namespace TDH.Common
                                 case "report":
                                 case "summaryreport":
                                 case "summaryreportbyyear":
+                                case "incomebyyearreport":
                                 case "accounttype":
                                 case "account":
                                 case "accounthistory":

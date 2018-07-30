@@ -39,3 +39,11 @@ TDH\.Common/obj/Release/
 TDH\.Services/obj/Release/
 
 TDH\.Model/obj/Release/
+
+TDH\.DataAccess/bin/Release/
+
+TDH\.Common/bin/Release/
+
+TDH\.Model/bin/Release/
+
+TDH\.Services/bin/Release/

@@ -14,7 +14,7 @@
 });
 
 var beginSubmit = function () {
-    loading($('.content-wrapper'), 'show');
+    loading($('body'), 'show');
 };
 
 var onSuccess = function (response, status, e) {

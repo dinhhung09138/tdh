@@ -34,5 +34,10 @@ namespace TDH.Model.Money
         /// Count value, format as string
         /// </summary>
         public string CountString { get; set; } = "";
+
+        /// <summary>
+        /// Account type
+        /// </summary>
+        public short Type { get; set; } = (short)AccountType.Cash;
     }
 }

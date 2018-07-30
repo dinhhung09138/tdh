@@ -31,6 +31,7 @@ namespace TDH.DataAccess
         public bool deleted { get; set; }
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
+        public short type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MN_ACCOUNT> MN_ACCOUNT { get; set; }

@@ -165,6 +165,7 @@ namespace TDH.Services.Money
                     {
                         ID = _md.id,
                         Name = _md.name,
+                        Type = _md.type,
                         Ordering = _md.ordering,
                         Publish = _md.publish
                     };
@@ -207,6 +208,7 @@ namespace TDH.Services.Money
                                 }
                             }
                             _md.name = model.Name;
+                            _md.type = model.Type;
                             _md.ordering = model.Ordering;
                             _md.publish = model.Publish;
                             if (model.Insert)

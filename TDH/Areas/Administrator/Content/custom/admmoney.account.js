@@ -102,6 +102,7 @@ $(document).ready(function () {
                 data: 'BorrowMoney',
                 orderable: false,
                 searchable: false,
+                className: 'text-right',
                 render: function (obj, type, data, meta) {
                     if (data.AccountType == 2 || data.AccountType == 3) {
                         //2: Credit
@@ -114,11 +115,15 @@ $(document).ready(function () {
                 }
             },
             {
-                data: 'Name',
-                orderable: true,
-                searchable: true,
+                data: 'LoanMoney',
+                orderable: false,
+                searchable: false,
+                className: 'text-right',
                 render: function (obj, type, data, meta) {
-                    return data.Name;
+                    if (data.AccountType == 4) {
+                        return '<span style="color: #359746;">' + data.LoanMoneyString + "</span>";
+                    }
+                    return '0';
                 }
             },
             {

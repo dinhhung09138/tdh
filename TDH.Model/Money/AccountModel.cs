@@ -75,6 +75,17 @@ namespace TDH.Model.Money
         public string BorrowMoneyString { get; set; } = "";
 
         /// <summary>
+        /// Total loan money
+        /// </summary>
+        public decimal LoanMoney { get; set; } = 0;
+
+        /// <summary>
+        /// Total loan money
+        /// Format as string
+        /// </summary>
+        public string LoanMoneyString { get; set; } = "";
+
+        /// <summary>
         /// Money receive in month
         /// </summary>
         public decimal MonthInput { get; set; } = 0;

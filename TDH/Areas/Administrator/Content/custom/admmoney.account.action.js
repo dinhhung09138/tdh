@@ -1,4 +1,14 @@
-﻿$(document).ready(function () {
+﻿var maxPayment;
+$(document).ready(function () {
+    maxPayment = new AutoNumeric('#MaxPaymentString', {
+        minimumValue: '0',
+        maximumValue: '99999999999999',
+        digitGroupSeparator: ',',
+        decimalPlaces: 2,
+        decimalCharacter: '.',
+        selectNumberOnly: true,
+        allowDecimalPadding: true
+    });
     $('#AccountTypeID').focus();
     $('input[type=checkbox],input[type=radio]').iCheck({
         checkboxClass: 'icheckbox_flat-green',

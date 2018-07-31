@@ -73,23 +73,22 @@ namespace TDH.Services.Money
                         {
                             ID = item.id,
                             Name = item.name,
-                            Input = item.input,
-                            Output = item.output,
-                            BorrowMoney = item.type == 2 ? item.input - item.output : //Credit card
-                                          item.type == 3 ? item.input - item.max_payment : //Borrow
+                            BorrowMoney = item.type == (short)AccountType.Credit ? item.input - item.output : 
+                                          item.type == (short)AccountType.Borrow ? item.input - item.max_payment :
                                           item.input - item.output,
-                            BorrowMoneyString = item.type == 2 ? (item.input - item.output).NumberToString() : //credit card
-                                                item.type == 3 ? (item.input - item.max_payment).NumberToString() : //Borrow
+                            BorrowMoneyString = item.type == (short)AccountType.Credit ? (item.input - item.output).NumberToString() : 
+                                                item.type == (short)AccountType.Borrow ? (item.input - item.max_payment).NumberToString() : //Borrow
                                                 (item.input - item.output).NumberToString(),
                             MaxPayment = item.max_payment,
                             MaxPaymentString = item.max_payment == 0 ? "" : item.max_payment.NumberToString(),
-                            AccountTypeName = item.type_name,
+                            LoanMoney = item.type == (short)AccountType.Loan ? item.max_payment - item.input : 0,
+                            LoanMoneyString = item.type == (short)AccountType.Loan ? (item.max_payment - item.input).NumberToString() : "0",
                             AccountType = item.type,
-                            Total = item.type == 2 ? 0 : //credit card
-                                    item.type == 3 ? 0 : //Borrow
+                            Total = item.type == (short)AccountType.Credit ? 0 :
+                                    item.type == (short)AccountType.Borrow ? 0 : 
                                     (item.input - item.output),
-                            TotalString = item.type == 2 ? "0" : //credit card
-                                          item.type == 3 ? "0" : //Borrow
+                            TotalString = item.type == (short)AccountType.Credit ? "0" :
+                                          item.type == (short)AccountType.Borrow ? "0" :
                                           (item.input - item.output).NumberToString()
                         });
                     }
@@ -223,6 +222,9 @@ namespace TDH.Services.Money
                     {
                         ID = _md.id,
                         Name = _md.name,
+                        MaxPayment = _md.max_payment,
+                        MaxPaymentString = _md.max_payment.NumberToString(),
+                        AccountType = _type.type,
                         AccountTypeID = _md.account_type_id,
                         AccountTypeName = _type.name,
                         Total = _md.input - _md.output
@@ -349,6 +351,7 @@ namespace TDH.Services.Money
                             }
                             _md.account_type_id = model.AccountTypeID;
                             _md.name = model.Name;
+                            _md.max_payment = model.MaxPayment;
                             //Create or edit, only change the name and type
                             if (model.Insert)
                             {

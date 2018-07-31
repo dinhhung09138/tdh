@@ -654,6 +654,7 @@ namespace TDH.Areas.Administrator.Controllers
 
                 #region " [ Main processing ] "
 
+                model.MaxPayment = decimal.Parse(model.MaxPaymentString.Replace(",", ""));
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
@@ -725,6 +726,7 @@ namespace TDH.Areas.Administrator.Controllers
 
                 #region " [ Main processing ] "
 
+                model.MaxPayment = decimal.Parse(model.MaxPaymentString.Replace(",", ""));
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;

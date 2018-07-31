@@ -92,8 +92,8 @@ $(document).ready(function () {
             },
             {
                 data: 'MaxPayment',
-                orderable: true,
-                searchable: true,
+                orderable: false,
+                searchable: false,
                 render: function (obj, type, data, meta) {
                     return data.MaxPaymentString;
                 }

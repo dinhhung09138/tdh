@@ -40,6 +40,7 @@ namespace TDH.DataAccess
         public bool deleted { get; set; }
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
+        public decimal max_payment { get; set; }
     
         public virtual MN_ACCOUNT_TYPE MN_ACCOUNT_TYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

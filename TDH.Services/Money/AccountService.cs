@@ -51,6 +51,7 @@ namespace TDH.Services.Money
                                       m.name,
                                       m.input,
                                       m.output,
+                                      m.max_payment,
                                       type_name = n.name,
                                       n.type
                                   }).ToList();
@@ -65,33 +66,30 @@ namespace TDH.Services.Money
                                                    m.type_name.ToLower().Contains(searchValue)).ToList();
                     }
                     //Add to list
-                    decimal _input = 0;
-                    decimal _out = 0;
                     decimal _yearMonth = decimal.Parse(DateTime.Now.DateToString("yyyyMM"));
                     foreach (var item in _lData)
                     {
-                        _input = 0;
-                        _out = 0;
-                        var _setting = _context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == item.id && m.yearmonth == _yearMonth);
-                        if (_setting != null)
-                        {
-                            _input = _setting.input;
-                            _out = _setting.output;
-                        }
                         _list.Add(new AccountModel()
                         {
                             ID = item.id,
                             Name = item.name,
-                            AccountTypeName = item.type_name,
+                            BorrowMoney = item.type == (short)AccountType.Credit ? item.input - item.output : 
+                                          item.type == (short)AccountType.Borrow ? item.input - item.max_payment :
+                                          item.input - item.output,
+                            BorrowMoneyString = item.type == (short)AccountType.Credit ? (item.input - item.output).NumberToString() : 
+                                                item.type == (short)AccountType.Borrow ? (item.input - item.max_payment).NumberToString() : //Borrow
+                                                (item.input - item.output).NumberToString(),
+                            MaxPayment = item.max_payment,
+                            MaxPaymentString = item.max_payment == 0 ? "" : item.max_payment.NumberToString(),
+                            LoanMoney = item.type == (short)AccountType.Loan ? item.max_payment - item.input : 0,
+                            LoanMoneyString = item.type == (short)AccountType.Loan ? (item.max_payment - item.input).NumberToString() : "0",
                             AccountType = item.type,
-                            MonthInput = _input,
-                            MonthInputString = _input.NumberToString(),
-                            MonthOutput = _out,
-                            MonthOutputString = _out.NumberToString(),
-                            MonthTotal = (_input - _out),
-                            MonthTotalString = (_input - _out).NumberToString(),
-                            Total = (item.input - item.output),
-                            TotalString = (item.input - item.output).NumberToString()
+                            Total = item.type == (short)AccountType.Credit ? 0 :
+                                    item.type == (short)AccountType.Borrow ? 0 : 
+                                    (item.input - item.output),
+                            TotalString = item.type == (short)AccountType.Credit ? "0" :
+                                          item.type == (short)AccountType.Borrow ? "0" :
+                                          (item.input - item.output).NumberToString()
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -219,11 +217,14 @@ namespace TDH.Services.Money
                     }
                     MN_ACCOUNT_TYPE _type = _context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == _md.account_type_id);
                     var _lSetting = _context.MN_ACCOUNT_SETTING.Where(m => m.account_id == model.ID && m.yearmonth.ToString().Contains(DateTime.Now.Year.ToString())).OrderByDescending(m => m.yearmonth);
-                    
+
                     var _return = new AccountModel()
                     {
                         ID = _md.id,
                         Name = _md.name,
+                        MaxPayment = _md.max_payment,
+                        MaxPaymentString = _md.max_payment.NumberToString(),
+                        AccountType = _type.type,
                         AccountTypeID = _md.account_type_id,
                         AccountTypeName = _type.name,
                         Total = _md.input - _md.output
@@ -350,6 +351,7 @@ namespace TDH.Services.Money
                             }
                             _md.account_type_id = model.AccountTypeID;
                             _md.name = model.Name;
+                            _md.max_payment = model.MaxPayment;
                             //Create or edit, only change the name and type
                             if (model.Insert)
                             {

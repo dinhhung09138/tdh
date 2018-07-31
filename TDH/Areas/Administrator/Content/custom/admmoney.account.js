@@ -29,32 +29,22 @@ $(document).ready(function () {
                         i : 0;
             };
             var _str = '';
-            //Month Income
-            monthIncome = api.column(3, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+            //Maximum payment for credit card
+            total = api.column(3, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
             _str = '';
-            if (monthIncome > 0) {
-                _str = '<span style="color: #359746;">' + number_format(monthIncome, 2) + '</span>';
-            }
-            else {
-                _str = '<span style="color: #dc3545;">' + number_format(monthIncome, 2) + '</span>';
-            }
+            _str = '<span style="color: #dc3545;">' + number_format(total, 2) + '</span>';
             $(api.column(3).footer()).html(_str);
             //Month Payment
-            monthPayment = api.column(4, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
-            _str = '<span style="color: #dc3545;">' + number_format(monthPayment, 2) + '</span>';
-            $(api.column(4).footer()).html(_str);
+            //monthPayment = api.column(3, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+            //_str = '<span style="color: #dc3545;">' + number_format(monthPayment, 2) + '</span>';
+            //$(api.column(3).footer()).html(_str);
             //Month total
-            monthTotal = api.column(5, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+            total = api.column(4, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
             _str = '';
-            if (monthTotal > 0) {
-                _str = '<span style="color: #359746;">' + number_format(monthTotal, 2) + '</span>';
-            }
-            else {
-                _str = '<span style="color: #dc3545;">' + number_format(monthTotal, 2) + '</span>';
-            }
-            $(api.column(5).footer()).html(_str);
+            _str = '<span style="color: #359746;">' + number_format(total, 2) + '</span>';
+            $(api.column(4).footer()).html(_str);
             // Total over
-            total = api.column(6, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+            total = api.column(5, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
             _str = '';
             if (total > 0) {
                 _str = '<span style="color: #359746;">' + number_format(total, 2) + '</span>';
@@ -62,7 +52,17 @@ $(document).ready(function () {
             else {
                 _str = '<span style="color: #dc3545;">' + number_format(total, 2) + '</span>';
             }
-            $(api.column(6).footer()).html(_str);
+            $(api.column(5).footer()).html(_str);
+            // Total over
+            //total = api.column(6, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+            //_str = '';
+            //if (total > 0) {
+            //    _str = '<span style="color: #359746;">' + number_format(total, 2) + '</span>';
+            //}
+            //else {
+            //    _str = '<span style="color: #dc3545;">' + number_format(total, 2) + '</span>';
+            //}
+            //$(api.column(6).footer()).html(_str);
         },
         language: language,
         order: [[1, "asc"]],
@@ -83,12 +83,6 @@ $(document).ready(function () {
                 }
             },
             {
-                data: 'AccountTypeName',
-                orderable: true,
-                searchable: true,
-                width: '200px'
-            },
-            {
                 data: 'Name',
                 orderable: true,
                 searchable: true,
@@ -97,49 +91,39 @@ $(document).ready(function () {
                 }
             },
             {
-                data: 'MonthInput',
+                data: 'MaxPayment',
                 orderable: false,
                 searchable: false,
-                className: 'text-right',
-                width: '110px',
                 render: function (obj, type, data, meta) {
-                    return data.MonthInputString;
+                    return data.MaxPaymentString;
                 }
             },
             {
-                data: 'MonthOutput',
+                data: 'BorrowMoney',
                 orderable: false,
                 searchable: false,
                 className: 'text-right',
-                width: '110px',
                 render: function (obj, type, data, meta) {
-                    return data.MonthOutputString;
-                }
-            },
-            {
-                data: 'MonthTotal',
-                orderable: false,
-                searchable: false,
-                className: 'text-right',
-                width: '110px',
-                render: function (obj, type, data, meta) {
-                    if (data.MonthTotal > 0) {
-                        return '<span style="color: #359746;">' + data.MonthTotalString + '</span>';
+                    if (data.AccountType == 2 || data.AccountType == 3) {
+                        //2: Credit
+                        return '<span style="color: #dc3545;">' + data.BorrowMoneyString + "</span>";
                     }
-                    return '<span style="color: #dc3545;">' + data.MonthTotalString + '</span>'; 
+                    if (data.AccountType == 4) {
+                        return '<span style="color: #359746;">' + data.BorrowMoneyString + "</span>";
+                    }
+                    return 0;
                 }
             },
             {
-                data: 'Total',
+                data: 'LoanMoney',
                 orderable: false,
                 searchable: false,
                 className: 'text-right',
-                width: '110px',
                 render: function (obj, type, data, meta) {
-                    if (data.Total > 0) {
-                        return '<span style="color: #359746;">' + data.TotalString + "</span>"; 
+                    if (data.AccountType == 4) {
+                        return '<span style="color: #359746;">' + data.LoanMoneyString + "</span>";
                     }
-                    return '<span style="color: #dc3545;">' + data.TotalString + "</span>"; 
+                    return '0';
                 }
             },
             {

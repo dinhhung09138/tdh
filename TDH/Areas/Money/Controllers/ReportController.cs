@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
+using TDH.Common.Fillters;
 using TDH.Services.Money;
 
 namespace TDH.Areas.Money.Controllers
@@ -12,6 +13,7 @@ namespace TDH.Areas.Money.Controllers
     /// <summary>
     /// Report controller
     /// </summary>
+    [AjaxExecuteFilterAttribute]
     public class ReportController : BaseController
     {
         #region " [ Properties ] "

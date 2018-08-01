@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
+using TDH.Common.Fillters;
 using TDH.Model.Money;
 using TDH.Services.Money;
 using Utils;
@@ -14,6 +15,7 @@ namespace TDH.Areas.Money.Controllers
     /// <summary>
     /// Flow history controller
     /// </summary>
+    [AjaxExecuteFilterAttribute]
     public class FlowHistoryController : BaseController
     {
         #region " [ Properties ] "

@@ -243,6 +243,20 @@
     <Compile Include="Areas\Administrator\Services\IdeaService.cs" />
     <Compile Include="Areas\Administrator\Services\ReportService.cs" />
     <Compile Include="Areas\Administrator\Services\TargetService.cs" />
+    <Compile Include="Areas\Money\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Money\Controllers\AccountTypeController.cs" />
+    <Compile Include="Areas\Money\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Money\Controllers\FlowHistoryController.cs" />
+    <Compile Include="Areas\Money\Controllers\GroupController.cs" />
+    <Compile Include="Areas\Money\Controllers\ReportController.cs" />
+    <Compile Include="Areas\Money\MoneyAreaRegistration.cs" />
+    <Compile Include="Areas\System\Controllers\ErrorLogController.cs" />
+    <Compile Include="Areas\System\Controllers\RoleController.cs" />
+    <Compile Include="Areas\System\Controllers\UserController.cs" />
+    <Compile Include="Areas\System\SystemAreaRegistration.cs" />
+    <Compile Include="Areas\Website\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Website\Controllers\NavigationController.cs" />
+    <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -6756,6 +6770,9 @@
     <Content Include="Areas\Administrator\Views\AdmMoney\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmSystem\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmPost\Index.cshtml" />
+    <Content Include="Areas\Money\Views\web.config" />
+    <Content Include="Areas\System\Views\web.config" />
+    <Content Include="Areas\Website\Views\web.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6809,6 +6826,23 @@
     <Folder Include="Areas\Administrator\Content\ckeditor\plugins\preview\" />
     <Folder Include="Areas\Administrator\Content\ckeditor\skins\moono\images\hidpi\" />
     <Folder Include="Areas\Administrator\Views\AdmJob\" />
+    <Folder Include="Areas\Money\Models\" />
+    <Folder Include="Areas\Money\Views\AccountType\" />
+    <Folder Include="Areas\Money\Views\Account\" />
+    <Folder Include="Areas\Money\Views\Category\" />
+    <Folder Include="Areas\Money\Views\FlowHistory\" />
+    <Folder Include="Areas\Money\Views\Group\" />
+    <Folder Include="Areas\Money\Views\Report\" />
+    <Folder Include="Areas\Money\Views\Shared\" />
+    <Folder Include="Areas\System\Models\" />
+    <Folder Include="Areas\System\Views\ErrorLog\" />
+    <Folder Include="Areas\System\Views\Role\" />
+    <Folder Include="Areas\System\Views\Shared\" />
+    <Folder Include="Areas\System\Views\User\" />
+    <Folder Include="Areas\Website\Models\" />
+    <Folder Include="Areas\Website\Views\Category\" />
+    <Folder Include="Areas\Website\Views\Navigation\" />
+    <Folder Include="Areas\Website\Views\Shared\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

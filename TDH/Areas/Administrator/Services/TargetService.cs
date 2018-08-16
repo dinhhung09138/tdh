@@ -131,14 +131,14 @@ namespace TDH.Areas.Administrator.Services
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
                                 context.TARGETs.Add(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                                //context.Entry(_md).State = System.Data.Entity.EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
                                 context.TARGETs.Attach(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                //context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
                             }
                             context.SaveChanges();
                             trans.Commit();

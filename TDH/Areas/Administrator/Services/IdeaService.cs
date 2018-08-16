@@ -204,14 +204,14 @@ namespace TDH.Areas.Administrator.Services
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
                                 context.IDEAs.Add(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                                //context.Entry(_md).State = System.Data.Entity.EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
                                 context.IDEAs.Attach(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                //context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
                             }
                             context.SaveChanges();
                             trans.Commit();
@@ -268,7 +268,7 @@ namespace TDH.Areas.Administrator.Services
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
                             context.IDEAs.Attach(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            //context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
                             context.SaveChanges();
                             trans.Commit();
                         }

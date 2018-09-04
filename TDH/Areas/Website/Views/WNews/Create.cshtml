@@ -1,0 +1,42 @@
+﻿@model TDH.Model.Website.PostModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "website" })
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Thêm bài viết</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.View == true)
+                {
+                    <a class="btn btn-box-tool" href="/administrator/admpost/index" title="Bài viết">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
+                }
+                <a class="btn btn-box-tool" data-url="/administrator/admpost/create" title="Thêm bài viết">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Ajax.BeginForm("create", "wpost", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
+        {
+            @Html.Partial("_NewsForm", Model)
+        }
+    </div>
+</div>
+@section script {
+    <script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
+    <script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="/Areas/Website/Content/News/action.js"></script>
+}
+

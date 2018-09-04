@@ -257,6 +257,7 @@
     <Compile Include="Areas\System\SystemAreaRegistration.cs" />
     <Compile Include="Areas\Website\Controllers\WCategoryController.cs" />
     <Compile Include="Areas\Website\Controllers\WNavigationController.cs" />
+    <Compile Include="Areas\Website\Controllers\WNewsController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -5154,8 +5155,6 @@
     <Content Include="Areas\Administrator\Content\custom\admworking.report.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admworking.report.js" />
     <Content Include="Areas\Administrator\Content\custom\admpost.about.action.js" />
-    <Content Include="Areas\Administrator\Content\custom\admpost.category.action.js" />
-    <Content Include="Areas\Administrator\Content\custom\admpost.category.js" />
     <Content Include="Areas\Administrator\Content\custom\custom.js" />
     <Content Include="Areas\Administrator\Content\dist\css\adminlte.css" />
     <Content Include="Areas\Administrator\Content\dist\css\adminlte.min.css" />
@@ -6163,6 +6162,8 @@
     <Content Include="Areas\Website\Content\Category\index.js" />
     <Content Include="Areas\Website\Content\Navigation\action.js" />
     <Content Include="Areas\Website\Content\Navigation\index.js" />
+    <Content Include="Areas\Website\Content\News\action.js" />
+    <Content Include="Areas\Website\Content\News\index.js" />
     <Content Include="Content\css\bootstrap-3.1.1.min.css" />
     <Content Include="Content\css\flexslider.css" />
     <Content Include="Content\css\owl.carousel.css" />
@@ -6715,10 +6716,6 @@
     <Content Include="Areas\Administrator\Views\AdmSystem\User.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmSystem\_RoleForm.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmSystem\_UserForm.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\Category.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\CreateCategory.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\_CategoryForm.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\EditCategory.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmPost\CreateNews.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmPost\EditNews.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmPost\News.cshtml" />
@@ -6783,6 +6780,10 @@
     <Content Include="Areas\Website\Views\WCategory\Create.cshtml" />
     <Content Include="Areas\Website\Views\WCategory\Edit.cshtml" />
     <Content Include="Areas\Website\Views\WCategory\_Form.cshtml" />
+    <Content Include="Areas\Website\Views\WNews\Edit.cshtml" />
+    <Content Include="Areas\Website\Views\WNews\Index.cshtml" />
+    <Content Include="Areas\Website\Views\WNews\Create.cshtml" />
+    <Content Include="Areas\Website\Views\WNews\_Form.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6846,7 +6847,7 @@
     <Folder Include="Areas\System\Views\Role\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="Areas\System\Views\User\" />
-    <Folder Include="Areas\Website\Content\Post\" />
+    <Folder Include="Areas\Website\Content\NewFolder1\" />
     <Folder Include="Areas\Website\Models\" />
     <Folder Include="Areas\Website\Views\Shared\" />
     <Folder Include="Views\Base\" />

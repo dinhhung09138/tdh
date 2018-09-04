@@ -7,12 +7,11 @@
         if (_listSidebar.Count > 0)
         {
             
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <ul class="nav">
                 @foreach (var item in _listSidebar)
                 {
                     <li class="nav-item">
-                        <a class="nav-link pg_ld" data-toggle="tab" href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action" 
-                           role="tab" aria-controls="@item.Action" aria-selected="true">@item.Title</a>
+                        <a class="nav-link" href="/@item.Area/@item.Controller/@item.Action">@item.Title</a>
                     </li>
                 }
             </ul>
@@ -22,7 +21,6 @@
     {
         if (_listSidebar.Count > 0)
         {
-
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 @{
                     var _setting = _listSidebar.Where(m => m.Code.Contains("setting")).ToList();
@@ -34,7 +32,7 @@
                                 @{
                                     foreach (var item in _setting)
                                     {
-                                        <a class="dropdown-item pg_ld"  href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action">@item.Title</a>
+                                        <a class="dropdown-item pg_ld"  href="/@item.Area/@item.Controller/@item.Action">@item.Title</a>
                                         <div class="dropdown-divider"></div>
                                     }
                                 }
@@ -50,7 +48,7 @@
                                 @{
                                     foreach (var item in _post)
                                     {
-                                        <a class="dropdown-item pg_ld" href="javascript:;" data-url="/@item.Area/@item.Controller/@item.Action">@item.Title</a>
+                                        <a class="dropdown-item pg_ld" href="/@item.Area/@item.Controller/@item.Action">@item.Title</a>
                                         <div class="dropdown-divider"></div>
                                     }
                                 }

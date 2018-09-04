@@ -308,58 +308,91 @@ namespace TDH.Common
 
                             #endregion
                             break;
-                        case "admmoney":
-                            #region " [ Money ] "
-
+                        case "dashboard":
+                            break;
+                    }
+                    break;
+                case "money":
+                    switch (controllerName)
+                    {
+                        case "mnaccounttype":
                             switch (actionName)
                             {
-                                case "report":
-                                case "summaryreport":
-                                case "summaryreportbyyear":
-                                case "incomebyyearreport":
-                                    return "money_report";
-                                case "accounttype":
-                                case "createaccounttype":
-                                case "editaccounttype":
-                                case "publishaccounttype":
-                                case "checkdeleteaccounttype":
-                                case "deleteaccounttype":
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "checkdelete":
+                                case "delete":
                                     return "money_account_type";
-                                case "account":
-                                case "accounthistory":
-                                case "createaccount":
-                                case "editaccount":
-                                case "publishaccount":
-                                case "checkdeleteaccount":
-                                case "deleteaccount":
+                                default:
+                                    return "";
+                            }
+                        case "mnaccount":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "checkdelete":
+                                case "delete":
                                     return "money_account";
-                                case "group":
-                                case "creategroup":
-                                case "editgroup":
-                                case "publishgroup":
-                                case "checkdeletegroup":
-                                case "deletegroup":
+                                default:
+                                    return "";
+                            }
+                        case "mngroup":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "checkdelete":
+                                case "delete":
                                 case "getgroupsettinginfo":
                                 case "savegroupsettinginfo":
                                     return "money_group";
-                                case "category":
-                                case "categoryhistory":
-                                case "createcategory":
-                                case "editcategory":
-                                case "publishcategory":
-                                case "checkdeletecategory":
-                                case "deletecategory":
+                                default:
+                                    return "";
+                            }
+                        case "mncategory":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "history":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "checkdelete":
+                                case "delete":
                                     return "money_category";
-                                case "flowhistory":
+                                default:
+                                    return "";
+                            }
+                        case "mnflow":
+                            switch (actionName)
+                            {
+                                case "index":
                                 case "saveincome":
                                 case "savepayment":
                                 case "savetransfer":
                                     return "money_flow";
+                                default:
+                                    return "";
                             }
-
-                            #endregion
-                            break;
-                        case "dashboard":
+                        case "mnreport":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "summaryreport":
+                                case "summaryreportbyyear":
+                                case "incomebyyearreport":
+                                    return "money_report";
+                                default:
+                                    return "";
+                            }
+                        default:
                             break;
                     }
                     break;
@@ -542,58 +575,107 @@ namespace TDH.Common
 
                             #endregion
                             break;
-                        case "admmoney":
-                            #region " [ Money ] "
-
+                        case "dashboard":
+                            break;
+                    }
+                    break;
+                case "money":
+                    switch (controllerName)
+                    {
+                        case "mnaccounttype":
                             switch (actionName)
                             {
-                                case "report":
-                                case "summaryreport":
-                                case "summaryreportbyyear":
-                                case "incomebyyearreport":
-                                case "accounttype":
-                                case "account":
-                                case "accounthistory":
-                                case "group":
-                                case "getgroupsettinginfo":
-                                case "category":
-                                case "categoryhistory":
-                                case "flowhistory":
+                                case "index":
                                     return ActionType.View;
-                                case "createaccounttype":
-                                case "createaccount":
-                                case "creategroup":
-                                case "createcategory":
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "checkdelete":
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "mnaccount":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "history":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "checkdelete":
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "mngroup":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "getgroupsettinginfo":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                case "savegroupsettinginfo":
+                                    return ActionType.Edit;
+                                case "checkdelete":
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "mncategory":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "history":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "checkdelete":
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "mnflow":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
                                 case "saveincome":
                                 case "savepayment":
                                 case "savetransfer":
                                     return ActionType.Create;
-                                case "editaccounttype":
-                                case "publishaccounttype":
-                                case "editaccount":
-                                case "publishaccount":
-                                case "editgroup":
-                                case "publishgroup":
-                                case "savegroupsettinginfo":
-                                case "editcategory":
-                                case "publishcategory":
-                                    return ActionType.Edit;
-                                case "checkdeleteaccounttype":
-                                case "deleteaccounttype":
-                                case "checkdeleteaccount":
-                                case "deleteaccount":
-                                case "checkdeletegroup":
-                                case "deletegroup":
-                                case "checkdeletecategory":
-                                case "deletecategory":
-                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
                             }
-
-                            #endregion
-                            break;
-                        case "dashboard":
-                            break;
+                        case "mnreport":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "summaryreport":
+                                case "summaryreportbyyear":
+                                case "incomebyyearreport":
+                                    return ActionType.View;
+                                default:
+                                    return ActionType.None;
+                            }
                     }
+                    break;
+                default:
                     break;
             }
             return ActionType.None;

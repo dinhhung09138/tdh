@@ -15,44 +15,45 @@ namespace TDH.Areas.Money.Controllers
     /// <summary>
     /// Flow history controller
     /// </summary>
-    [AjaxExecuteFilterAttribute]
-    public class FlowHistoryController : BaseController
+    public class MNFlowController : BaseController
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Money.Controllers/FlowHistoryController.cs";
+        private readonly string FILE_NAME = "Money.Controllers/MNFlowController.cs";
 
         #endregion
-
-        // GET: Money/FlowHistory
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         /// <summary>
         /// Flow history form
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult FlowHistory()
+        public ActionResult Index()
         {
-            #region " [ Declaration ] "
+            try
+            {
+                #region " [ Declaration ] "
 
-            CategoryService _categoryServices = new CategoryService();
-            AccountService _accountServices = new AccountService();
-            //
-            ViewBag.incomeCategory = _categoryServices.GetAll(UserID, true);
-            ViewBag.paymentCategory = _categoryServices.GetAll(UserID, false);
-            ViewBag.account = _accountServices.GetAll(UserID);
-            ViewBag.accountHasMoney = _accountServices.GetAllWithFullMoney(UserID);
+                CategoryService _categoryServices = new CategoryService();
+                AccountService _accountServices = new AccountService();
+                //
+                ViewBag.incomeCategory = _categoryServices.GetAll(UserID, true);
+                ViewBag.paymentCategory = _categoryServices.GetAll(UserID, false);
+                ViewBag.account = _accountServices.GetAll(UserID);
+                ViewBag.accountHasMoney = _accountServices.GetAllWithFullMoney(UserID);
 
-            #endregion
-            //
-            return View();
+                #endregion
+                //
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
+                throw new HttpException();
+            }
         }
 
         /// <summary>
@@ -62,7 +63,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="requestData">Jquery datatable request</param>
         /// <returns>DataTableResponse<FlowModel></returns>
         [HttpPost]
-        public ActionResult FlowHistory(CustomDataTableRequestHelper requestData)
+        public ActionResult Index(CustomDataTableRequestHelper requestData)
         {
             try
             {
@@ -93,7 +94,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "FlowHistory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -211,6 +212,7 @@ namespace TDH.Areas.Money.Controllers
                 throw new HttpException();
             }
         }
+
 
     }
 }

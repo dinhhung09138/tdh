@@ -85,7 +85,7 @@ $(document).ready(function () {
         },
         language: language,
         ajax: {
-            url: '/administrator/admmoney/flowhistory',
+            url: '/money/mnflow/index',
             type: 'post',
             data: function (d) {
                 d.Parameter1 = $('#ddlSelect').val()
@@ -136,10 +136,6 @@ $(document).ready(function () {
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     var str = '';
-                    if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" onclick="groupSetting(\'' + data.ID + '\')" title="Thiết lập" class="mg-lr-2"><i class="fa fa-cogs" aria-hidden="true"></i></a>';
-                        str = str + '<a href="javascript:;" data-url="/administrator/admmoney/editgroup/' + data.ID + '\" data-title="Cập nhật quy tắc chi tiêu" title="Cập nhật" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
-                    }
                     return str;
                 }
             }
@@ -193,7 +189,7 @@ function saveIncome(ctn) {
     $('#frmIncome').parsley().validate();
     if ($('#frmIncome').parsley().isValid() === true) {
         $.ajax({
-            url: '/administrator/admmoney/saveincome',
+            url: '/money/mnflow/saveincome',
             type: 'POST',
             contentType: 'application/json',
             dataType: 'json',
@@ -252,7 +248,7 @@ function savePayment(ctn) {
     $('#frmPayment').parsley().validate();
     if ($('#frmPayment').parsley().isValid() === true) {
         $.ajax({
-            url: '/administrator/admmoney/savepayment',
+            url: '/money/mnflow/savepayment',
             type: 'POST',
             contentType: 'application/json',
             dataType: 'json',
@@ -312,7 +308,7 @@ function saveTransfer(ctn) {
     $('#frmTransfer').parsley().validate();
     if ($('#frmTransfer').parsley().isValid() === true) {
         $.ajax({
-            url: '/administrator/admmoney/savetransfer',
+            url: '/money/mnflow/savetransfer',
             type: 'POST',
             contentType: 'application/json',
             dataType: 'json',

@@ -1,7 +1,13 @@
-﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
-<link href="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
-<link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+﻿@{
+    ViewBag.Title = "Lịch sử thu nhập - chi tiêu - Chuyển khoản";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+    <link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+    <link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+}
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
@@ -73,7 +79,7 @@
                                 </div>
                             </div>
                             <div class="row form-group">
-                                <div class="col-md-6 col-xs-12">                                    
+                                <div class="col-md-6 col-xs-12">
                                     Ngày thu
                                 </div>
                                 <div class="col-md-6 col-xs-12">
@@ -231,7 +237,7 @@
                                     Ngày chuyển khoản
                                 </div>
                                 <div class="col-md-6 col-xs-12">
-                                    
+
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -239,7 +245,7 @@
                                     <input id="txtTransferDate" type="text" class="form-control datePicker" maxlength="10" readonly data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
                                 </div>
                                 <div class="col-md-6 col-xs-12">
-                                    
+
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -294,16 +300,16 @@
                 <button type="button" id="btnSaveTransferContinue" class="btn btn-primary" onclick="saveTransfer(true);" tabindex="10">Lưu và thêm mới</button>
             </div>
         </div>
-
     </div>
 </div>
-
-<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
-<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
-<script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
-<script src="/Areas/Administrator/Content/plugins/autoNumeric/autoNumeric.min.js"></script>
-<script src="~/Areas/Administrator/Content/plugins/parsleyjs/dist/parsley.min.js"></script>
-<script src="/Areas/Administrator/Content/Custom/admmoney.historyflow.js"></script>
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/autoNumeric/autoNumeric.min.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/parsleyjs/dist/parsley.min.js"></script>
+    <script src="/Areas/Money/Content/Script/Flow/index.js"></script>
+}
 

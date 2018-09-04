@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
-using TDH.Common.Fillters;
 using TDH.Model.Website;
 using TDH.Services.Website;
 using Utils;
@@ -15,20 +14,19 @@ namespace TDH.Areas.Website.Controllers
     /// <summary>
     /// Navigation controller
     /// </summary>
-    [AjaxExecuteFilterAttribute]
-    public class NavigationController : BaseController
+    public class WNavigationController : BaseController
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Website.Controllers/NavigationController.cs";
+        private readonly string FILE_NAME = "Website.Controllers/WNavigationController.cs";
 
         #endregion
 
-        // GET: Website/Navigation
-        public ActionResult Index()
+        [AllowAnonymous]
+        public ActionResult Home()
         {
             return View();
         }
@@ -38,7 +36,7 @@ namespace TDH.Areas.Website.Controllers
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult Navigation()
+        public ActionResult Index()
         {
             try
             {
@@ -46,7 +44,7 @@ namespace TDH.Areas.Website.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Navigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -58,7 +56,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="requestData">Jquery datatable request</param>
         /// <returns>DataTableResponse<NavigationModel></returns>
         [HttpPost]
-        public JsonResult Navigation(CustomDataTableRequestHelper requestData)
+        public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
             try
             {
@@ -87,7 +85,7 @@ namespace TDH.Areas.Website.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Navigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -97,7 +95,7 @@ namespace TDH.Areas.Website.Controllers
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult CreateNavigation()
+        public ActionResult Create()
         {
             try
             {
@@ -111,12 +109,12 @@ namespace TDH.Areas.Website.Controllers
                 };
 
                 #endregion
-
+                
                 return PartialView(model);
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateNavigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -129,7 +127,7 @@ namespace TDH.Areas.Website.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateNavigation(NavigationModel model)
+        public ActionResult Create(NavigationModel model)
         {
             try
             {
@@ -153,7 +151,7 @@ namespace TDH.Areas.Website.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateNavigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -164,7 +162,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="id">Navigation identifier</param>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult EditNavigation(string id)
+        public ActionResult Edit(string id)
         {
             ViewBag.id = id;
             try
@@ -172,19 +170,19 @@ namespace TDH.Areas.Website.Controllers
                 #region " [ Declaration ] "
 
                 NavigationService _service = new NavigationService();
-
+                
                 ViewBag.id = id;
 
                 #endregion
 
                 //Call to service
                 NavigationModel model = _service.GetItemByID(new NavigationModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
-
+                
                 return PartialView(model);
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditNavigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -197,7 +195,7 @@ namespace TDH.Areas.Website.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditNavigation(NavigationModel model)
+        public ActionResult Edit(NavigationModel model)
         {
             try
             {
@@ -221,7 +219,7 @@ namespace TDH.Areas.Website.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditNavigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -232,7 +230,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult PublishNavigation(NavigationModel model)
+        public ActionResult Publish(NavigationModel model)
         {
             try
             {
@@ -255,7 +253,7 @@ namespace TDH.Areas.Website.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "PublishNavigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Publish", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -266,7 +264,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult DeleteNavigation(NavigationModel model)
+        public ActionResult Delete(NavigationModel model)
         {
             try
             {
@@ -289,7 +287,7 @@ namespace TDH.Areas.Website.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "DeleteNavigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Delete", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -300,7 +298,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDeleteNavigation(NavigationModel model)
+        public ActionResult CheckDelete(NavigationModel model)
         {
             try
             {
@@ -321,7 +319,7 @@ namespace TDH.Areas.Website.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CheckDeleteNavigation", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDelete", UserID, ex);
                 throw new HttpException();
             }
         }

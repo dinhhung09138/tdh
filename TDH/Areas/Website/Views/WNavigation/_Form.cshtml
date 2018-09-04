@@ -77,7 +77,7 @@
                 @Html.HiddenFor(m => m.Image)
                 <div class="row" style="padding:10px;">
                     <img id="imgImage" src="@Model.Image" width="352" height="230" />
-                </div> 
+                </div>
             </div>
         </div>
     </div>
@@ -144,7 +144,7 @@
                         @Html.HiddenFor(m => m.MetaOgImage)
                         <div class="row" style="padding:10px;">
                             <img id="imgMetaOgImage" name="imgMetaOgImage" src="@Model.MetaOgImage" width="300" height="160" />
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
                         @Html.HiddenFor(m => m.MetaTwitterImage)
                         <div class="row" style="padding:10px;">
                             <img id="imgMetaTwitterImage" src="@Model.MetaTwitterImage" width="300" height="160" />
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -200,10 +200,11 @@
         @{
             if (ViewBag.Add == true || ViewBag.Edit == true)
             {
-                <a href="javascript:;" data-url="/administrator/admpost/navigation" data-title="Danh mục bài viết" class="btn btn-default pg_ld" tabindex="17">Quay lại</a>
+                <a href="/website/wnavigation/index" data-title="Danh mục bài viết" class="btn btn-default" tabindex="17">Quay lại</a>
                 <button type="submit" id="submitForm" class="btn btn-primary" tabindex="18">Lưu</button>
             }
         }
     </div>
 </div>
+
 

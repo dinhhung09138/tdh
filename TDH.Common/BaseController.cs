@@ -71,7 +71,7 @@ namespace TDH.Common
             }
             var _controllerName = filterContext.RouteData.Values["controller"].ToString().ToLower();
             var _actionName = filterContext.RouteData.Values["action"].ToString().ToLower();
-            
+
             string _functionCode = GetFunctionCode(_areaName, _controllerName, _actionName);
             var _type = GetFunctionType(_areaName, _controllerName, _actionName);
             var _permision = AllowAccess(_user.UserID, _functionCode);
@@ -247,21 +247,6 @@ namespace TDH.Common
                                 case "publishnews":
                                 case "deletenews":
                                     return "post_news";
-                                case "category":
-                                case "createcategory":
-                                case "editcategory":
-                                case "publishcategory":
-                                case "deletecategory":
-                                case "checkdeletecategory":
-                                case "onnavigationcategory":
-                                    return "post_category";
-                                case "navigation":
-                                case "createnavigation":
-                                case "editnavigation":
-                                case "publishnavigation":
-                                case "deletenavigation":
-                                case "checkdeletenavigation":
-                                    return "post_navigation";
                                 case "about":
                                     return "post_about";
                             }
@@ -396,6 +381,39 @@ namespace TDH.Common
                             break;
                     }
                     break;
+                case "website":
+                    switch (controllerName)
+                    {
+                        case "wnavigation":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "checkdelete":
+                                case "delete":
+                                    return "post_navigation";
+                                default:
+                                    return "";
+                            }
+                        case "wcategory":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "checkdelete":
+                                case "delete":
+                                    return "post_category";
+                                default:
+                                    return "";
+                            }
+                        default:
+                            break;
+                    }
+                    break;
             }
             return "";
         }
@@ -475,27 +493,14 @@ namespace TDH.Common
                             switch (actionName)
                             {
                                 case "news":
-                                case "category":
-                                case "navigation":
                                 case "about":
                                     return ActionType.View;
                                 case "createnews":
-                                case "createcategory":
-                                case "createnavigation":
                                     return ActionType.Create;
                                 case "editnews":
                                 case "publishnews":
-                                case "editcategory":
-                                case "publishcategory":
-                                case "editnavigation":
-                                case "publishnavigation":
-                                case "onnavigationcategory":
                                     return ActionType.Edit;
                                 case "deletenews":
-                                case "deletecategory":
-                                case "checkdeletecategory":
-                                case "deletenavigation":
-                                case "checkdeletenavigation":
                                     return ActionType.Delete;
                             }
 
@@ -670,6 +675,59 @@ namespace TDH.Common
                                 case "summaryreportbyyear":
                                 case "incomebyyearreport":
                                     return ActionType.View;
+                                default:
+                                    return ActionType.None;
+                            }
+                    }
+                    break;
+                case "website":
+                    switch (controllerName)
+                    {
+                        case "wnavigation":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "checkdelete":
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "wcategory":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "checkdelete":
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "wpost":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "checkdelete":
+                                case "delete":
+                                    return ActionType.Delete;
                                 default:
                                     return ActionType.None;
                             }

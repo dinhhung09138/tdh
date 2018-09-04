@@ -41,7 +41,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admpost/navigation', 'Danh mục bài viết');
+    window.location.href = '/website/wnavigation/index';
 };
 
 var OnFailure = function (response) {

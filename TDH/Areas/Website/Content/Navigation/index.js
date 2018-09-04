@@ -23,7 +23,7 @@ $(document).ready(function () {
         language: language,
         order: [[1, "asc"]],
         ajax: {
-            url: '/administrator/admpost/navigation',
+            url: '/website/wnavigation/index',
             type: 'post',
             data: function (d) {
                 //d.ModuleCode = ""
@@ -129,7 +129,7 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admpost/editnavigation/' + data.ID + '\" data-title="Cập nhật danh mục bài viết" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="/website/wnavigation/edit/' + data.ID + '\" title="Cập nhật danh mục bài viết" title="Cập nhật" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-remove" aria-hidden="true"></i></a>';
@@ -159,7 +159,7 @@ $(document).ready(function () {
 
 function savePublish(id, publish) {
     $.ajax({
-        url: '/administrator/admpost/publishnavigation',
+        url: '/website/wnavigation/publish',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -178,14 +178,14 @@ function savePublish(id, publish) {
 
 function confirmDelete(deletedId) {
     $.ajax({
-        url: '/administrator/admpost/checkdeletenavigation',
+        url: '/website/wnavigation/checkdelete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
         data: JSON.stringify({ ID: deletedId }),
         success: function (response) {
             console.log(response);
-            if (response === 3) { 
+            if (response === 3) {
                 id = deletedId;
                 $('#deleteModal').modal('show');
             } else {
@@ -196,12 +196,12 @@ function confirmDelete(deletedId) {
             console.log(error);
         }
     });
-    
+
 }
 
 function deleteItem() {
     $.ajax({
-        url: '/administrator/admpost/deletenavigation',
+        url: '/website/wnavigation/delete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',

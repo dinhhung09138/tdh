@@ -255,8 +255,8 @@
     <Compile Include="Areas\System\Controllers\RoleController.cs" />
     <Compile Include="Areas\System\Controllers\UserController.cs" />
     <Compile Include="Areas\System\SystemAreaRegistration.cs" />
-    <Compile Include="Areas\Website\Controllers\CategoryController.cs" />
-    <Compile Include="Areas\Website\Controllers\NavigationController.cs" />
+    <Compile Include="Areas\Website\Controllers\WCategoryController.cs" />
+    <Compile Include="Areas\Website\Controllers\WNavigationController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -5138,9 +5138,6 @@
     <Content Include="Areas\Administrator\Content\ckfinder\skins\v1\richcombo.css" />
     <Content Include="Areas\Administrator\Content\ckfinder\skins\v1\skin.js" />
     <Content Include="Areas\Administrator\Content\ckfinder\skins\v1\uipanel.css" />
-    <Content Include="Areas\Administrator\Content\custom\admmoney.report.js" />
-    <Content Include="Areas\Administrator\Content\custom\admpost.navigation.action.js" />
-    <Content Include="Areas\Administrator\Content\custom\admpost.navigation.js" />
     <Content Include="Areas\Administrator\Content\custom\admpost.news.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admpost.news.js" />
     <Content Include="Areas\Administrator\Content\custom\admsetting.category.js" />
@@ -6162,6 +6159,8 @@
     <Content Include="Areas\Money\Content\Script\Report\index.js" />
     <Content Include="Areas\Money\Content\Script\Type\action.js" />
     <Content Include="Areas\Money\Content\Script\Type\index.js" />
+    <Content Include="Areas\Website\Content\Navigation\action.js" />
+    <Content Include="Areas\Website\Content\Navigation\index.js" />
     <Content Include="Content\css\bootstrap-3.1.1.min.css" />
     <Content Include="Content\css\flexslider.css" />
     <Content Include="Content\css\owl.carousel.css" />
@@ -6714,10 +6713,6 @@
     <Content Include="Areas\Administrator\Views\AdmSystem\User.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmSystem\_RoleForm.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmSystem\_UserForm.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\CreateNavigation.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\EditNavigation.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\Navigation.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\_NavigationForm.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmPost\Category.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmPost\CreateCategory.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmPost\_CategoryForm.cshtml" />
@@ -6777,6 +6772,11 @@
     <Content Include="Areas\Money\Views\MNCategory\_Form.cshtml" />
     <Content Include="Areas\Money\Views\MNFlow\Index.cshtml" />
     <Content Include="Areas\Money\Views\MNReport\Index.cshtml" />
+    <Content Include="Areas\Website\Views\WNavigation\Index.cshtml" />
+    <Content Include="Areas\Website\Views\WNavigation\Create.cshtml" />
+    <Content Include="Areas\Website\Views\WNavigation\Edit.cshtml" />
+    <Content Include="Areas\Website\Views\WNavigation\_Form.cshtml" />
+    <Content Include="Areas\Website\Views\WNavigation\Home.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6840,9 +6840,9 @@
     <Folder Include="Areas\System\Views\Role\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="Areas\System\Views\User\" />
+    <Folder Include="Areas\Website\Content\Category\" />
+    <Folder Include="Areas\Website\Content\Post\" />
     <Folder Include="Areas\Website\Models\" />
-    <Folder Include="Areas\Website\Views\Category\" />
-    <Folder Include="Areas\Website\Views\Navigation\" />
     <Folder Include="Areas\Website\Views\Shared\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

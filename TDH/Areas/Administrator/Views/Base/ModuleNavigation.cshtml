@@ -21,7 +21,7 @@
     {
         if (_listSidebar.Count > 0)
         {
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <ul class="nav">
                 @{
                     var _setting = _listSidebar.Where(m => m.Code.Contains("setting")).ToList();
                     if (_setting.Count() > 0)
@@ -32,7 +32,7 @@
                                 @{
                                     foreach (var item in _setting)
                                     {
-                                        <a class="dropdown-item pg_ld"  href="/@item.Area/@item.Controller/@item.Action">@item.Title</a>
+                                        <a class="dropdown-item" href="/@item.Area/@item.Controller/@item.Action">@item.Title</a>
                                         <div class="dropdown-divider"></div>
                                     }
                                 }
@@ -48,7 +48,7 @@
                                 @{
                                     foreach (var item in _post)
                                     {
-                                        <a class="dropdown-item pg_ld" href="/@item.Area/@item.Controller/@item.Action">@item.Title</a>
+                                        <a class="dropdown-item" href="/@item.Area/@item.Controller/@item.Action">@item.Title</a>
                                         <div class="dropdown-divider"></div>
                                     }
                                 }

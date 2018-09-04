@@ -41,7 +41,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admpost/category', 'Chủ đề bài viết');
+    window.location.href = '/website/wcategory/index';
 };
 
 var OnFailure = function (response) {

@@ -6159,6 +6159,8 @@
     <Content Include="Areas\Money\Content\Script\Report\index.js" />
     <Content Include="Areas\Money\Content\Script\Type\action.js" />
     <Content Include="Areas\Money\Content\Script\Type\index.js" />
+    <Content Include="Areas\Website\Content\Category\action.js" />
+    <Content Include="Areas\Website\Content\Category\index.js" />
     <Content Include="Areas\Website\Content\Navigation\action.js" />
     <Content Include="Areas\Website\Content\Navigation\index.js" />
     <Content Include="Content\css\bootstrap-3.1.1.min.css" />
@@ -6777,6 +6779,10 @@
     <Content Include="Areas\Website\Views\WNavigation\Edit.cshtml" />
     <Content Include="Areas\Website\Views\WNavigation\_Form.cshtml" />
     <Content Include="Areas\Website\Views\WNavigation\Home.cshtml" />
+    <Content Include="Areas\Website\Views\WCategory\Index.cshtml" />
+    <Content Include="Areas\Website\Views\WCategory\Create.cshtml" />
+    <Content Include="Areas\Website\Views\WCategory\Edit.cshtml" />
+    <Content Include="Areas\Website\Views\WCategory\_Form.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6840,7 +6846,6 @@
     <Folder Include="Areas\System\Views\Role\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="Areas\System\Views\User\" />
-    <Folder Include="Areas\Website\Content\Category\" />
     <Folder Include="Areas\Website\Content\Post\" />
     <Folder Include="Areas\Website\Models\" />
     <Folder Include="Areas\Website\Views\Shared\" />

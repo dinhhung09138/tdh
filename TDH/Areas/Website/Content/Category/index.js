@@ -23,7 +23,7 @@ $(document).ready(function () {
         language: language,
         order: [[3, "asc"]],
         ajax: {
-            url: '/administrator/admpost/category',
+            url: '/website/wcategory/index',
             type: 'post',
             data: function (d) {
                 d.Parameter1 = $('#navigationSelection').val()
@@ -155,7 +155,7 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admpost/editcategory/' + data.ID + '\" data-title="Cập nhật danh mục bài viết" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="/website/wcategory/edit/' + data.ID + '\" title="Cập nhật danh mục bài viết" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-remove" aria-hidden="true"></i></a>';
@@ -200,7 +200,7 @@ $(document).ready(function () {
 
 function saveOnNav(id, show) {
     $.ajax({
-        url: '/administrator/admpost/onnavigationcategory',
+        url: '/website/wcategory/onnavigation',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -219,7 +219,7 @@ function saveOnNav(id, show) {
 
 function savePublish(id, publish) {
     $.ajax({
-        url: '/administrator/admpost/publishcategory',
+        url: '/website/wcategory/publish',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -238,7 +238,7 @@ function savePublish(id, publish) {
 
 function confirmDelete(deletedId) {
     $.ajax({
-        url: '/administrator/admpost/checkdeletecategory',
+        url: '/website/wcategory/checkdelete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -260,7 +260,7 @@ function confirmDelete(deletedId) {
 
 function deleteItem() {
     $.ajax({
-        url: '/administrator/admpost/deletecategory',
+        url: '/website/wcategory/delete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -282,4 +282,3 @@ function deleteItem() {
 $(document).on('change', '#navigationSelection', function (e) {
     table.ajax.reload();
 });
-  

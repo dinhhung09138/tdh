@@ -402,6 +402,7 @@ namespace TDH.Common
                             {
                                 case "index":
                                 case "create":
+                                case "onnavigation":
                                 case "edit":
                                 case "publish":
                                 case "checkdelete":
@@ -708,6 +709,7 @@ namespace TDH.Common
                                     return ActionType.Create;
                                 case "edit":
                                 case "publish":
+                                case "onnavigation":
                                     return ActionType.Edit;
                                 case "checkdelete":
                                 case "delete":

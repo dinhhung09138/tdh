@@ -1,0 +1,42 @@
+﻿@model TDH.Model.Money.AccountTypeModel
+@{
+    ViewBag.Title = "Thêm loại tài khoản";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Thêm loại tài khoản</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.View == true)
+                {
+                    <a class="btn btn-box-tool " href="/money/mnaccounttype/index" title="Danh sách loại tài khoản">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
+                }
+                <a class="btn btn-box-tool " href="/money/mnaccounttype/create" title="Thêm loại tài khoản">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Ajax.BeginForm("create", "mnaccounttype", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
+        {
+            @Html.Partial("_Form", Model)
+        }
+    </div>
+</div>
+@section script {
+    <script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
+    <script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="/Areas/Money/Content/Script/Type/action.js"></script>
+}
+

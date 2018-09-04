@@ -23,7 +23,7 @@ $(document).ready(function () {
         language: language,
         order: [[2, "asc"]],
         ajax: {
-            url: '/administrator/admmoney/accounttype',
+            url: '/money/mnaccounttype/index',
             type: 'post',
             data: function (d) {
                 //d.ModuleCode = ""
@@ -48,13 +48,6 @@ $(document).ready(function () {
                 data: 'Ordering',
                 orderable: true,
                 searchable: true,
-                className: 'ctn-center',
-                width: '90px'
-            },
-            {
-                data: 'CountString',
-                orderable: false,
-                searchable: false,
                 className: 'ctn-center',
                 width: '90px'
             },
@@ -93,13 +86,20 @@ $(document).ready(function () {
                 }
             },
             {
+                data: 'CountString',
+                orderable: false,
+                searchable: false,
+                className: 'ctn-center',
+                width: '90px'
+            },
+            {
                 orderable: false,
                 width: '40px',
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admmoney/editaccounttype/' + data.ID + '\" data-title="Cập nhật loại tài khoản" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="/money/mnaccounttype/edit/' + data.ID + '\" title="Cập nhật loại tài khoản" title="Cập nhật" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-remove" aria-hidden="true"></i></a>';
@@ -132,7 +132,7 @@ $(document).ready(function () {
 
 function savePublish(id, publish) {
     $.ajax({
-        url: '/administrator/admmoney/publishaccounttype',
+        url: '/money/mnaccounttype/publish',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -151,7 +151,7 @@ function savePublish(id, publish) {
 
 function confirmDelete(deletedId) {
     $.ajax({
-        url: '/administrator/admmoney/checkdeleteaccounttype',
+        url: '/money/mnaccounttype/checkdelete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -174,7 +174,7 @@ function confirmDelete(deletedId) {
 
 function deleteItem() {
     $.ajax({
-        url: '/administrator/admmoney/deleteaccounttype',
+        url: '/money/mnaccounttype/delete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',

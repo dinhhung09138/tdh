@@ -18,7 +18,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admmoney/group', 'Quy tắc chi tiêu');
+    window.location.href = '/money/mnaccounttype/index';
 };
 
 var OnFailure = function (response) {

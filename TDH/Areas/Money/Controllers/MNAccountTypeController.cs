@@ -15,38 +15,32 @@ namespace TDH.Areas.Money.Controllers
     /// <summary>
     /// Account type controller
     /// </summary>
-    [AjaxExecuteFilterAttribute]
-    public class AccountTypeController : BaseController
+    public class MNAccountTypeController : BaseController
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Money.Controllers/AccountTypeController.cs";
+        private readonly string FILE_NAME = "Money.Controllers/MNAccountTypeController.cs";
 
         #endregion
 
-        // GET: Money/AccountType
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         /// <summary>
         /// AccountType form
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult AccountType()
+        public ActionResult Index()
         {
             try
             {
-                return PartialView();
+                return View();
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "AccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -58,7 +52,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="requestData">jquery datatable request</param>
         /// <returns>DataTableResponse<AccountTypeModel></returns>
         [HttpPost]
-        public JsonResult AccountType(CustomDataTableRequestHelper requestData)
+        public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
             try
             {
@@ -88,7 +82,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "AccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -98,7 +92,7 @@ namespace TDH.Areas.Money.Controllers
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult CreateAccountType()
+        public ActionResult Create()
         {
             try
             {
@@ -111,11 +105,11 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 AccountTypeModel model = new AccountTypeModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
                 //
-                return PartialView(model);
+                return View(model);
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -128,7 +122,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateAccountType(AccountTypeModel model)
+        public ActionResult Create(AccountTypeModel model)
         {
             try
             {
@@ -153,7 +147,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -165,7 +159,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="id">the identifier</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpGet]
-        public ActionResult EditAccountType(string id)
+        public ActionResult Edit(string id)
         {
             try
             {
@@ -180,11 +174,11 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 AccountTypeModel model = _service.GetItemByID(new AccountTypeModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 //
-                return PartialView(model);
+                return View(model);
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -197,7 +191,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAccountType(AccountTypeModel model)
+        public ActionResult Edit(AccountTypeModel model)
         {
             try
             {
@@ -221,7 +215,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -232,7 +226,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">AccountTypeModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult PublishAccountType(AccountTypeModel model)
+        public ActionResult Publish(AccountTypeModel model)
         {
             try
             {
@@ -255,7 +249,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "PublishAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Publish", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -266,7 +260,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">AccountTypeModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult DeleteAccountType(AccountTypeModel model)
+        public ActionResult Delete(AccountTypeModel model)
         {
             try
             {
@@ -289,7 +283,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "DeleteAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Delete", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -300,7 +294,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">AccountTypeModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDeleteAccountType(AccountTypeModel model)
+        public ActionResult CheckDelete(AccountTypeModel model)
         {
             try
             {
@@ -321,10 +315,11 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CheckDeleteAccountType", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDelete", UserID, ex);
                 throw new HttpException();
             }
         }
+
 
     }
 }

@@ -13,38 +13,31 @@ namespace TDH.Areas.Money.Controllers
     /// <summary>
     /// Report controller
     /// </summary>
-    [AjaxExecuteFilterAttribute]
-    public class ReportController : BaseController
+    public class MNReportController : BaseController
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Money.Controllers/ReportController.cs";        
+        private readonly string FILE_NAME = "Money.Controllers/MNReportController.cs";
 
         #endregion
-
-        // GET: Money/Report
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         /// <summary>
         /// Report form
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult Report()
+        public ActionResult Index()
         {
             try
             {
-                return PartialView();
+                return View();
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Report", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -144,6 +137,7 @@ namespace TDH.Areas.Money.Controllers
                 throw new HttpException();
             }
         }
+
 
     }
 }

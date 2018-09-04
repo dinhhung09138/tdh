@@ -34,12 +34,12 @@ $(document).ready(function () {
         language: language,
         order: [[1, "asc"]],
         ajax: {
-            url: '/administrator/admmoney/accounthistory',
+            url: '/money/mnaccount/accounthistory',
             type: 'post',
             data: function (d) {
                 d.Parameter1 = $('#monthSelectValue').val(), //By month
-                d.Parameter2 = $('#id').val(), //By account id
-                d.Parameter3 = $('#ddlSelect').val() //by type (income or payment)
+                    d.Parameter2 = $('#id').val(), //By account id
+                    d.Parameter3 = $('#ddlSelect').val() //by type (income or payment)
             }
         },
         columns: [

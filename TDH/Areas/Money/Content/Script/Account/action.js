@@ -28,7 +28,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admmoney/account', 'Tài khoản');
+    window.location.href = '/money/mnaccount/account';
 };
 
 var OnFailure = function (response) {
@@ -37,7 +37,7 @@ var OnFailure = function (response) {
 function history(id, name, yearMonth) {
     loading($('body'), 'show');
     $.ajax({
-        url: '/administrator/admmoney/accounthistory/',
+        url: '/money/mnaccount/accounthistory/',
         type: 'get',
         async: false,
         dataType: 'html',
@@ -46,7 +46,7 @@ function history(id, name, yearMonth) {
             document.title = 'Lịch sử giao dịch: ' + name;
             $('#main_layout').empty();
             $('#main_layout').append(response);
-            setTimeout(function () { loading($('body'), 'hide') }, 700);      
+            setTimeout(function () { loading($('body'), 'hide') }, 700);
         }
-    }); 
+    });
 }

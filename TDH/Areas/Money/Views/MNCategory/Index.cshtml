@@ -1,7 +1,14 @@
-﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
-<link href="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
-<link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+﻿
+@{
+    ViewBag.Title = "Danh mục thu chi";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+    <link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+    <link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+}
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
@@ -22,7 +29,7 @@
             @{
                 if (ViewBag.Add == true)
                 {
-                    <a title="Thêm mới" class="btn btn-box-tool pg_ld" data-title="Thêm danh mục thu chi" data-url="/administrator/admmoney/createcategory">
+                    <a class="btn btn-box-tool" title="Thêm danh mục thu chi" href="/money/mncategory/create">
                         <i class="fa fa-plus"></i>
                     </a>
                 }
@@ -46,11 +53,13 @@
     </div>
 </div>
 @Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
-<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
-<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
-<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
-<script src="~/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
-<script src="/Areas/Administrator/Content/Custom/admmoney.category.js"></script>
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
+    <script src="/Areas/Money/Content/Script/Category/index.js"></script>
+}
 

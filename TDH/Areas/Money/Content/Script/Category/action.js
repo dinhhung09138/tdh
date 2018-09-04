@@ -18,7 +18,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admmoney/category', 'Danh mục thu chi');
+    window.location.href = '/money/mncategory/category';
 };
 
 var OnFailure = function (response) {
@@ -27,7 +27,7 @@ var OnFailure = function (response) {
 function history(id, name, yearMonth) {
     loading($('body'), 'show');
     $.ajax({
-        url: '/administrator/admmoney/categoryhistory/',
+        url: '/money/mncategory/history/',
         type: 'get',
         async: false,
         dataType: 'html',
@@ -36,7 +36,7 @@ function history(id, name, yearMonth) {
             document.title = 'Lịch sử giao dịch: ' + name;
             $('#main_layout').empty();
             $('#main_layout').append(response);
-            setTimeout(function () { loading($('body'), 'hide') }, 700);      
+            setTimeout(function () { loading($('body'), 'hide'); }, 700);
         }
-    }); 
+    });
 }

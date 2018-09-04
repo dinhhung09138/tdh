@@ -34,11 +34,11 @@ $(document).ready(function () {
         language: language,
         order: [[1, "asc"]],
         ajax: {
-            url: '/administrator/admmoney/categoryhistory',
+            url: '/money/mncategory/history',
             type: 'post',
             data: function (d) {
                 d.Parameter1 = $('#monthSelectValue').val(), //By month
-                d.Parameter2 = $('#id').val() //By account id
+                    d.Parameter2 = $('#id').val() //By account id
             }
         },
         columns: [

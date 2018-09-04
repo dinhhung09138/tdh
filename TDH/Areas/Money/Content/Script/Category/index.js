@@ -35,11 +35,11 @@ $(document).ready(function () {
         language: language,
         order: [[2, "asc"]],
         ajax: {
-            url: '/administrator/admmoney/category',
+            url: '/money/mncategory/index',
             type: 'post',
             data: function (d) {
                 d.Parameter1 = $('#groupSelect').val(),
-                d.Parameter2 = $('#monthSelectValue').val()
+                    d.Parameter2 = $('#monthSelectValue').val()
             }
         },
         columns: [
@@ -117,9 +117,9 @@ $(document).ready(function () {
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     var str = '';
-                    str = str + '<a href="javascript:;" onclick="history(\'' + data.ID + '\',\'' + data.Name + '\');" title="Lịch sử giao dịch" class="mg-lr-2"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+                    str = str + '<a href="/money/mncategory/history/' + data.ID + '\" title="Lịch sử giao dịch" class="mg-lr-2"><i class="fa fa-eye" aria-hidden="true"></i></a>';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admmoney/editcategory/' + data.ID + '\" data-title="Cập nhật danh mục thu chi" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="/money/mncategory/edit/' + data.ID + '\" title="Cập nhật danh mục thu chi" title="Cập nhật" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-remove" aria-hidden="true"></i></a>';
@@ -153,7 +153,7 @@ $(document).on('change', '#groupSelect', function (e) {
 
 function savePublish(id, publish) {
     $.ajax({
-        url: '/administrator/admmoney/publishcategory',
+        url: '/money/mncategory/publish',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -172,7 +172,7 @@ function savePublish(id, publish) {
 
 function confirmDelete(deletedId) {
     $.ajax({
-        url: '/administrator/admmoney/checkdeletecategory',
+        url: '/money/mncategory/checkdelete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -195,7 +195,7 @@ function confirmDelete(deletedId) {
 
 function deleteItem() {
     $.ajax({
-        url: '/administrator/admmoney/deletecategory',
+        url: '/money/mncategory/delete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -217,7 +217,7 @@ function deleteItem() {
 function history(id, name) {
     loading($('body'), 'show');
     $.ajax({
-        url: '/administrator/admmoney/categoryhistory/',
+        url: '/money/mncategory/history/',
         type: 'get',
         async: false,
         dataType: 'html',
@@ -226,7 +226,7 @@ function history(id, name) {
             document.title = 'Lịch sử giao dịch: ' + name;
             $('#main_layout').empty();
             $('#main_layout').append(response);
-            setTimeout(function () { loading($('body'), 'hide') }, 700);
+            setTimeout(function () { loading($('body'), 'hide'); }, 700);
         }
     });
 }

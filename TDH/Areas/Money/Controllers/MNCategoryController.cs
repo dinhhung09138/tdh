@@ -15,30 +15,23 @@ namespace TDH.Areas.Money.Controllers
     /// <summary>
     /// Category controller
     /// </summary>
-    [AjaxExecuteFilterAttribute]
-    public class CategoryController : BaseController
+    public class MNCategoryController : BaseController
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Money.Controllers/CategoryController.cs";
+        private readonly string FILE_NAME = "Money.Controllers/MNCategoryController.cs";
 
         #endregion
-
-        // GET: Money/Category
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         /// <summary>
         /// Category form
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult Category()
+        public ActionResult Index()
         {
             try
             {
@@ -50,11 +43,11 @@ namespace TDH.Areas.Money.Controllers
 
                 #endregion
                 //
-                return PartialView();
+                return View();
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Category", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -66,7 +59,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="requestData">Jquery datatable request</param>
         /// <returns>DataTableResponse<CategoryModel></returns>
         [HttpPost]
-        public JsonResult Category(CustomDataTableRequestHelper requestData)
+        public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
             try
             {
@@ -104,7 +97,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Category", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -117,12 +110,20 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="yearMonth">year month</param>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult CategoryHistory(string id, string name, string yearMonth)
+        public ActionResult History(string id, string yearMonth = "")
         {
             try
             {
+                #region " [ Declaration ] "
+
+                CategoryService _service = new CategoryService();
+
+                CategoryModel _model = _service.GetItemByID(new CategoryModel() { ID = new Guid(id), CreateBy = UserID });
+
+                #endregion
+
                 ViewBag.cateID = id;
-                ViewBag.name = name;
+                ViewBag.name = _model.Name;
                 ViewBag.yearMonth = DateTime.Now.ToString("yyyyMM");
                 ViewBag.yearMonthValue = DateTime.Now.ToString("yyyy/MM");
                 ViewBag.listAccount = "1"; //Back  to list account
@@ -133,11 +134,11 @@ namespace TDH.Areas.Money.Controllers
                     ViewBag.listAccount = "0";//Back to edit account
                 }
                 //
-                return PartialView();
+                return View();
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CategoryHistory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "History", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -149,7 +150,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="requestData">Jquery datatable request</param>
         /// <returns>DataTableResponse<CategoryHistoryModel></returns>
         [HttpPost]
-        public JsonResult CategoryHistory(CustomDataTableRequestHelper requestData)
+        public JsonResult History(CustomDataTableRequestHelper requestData)
         {
             try
             {
@@ -185,7 +186,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CategoryHistory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "History", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -195,7 +196,7 @@ namespace TDH.Areas.Money.Controllers
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult CreateCategory()
+        public ActionResult Create()
         {
             try
             {
@@ -210,11 +211,11 @@ namespace TDH.Areas.Money.Controllers
                 //
                 CategoryModel model = new CategoryModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
                 //
-                return PartialView(model);
+                return View(model);
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -227,7 +228,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateCategory(CategoryModel model)
+        public ActionResult Create(CategoryModel model)
         {
             try
             {
@@ -252,7 +253,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -263,7 +264,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="id">The category identifier</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpGet]
-        public ActionResult EditCategory(string id)
+        public ActionResult Edit(string id)
         {
             try
             {
@@ -281,11 +282,11 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 CategoryModel model = _service.GetItemByID(new CategoryModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 //
-                return PartialView(model);
+                return View(model);
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -298,7 +299,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditCategory(CategoryModel model)
+        public ActionResult Edit(CategoryModel model)
         {
             try
             {
@@ -322,7 +323,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -333,7 +334,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">CategoryModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult PublishCategory(CategoryModel model)
+        public ActionResult Publish(CategoryModel model)
         {
             try
             {
@@ -356,7 +357,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "PublishCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Publish", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -367,7 +368,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult DeleteCategory(CategoryModel model)
+        public ActionResult Delete(CategoryModel model)
         {
             try
             {
@@ -390,7 +391,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "DeleteAccount", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Delete", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -401,7 +402,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">CategoryModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDeleteCategory(CategoryModel model)
+        public ActionResult CheckDelete(CategoryModel model)
         {
             try
             {
@@ -422,7 +423,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CheckDeleteCategory", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDelete", UserID, ex);
                 throw new HttpException();
             }
         }

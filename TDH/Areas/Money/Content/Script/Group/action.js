@@ -18,7 +18,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admmoney/accounttype', 'Loại tài khoản');
+    window.location.href = '/money/mngroup/index';
 };
 
 var OnFailure = function (response) {

@@ -1,7 +1,13 @@
-﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
-<link href="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
-<link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+﻿@{
+    ViewBag.Title = "Danh sách quy tắc chi tiêu";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+    <link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+    <link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+}
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
@@ -26,7 +32,7 @@
             @{
                 if (ViewBag.Add == true)
                 {
-                    <a title="Thêm mới" class="btn btn-box-tool pg_ld" data-title="Thêm quy tắc chi tiêu" data-url="/administrator/admmoney/creategroup">
+                    <a class="btn btn-box-tool" title="Thêm quy tắc chi tiêu" href="/money/mngroup/create">
                         <i class="fa fa-plus"></i>
                     </a>
                 }
@@ -57,8 +63,6 @@
         </table>
     </div>
 </div>
-@Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
-
 <div class="modal fade" id="settingModel" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -67,7 +71,7 @@
                     <div class="card-header with-border no-bg">
                         <h3 class="card-title">Thiết lập quy tắc chi tiêu</h3>
                         <div class="card-tools pull-right">
-                           <input type="text" id="monthSettingSelect" readonly />
+                            <input type="text" id="monthSettingSelect" readonly />
                         </div>
                     </div>
                     <div class="card-body">
@@ -120,12 +124,15 @@
         </div>
     </div>
 </div>
-<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
-<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
-<script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
-<script src="~/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
-<script src="/Areas/Administrator/Content/plugins/autoNumeric/autoNumeric.min.js"></script>
-<script src="/Areas/Administrator/Content/Custom/admmoney.group.js"></script>
+@Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/autoNumeric/autoNumeric.min.js"></script>
+    <script src="/Areas/Money/Content/Script/Group/index.js"></script>
+}
 

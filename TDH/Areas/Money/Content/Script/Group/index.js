@@ -20,7 +20,7 @@ $(document).ready(function () {
         initComplete: function (settings, json) {
             //Do something after finish
         },
-        createdRow: function(row, data, dataIndex) {
+        createdRow: function (row, data, dataIndex) {
             if (data.IsInput === true || (data.PercentCurrent === 0 && data.PercentSetting === 0) || ((data.PercentCurrent * 100) / data.PercentSetting) <= 80) {
                 //
             } else {
@@ -29,17 +29,17 @@ $(document).ready(function () {
                     $(row).css({ 'background-color': '#ffc107' });
                 } else {
                     $(row).css({ 'background-color': '#dc3545' });
-                }                
+                }
             }
         },
         language: language,
         order: [[3, "asc"]],
         ajax: {
-            url: '/administrator/admmoney/group',
+            url: '/money/mngroup/index',
             type: 'post',
             data: function (d) {
                 d.Parameter1 = $('#ddlSelect').val(),
-                d.Parameter2 = $('#monthSelectValue').val()
+                    d.Parameter2 = $('#monthSelectValue').val()
             }
         },
         columns: [
@@ -166,7 +166,7 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admmoney/editgroup/' + data.ID + '\" data-title="Cập nhật quy tắc chi tiêu" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="/money/mngroup/edit/' + data.ID + '\" title="Cập nhật quy tắc chi tiêu" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-remove" aria-hidden="true"></i></a>';
@@ -197,7 +197,7 @@ $(document).ready(function () {
 
         }
     });
-    
+
     $("#monthSelect").datepicker({
         language: 'vi',
         format: "yyyy/mm",
@@ -221,8 +221,8 @@ $(document).ready(function () {
         var month = $(this).val().substring(5, 8);
         var year = $(this).val().substring(0, 4);
         getSpendSetting(parseInt(year + month));
-        });
-    
+    });
+
 });
 
 $(document).on('change', '#ddlSelect', function (e) {
@@ -231,7 +231,7 @@ $(document).on('change', '#ddlSelect', function (e) {
 
 function savePublish(id, publish) {
     $.ajax({
-        url: '/administrator/admmoney/publishgroup',
+        url: '/money/mngroup/publish',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -250,7 +250,7 @@ function savePublish(id, publish) {
 
 function confirmDelete(deletedId) {
     $.ajax({
-        url: '/administrator/admmoney/checkdeletegroup',
+        url: '/money/mngroup/checkdelete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -273,7 +273,7 @@ function confirmDelete(deletedId) {
 
 function deleteItem() {
     $.ajax({
-        url: '/administrator/admmoney/deletegroup',
+        url: '/money/mngroup/delete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -293,7 +293,7 @@ function deleteItem() {
 }
 
 function spendSetting() {
-    var currentTime = new Date()
+    var currentTime = new Date();
     // returns the month (from 0 to 11)
     var month = currentTime.getMonth() + 1;
     // returns the day of the month (from 1 to 31)
@@ -307,7 +307,7 @@ function spendSetting() {
 function getSpendSetting(year) {
     $('#bodytbListFullGroupSetting').empty();
     $.ajax({
-        url: '/administrator/admmoney/getgroupsettinginfo',
+        url: '/money/mngroup/getgroupsettinginfo',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -350,7 +350,7 @@ function saveSpendSetting() {
     });
     if (list.length > 0) {
         $.ajax({
-            url: '/administrator/admmoney/savegroupsettinginfo',
+            url: '/money/mngroup/savegroupsettinginfo',
             type: 'POST',
             contentType: 'application/json',
             dataType: 'json',
@@ -368,7 +368,7 @@ function saveSpendSetting() {
 
 function groupSetting(id) {
     $.ajax({
-        url: '/administrator/admmoney/groupsettinginfo',
+        url: '/money/mngroup/groupsettinginfo',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',

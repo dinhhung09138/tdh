@@ -15,38 +15,31 @@ namespace TDH.Areas.Money.Controllers
     /// <summary>
     /// Group controller
     /// </summary>
-    [AjaxExecuteFilterAttribute]
-    public class GroupController : BaseController
+    public class MNGroupController : BaseController
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Money.Controllers/GroupController.cs";
+        private readonly string FILE_NAME = "Money.Controllers/MNGroupController.cs";
 
         #endregion
-
-        // GET: Money/Group
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         /// <summary>
         /// Group form
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult Group()
+        public ActionResult Index()
         {
             try
             {
-                return PartialView();
+                return View();
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Group", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -58,7 +51,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="requestData"></param>
         /// <returns>DataTableResponse<GroupModel></returns>
         [HttpPost]
-        public JsonResult Group(CustomDataTableRequestHelper requestData)
+        public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
             try
             {
@@ -96,7 +89,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Group", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -106,7 +99,7 @@ namespace TDH.Areas.Money.Controllers
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult CreateGroup()
+        public ActionResult Create()
         {
             try
             {
@@ -119,11 +112,11 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 GroupModel model = new GroupModel() { ID = Guid.NewGuid(), CreateBy = UserID, Insert = true };
                 //
-                return PartialView(model);
+                return View(model);
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -136,7 +129,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateGroup(GroupModel model)
+        public ActionResult Create(GroupModel model)
         {
             try
             {
@@ -152,8 +145,7 @@ namespace TDH.Areas.Money.Controllers
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
-
-
+                
                 #endregion
 
                 //Call to service
@@ -161,7 +153,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -172,7 +164,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="id">The group identifier</param>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult EditGroup(string id)
+        public ActionResult Edit(string id)
         {
             try
             {
@@ -187,11 +179,11 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 GroupModel model = _service.GetItemByID(new GroupModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 //
-                return PartialView(model);
+                return View(model);
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -271,7 +263,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditGroup(GroupModel model)
+        public ActionResult Edit(GroupModel model)
         {
             try
             {
@@ -295,7 +287,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -306,7 +298,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">GroupModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult PublishGroup(GroupModel model)
+        public ActionResult Publish(GroupModel model)
         {
             try
             {
@@ -329,7 +321,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "PublishGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Publish", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -340,7 +332,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">GroupModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult DeleteGroup(GroupModel model)
+        public ActionResult Delete(GroupModel model)
         {
             try
             {
@@ -363,7 +355,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "DeleteGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Delete", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -374,7 +366,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">GroupModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDeleteGroup(GroupModel model)
+        public ActionResult CheckDelete(GroupModel model)
         {
             try
             {
@@ -395,7 +387,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CheckDeleteGroup", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDelete", UserID, ex);
                 throw new HttpException();
             }
         }

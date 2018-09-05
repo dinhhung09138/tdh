@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -6136,6 +6136,8 @@
     <Content Include="Areas\Administrator\Content\vendors\pdfmake\build\pdfmake.js" />
     <Content Include="Areas\Administrator\Content\vendors\pdfmake\build\pdfmake.min.js" />
     <Content Include="Areas\Administrator\Content\vendors\pdfmake\build\vfs_fonts.js" />
+    <Content Include="Areas\Marketing\Content\Youtube\init.js" />
+    <Content Include="Areas\Marketing\Content\Youtube\listchannel.js" />
     <Content Include="Areas\Money\Content\Account\action.js" />
     <Content Include="Areas\Money\Content\Account\history.js" />
     <Content Include="Areas\Money\Content\Account\index.js" />
@@ -6784,6 +6786,7 @@
     <Content Include="Areas\System\Views\STUser\Create.cshtml" />
     <Content Include="Areas\System\Views\STUser\Edit.cshtml" />
     <Content Include="Areas\System\Views\STUser\_Form.cshtml" />
+    <Content Include="Areas\Marketing\Views\Youtube\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6838,7 +6841,6 @@
     <Folder Include="Areas\Administrator\Content\ckeditor\skins\moono\images\hidpi\" />
     <Folder Include="Areas\Marketing\Models\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
-    <Folder Include="Areas\Marketing\Views\Youtube\" />
     <Folder Include="Areas\Money\Models\" />
     <Folder Include="Areas\Money\Views\Shared\" />
     <Folder Include="Areas\System\Models\" />

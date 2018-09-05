@@ -23,7 +23,7 @@ $(document).ready(function () {
         language: language,
         order: [[1, "asc"]],
         ajax: {
-            url: '/administrator/admpost/index',
+            url: '/website/wnews/index',
             type: 'post',
             data: function (d) {
                 //d.ModuleCode = ""
@@ -102,7 +102,7 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="/administrator/admpost/edit/' + data.ID + '\"  title="Cập nhật bài viết" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="/website/wnews/edit/' + data.ID + '\"  title="Cập nhật bài viết" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-remove" aria-hidden="true"></i></a>';
@@ -135,7 +135,7 @@ $(document).ready(function () {
 
 function savePublish(id, publish) {
     $.ajax({
-        url: '/administrator/admpost/publish',
+        url: '/website/wnews/publish',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -159,7 +159,7 @@ function confirmDelete(deletedId) {
 
 function deleteItem() {
     $.ajax({
-        url: '/administrator/admpost/delete',
+        url: '/website/wnews/delete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',

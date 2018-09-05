@@ -5139,8 +5139,6 @@
     <Content Include="Areas\Administrator\Content\ckfinder\skins\v1\richcombo.css" />
     <Content Include="Areas\Administrator\Content\ckfinder\skins\v1\skin.js" />
     <Content Include="Areas\Administrator\Content\ckfinder\skins\v1\uipanel.css" />
-    <Content Include="Areas\Administrator\Content\custom\admpost.news.action.js" />
-    <Content Include="Areas\Administrator\Content\custom\admpost.news.js" />
     <Content Include="Areas\Administrator\Content\custom\admsetting.category.js" />
     <Content Include="Areas\Administrator\Content\custom\admsetting.configuration.action.js" />
     <Content Include="Areas\Administrator\Content\custom\admsetting.configuration.js" />
@@ -6716,10 +6714,6 @@
     <Content Include="Areas\Administrator\Views\AdmSystem\User.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmSystem\_RoleForm.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmSystem\_UserForm.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\CreateNews.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\EditNews.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\News.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmPost\_NewsForm.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmSetting\Category.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmSetting\Navigation.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmPost\About.cshtml" />

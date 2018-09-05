@@ -241,12 +241,6 @@ namespace TDH.Common
 
                             switch (actionName)
                             {
-                                case "news":
-                                case "createnews":
-                                case "editnews":
-                                case "publishnews":
-                                case "deletenews":
-                                    return "post_news";
                                 case "about":
                                     return "post_about";
                             }
@@ -411,6 +405,19 @@ namespace TDH.Common
                                 default:
                                     return "";
                             }
+                        case "wnews":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "checkdelete":
+                                case "delete":
+                                    return "post_news";
+                                default:
+                                    return "";
+                            }
                         default:
                             break;
                     }
@@ -493,16 +500,8 @@ namespace TDH.Common
 
                             switch (actionName)
                             {
-                                case "news":
                                 case "about":
                                     return ActionType.View;
-                                case "createnews":
-                                    return ActionType.Create;
-                                case "editnews":
-                                case "publishnews":
-                                    return ActionType.Edit;
-                                case "deletenews":
-                                    return ActionType.Delete;
                             }
 
                             #endregion
@@ -717,7 +716,7 @@ namespace TDH.Common
                                 default:
                                     return ActionType.None;
                             }
-                        case "wpost":
+                        case "wnews":
                             switch (actionName)
                             {
                                 case "index":

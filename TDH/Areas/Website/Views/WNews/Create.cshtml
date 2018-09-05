@@ -14,20 +14,20 @@
             @{
                 if (ViewBag.View == true)
                 {
-                    <a class="btn btn-box-tool" href="/administrator/admpost/index" title="Bài viết">
+                    <a class="btn btn-box-tool" href="/website/wnews/index" title="Danh sách bài viết">
                         <i class="fa fa-long-arrow-left"></i>
                     </a>
                 }
-                <a class="btn btn-box-tool" data-url="/administrator/admpost/create" title="Thêm bài viết">
+                <a class="btn btn-box-tool" href="/website/wnews/create" title="Thêm bài viết">
                     <i class="fa fa-refresh"></i>
                 </a>
             }
         </div>
     </div>
     <div class="card-body">
-        @using (Ajax.BeginForm("create", "wpost", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
+        @using (Ajax.BeginForm("create", "wnews", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
         {
-            @Html.Partial("_NewsForm", Model)
+            @Html.Partial("_Form", Model)
         }
     </div>
 </div>

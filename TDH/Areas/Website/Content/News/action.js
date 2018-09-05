@@ -77,7 +77,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    window.location.href = '/administrator/admpost/news';
+    window.location.href = '/website/wnews/index';
 };
 
 var OnFailure = function (response) {

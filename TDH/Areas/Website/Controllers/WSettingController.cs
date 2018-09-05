@@ -10,21 +10,16 @@ using TDH.Services.Website;
 using Utils;
 using Utils.JqueryDatatable;
 
-
-namespace TDH.Areas.Administrator.Controllers
+namespace TDH.Areas.Website.Controllers
 {
-    /// <summary>
-    /// Setting controller
-    /// </summary>
-    [AjaxExecuteFilterAttribute]
-    public class AdmSettingController : TDH.Common.BaseController
+    public class WSettingController : TDH.Common.BaseController
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Administrator.Controllers/AdmSettingController.cs";
+        private readonly string FILE_NAME = "Website.Controllers/WSettingController.cs";
 
         #endregion
 
@@ -178,7 +173,7 @@ namespace TDH.Areas.Administrator.Controllers
                     DataTableResponse<HomeCategoryModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<HomeCategoryModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
-                
+
                 return this.Json(new DataTableResponse<HomeCategoryModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -277,7 +272,7 @@ namespace TDH.Areas.Administrator.Controllers
                     DataTableResponse<ConfigurationModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<ConfigurationModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
-                
+
                 return this.Json(new DataTableResponse<ConfigurationModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -300,7 +295,7 @@ namespace TDH.Areas.Administrator.Controllers
                 #region " [ Declaration ] "
 
                 ConfigurationService _service = new ConfigurationService();
-                
+
                 ViewBag.id = id;
 
                 #endregion
@@ -352,6 +347,5 @@ namespace TDH.Areas.Administrator.Controllers
         }
 
         #endregion
-
     }
 }

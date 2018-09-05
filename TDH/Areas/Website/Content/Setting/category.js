@@ -19,9 +19,9 @@ $(document).ready(function () {
             //Do something after finish
         },
         language: language,
-        order: [[3, "desc"]],
+        order: [[4, "desc"]],
         ajax: {
-            url: '/administrator/admsetting/navigation',
+            url: '/website/wsetting/category',
             type: 'post',
             data: function (d) {
             }
@@ -43,9 +43,9 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     if (allowEdit === 'True') {
                         if (data.Selected === true) {
-                            return '<input type="checkbox" class="flat" name="Selected" checked  value="' + data.NavigationID + '" />';
+                            return '<input type="checkbox" class="flat" name="Selected" checked  value="' + data.CategoryID + '" />';
                         } else {
-                            return '<input type="checkbox" class="flat" name="Selected" value="' + data.NavigationID + '" />';
+                            return '<input type="checkbox" class="flat" name="Selected" value="' + data.CategoryID + '" />';
                         }
                     } else {
                         if (data.Selected === true) {
@@ -75,6 +75,11 @@ $(document).ready(function () {
                 width: '150px',
             },
             {
+                data: 'CategoryTitle',
+                orderable: true,
+                searchable: true
+            },
+            {
                 data: 'Ordering',
                 orderable: true,
                 searchable: true,
@@ -82,7 +87,7 @@ $(document).ready(function () {
                 width: '100px',
                 render: function (obj, type, data, meta) {
                     if (data.Selected === true) {
-                        return '<span class="ordering" data-nav="' + data.NavigationID + '" data-ordering="' + data.Ordering + '">' + data.Ordering + '</span>';
+                        return '<span class="ordering" data-cate="' + data.CategoryID + '" data-ordering="' + data.Ordering + '">' + data.Ordering + '</span>';
                     } else {
                         return data.Ordering;
                     }
@@ -110,11 +115,11 @@ $(document).ready(function () {
 
 function saveSelected(id, selected) {
     $.ajax({
-        url: '/Administrator/AdmSetting/savenavigation',
+        url: '/website/wsetting/savecategory',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify({ NavigationID: id, Selected: selected }),
+        data: JSON.stringify({ CategoryID: id, Selected: selected }),
         success: function (response) {
             if (response === 0) {
                 table.ajax.reload();
@@ -128,17 +133,17 @@ function saveSelected(id, selected) {
 
 $(document).on('click', '.ordering', function (e) {
     $('#orderingSelection').val($(this).attr('data-ordering'));
-    $('#navID').val($(this).attr('data-nav'));
+    $('#cateID').val($(this).attr('data-cate'));
     $('#orderingModal').modal('show');
 });
 
 function updateOrder() {
     $.ajax({
-        url: '/Administrator/AdmSetting/savenavigation',
+        url: '/website/wsetting/savecategory',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify({ NavigationID: $('#navID').val(), Ordering: $('#orderingSelection').val(), Selected: true }),
+        data: JSON.stringify({ CategoryID: $('#cateID').val(), Ordering: $('#orderingSelection').val(), Selected: true }),
         success: function (response) {
             if (response === 0) {
                 table.ajax.reload();

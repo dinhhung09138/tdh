@@ -22,7 +22,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admsetting/configuration', 'Cấu hình chung');
+    window.location.href = '/website/wsetting/configuration';
 };
 
 var OnFailure = function (response) {

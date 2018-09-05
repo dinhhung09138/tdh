@@ -21,7 +21,7 @@ $(document).ready(function () {
         language: language,
         order: [[1, "asc"]],
         ajax: {
-            url: '/administrator/admsetting/configuration',
+            url: '/website/wsetting/configuration',
             type: 'post',
             data: function (d) {
                 //d.ModuleCode = ""
@@ -59,12 +59,12 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admsetting/editconfiguration/' + data.Key + '\" data-title="Cập nhật thông tin thiết lập" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="/website/wsetting/editconfiguration/' + data.Key + '\" title="Cập nhật thông tin thiết lập" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     return str;
                 }
             }
         ]
     });
-    
+
 });

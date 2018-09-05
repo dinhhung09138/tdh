@@ -187,30 +187,6 @@ namespace TDH.Common
                 case "administrator":
                     switch (controllerName)
                     {
-                        case "admsetting":
-                            #region " [ setting ] "
-
-                            switch (actionName)
-                            {
-                                case "banner":
-                                case "createbanner":
-                                case "editbanner":
-                                case "publishbanner":
-                                case "deletebanner":
-                                    return "banner";
-                                case "configuration":
-                                case "editconfiguration":
-                                    return "setting_configuration";
-                                case "category":
-                                case "savecategory":
-                                    return "setting_category";
-                                case "navigation":
-                                case "savenavigation":
-                                    return "setting_category";
-                            }
-
-                            #endregion
-                            break;
                         case "admsystem":
                             #region " [ System ] "
 
@@ -409,6 +385,21 @@ namespace TDH.Common
                             }
                         case "wabout":
                             return "post_about";
+                        case "wsetting":
+                            switch (actionName)
+                            {
+                                case "navigation":
+                                case "savenavigation":
+                                    return "setting_category";
+                                case "category":
+                                case "savecategory":
+                                    return "setting_category";
+                                case "configuration":
+                                case "editconfiguration":
+                                    return "setting_configuration";
+                                default:
+                                    return "";
+                            }
                         default:
                             break;
                     }
@@ -431,30 +422,6 @@ namespace TDH.Common
                 case "administrator":
                     switch (controllerName)
                     {
-                        case "admsetting":
-                            #region " [ setting ] "
-
-                            switch (actionName)
-                            {
-                                case "banner":
-                                case "configuration":
-                                case "category":
-                                case "navigation":
-                                    return ActionType.View;
-                                case "createbanner":
-                                    return ActionType.Create;
-                                case "editbanner":
-                                case "publishbanner":
-                                case "editconfiguration":
-                                case "savecategory":
-                                case "savenavigation":
-                                    return ActionType.Edit;
-                                case "deletebanner":
-                                    return ActionType.Delete;
-                            }
-
-                            #endregion
-                            break;
                         case "admsystem":
                             #region " [ System ] "
 
@@ -714,6 +681,20 @@ namespace TDH.Common
                             }
                         case "wabout":
                             return ActionType.View;
+                        case "wsetting":
+                            switch (actionName)
+                            {
+                                case "configuration":
+                                case "category":
+                                case "navigation":
+                                    return ActionType.View;
+                                case "editconfiguration":
+                                case "savecategory":
+                                case "savenavigation":
+                                    return ActionType.Edit;
+                                default:
+                                    return ActionType.None;
+                            }
                     }
                     break;
                 default:

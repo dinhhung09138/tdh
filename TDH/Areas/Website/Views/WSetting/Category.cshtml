@@ -1,15 +1,22 @@
-﻿<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
-<link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
-<style>
-    .ordering {
-        padding: 5px;
-        margin: 3px;
-        background-color: #17a2b8;
-        color: white;
-        cursor: pointer;
-    }
-</style>
+﻿
+@{
+    ViewBag.Title = "Nhóm chủ đề hiển thị ở trang chủ";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+    <link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+    <style>
+        .ordering {
+            padding: 5px;
+            margin: 3px;
+            background-color: #17a2b8;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+}
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "website" })
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <div class="card card-success">
@@ -64,8 +71,11 @@
 
     </div>
 </div>
-<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
-<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
-<script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="/Areas/Administrator/Content/custom/admsetting.category.js"></script>
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/Areas/Website/Content/Setting/category.js"></script>
+}
+

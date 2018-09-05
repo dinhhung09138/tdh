@@ -187,31 +187,6 @@ namespace TDH.Common
                 case "administrator":
                     switch (controllerName)
                     {
-                        case "admsystem":
-                            #region " [ System ] "
-
-                            switch (actionName)
-                            {
-                                case "role":
-                                case "createrole":
-                                case "editrole":
-                                case "publishrole":
-                                case "deleterole":
-                                case "checkdeleterole":
-                                    return "system_role";
-                                case "user":
-                                case "createuser":
-                                case "edituser":
-                                case "eublishuser":
-                                case "deleteuser":
-                                    return "system_user";
-                                case "errorlog":
-                                case "detailerrolog":
-                                    return "system_error_log";
-                            }
-
-                            #endregion
-                            break;
                         case "admtarget":
                             #region " [ Target ] "
 
@@ -256,6 +231,47 @@ namespace TDH.Common
                             break;
                     }
                     break;
+                case "system":
+                    switch (controllerName)
+                    {
+                        case "sterrorlog":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "detail":
+                                    return "system_error_log";
+                                default:
+                                    return "";
+                            }
+                        case "strole":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "checkdelete":
+                                case "delete":
+                                    return "system_role";
+                                default:
+                                    return "";
+                            }
+                        case "stuser":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "checkdelete":
+                                case "delete":
+                                    return "system_user";
+                                default:
+                                    return "";
+                            }
+                        default:
+                            return "";
+                    }
                 case "money":
                     switch (controllerName)
                     {
@@ -337,9 +353,8 @@ namespace TDH.Common
                                     return "";
                             }
                         default:
-                            break;
+                            return "";
                     }
-                    break;
                 case "website":
                     switch (controllerName)
                     {
@@ -401,9 +416,8 @@ namespace TDH.Common
                                     return "";
                             }
                         default:
-                            break;
+                            return "";
                     }
-                    break;
             }
             return "";
         }
@@ -422,37 +436,6 @@ namespace TDH.Common
                 case "administrator":
                     switch (controllerName)
                     {
-                        case "admsystem":
-                            #region " [ System ] "
-
-                            switch (actionName)
-                            {
-                                case "role":
-                                case "employee":
-                                case "user":
-                                case "errorlog":
-                                case "detailerrolog":
-                                    return ActionType.View;
-                                case "createrole":
-                                case "createemployee":
-                                case "createuser":
-                                    return ActionType.Create;
-                                case "editrole":
-                                case "publishrole":
-                                case "editemployee":
-                                case "publishemployee":
-                                case "edituser":
-                                case "publishuser":
-                                    return ActionType.Edit;
-                                case "deleterole":
-                                case "checkdeleterole":
-                                case "deleteemployee":
-                                case "deleteuser":
-                                    return ActionType.Delete;
-                            }
-
-                            #endregion
-                            break;
                         case "admproduct":
                             #region " [ admproduct ] "
 
@@ -531,6 +514,53 @@ namespace TDH.Common
                             break;
                     }
                     break;
+                case "system":
+                    switch (controllerName)
+                    {
+                        case "sterrorlog":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "detail":
+                                    return ActionType.View;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "strole":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "checkdelete":
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "stuser":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "checkdelete":
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        default:
+                            return ActionType.None;
+                    }
                 case "money":
                     switch (controllerName)
                     {
@@ -625,8 +655,9 @@ namespace TDH.Common
                                 default:
                                     return ActionType.None;
                             }
+                        default:
+                            return ActionType.None;
                     }
-                    break;
                 case "website":
                     switch (controllerName)
                     {
@@ -695,8 +726,9 @@ namespace TDH.Common
                                 default:
                                     return ActionType.None;
                             }
+                        default:
+                            return ActionType.None;
                     }
-                    break;
                 default:
                     break;
             }

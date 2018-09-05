@@ -1,0 +1,53 @@
+﻿@using TDH.Areas.System.Utils;
+@{
+    ViewBag.Title = Message.User.LIST;
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+    <link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "system" })
+<input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
+<input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
+<input type="hidden" id="currentID" value="@Html.Raw(ViewBag.currentID)" />
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">@Message.User.LIST</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.Add == true)
+                {
+                    <a class="btn btn-box-tool" title="@Message.User.CREATE" href="/system/stuser/create">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="tbList" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Họ tên</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Quyền</th>
+                    <th>Đăng nhập</th>
+                    <th>Khóa</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/Areas/System/Content/User/index.js"></script>
+}
+

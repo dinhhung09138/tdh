@@ -15,15 +15,14 @@ namespace TDH.Areas.System.Controllers
     /// <summary>
     /// User controller
     /// </summary>
-    [AjaxExecuteFilterAttribute]
-    public class UserController : BaseController
+    public class STUserController : BaseController
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "System.Controllers/UserController.cs";
+        private readonly string FILE_NAME = "System.Controllers/STUserController.cs";
 
         #endregion
 
@@ -32,7 +31,7 @@ namespace TDH.Areas.System.Controllers
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public new ActionResult User()
+        public ActionResult Index()
         {
             try
             {
@@ -46,7 +45,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "User", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -58,7 +57,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="requestData">jquery datatable request</param>
         /// <returns>DataTableResponse<UserModel></returns>
         [HttpPost]
-        public new JsonResult User(CustomDataTableRequestHelper requestData)
+        public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
             try
             {
@@ -87,7 +86,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "User", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -97,7 +96,7 @@ namespace TDH.Areas.System.Controllers
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult CreateUser()
+        public ActionResult Create()
         {
             try
             {
@@ -120,7 +119,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -133,7 +132,7 @@ namespace TDH.Areas.System.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateUser(UserModel model)
+        public ActionResult Create(UserModel model)
         {
             try
             {
@@ -157,7 +156,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -168,7 +167,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="id">User identifier</param>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult EditUser(string id)
+        public ActionResult Edit(string id)
         {
             try
             {
@@ -190,7 +189,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -203,7 +202,7 @@ namespace TDH.Areas.System.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUser(UserModel model)
+        public ActionResult Edit(UserModel model)
         {
             try
             {
@@ -227,7 +226,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -238,7 +237,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="model">User model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult PublishUser(UserModel model)
+        public ActionResult Publish(UserModel model)
         {
             try
             {
@@ -261,7 +260,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "PublishUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Publish", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -272,7 +271,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="model">User model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult DeleteUser(UserModel model)
+        public ActionResult Delete(UserModel model)
         {
             try
             {
@@ -295,7 +294,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "DeleteUser", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Delete", UserID, ex);
                 throw new HttpException();
             }
         }

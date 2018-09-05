@@ -1,0 +1,7 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "system" })
+

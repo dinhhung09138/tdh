@@ -15,24 +15,24 @@ namespace TDH.Areas.System.Controllers
     /// <summary>
     /// Error log controller
     /// </summary>
-    [AjaxExecuteFilterAttribute]
-    public class ErrorLogController : BaseController
+    public class STErrorLogController : BaseController
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "System.Controllers/ErrorLogController.cs";
+        private readonly string FILE_NAME = "System.Controllers/STErrorLogController.cs";
 
         #endregion
+
 
         /// <summary>
         /// Error log form
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult ErrorLog()
+        public ActionResult Index()
         {
             try
             {
@@ -40,7 +40,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "ErrorLog", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -52,7 +52,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="requestData">Jquery datatable request</param>
         /// <returns>DataTableResponse<ErrorLogModel></returns>
         [HttpPost]
-        public JsonResult ErrorLog(CustomDataTableRequestHelper requestData)
+        public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "ErrorLog", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -90,7 +90,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="id">log identifier</param>
         /// <returns>View</returns>
         [HttpPost]
-        public JsonResult DetailErroLog(string id)
+        public JsonResult Detail(string id)
         {
             try
             {
@@ -109,10 +109,11 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "DetailErroLog", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Detail", UserID, ex);
                 throw new HttpException();
             }
         }
+
 
     }
 }

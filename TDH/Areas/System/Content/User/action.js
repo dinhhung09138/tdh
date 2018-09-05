@@ -18,7 +18,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admsystem/user', 'Tài khoản người dùng');
+    window.location.href = '/system/stuser/index';
 };
 
 var OnFailure = function (response) {

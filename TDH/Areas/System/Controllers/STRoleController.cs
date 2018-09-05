@@ -15,24 +15,29 @@ namespace TDH.Areas.System.Controllers
     /// <summary>
     /// Role controller
     /// </summary>
-    [AjaxExecuteFilterAttribute]
-    public class RoleController : BaseController
+    public class STRoleController : BaseController
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "System.Controllers/RoleController.cs";
+        private readonly string FILE_NAME = "System.Controllers/STRoleController.cs";
 
         #endregion
+
+        [AllowAnonymous]
+        public ActionResult Home()
+        {
+            return View();
+        }
 
         /// <summary>
         /// Role form
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult Role()
+        public ActionResult Index()
         {
             try
             {
@@ -40,7 +45,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Role", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -51,7 +56,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="requestData">Jquery datatable request</param>
         /// <returns>DataTableResponse<RoleModel></returns>
         [HttpPost]
-        public JsonResult Role(CustomDataTableRequestHelper requestData)
+        public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
             try
             {
@@ -81,7 +86,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Role", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -91,7 +96,7 @@ namespace TDH.Areas.System.Controllers
         /// </summary>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult CreateRole()
+        public ActionResult Create()
         {
             try
             {
@@ -108,7 +113,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -122,7 +127,7 @@ namespace TDH.Areas.System.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateRole(RoleModel model, FormCollection fc)
+        public ActionResult Create(RoleModel model, FormCollection fc)
         {
             try
             {
@@ -178,7 +183,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CreateRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -189,7 +194,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="id">Role identifier</param>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult EditRole(string id)
+        public ActionResult Edit(string id)
         {
             try
             {
@@ -208,7 +213,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -222,7 +227,7 @@ namespace TDH.Areas.System.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditRole(RoleModel model, FormCollection fc)
+        public ActionResult Edit(RoleModel model, FormCollection fc)
         {
             try
             {
@@ -278,7 +283,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -289,7 +294,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="model">Role model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult PublishRole(RoleModel model)
+        public ActionResult Publish(RoleModel model)
         {
             try
             {
@@ -312,7 +317,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "PublishRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Publish", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -323,7 +328,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="model">Role model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult DeleteRole(RoleModel model)
+        public ActionResult Delete(RoleModel model)
         {
             try
             {
@@ -346,7 +351,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "DeleteRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "Delete", UserID, ex);
                 throw new HttpException();
             }
         }
@@ -357,7 +362,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="model">Role model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDeleteRole(RoleModel model)
+        public ActionResult CheckDelete(RoleModel model)
         {
             try
             {
@@ -378,7 +383,7 @@ namespace TDH.Areas.System.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CheckDeleteRole", UserID, ex);
+                Log.WriteLog(FILE_NAME, "CheckDelete", UserID, ex);
                 throw new HttpException();
             }
         }

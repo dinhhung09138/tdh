@@ -2,7 +2,6 @@
 
 $(document).ready(function () {
     $('#Name').focus();
-    //new AutoNumeric('#Level', { maximumValue: 10, minimumValue: 0, decimalPlaces: 0 });
 
     table = $('#tbList').DataTable({
         processing: false,
@@ -51,7 +50,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admsystem/role', 'Nhóm quyền');
+    window.location.href = '/system/strole/index';
 };
 
 var OnFailure = function (response) {

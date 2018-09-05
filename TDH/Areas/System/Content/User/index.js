@@ -4,6 +4,7 @@ var id = 0;
 $(document).ready(function () {
     var allowEdit = $('#edit').val();
     var allowDelete = $('#delete').val();
+    var curID = $('#currentID').val();
     //
     table = $('#tbList').DataTable({
         processing: true,
@@ -13,17 +14,17 @@ $(document).ready(function () {
         paging: true,
         responsive: true,
         pageLength: 10,
-        pagingType: 'full_numbers',
         dom: dom,
+        pagingType: 'full_numbers',
         info: true,
         autoWidth: false,
         initComplete: function (settings, json) {
             //Do something after finish
         },
         language: language,
-        order: [[2, "asc"]],
+        order: [[1, "asc"]],
         ajax: {
-            url: '/administrator/admsystem/role',
+            url: '/system/stuser/index',
             type: 'post',
             data: function (d) {
                 //d.ModuleCode = ""
@@ -32,45 +33,53 @@ $(document).ready(function () {
         columns: [
             {
                 orderable: false,
-                width: '40px',
+                width: '30px',
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     return meta.row + meta.settings._iDisplayStart + 1;
                 }
             },
             {
-                data: 'Name',
+                data: 'FullName',
                 orderable: true,
                 searchable: true,
-                width: '200px'
+                width: '200px',
             },
             {
-                data: 'Description',
+                data: 'UserName',
+                orderable: true,
+                searchable: true,
+                width: '200px',
+            },
+            {
+                data: 'RoleName',
                 orderable: true,
                 searchable: true
             },
             {
-                data: 'CountString',
+                data: 'LastLoginString',
                 orderable: true,
                 searchable: true,
                 className: 'ctn-center',
-                width: '70px'
             },
             {
-                data: 'Publish',
+                data: 'Locked',
                 orderable: false,
                 searchable: false,
                 className: 'ctn-center',
                 width: '60px',
                 render: function (obj, type, data, meta) {
-                    if (allowEdit === 'True' && data.Count === 0) {
-                        if (data.Publish === true) {
+                    if (data.ID === curID) {
+                        return '';
+                    }
+                    if (allowEdit === 'True') {
+                        if (data.Locked === true) {
                             return '<input type="checkbox" class="flat" name="publish" checked  value="' + data.ID + '" />';
                         } else {
                             return '<input type="checkbox" class="flat" name="publish" value="' + data.ID + '" />';
                         }
                     } else {
-                        if (data.Publish === true) {
+                        if (data.Locked === true) {
                             return '<div class="icheckbox_flat-green checked" style="position: relative;">\
                                         <input type="checkbox" class="flat" name="table_records" checked="" \
                                                style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
@@ -97,9 +106,9 @@ $(document).ready(function () {
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admsystem/editrole/' + data.ID + '\" data-title="Cập nhật nhóm quyền" title="Cập nhật" class="mg-lr-2 pg_ld"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="/system/stuser/edit/' + data.ID + '\" title="Cập nhật tài khoản" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
-                    if (allowDelete === "True") {
+                    if (allowDelete === "True" && data.ID !== curID) {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-remove" aria-hidden="true"></i></a>';
                     }
                     return str;
@@ -123,18 +132,18 @@ $(document).ready(function () {
             $('#tbList input[name="publish"]').on('ifUnchecked', function () {
                 savePublish($(this).val(), false);
             });
-            
+
         }
     });
 });
 
-function savePublish(id, publish) {
+function savePublish(id, locked) {
     $.ajax({
-        url: '/administrator/admsystem/publishrole',
+        url: '/system/stuser/publish',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        data: JSON.stringify({ ID: id, Publish: publish }),
+        data: JSON.stringify({ ID: id, Locked: locked }),
         success: function (response) {
             if (response === 0) {
                 table.ajax.reload();
@@ -148,31 +157,13 @@ function savePublish(id, publish) {
 }
 
 function confirmDelete(deletedId) {
-    $.ajax({
-        url: '/administrator/admsystem/checkdeleterole',
-        type: 'POST',
-        contentType: 'application/json',
-        dataType: 'json',
-        data: JSON.stringify({ ID: deletedId }),
-        success: function (response) {
-            if (response === 3) {
-                id = deletedId;
-                $('#deleteModal').modal('show');
-            } else {
-                id = '';
-            }
-            $('#deleteModal').modal('hide');
-        },
-        error: function (xhr, status, error) {
-            console.log(error);
-            $('#deleteModal').modal('hide');
-        }
-    });
+    id = deletedId;
+    $('#deleteModal').modal('show');
 }
 
 function deleteItem() {
     $.ajax({
-        url: '/administrator/admsystem/deleterole',
+        url: '/system/stuser/delete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',

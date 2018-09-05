@@ -1,29 +1,5 @@
 ﻿@model TDH.Model.System.UserModel
-@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "system" })
-<div class="card card-success">
-    <div class="card-header with-border no-bg">
-        <h3 class="card-title">Cập nhật tài khoản</h3>
-        <div class="card-tools pull-right">
-            @{
-                if (ViewBag.View == true)
-                {
-                    <a href="javascript:;" title="Quay lại" class="btn btn-box-tool pg_ld" data-url="/administrator/admsystem/user" data-title="Tài khoản">
-                        <i class="fa fa-long-arrow-left"></i>
-                    </a>
-                }
-                <a href="javascript:;" title="Tải lại" class="btn btn-box-tool pg_ld" data-url="/administrator/admsystem/edituser/@ViewBag.id" data-title="Cập nhật tài khoản">
-                    <i class="fa fa-refresh"></i>
-                </a>
-            }
-        </div>
-    </div>
-    <div class="card-body">
-        @using (Ajax.BeginForm("EditUser", "AdmSystem", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
-        {
-            @Html.Partial("_UserForm", Model)
-        }
-    </div>
-</div>
+
 <script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
 <script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
 <script src="/Scripts/jquery.validate.min.js"></script>

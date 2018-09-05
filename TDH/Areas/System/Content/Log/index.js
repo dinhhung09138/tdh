@@ -23,7 +23,7 @@ $(document).ready(function () {
         language: language,
         order: [[2, "asc"]],
         ajax: {
-            url: '/administrator/admsystem/errorlog',
+            url: '/system/sterrorlog/index',
             type: 'post',
             data: function (d) {
                 //d.ModuleCode = ""
@@ -59,8 +59,6 @@ $(document).ready(function () {
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     return '<a href="javascript:;"  title="Chi tiết" onclick="detailItem(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-eye" aria-hidden="true"></i></a>';
-                    
-                    return str;
                 }
             }
         ]
@@ -70,7 +68,7 @@ $(document).ready(function () {
 
 function detailItem(id) {
     $.ajax({
-        url: '/administrator/admsystem/detailerrolog',
+        url: '/system/sterrorlog/detail',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',

@@ -1,6 +1,7 @@
-﻿@model TDH.Model.Website.PostModel
+﻿@using TDH.Areas.Website.Utils;
+@model TDH.Model.Website.PostModel
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = Message.News.CREATE;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{
@@ -9,16 +10,16 @@
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "website" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Thêm bài viết</h3>
+        <h3 class="card-title">@Message.News.CREATE</h3>
         <div class="card-tools pull-right">
             @{
                 if (ViewBag.View == true)
                 {
-                    <a class="btn btn-box-tool" href="/website/wnews/index" title="Danh sách bài viết">
+                    <a class="btn btn-box-tool" href="/website/wnews/index" title="@Message.News.LIST">
                         <i class="fa fa-long-arrow-left"></i>
                     </a>
                 }
-                <a class="btn btn-box-tool" href="/website/wnews/create" title="Thêm bài viết">
+                <a class="btn btn-box-tool" href="/website/wnews/create" title="@Message.News.CREATE">
                     <i class="fa fa-refresh"></i>
                 </a>
             }

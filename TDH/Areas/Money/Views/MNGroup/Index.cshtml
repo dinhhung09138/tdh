@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Danh sách quy tắc chi tiêu";
+﻿@using TDH.Areas.Money.Utils;
+@{
+    ViewBag.Title = Message.Group.LIST;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{
@@ -27,18 +28,18 @@
 
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Quy tắc chi tiêu</h3>
+        <h3 class="card-title">@Message.Group.LIST</h3>
         <div class="card-tools pull-right">
             @{
                 if (ViewBag.Add == true)
                 {
-                    <a class="btn btn-box-tool" title="Thêm quy tắc chi tiêu" href="/money/mngroup/create">
+                    <a class="btn btn-box-tool" title="@Message.Group.CREATE" href="/money/mngroup/create">
                         <i class="fa fa-plus"></i>
                     </a>
                 }
                 if (ViewBag.Edit == true)
                 {
-                    <a title="Thiết lập quy tắc chi tiêu" class="btn btn-box-tool pg_ld" onclick="spendSetting()">
+                    <a title="@Message.Group.SETTING" class="btn btn-box-tool" onclick="spendSetting()">
                         <i class="fa fa-cogs"></i>
                     </a>
                 }

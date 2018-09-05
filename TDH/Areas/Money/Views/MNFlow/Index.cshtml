@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Lịch sử thu nhập - chi tiêu - Chuyển khoản";
+﻿@using TDH.Areas.Money.Utils;
+@{
+    ViewBag.Title = Message.Flow.INDEX;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{
@@ -19,7 +20,7 @@
 </select>
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Lịch sử thu nhập - chi tiêu - Chuyển khoản</h3>
+        <h3 class="card-title">Message.Flow.INDEX</h3>
         <div class="card-tools pull-right">
             @{
                 if (ViewBag.Add == true)

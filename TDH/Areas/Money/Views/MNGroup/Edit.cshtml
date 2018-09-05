@@ -1,6 +1,7 @@
-﻿@model TDH.Model.Money.GroupModel
+﻿@using TDH.Areas.Money.Utils;
+@model TDH.Model.Money.GroupModel
 @{
-    ViewBag.Title = "Cập nhật quy tắc chi tiêu";
+    ViewBag.Title = Message.Group.EDIT;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{
@@ -9,16 +10,16 @@
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Cập nhật quy tắc chi tiêu</h3>
+        <h3 class="card-title">@Message.Group.EDIT</h3>
         <div class="card-tools pull-right">
             @{
                 if (ViewBag.View == true)
                 {
-                    <a class="btn btn-box-tool" href="/money/mngroup/index" title="Danh sách quy tắc chi tiêu">
+                    <a class="btn btn-box-tool" href="/money/mngroup/index" title="@Message.Group.LIST">
                         <i class="fa fa-long-arrow-left"></i>
                     </a>
                 }
-                <a class="btn btn-box-tool" href="/money/mngroup/edit/@ViewBag.id" title="Cập nhật quy tắc chi tiêu">
+                <a class="btn btn-box-tool" href="/money/mngroup/edit/@ViewBag.id" title="@Message.Group.EDIT">
                     <i class="fa fa-refresh"></i>
                 </a>
             }

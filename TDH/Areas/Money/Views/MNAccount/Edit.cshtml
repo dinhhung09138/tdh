@@ -1,6 +1,7 @@
-﻿@model TDH.Model.Money.AccountModel
+﻿@using TDH.Areas.Money.Utils;
+@model TDH.Model.Money.AccountModel
 @{
-    ViewBag.Title = "Cập nhật tài khoản";
+    ViewBag.Title = Message.Account.EDIT;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{
@@ -9,16 +10,16 @@
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Cập nhật tài khoản</h3>
+        <h3 class="card-title">@Message.Account.EDIT</h3>
         <div class="card-tools pull-right">
             @{
                 if (ViewBag.View == true)
                 {
-                    <a class="btn btn-box-tool" href="/money/mnaccount/index" title="Tài khoản">
+                    <a class="btn btn-box-tool" href="/money/mnaccount/index" title="@Message.Account.LIST">
                         <i class="fa fa-long-arrow-left"></i>
                     </a>
                 }
-                <a class="btn btn-box-tool" href="/money/mnaccount/edit" title="Cập nhật tài khoản">
+                <a class="btn btn-box-tool" href="/money/mnaccount/edit" title="@Message.Account.EDIT">
                     <i class="fa fa-refresh"></i>
                 </a>
             }

@@ -1,6 +1,6 @@
-﻿
+﻿@using TDH.Areas.Website.Utils;
 @{
-    ViewBag.Title = "Chủ đề bài viết";
+    ViewBag.Title = Message.Category.LIST;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{
@@ -14,12 +14,12 @@
 @Html.DropDownList("navigationSelection", new SelectList(ViewBag.navigation, "ID", "Title"), "Chọn danh mục", new { @class = "form-control form-control-sm" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Chủ đề bài viết</h3>
+        <h3 class="card-title">@Message.Category.LIST</h3>
         <div class="card-tools pull-right">
             @{
                 if (ViewBag.Add == true)
                 {
-                    <a class="btn btn-box-tool" title="Thêm nhóm chủ đề" href="/website/wcategory/create">
+                    <a class="btn btn-box-tool" title="@Message.Category.CREATE " href="/website/wcategory/create">
                         <i class="fa fa-plus"></i>
                     </a>
                 }

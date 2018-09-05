@@ -1,6 +1,7 @@
-﻿@model TDH.Model.Website.AboutModel
+﻿@using TDH.Areas.Website.Utils;
+@model TDH.Model.Website.AboutModel
 @{
-    ViewBag.Title = "Giới thiệu";
+    ViewBag.Title = Message.About.LIST;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{

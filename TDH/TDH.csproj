@@ -249,6 +249,7 @@
     <Compile Include="Areas\Money\Controllers\MNGroupController.cs" />
     <Compile Include="Areas\Money\Controllers\MNReportController.cs" />
     <Compile Include="Areas\Money\MoneyAreaRegistration.cs" />
+    <Compile Include="Areas\Money\Utils\Message.cs" />
     <Compile Include="Areas\System\Controllers\ErrorLogController.cs" />
     <Compile Include="Areas\System\Controllers\RoleController.cs" />
     <Compile Include="Areas\System\Controllers\UserController.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="Areas\Website\Controllers\WNavigationController.cs" />
     <Compile Include="Areas\Website\Controllers\WNewsController.cs" />
     <Compile Include="Areas\Website\Controllers\WSettingController.cs" />
+    <Compile Include="Areas\Website\Utils\Message.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -6829,7 +6831,6 @@
     <Folder Include="Areas\Administrator\Content\ckeditor\plugins\clipboard\dialogs\" />
     <Folder Include="Areas\Administrator\Content\ckeditor\plugins\preview\" />
     <Folder Include="Areas\Administrator\Content\ckeditor\skins\moono\images\hidpi\" />
-    <Folder Include="Areas\Administrator\Views\AdmJob\" />
     <Folder Include="Areas\Marketing\Models\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Marketing\Views\Youtube\" />

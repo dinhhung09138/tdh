@@ -1,6 +1,7 @@
-﻿@model TDH.Model.Website.ConfigurationModel
+﻿@using TDH.Areas.Website.Utils;
+@model TDH.Model.Website.ConfigurationModel
 @{
-    ViewBag.Title = "Cập nhật thông tin thiết lập";
+    ViewBag.Title = Message.Setting.EDIT_CONFIGURATION;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{
@@ -14,11 +15,11 @@
             @{
                 if (ViewBag.View == true)
                 {
-                    <a class="btn btn-box-tool" href="/website/wsetting/configuration" title="Thiết lập chung">
+                    <a class="btn btn-box-tool" href="/website/wsetting/configuration" title="@Message.Setting.CONFIGURATION">
                         <i class="fa fa-long-arrow-left"></i>
                     </a>
                 }
-                <a class="btn btn-box-tool" href="/website/wsetting/editconfiguration/@ViewBag.id" title="Cập nhật thông tin thiết lập">
+                <a class="btn btn-box-tool" href="/website/wsetting/editconfiguration/@ViewBag.id" title="@Message.Setting.EDIT_CONFIGURATION">
                     <i class="fa fa-refresh"></i>
                 </a>
             }
@@ -81,7 +82,7 @@
                     @{
                         if (ViewBag.Add == true || ViewBag.Edit == true)
                         {
-                            <a href="/website/wsetting/configuration" title="Thiết lập chung" class="btn btn-default" tabindex="4">Quay lại</a>
+                            <a href="/website/wsetting/configuration" class="btn btn-default" tabindex="4">Quay lại</a>
                             <button type="submit" class="btn btn-primary" id="submitForm" tabindex="5">Lưu</button>
                         }
                     }

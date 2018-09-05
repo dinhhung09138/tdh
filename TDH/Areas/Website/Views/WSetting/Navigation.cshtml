@@ -1,6 +1,6 @@
-﻿
+﻿@using TDH.Areas.Website.Utils;
 @{
-    ViewBag.Title = "Danh mục hiển thị ở trang chủ";
+    ViewBag.Title = Message.Setting.NAVIGATION;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{
@@ -21,7 +21,7 @@
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Danh mục hiển thị ở trang chủ</h3>
+        <h3 class="card-title">@Message.Setting.NAVIGATION</h3>
     </div>
     <div class="card-body">
         <table id="tbList" class="table table-bordered table-hover">

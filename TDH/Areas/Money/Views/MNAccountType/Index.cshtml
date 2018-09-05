@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Danh sách nhóm tài khoản";
+﻿@using TDH.Areas.Money.Utils;
+@{
+    ViewBag.Title = Message.AccountType.LIST;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{
@@ -12,12 +13,12 @@
 <input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Loại tài khoản</h3>
+        <h3 class="card-title">Message.AccountType.LIST</h3>
         <div class="card-tools pull-right">
             @{
                 if (ViewBag.Add == true)
                 {
-                    <a class="btn btn-box-tool" title="Thêm loại tài khoản" href="/money/mnaccounttype/create">
+                    <a class="btn btn-box-tool" title="@Message.AccountType.CREATE" href="/money/mnaccounttype/create">
                         <i class="fa fa-plus"></i>
                     </a>
                 }

@@ -1,6 +1,6 @@
-﻿
+﻿@using TDH.Areas.Money.Utils;
 @{
-    ViewBag.Title = "Danh sách tài khoản";
+    ViewBag.Title = Message.Account.LIST;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{
@@ -13,12 +13,12 @@
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Tài khoản</h3>
+        <h3 class="card-title">@Message.Account.LIST</h3>
         <div class="card-tools pull-right">
             @{
                 if (ViewBag.Add == true)
                 {
-                    <a title="Thêm mới" class="btn btn-box-tool" data-title="Thêm tài khoản" href="/money/mnaccount/create">
+                    <a class="btn btn-box-tool" title="@Message.Account.CREATE" href="/money/mnaccount/create">
                         <i class="fa fa-plus"></i>
                     </a>
                 }

@@ -1,6 +1,6 @@
-﻿
+﻿@using TDH.Areas.Website.Utils;
 @{
-    ViewBag.Title = "Thiết lập chung";
+    ViewBag.Title = Message.Setting.CONFIGURATION;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
 @section header{
@@ -13,7 +13,7 @@
 <input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Thiết lập chung</h3>
+        <h3 class="card-title">@Message.Setting.CONFIGURATION</h3>
     </div>
     <div class="card-body">
         <table id="tbList" class="table table-bordered table-hover">

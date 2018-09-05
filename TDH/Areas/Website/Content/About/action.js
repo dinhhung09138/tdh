@@ -48,7 +48,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admpost/about', 'Giới thiệu');
+    window.location.href = '/website/wabout/index';
 };
 
 var OnFailure = function (response) {

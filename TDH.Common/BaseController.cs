@@ -236,17 +236,6 @@ namespace TDH.Common
 
                             #endregion
                             break;
-                        case "admpost":
-                            #region " [ Post ] "
-
-                            switch (actionName)
-                            {
-                                case "about":
-                                    return "post_about";
-                            }
-
-                            #endregion
-                            break;
                         case "admtarget":
                             #region " [ Target ] "
 
@@ -418,6 +407,8 @@ namespace TDH.Common
                                 default:
                                     return "";
                             }
+                        case "wabout":
+                            return "post_about";
                         default:
                             break;
                     }
@@ -491,17 +482,6 @@ namespace TDH.Common
                                 case "deleteemployee":
                                 case "deleteuser":
                                     return ActionType.Delete;
-                            }
-
-                            #endregion
-                            break;
-                        case "admpost":
-                            #region " [ Post ] "
-
-                            switch (actionName)
-                            {
-                                case "about":
-                                    return ActionType.View;
                             }
 
                             #endregion
@@ -732,6 +712,8 @@ namespace TDH.Common
                                 default:
                                     return ActionType.None;
                             }
+                        case "wabout":
+                            return ActionType.View;
                     }
                     break;
                 default:

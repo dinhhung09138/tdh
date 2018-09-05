@@ -1,11 +1,18 @@
 ﻿@model TDH.Model.Website.AboutModel
+@{
+    ViewBag.Title = "Giới thiệu";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+
+}
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "website" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
         <h3 class="card-title">Giới thiệu</h3>
     </div>
     <div class="card-body">
-        @using (Ajax.BeginForm("about", "admpost", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
+        @using (Ajax.BeginForm("index", "wabout", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(m => m.ID)
@@ -159,13 +166,15 @@
         }
     </div>
 </div>
-<script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
-<script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
-<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
-<script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
-<script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
-<script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
-<script src="/Scripts/jquery.validate.min.js"></script>
-<script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
-<script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-<script src="/Areas/Administrator/Content/custom/admpost.about.action.js"></script>
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
+    <script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="/Areas/Website/Content/About/action.js"></script>
+}

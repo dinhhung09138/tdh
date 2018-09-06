@@ -4,28 +4,29 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
+using TDH.Model.Personal;
 using TDH.Model.Website;
+using TDH.Services.Personal;
 using TDH.Services.Website;
 using Utils;
 using Utils.JqueryDatatable;
 
-namespace TDH.Areas.Website.Controllers
+namespace TDH.Areas.Personal.Controllers
 {
-    public class WNewsController : BaseController
+    /// <summary>
+    /// Idea controller
+    /// </summary>
+    public class PNIdeaController : BaseController
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Website.Controllers/WNewsController.cs";
+        private readonly string FILE_NAME = "Personal.Controllers/PNIdeaController.cs";
 
         #endregion
-
-        /// <summary>
-        /// News form
-        /// </summary>
-        /// <returns>View</returns>
+        
         [HttpGet]
         public ActionResult Index()
         {
@@ -40,12 +41,6 @@ namespace TDH.Areas.Website.Controllers
             }
         }
 
-        /// <summary>
-        /// News form
-        /// Post method
-        /// </summary>
-        /// <param name="requestData">Jquery datatable request</param>
-        /// <returns>DataTableResponse<PostModel></returns>
         [HttpPost]
         public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
@@ -53,7 +48,7 @@ namespace TDH.Areas.Website.Controllers
             {
                 #region " [ Declaration ] "
 
-                PostService _service = new PostService();
+                IdeaService _service = new IdeaService();
 
                 #endregion
 
@@ -68,11 +63,11 @@ namespace TDH.Areas.Website.Controllers
                 Dictionary<string, object> _return = _service.List(requestData, UserID);
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
-                    DataTableResponse<PostModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<PostModel>;
+                    DataTableResponse<IdeaModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<IdeaModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
-
-                return this.Json(new DataTableResponse<PostModel>(), JsonRequestBehavior.AllowGet);
+                //
+                return this.Json(new DataTableResponse<IdeaModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -81,10 +76,6 @@ namespace TDH.Areas.Website.Controllers
             }
         }
 
-        /// <summary>
-        /// Create news form
-        /// </summary>
-        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Create()
         {
@@ -92,12 +83,7 @@ namespace TDH.Areas.Website.Controllers
             {
                 #region " [ Declaration ] "
 
-                NavigationService _nServices = new NavigationService();
-
-                ViewBag.navigation = _nServices.GetAll(UserID);
-                CategoryService _cServices = new CategoryService();
-                ViewBag.cate = _cServices.GetAll(UserID);
-                PostModel model = new PostModel()
+                IdeaModel model = new IdeaModel()
                 {
                     ID = Guid.NewGuid(),
                     CreateBy = UserID,
@@ -115,26 +101,20 @@ namespace TDH.Areas.Website.Controllers
             }
         }
 
-        /// <summary>
-        /// Create news form
-        /// Post method
-        /// </summary>
-        /// <param name="model">Post model</param>
-        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Create(PostModel model)
+        public ActionResult Create(IdeaModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                PostService _service = new PostService();
+                IdeaService _service = new IdeaService();
 
                 #endregion
 
-                #region " [ Main process ] "
+                #region " [ Main processing ] "
 
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
@@ -143,7 +123,7 @@ namespace TDH.Areas.Website.Controllers
 
                 #endregion
 
-                //Call to service
+                // Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -153,11 +133,6 @@ namespace TDH.Areas.Website.Controllers
             }
         }
 
-        /// <summary>
-        /// Edit news form
-        /// </summary>
-        /// <param name="id">The news identifier</param>
-        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Edit(string id)
         {
@@ -165,19 +140,14 @@ namespace TDH.Areas.Website.Controllers
             {
                 #region " [ Declaration ] "
 
-                NavigationService _nServices = new NavigationService();
-                CategoryService _cServices = new CategoryService();
-                PostService _service = new PostService();
-
+                IdeaService _service = new IdeaService();
+                //
                 ViewBag.id = id;
-                ViewBag.navigation = _nServices.GetAll(UserID);
-                ViewBag.cate = _cServices.GetAll(UserID);
 
                 #endregion
 
-                //Call to service
-                PostModel model = _service.GetItemByID(new PostModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
-
+                // Call to service
+                IdeaModel model = _service.GetItemByID(new IdeaModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 return View(model);
             }
             catch (Exception ex)
@@ -187,28 +157,21 @@ namespace TDH.Areas.Website.Controllers
             }
         }
 
-        /// <summary>
-        /// Edit news form
-        /// Post method
-        /// </summary>
-        /// <param name="model">Post model</param>
-        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Edit(PostModel model)
+        public ActionResult Edit(IdeaModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                PostService _service = new PostService();
+                IdeaService _service = new IdeaService();
 
                 #endregion
 
-                #region " [ Main process ] "
+                #region " [ Main processing ] "
 
-                model.CreateBy = UserID;
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
@@ -216,7 +179,7 @@ namespace TDH.Areas.Website.Controllers
 
                 #endregion
 
-                //Call to service
+                // Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -226,53 +189,14 @@ namespace TDH.Areas.Website.Controllers
             }
         }
 
-        /// <summary>
-        /// Publish news
-        /// </summary>
-        /// <param name="model">Post model</param>
-        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Publish(PostModel model)
+        public ActionResult Delete(IdeaModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                PostService _service = new PostService();
-
-                #endregion
-
-                #region " [ Main process ] "
-
-                model.CreateBy = UserID;
-                model.UpdateBy = UserID;
-                model.UpdateDate = DateTime.Now;
-
-                #endregion
-
-                //Call to service
-                return this.Json(_service.Publish(model), JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Log.WriteLog(FILE_NAME, "Publish", UserID, ex);
-                throw new HttpException();
-            }
-        }
-
-        /// <summary>
-        /// Delete news
-        /// </summary>
-        /// <param name="model">Post model</param>
-        /// <returns>ResponseStatusCodeHelper</returns>
-        [HttpPost]
-        public ActionResult Delete(PostModel model)
-        {
-            try
-            {
-                #region " [ Declaration ] "
-
-                PostService _service = new PostService();
+                IdeaService _service = new IdeaService();
 
                 #endregion
 
@@ -290,6 +214,33 @@ namespace TDH.Areas.Website.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "Delete", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CheckDelete(IdeaModel model)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                IdeaService _service = new IdeaService();
+
+                #endregion
+
+                #region " [ Main process ] "
+
+                model.CreateBy = UserID;
+
+                #endregion
+
+                //Call to service
+                return this.Json(_service.CheckDelete(model), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog(FILE_NAME, "CheckDelete", UserID, ex);
                 throw new HttpException();
             }
         }

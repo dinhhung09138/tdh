@@ -76,6 +76,7 @@
     <Compile Include="PersonalWorking\CheckListGroupModel.cs" />
     <Compile Include="PersonalWorking\CheckListItemDetailModel.cs" />
     <Compile Include="PersonalWorking\CheckListItemModel.cs" />
+    <Compile Include="Personal\IdeaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SideBarViewModel.cs" />
     <Compile Include="System\ErrorLogModel.cs" />

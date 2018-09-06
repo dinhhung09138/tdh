@@ -35,7 +35,7 @@ namespace TDH.Areas.Website.Controllers
 
                 #endregion
 
-                return PartialView(_model);
+                return View(_model);
             }
             catch (Exception ex)
             {

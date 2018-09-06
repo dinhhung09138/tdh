@@ -1,0 +1,43 @@
+﻿@using TDH.Areas.Personal.Utils;
+@model TDH.Model.Personal.IdeaModel
+@{
+    ViewBag.Title = Message.Idea.CREATE;
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "user_info" })
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">@Message.Idea.CREATE</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.View == true)
+                {
+                    <a class="btn btn-box-tool" href="/personal/pnidea/index" title="@Message.Idea.LIST">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
+                }
+                <a class="btn btn-box-tool" href="/personal/pnidea/create" title="@Message.Idea.CREATE">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Ajax.BeginForm("create", "pnidea", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
+        {
+            @Html.Partial("_Form", Model)
+        }
+    </div>
+</div>
+@section script {
+    <script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
+    <script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="/Areas/Personal/Content/Idea/action.js"></script>
+}
+

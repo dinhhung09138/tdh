@@ -21,7 +21,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    loadPage('/administrator/admtarget/idea', 'Khu vườn ý tưởng');
+    window.location.href = '/personal/pnidea/index';
 };
 
 var OnFailure = function (response) {

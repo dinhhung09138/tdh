@@ -20,9 +20,9 @@ $(document).ready(function () {
             //Do something after finish
         },
         language: language,
-        order: [[4, "desc"]],
+        order: [[2, "desc"]],
         ajax: {
-            url: '/administrator/admtarget/idea',
+            url: '/personal/pnidea/index',
             type: 'post',
             data: function (d) {
             }
@@ -39,24 +39,7 @@ $(document).ready(function () {
             {
                 data: 'Title',
                 orderable: true,
-                searchable: true,
-                render: function (obj, type, data, meta) {
-                    return '<a href="javascript:;" data-url="/administrator/admtarget/detailidea/' + data.ID + '\" data-title="' + data.Title + '" class="pg_ld">' + data.Title + '</a>';
-                }
-            },
-            {
-                data: 'Count',
-                orderable: true,
-                searchable: true,
-                className: 'ctn-center',
-                width: '90px'
-            },
-            {
-                data: 'UserCreate',
-                orderable: true,
-                searchable: true,
-                className: 'ctn-center',
-                width: '200px'
+                searchable: true
             },
             {
                 data: 'CreateDateString',
@@ -66,13 +49,20 @@ $(document).ready(function () {
                 width: '200px'
             },
             {
+                data: 'Targets',
+                orderable: true,
+                searchable: true,
+                className: 'ctn-center',
+                width: '100px'
+            },
+            {
                 orderable: false,
                 width: '60px',
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     var str = '';
                     if (allowEdit === "True") {
-                        str = str + '<a href="javascript:;" data-url="/administrator/admtarget/editidea/' + data.ID + '\" data-title="Cập nhật ý tưởng" class="mg-lr-2 pg_ld" title="Cập nhật"><i class="fa fa-edit" aria-hidden="true"></i></a>';
+                        str = str + '<a href="/personal/pnidea/edit/' + data.ID + '\" title="Cập nhật ý tưởng" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
                     if (allowDelete === "True") {
                         str = str + '<a href="javascript:;" title="Xóa" onclick="confirmDelete(\'' + data.ID + '\');" class="mg-lr-2"><i class="fa fa-remove" aria-hidden="true"></i></a>';
@@ -82,13 +72,13 @@ $(document).ready(function () {
             }
         ]
     });
-    
-    
+
+
 });
 
 function confirmDelete(deletedId) {
     $.ajax({
-        url: '/administrator/admtarget/checkdeleteidea',
+        url: '/personal/pnidea/checkdelete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
@@ -108,7 +98,7 @@ function confirmDelete(deletedId) {
 
 function deleteItem() {
     $.ajax({
-        url: '/administrator/admtarget/deleteidea',
+        url: '/personal/pnidea/delete',
         type: 'POST',
         contentType: 'application/json',
         dataType: 'json',

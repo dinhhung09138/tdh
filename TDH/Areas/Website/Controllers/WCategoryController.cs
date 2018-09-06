@@ -38,7 +38,7 @@ namespace TDH.Areas.Website.Controllers
 
                 #endregion
 
-                return PartialView();
+                return View();
             }
             catch (Exception ex)
             {
@@ -115,7 +115,7 @@ namespace TDH.Areas.Website.Controllers
 
                 #endregion
 
-                return PartialView(model);
+                return View(model);
             }
             catch (Exception ex)
             {
@@ -185,7 +185,7 @@ namespace TDH.Areas.Website.Controllers
                 //Call to service
                 CategoryModel model = _service.GetItemByID(new CategoryModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
 
-                return PartialView(model);
+                return View(model);
             }
             catch (Exception ex)
             {

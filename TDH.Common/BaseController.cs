@@ -192,13 +192,6 @@ namespace TDH.Common
 
                             switch (actionName)
                             {
-                                case "idea":
-                                case "createidea":
-                                case "editidea":
-                                case "deleteidea":
-                                case "checkdeleteidea":
-                                case "detailidea":
-                                    return "target_idea";
                                 case "overview":
                                 case "savetarget":
                                     return "target_overview";
@@ -418,6 +411,35 @@ namespace TDH.Common
                         default:
                             return "";
                     }
+                case "personal":
+                    switch (controllerName)
+                    {
+                        case "me":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return "personal_overview";
+                                default:
+                                    return "";
+                            }
+                        case "pnidea":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "checkdelete":
+                                case "delete":
+                                    return "personal_idea";
+                                default:
+                                    return "";
+                            }
+                        default:
+                            return "";
+                    }
+                default:
+                    return "";
             }
             return "";
         }
@@ -472,20 +494,12 @@ namespace TDH.Common
 
                             switch (actionName)
                             {
-                                case "idea":
                                 case "overview":
                                 case "dashboard":
                                 case "dailytask":
                                 case "savetarget":
                                 case "detailidea":
                                     return ActionType.View;
-                                case "createidea":
-                                    return ActionType.Create;
-                                case "editidea":
-                                    return ActionType.Edit;
-                                case "deleteidea":
-                                case "checkdeleteidea":
-                                    return ActionType.Delete;
                             }
 
                             #endregion
@@ -723,6 +737,36 @@ namespace TDH.Common
                                 case "savecategory":
                                 case "savenavigation":
                                     return ActionType.Edit;
+                                default:
+                                    return ActionType.None;
+                            }
+                        default:
+                            return ActionType.None;
+                    }
+                case "personal":
+                    switch (controllerName)
+                    {
+                        case "me":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "pnidea":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "checkdelete":
+                                case "delete":
+                                    return ActionType.Delete;
                                 default:
                                     return ActionType.None;
                             }

@@ -40,7 +40,7 @@ namespace TDH.Areas.Website.Controllers
         {
             try
             {
-                return PartialView();
+                return View();
             }
             catch (Exception ex)
             {
@@ -110,7 +110,7 @@ namespace TDH.Areas.Website.Controllers
 
                 #endregion
                 
-                return PartialView(model);
+                return View(model);
             }
             catch (Exception ex)
             {
@@ -178,7 +178,7 @@ namespace TDH.Areas.Website.Controllers
                 //Call to service
                 NavigationModel model = _service.GetItemByID(new NavigationModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 
-                return PartialView(model);
+                return View(model);
             }
             catch (Exception ex)
             {

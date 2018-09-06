@@ -1,0 +1,93 @@
+﻿@model TDH.Model.Personal.DreamModel
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.Insert)
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Tiêu đề <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (Model.Insert || Model.Finish == false)
+            {
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @maxlength = 250, @required = true, @focus = true, @tabindex = "1" })
+                @Html.ValidationMessageFor(m => m.Title)
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.Title)
+                @Html.Raw(Model.Title)
+            }
+        }
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Thứ tự <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (Model.Insert || Model.Finish == false)
+            {
+                @Html.TextBoxFor(m => m.Ordering, new { @class = "form-control", @maxlength = 2, @required = true, @tabindex = "2" })
+                @Html.ValidationMessageFor(m => m.Ordering)
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.Ordering)
+                @Html.Raw(Model.Ordering)
+            }
+        }
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hoàn thành <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (Model.Insert || Model.Finish == false)
+            {
+                @Html.CheckBoxFor(m => m.Finish, new { @class = "form-control", @tabindex = "3" })
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.Finish)
+                @Html.Raw("Mục tiêu đã hoàn thành")
+            }
+        }
+
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Ngày hoàn thành
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            @Html.TextBoxFor(m => m.FinishTime, new { @class = "form-control datePicker", @maxlength = 10, @tabindex = "4" })
+        }
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Mô tả  <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextAreaFor(m => m.Notes, new { @class = "form-control", @rows = 2, @tabindex = "5", @maxlength = 250 })
+        @Html.ValidationMessageFor(m => m.Notes)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (ViewBag.Add == true || ViewBag.Edit == true)
+            {
+                <a href="/personal/pndream/index" class="btn btn-default" tabindex="3">Quay lại</a>
+                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="19">Lưu</button>
+            }
+        }
+    </div>
+</div>

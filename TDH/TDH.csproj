@@ -247,6 +247,7 @@
     <Compile Include="Areas\Money\MoneyAreaRegistration.cs" />
     <Compile Include="Areas\Money\Utils\Message.cs" />
     <Compile Include="Areas\Personal\Controllers\MeController.cs" />
+    <Compile Include="Areas\Personal\Controllers\PNDreamController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNIdeaController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
     <Compile Include="Areas\Personal\Utils\Message.cs" />
@@ -6149,6 +6150,8 @@
     <Content Include="Areas\Money\Content\Report\index.js" />
     <Content Include="Areas\Money\Content\Type\action.js" />
     <Content Include="Areas\Money\Content\Type\index.js" />
+    <Content Include="Areas\Personal\Content\Dream\action.js" />
+    <Content Include="Areas\Personal\Content\Dream\index.js" />
     <Content Include="Areas\Personal\Content\Idea\action.js" />
     <Content Include="Areas\Personal\Content\Idea\index.js" />
     <Content Include="Areas\System\Content\Log\index.js" />
@@ -6783,6 +6786,10 @@
     <Content Include="Areas\Personal\Views\PNIdea\Create.cshtml" />
     <Content Include="Areas\Personal\Views\PNIdea\Edit.cshtml" />
     <Content Include="Areas\Personal\Views\PNIdea\_Form.cshtml" />
+    <Content Include="Areas\Personal\Views\PNDream\Index.cshtml" />
+    <Content Include="Areas\Personal\Views\PNDream\Create.cshtml" />
+    <Content Include="Areas\Personal\Views\PNDream\Edit.cshtml" />
+    <Content Include="Areas\Personal\Views\PNDream\_Form.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

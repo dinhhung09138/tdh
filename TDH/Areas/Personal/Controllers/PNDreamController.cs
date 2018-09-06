@@ -12,19 +12,20 @@ using Utils.JqueryDatatable;
 namespace TDH.Areas.Personal.Controllers
 {
     /// <summary>
-    /// Idea controller
+    /// Dream controller
     /// </summary>
-    public class PNIdeaController : BaseController
+    public class PNDreamController : BaseController
     {
+
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Personal.Controllers/PNIdeaController.cs";
+        private readonly string FILE_NAME = "Personal.Controllers/PNDreamController.cs";
 
         #endregion
-        
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -46,7 +47,7 @@ namespace TDH.Areas.Personal.Controllers
             {
                 #region " [ Declaration ] "
 
-                IdeaService _service = new IdeaService();
+                DreamService _service = new DreamService();
 
                 #endregion
 
@@ -61,11 +62,11 @@ namespace TDH.Areas.Personal.Controllers
                 Dictionary<string, object> _return = _service.List(requestData, UserID);
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
-                    DataTableResponse<IdeaModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<IdeaModel>;
+                    DataTableResponse<DreamModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<DreamModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
                 //
-                return this.Json(new DataTableResponse<IdeaModel>(), JsonRequestBehavior.AllowGet);
+                return this.Json(new DataTableResponse<DreamModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -81,7 +82,7 @@ namespace TDH.Areas.Personal.Controllers
             {
                 #region " [ Declaration ] "
 
-                IdeaModel model = new IdeaModel()
+                DreamModel model = new DreamModel()
                 {
                     ID = Guid.NewGuid(),
                     CreateBy = UserID,
@@ -102,13 +103,13 @@ namespace TDH.Areas.Personal.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Create(IdeaModel model)
+        public ActionResult Create(DreamModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                IdeaService _service = new IdeaService();
+                DreamService _service = new DreamService();
 
                 #endregion
 
@@ -138,14 +139,14 @@ namespace TDH.Areas.Personal.Controllers
             {
                 #region " [ Declaration ] "
 
-                IdeaService _service = new IdeaService();
+                DreamService _service = new DreamService();
                 //
                 ViewBag.id = id;
 
                 #endregion
 
                 // Call to service
-                IdeaModel model = _service.GetItemByID(new IdeaModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+                DreamModel model = _service.GetItemByID(new DreamModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 return View(model);
             }
             catch (Exception ex)
@@ -158,13 +159,13 @@ namespace TDH.Areas.Personal.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Edit(IdeaModel model)
+        public ActionResult Edit(DreamModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                IdeaService _service = new IdeaService();
+                DreamService _service = new DreamService();
 
                 #endregion
 
@@ -188,13 +189,13 @@ namespace TDH.Areas.Personal.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(IdeaModel model)
+        public ActionResult Delete(DreamModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                IdeaService _service = new IdeaService();
+                DreamService _service = new DreamService();
 
                 #endregion
 
@@ -212,33 +213,6 @@ namespace TDH.Areas.Personal.Controllers
             catch (Exception ex)
             {
                 Log.WriteLog(FILE_NAME, "Delete", UserID, ex);
-                throw new HttpException();
-            }
-        }
-
-        [HttpPost]
-        public ActionResult CheckDelete(IdeaModel model)
-        {
-            try
-            {
-                #region " [ Declaration ] "
-
-                IdeaService _service = new IdeaService();
-
-                #endregion
-
-                #region " [ Main process ] "
-
-                model.CreateBy = UserID;
-
-                #endregion
-
-                //Call to service
-                return this.Json(_service.CheckDelete(model), JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                Log.WriteLog(FILE_NAME, "CheckDelete", UserID, ex);
                 throw new HttpException();
             }
         }

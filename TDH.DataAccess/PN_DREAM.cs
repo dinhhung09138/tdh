@@ -19,6 +19,7 @@ namespace TDH.DataAccess
         public bool finish { get; set; }
         public Nullable<System.DateTime> finish_time { get; set; }
         public string notes { get; set; }
+        public short ordering { get; set; }
         public System.Guid created_by { get; set; }
         public System.DateTime created_date { get; set; }
         public Nullable<System.Guid> updated_by { get; set; }

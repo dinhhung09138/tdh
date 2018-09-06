@@ -435,6 +435,17 @@ namespace TDH.Common
                                 default:
                                     return "";
                             }
+                        case "pndream":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "delete":
+                                    return "personal_dream";
+                                default:
+                                    return "";
+                            }
                         default:
                             return "";
                     }
@@ -765,6 +776,20 @@ namespace TDH.Common
                                 case "publish":
                                     return ActionType.Edit;
                                 case "checkdelete":
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "pndream":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                    return ActionType.Edit;
                                 case "delete":
                                     return ActionType.Delete;
                                 default:

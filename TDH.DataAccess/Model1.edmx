@@ -217,6 +217,7 @@
           <Property Name="finish" Type="bit" Nullable="false" />
           <Property Name="finish_time" Type="datetime" />
           <Property Name="notes" Type="nvarchar" MaxLength="250" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
           <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
           <Property Name="created_date" Type="datetime" Nullable="false" />
           <Property Name="updated_by" Type="uniqueidentifier" />
@@ -3099,6 +3100,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="finish" Type="Boolean" Nullable="false" />
           <Property Name="finish_time" Type="DateTime" Precision="3" />
           <Property Name="notes" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="created_by" Type="Guid" Nullable="false" />
           <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="updated_by" Type="Guid" />
@@ -3997,6 +3999,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
                 <ScalarProperty Name="updated_by" ColumnName="updated_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="finish_time" ColumnName="finish_time" />
                 <ScalarProperty Name="finish" ColumnName="finish" />

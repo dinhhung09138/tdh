@@ -249,6 +249,9 @@
     <Compile Include="Areas\Money\Controllers\MNReportController.cs" />
     <Compile Include="Areas\Money\MoneyAreaRegistration.cs" />
     <Compile Include="Areas\Money\Utils\Message.cs" />
+    <Compile Include="Areas\Personal\Controllers\MeController.cs" />
+    <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
+    <Compile Include="Areas\Personal\Utils\Message.cs" />
     <Compile Include="Areas\System\Controllers\STErrorLogController.cs" />
     <Compile Include="Areas\System\Controllers\STRoleController.cs" />
     <Compile Include="Areas\System\Controllers\STUserController.cs" />
@@ -6787,6 +6790,8 @@
     <Content Include="Areas\System\Views\STUser\Edit.cshtml" />
     <Content Include="Areas\System\Views\STUser\_Form.cshtml" />
     <Content Include="Areas\Marketing\Views\Youtube\Index.cshtml" />
+    <Content Include="Areas\Personal\Views\web.config" />
+    <Content Include="Areas\Personal\Views\Me\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6843,6 +6848,9 @@
     <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Money\Models\" />
     <Folder Include="Areas\Money\Views\Shared\" />
+    <Folder Include="Areas\Personal\Content\" />
+    <Folder Include="Areas\Personal\Models\" />
+    <Folder Include="Areas\Personal\Views\Shared\" />
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="Areas\Website\Models\" />

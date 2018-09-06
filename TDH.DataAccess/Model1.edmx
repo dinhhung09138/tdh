@@ -208,6 +208,23 @@
           <Property Name="delete_date" Type="datetime" />
           <Property Name="date" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="PN_DREAM">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="finish" Type="bit" Nullable="false" />
+          <Property Name="finish_time" Type="datetime" />
+          <Property Name="notes" Type="nvarchar" MaxLength="250" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="PN_IDEA">
           <Key>
             <PropertyRef Name="id" />
@@ -279,6 +296,7 @@
           <Property Name="deleted" Type="bit" Nullable="false" />
           <Property Name="deleted_by" Type="uniqueidentifier" />
           <Property Name="deleted_date" Type="datetime" />
+          <Property Name="finish_date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="PN_TARGET_PLANNING">
           <Key>
@@ -1325,6 +1343,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <EntitySet Name="MN_INCOME" EntityType="Self.MN_INCOME" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MN_PAYMENT" EntityType="Self.MN_PAYMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MN_TRANSFER" EntityType="Self.MN_TRANSFER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PN_DREAM" EntityType="Self.PN_DREAM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_IDEA" EntityType="Self.PN_IDEA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_REPORT" EntityType="Self.PN_REPORT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_REPORT_KIND" EntityType="Self.PN_REPORT_KIND" Schema="dbo" store:Type="Tables" />
@@ -1768,6 +1787,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             <End Role="SYS_MODULE" EntitySet="SYS_MODULE" />
             <End Role="SYS_FUNCTION" EntitySet="SYS_FUNCTION" />
           </AssociationSet>
+          <EntitySet Name="PN_DREAM" EntityType="TDHModel.PN_DREAM" />
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -2320,6 +2340,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <NavigationProperty Name="PN_TARGET_PRIORITY" Relationship="TDHModel.FK_PN_TARGET_PN_TARGET_PRIORITY" FromRole="PN_TARGET" ToRole="PN_TARGET_PRIORITY" />
           <NavigationProperty Name="PN_TARGET_TYPE" Relationship="TDHModel.FK_PN_TARGET_PN_TARGET_TYPE" FromRole="PN_TARGET" ToRole="PN_TARGET_TYPE" />
           <NavigationProperty Name="PN_TARGET_QUESTION" Relationship="TDHModel.FK_PN_TARGET_QUESTION_PN_TARGET" FromRole="PN_TARGET" ToRole="PN_TARGET_QUESTION" />
+          <Property Name="finish_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="PN_TARGET_PLANNING">
           <Key>
@@ -3069,6 +3090,23 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PN_DREAM">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="finish" Type="Boolean" Nullable="false" />
+          <Property Name="finish_time" Type="DateTime" Precision="3" />
+          <Property Name="notes" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3478,6 +3516,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <EntitySetMapping Name="PN_TARGET">
             <EntityTypeMapping TypeName="TDHModel.PN_TARGET">
               <MappingFragment StoreEntitySet="PN_TARGET">
+                <ScalarProperty Name="finish_date" ColumnName="finish_date" />
                 <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
                 <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
                 <ScalarProperty Name="deleted" ColumnName="deleted" />
@@ -3945,6 +3984,24 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
                 <ScalarProperty Name="default_action" ColumnName="default_action" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="code" ColumnName="code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PN_DREAM">
+            <EntityTypeMapping TypeName="TDHModel.PN_DREAM">
+              <MappingFragment StoreEntitySet="PN_DREAM">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="finish_time" ColumnName="finish_time" />
+                <ScalarProperty Name="finish" ColumnName="finish" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

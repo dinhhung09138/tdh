@@ -83,6 +83,7 @@
         <AssociationConnector Association="TDHModel.FK_WEB_POST_WEB_NAVIGATION" />
         <EntityTypeShape EntityType="TDHModel.SYS_MODULE" Width="1.5" PointX="7" PointY="8.25" />
         <AssociationConnector Association="TDHModel.FK_SYS_FUNCTION_SYS_MODULE" />
+        <EntityTypeShape EntityType="TDHModel.PN_DREAM" Width="1.5" PointX="0.75" PointY="17.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

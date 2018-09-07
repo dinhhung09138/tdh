@@ -3,7 +3,8 @@
     var _listSidebar = ViewBag.sidebar as List<SideBarViewModel>;
     if (ViewBag.moduleCode == "money" ||
         ViewBag.moduleCode == "system" ||
-        ViewBag.moduleCode == "user_info")
+        ViewBag.moduleCode == "user_info" ||
+        ViewBag.moduleCode == "common")
     {
         if (_listSidebar.Count > 0)
         {

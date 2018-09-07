@@ -67,7 +67,7 @@ namespace TDH.Services.Personal
                             Finish = item.finish,
                             Ordering = item.ordering,
                             FinishTime = item.finish_time,
-                            FinishTimeString = item.finish_time.HasValue ? item.finish_time.Value.DateToString() : ""
+                            FinishTimeString = item.finish_time.HasValue ? item.finish_time.Value.DateToString("dd/MM/yyyy") : ""
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -158,6 +158,7 @@ namespace TDH.Services.Personal
                         Title = _md.title,
                         Finish = _md.finish,
                         FinishTime = _md.finish_time,
+                        FinishTimeString = _md.finish_time.HasValue ? _md.finish_time.Value.DateToString("dd/MM/yyyy") : "",
                         Notes = _md.notes
                     };
                 }

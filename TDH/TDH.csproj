@@ -236,6 +236,9 @@
     <Compile Include="Areas\Administrator\Services\CheckListItemService.cs" />
     <Compile Include="Areas\Administrator\Services\ReportService.cs" />
     <Compile Include="Areas\Administrator\Services\TargetService.cs" />
+    <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
+    <Compile Include="Areas\Common\Controllers\CMSkillController.cs" />
+    <Compile Include="Areas\Common\Utils\Message.cs" />
     <Compile Include="Areas\Marketing\Controllers\YoutubeController.cs" />
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
     <Compile Include="Areas\Money\Controllers\MNAccountController.cs" />
@@ -6790,6 +6793,9 @@
     <Content Include="Areas\Personal\Views\PNDream\Create.cshtml" />
     <Content Include="Areas\Personal\Views\PNDream\Edit.cshtml" />
     <Content Include="Areas\Personal\Views\PNDream\_Form.cshtml" />
+    <Content Include="Areas\Common\Views\web.config" />
+    <Content Include="Areas\Common\Views\CMSkill\Index.cshtml" />
+    <Content Include="Areas\Common\Views\CMSkill\Home.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6842,6 +6848,9 @@
     <Folder Include="Areas\Administrator\Content\ckeditor\plugins\clipboard\dialogs\" />
     <Folder Include="Areas\Administrator\Content\ckeditor\plugins\preview\" />
     <Folder Include="Areas\Administrator\Content\ckeditor\skins\moono\images\hidpi\" />
+    <Folder Include="Areas\Common\Content\" />
+    <Folder Include="Areas\Common\Models\" />
+    <Folder Include="Areas\Common\Views\Shared\" />
     <Folder Include="Areas\Marketing\Models\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Money\Models\" />

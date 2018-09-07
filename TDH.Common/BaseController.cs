@@ -449,6 +449,20 @@ namespace TDH.Common
                         default:
                             return "";
                     }
+                case "common":
+                    switch (controllerName)
+                    {
+                        case "cmskill":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return "common_skill";
+                                default:
+                                    return "";
+                            }
+                        default:
+                            return "";
+                    }
                 default:
                     return "";
             }
@@ -790,6 +804,28 @@ namespace TDH.Common
                                     return ActionType.Create;
                                 case "edit":
                                     return ActionType.Edit;
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        default:
+                            return ActionType.None;
+                    }
+                case "common":
+                    switch (controllerName)
+                    {
+                        case "cmskill":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "checkdelete":
                                 case "delete":
                                     return ActionType.Delete;
                                 default:

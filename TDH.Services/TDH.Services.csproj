@@ -50,6 +50,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\SkillGroupService.cs" />
+    <Compile Include="Common\SkillService.cs" />
     <Compile Include="Money\AccountService.cs" />
     <Compile Include="Money\AccountSettingService.cs" />
     <Compile Include="Money\AccountTypeService.cs" />

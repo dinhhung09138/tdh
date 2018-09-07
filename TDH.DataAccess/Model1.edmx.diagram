@@ -84,6 +84,20 @@
         <EntityTypeShape EntityType="TDHModel.SYS_MODULE" Width="1.5" PointX="7" PointY="8.25" />
         <AssociationConnector Association="TDHModel.FK_SYS_FUNCTION_SYS_MODULE" />
         <EntityTypeShape EntityType="TDHModel.PN_DREAM" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="TDHModel.CM_SKILL" Width="1.5" PointX="27" PointY="3.125" />
+        <EntityTypeShape EntityType="TDHModel.CM_SKILL_DEFINDED" Width="1.5" PointX="29.25" PointY="1.25" />
+        <EntityTypeShape EntityType="TDHModel.CM_SKILL_GROUP" Width="1.5" PointX="24.75" PointY="3.5" />
+        <EntityTypeShape EntityType="TDHModel.PN_EDUCATION" Width="1.5" PointX="28" PointY="11.125" />
+        <EntityTypeShape EntityType="TDHModel.PN_EDUCATION_TYPE" Width="1.5" PointX="25.75" PointY="12" />
+        <EntityTypeShape EntityType="TDHModel.PN_EVENT" Width="1.5" PointX="17" PointY="23.125" />
+        <EntityTypeShape EntityType="TDHModel.PN_EVENT_TYPE" Width="1.5" PointX="14.75" PointY="23.875" />
+        <EntityTypeShape EntityType="TDHModel.PN_SKILL" Width="1.5" PointX="29.25" PointY="5.875" />
+        <EntityTypeShape EntityType="TDHModel.V_TIMELINE" Width="1.5" PointX="0.75" PointY="22.75" />
+        <AssociationConnector Association="TDHModel.FK_CM_SKILL_CM_SKILL_GROUP" />
+        <AssociationConnector Association="TDHModel.FK_CM_SKILL_DEFINDED_CM_SKILL" />
+        <AssociationConnector Association="TDHModel.FK_PN_SKILL_CM_SKILL" />
+        <AssociationConnector Association="TDHModel.FK_PN_EDUCATION_PN_EDUCATION_TYPE" />
+        <AssociationConnector Association="TDHModel.FK_PN_EVENT_PN_EVENT_TYPE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -71,6 +71,15 @@ namespace TDH.DataAccess
         public virtual DbSet<V_CATEGORY_HISTORY> V_CATEGORY_HISTORY { get; set; }
         public virtual DbSet<SYS_MODULE> SYS_MODULE { get; set; }
         public virtual DbSet<PN_DREAM> PN_DREAM { get; set; }
+        public virtual DbSet<CM_SKILL> CM_SKILL { get; set; }
+        public virtual DbSet<CM_SKILL_DEFINDED> CM_SKILL_DEFINDED { get; set; }
+        public virtual DbSet<CM_SKILL_GROUP> CM_SKILL_GROUP { get; set; }
+        public virtual DbSet<PN_EDUCATION> PN_EDUCATION { get; set; }
+        public virtual DbSet<PN_EDUCATION_TYPE> PN_EDUCATION_TYPE { get; set; }
+        public virtual DbSet<PN_EVENT> PN_EVENT { get; set; }
+        public virtual DbSet<PN_EVENT_TYPE> PN_EVENT_TYPE { get; set; }
+        public virtual DbSet<PN_SKILL> PN_SKILL { get; set; }
+        public virtual DbSet<V_TIMELINE> V_TIMELINE { get; set; }
     
         [DbFunction("TDHEntities", "FNC_REPORT_INCOME_BY_CATEGORY")]
         public virtual IQueryable<FNC_REPORT_INCOME_BY_CATEGORY_Result> FNC_REPORT_INCOME_BY_CATEGORY()

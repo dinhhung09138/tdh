@@ -49,6 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CM_SKILL.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CM_SKILL_DEFINDED.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CM_SKILL_GROUP.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -112,6 +121,18 @@
     <Compile Include="PN_DREAM.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="PN_EDUCATION.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PN_EDUCATION_TYPE.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PN_EVENT.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PN_EVENT_TYPE.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="PN_IDEA.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -119,6 +140,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="PN_REPORT_KIND.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PN_SKILL.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="PN_TARGET.cs">
@@ -177,6 +201,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="V_MONEY_FLOW.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="V_TIMELINE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="WEB_ABOUT.cs">

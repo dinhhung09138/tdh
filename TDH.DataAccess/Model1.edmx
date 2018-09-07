@@ -5,6 +5,60 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="TDHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CM_SKILL">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="notes" Type="nvarchar" MaxLength="255" />
+          <Property Name="group_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CM_SKILL_DEFINDED">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="skill_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="400" />
+          <Property Name="point" Type="smallint" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CM_SKILL_GROUP">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="notes" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="MN_ACCOUNT">
           <Key>
             <PropertyRef Name="id" />
@@ -226,6 +280,87 @@
           <Property Name="deleted_by" Type="uniqueidentifier" />
           <Property Name="deleted_date" Type="datetime" />
         </EntityType>
+        <EntityType Name="PN_EDUCATION">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="school" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="duration" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="is_plan" Type="bit" Nullable="false" />
+          <Property Name="is_finish" Type="bit" Nullable="false" />
+          <Property Name="is_cancel" Type="bit" Nullable="false" />
+          <Property Name="education_type" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PN_EDUCATION_TYPE">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PN_EVENT">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="duration" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="is_plan" Type="bit" Nullable="false" />
+          <Property Name="is_finish" Type="bit" Nullable="false" />
+          <Property Name="is_cancel" Type="bit" Nullable="false" />
+          <Property Name="event_type" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PN_EVENT_TYPE">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="PN_IDEA">
           <Key>
             <PropertyRef Name="id" />
@@ -268,6 +403,22 @@
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PN_SKILL">
+          <Key>
+            <PropertyRef Name="skill_id" />
+          </Key>
+          <Property Name="skill_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="level" Type="smallint" Nullable="false" />
           <Property Name="ordering" Type="smallint" Nullable="false" />
           <Property Name="publish" Type="bit" Nullable="false" />
           <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
@@ -805,6 +956,60 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="fee" Type="numeric" Precision="18" Scale="1" Nullable="false" />
           <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_TIMELINE">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="school" />
+            <PropertyRef Name="duration" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="date" />
+            <PropertyRef Name="is_plan" />
+            <PropertyRef Name="is_finish" />
+            <PropertyRef Name="is_cancel" />
+            <PropertyRef Name="type_code" />
+            <PropertyRef Name="type_name" />
+            <PropertyRef Name="created_by" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="school" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="duration" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="is_plan" Type="bit" Nullable="false" />
+          <Property Name="is_finish" Type="bit" Nullable="false" />
+          <Property Name="is_cancel" Type="bit" Nullable="false" />
+          <Property Name="type_code" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="type_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CM_SKILL_CM_SKILL_GROUP">
+          <End Role="CM_SKILL_GROUP" Type="Self.CM_SKILL_GROUP" Multiplicity="1" />
+          <End Role="CM_SKILL" Type="Self.CM_SKILL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CM_SKILL_GROUP">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CM_SKILL">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CM_SKILL_DEFINDED_CM_SKILL">
+          <End Role="CM_SKILL" Type="Self.CM_SKILL" Multiplicity="1" />
+          <End Role="CM_SKILL_DEFINDED" Type="Self.CM_SKILL_DEFINDED" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CM_SKILL">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CM_SKILL_DEFINDED">
+              <PropertyRef Name="skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
           <End Role="MN_ACCOUNT_TYPE" Type="Self.MN_ACCOUNT_TYPE" Multiplicity="1" />
           <End Role="MN_ACCOUNT" Type="Self.MN_ACCOUNT" Multiplicity="*" />
@@ -943,6 +1148,30 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PN_EDUCATION_PN_EDUCATION_TYPE">
+          <End Role="PN_EDUCATION_TYPE" Type="Self.PN_EDUCATION_TYPE" Multiplicity="1" />
+          <End Role="PN_EDUCATION" Type="Self.PN_EDUCATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PN_EDUCATION_TYPE">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="PN_EDUCATION">
+              <PropertyRef Name="education_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PN_EVENT_PN_EVENT_TYPE">
+          <End Role="PN_EVENT_TYPE" Type="Self.PN_EVENT_TYPE" Multiplicity="1" />
+          <End Role="PN_EVENT" Type="Self.PN_EVENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PN_EVENT_TYPE">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="PN_EVENT">
+              <PropertyRef Name="event_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PN_REPORT_PN_REPORT_KIND">
           <End Role="PN_REPORT_KIND" Type="Self.PN_REPORT_KIND" Multiplicity="1" />
           <End Role="PN_REPORT" Type="Self.PN_REPORT" Multiplicity="*" />
@@ -952,6 +1181,18 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             </Principal>
             <Dependent Role="PN_REPORT">
               <PropertyRef Name="kind_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PN_SKILL_CM_SKILL">
+          <End Role="CM_SKILL" Type="Self.CM_SKILL" Multiplicity="1" />
+          <End Role="PN_SKILL" Type="Self.PN_SKILL" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CM_SKILL">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PN_SKILL">
+              <PropertyRef Name="skill_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1334,6 +1575,9 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           </ReturnType>
         </Function>
         <EntityContainer Name="TDHModelStoreContainer">
+          <EntitySet Name="CM_SKILL" EntityType="Self.CM_SKILL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CM_SKILL_DEFINDED" EntityType="Self.CM_SKILL_DEFINDED" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CM_SKILL_GROUP" EntityType="Self.CM_SKILL_GROUP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MN_ACCOUNT" EntityType="Self.MN_ACCOUNT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MN_ACCOUNT_SETTING" EntityType="Self.MN_ACCOUNT_SETTING" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MN_ACCOUNT_TYPE" EntityType="Self.MN_ACCOUNT_TYPE" Schema="dbo" store:Type="Tables" />
@@ -1345,9 +1589,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <EntitySet Name="MN_PAYMENT" EntityType="Self.MN_PAYMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MN_TRANSFER" EntityType="Self.MN_TRANSFER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_DREAM" EntityType="Self.PN_DREAM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PN_EDUCATION" EntityType="Self.PN_EDUCATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PN_EDUCATION_TYPE" EntityType="Self.PN_EDUCATION_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PN_EVENT" EntityType="Self.PN_EVENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PN_EVENT_TYPE" EntityType="Self.PN_EVENT_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_IDEA" EntityType="Self.PN_IDEA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_REPORT" EntityType="Self.PN_REPORT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_REPORT_KIND" EntityType="Self.PN_REPORT_KIND" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PN_SKILL" EntityType="Self.PN_SKILL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_TARGET" EntityType="Self.PN_TARGET" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_TARGET_PLANNING" EntityType="Self.PN_TARGET_PLANNING" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_TARGET_PLANNING_REPORT" EntityType="Self.PN_TARGET_PLANNING_REPORT" Schema="dbo" store:Type="Tables" />
@@ -1408,6 +1657,30 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
     [V_MONEY_FLOW].[type] AS [type]
     FROM [dbo].[V_MONEY_FLOW] AS [V_MONEY_FLOW]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="V_TIMELINE" EntityType="Self.V_TIMELINE" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_TIMELINE].[id] AS [id], 
+    [V_TIMELINE].[name] AS [name], 
+    [V_TIMELINE].[school] AS [school], 
+    [V_TIMELINE].[duration] AS [duration], 
+    [V_TIMELINE].[description] AS [description], 
+    [V_TIMELINE].[date] AS [date], 
+    [V_TIMELINE].[is_plan] AS [is_plan], 
+    [V_TIMELINE].[is_finish] AS [is_finish], 
+    [V_TIMELINE].[is_cancel] AS [is_cancel], 
+    [V_TIMELINE].[type_code] AS [type_code], 
+    [V_TIMELINE].[type_name] AS [type_name], 
+    [V_TIMELINE].[created_by] AS [created_by]
+    FROM [dbo].[V_TIMELINE] AS [V_TIMELINE]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CM_SKILL_CM_SKILL_GROUP" Association="Self.FK_CM_SKILL_CM_SKILL_GROUP">
+            <End Role="CM_SKILL_GROUP" EntitySet="CM_SKILL_GROUP" />
+            <End Role="CM_SKILL" EntitySet="CM_SKILL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CM_SKILL_DEFINDED_CM_SKILL" Association="Self.FK_CM_SKILL_DEFINDED_CM_SKILL">
+            <End Role="CM_SKILL" EntitySet="CM_SKILL" />
+            <End Role="CM_SKILL_DEFINDED" EntitySet="CM_SKILL_DEFINDED" />
+          </AssociationSet>
           <AssociationSet Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" Association="Self.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
             <End Role="MN_ACCOUNT_TYPE" EntitySet="MN_ACCOUNT_TYPE" />
             <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
@@ -1452,9 +1725,21 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
             <End Role="MN_TRANSFER" EntitySet="MN_TRANSFER" />
           </AssociationSet>
+          <AssociationSet Name="FK_PN_EDUCATION_PN_EDUCATION_TYPE" Association="Self.FK_PN_EDUCATION_PN_EDUCATION_TYPE">
+            <End Role="PN_EDUCATION_TYPE" EntitySet="PN_EDUCATION_TYPE" />
+            <End Role="PN_EDUCATION" EntitySet="PN_EDUCATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PN_EVENT_PN_EVENT_TYPE" Association="Self.FK_PN_EVENT_PN_EVENT_TYPE">
+            <End Role="PN_EVENT_TYPE" EntitySet="PN_EVENT_TYPE" />
+            <End Role="PN_EVENT" EntitySet="PN_EVENT" />
+          </AssociationSet>
           <AssociationSet Name="FK_PN_REPORT_PN_REPORT_KIND" Association="Self.FK_PN_REPORT_PN_REPORT_KIND">
             <End Role="PN_REPORT_KIND" EntitySet="PN_REPORT_KIND" />
             <End Role="PN_REPORT" EntitySet="PN_REPORT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PN_SKILL_CM_SKILL" Association="Self.FK_PN_SKILL_CM_SKILL">
+            <End Role="CM_SKILL" EntitySet="CM_SKILL" />
+            <End Role="PN_SKILL" EntitySet="PN_SKILL" />
           </AssociationSet>
           <AssociationSet Name="FK_PN_TARGET_PLANING_SPRINT_PN_TARGET_PLANNING" Association="Self.FK_PN_TARGET_PLANING_SPRINT_PN_TARGET_PLANNING">
             <End Role="PN_TARGET_PLANNING" EntitySet="PN_TARGET_PLANNING" />
@@ -1789,6 +2074,35 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
             <End Role="SYS_FUNCTION" EntitySet="SYS_FUNCTION" />
           </AssociationSet>
           <EntitySet Name="PN_DREAM" EntityType="TDHModel.PN_DREAM" />
+          <EntitySet Name="CM_SKILL" EntityType="TDHModel.CM_SKILL" />
+          <EntitySet Name="CM_SKILL_DEFINDED" EntityType="TDHModel.CM_SKILL_DEFINDED" />
+          <EntitySet Name="CM_SKILL_GROUP" EntityType="TDHModel.CM_SKILL_GROUP" />
+          <EntitySet Name="PN_EDUCATION" EntityType="TDHModel.PN_EDUCATION" />
+          <EntitySet Name="PN_EDUCATION_TYPE" EntityType="TDHModel.PN_EDUCATION_TYPE" />
+          <EntitySet Name="PN_EVENT" EntityType="TDHModel.PN_EVENT" />
+          <EntitySet Name="PN_EVENT_TYPE" EntityType="TDHModel.PN_EVENT_TYPE" />
+          <EntitySet Name="PN_SKILL" EntityType="TDHModel.PN_SKILL" />
+          <EntitySet Name="V_TIMELINE" EntityType="TDHModel.V_TIMELINE" />
+          <AssociationSet Name="FK_CM_SKILL_CM_SKILL_GROUP" Association="TDHModel.FK_CM_SKILL_CM_SKILL_GROUP">
+            <End Role="CM_SKILL_GROUP" EntitySet="CM_SKILL_GROUP" />
+            <End Role="CM_SKILL" EntitySet="CM_SKILL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CM_SKILL_DEFINDED_CM_SKILL" Association="TDHModel.FK_CM_SKILL_DEFINDED_CM_SKILL">
+            <End Role="CM_SKILL" EntitySet="CM_SKILL" />
+            <End Role="CM_SKILL_DEFINDED" EntitySet="CM_SKILL_DEFINDED" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PN_SKILL_CM_SKILL" Association="TDHModel.FK_PN_SKILL_CM_SKILL">
+            <End Role="CM_SKILL" EntitySet="CM_SKILL" />
+            <End Role="PN_SKILL" EntitySet="PN_SKILL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PN_EDUCATION_PN_EDUCATION_TYPE" Association="TDHModel.FK_PN_EDUCATION_PN_EDUCATION_TYPE">
+            <End Role="PN_EDUCATION_TYPE" EntitySet="PN_EDUCATION_TYPE" />
+            <End Role="PN_EDUCATION" EntitySet="PN_EDUCATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PN_EVENT_PN_EVENT_TYPE" Association="TDHModel.FK_PN_EVENT_PN_EVENT_TYPE">
+            <End Role="PN_EVENT_TYPE" EntitySet="PN_EVENT_TYPE" />
+            <End Role="PN_EVENT" EntitySet="PN_EVENT" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -3109,6 +3423,255 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="deleted_by" Type="Guid" />
           <Property Name="deleted_date" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="CM_SKILL">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="group_id" Type="Guid" Nullable="false" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CM_SKILL_GROUP" Relationship="TDHModel.FK_CM_SKILL_CM_SKILL_GROUP" FromRole="CM_SKILL" ToRole="CM_SKILL_GROUP" />
+          <NavigationProperty Name="CM_SKILL_DEFINDED" Relationship="TDHModel.FK_CM_SKILL_DEFINDED_CM_SKILL" FromRole="CM_SKILL" ToRole="CM_SKILL_DEFINDED" />
+          <NavigationProperty Name="PN_SKILL" Relationship="TDHModel.FK_PN_SKILL_CM_SKILL" FromRole="CM_SKILL" ToRole="PN_SKILL" />
+        </EntityType>
+        <EntityType Name="CM_SKILL_DEFINDED">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="skill_id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="point" Type="Int16" Nullable="false" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CM_SKILL" Relationship="TDHModel.FK_CM_SKILL_DEFINDED_CM_SKILL" FromRole="CM_SKILL_DEFINDED" ToRole="CM_SKILL" />
+        </EntityType>
+        <EntityType Name="CM_SKILL_GROUP">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CM_SKILL" Relationship="TDHModel.FK_CM_SKILL_CM_SKILL_GROUP" FromRole="CM_SKILL_GROUP" ToRole="CM_SKILL" />
+        </EntityType>
+        <EntityType Name="PN_EDUCATION">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="school" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="duration" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_plan" Type="Boolean" Nullable="false" />
+          <Property Name="is_finish" Type="Boolean" Nullable="false" />
+          <Property Name="is_cancel" Type="Boolean" Nullable="false" />
+          <Property Name="education_type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PN_EDUCATION_TYPE" Relationship="TDHModel.FK_PN_EDUCATION_PN_EDUCATION_TYPE" FromRole="PN_EDUCATION" ToRole="PN_EDUCATION_TYPE" />
+        </EntityType>
+        <EntityType Name="PN_EDUCATION_TYPE">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PN_EDUCATION" Relationship="TDHModel.FK_PN_EDUCATION_PN_EDUCATION_TYPE" FromRole="PN_EDUCATION_TYPE" ToRole="PN_EDUCATION" />
+        </EntityType>
+        <EntityType Name="PN_EVENT">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="duration" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_plan" Type="Boolean" Nullable="false" />
+          <Property Name="is_finish" Type="Boolean" Nullable="false" />
+          <Property Name="is_cancel" Type="Boolean" Nullable="false" />
+          <Property Name="event_type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PN_EVENT_TYPE" Relationship="TDHModel.FK_PN_EVENT_PN_EVENT_TYPE" FromRole="PN_EVENT" ToRole="PN_EVENT_TYPE" />
+        </EntityType>
+        <EntityType Name="PN_EVENT_TYPE">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PN_EVENT" Relationship="TDHModel.FK_PN_EVENT_PN_EVENT_TYPE" FromRole="PN_EVENT_TYPE" ToRole="PN_EVENT" />
+        </EntityType>
+        <EntityType Name="PN_SKILL">
+          <Key>
+            <PropertyRef Name="skill_id" />
+          </Key>
+          <Property Name="skill_id" Type="Guid" Nullable="false" />
+          <Property Name="level" Type="Int16" Nullable="false" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CM_SKILL" Relationship="TDHModel.FK_PN_SKILL_CM_SKILL" FromRole="PN_SKILL" ToRole="CM_SKILL" />
+        </EntityType>
+        <EntityType Name="V_TIMELINE">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="school" />
+            <PropertyRef Name="duration" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="date" />
+            <PropertyRef Name="is_plan" />
+            <PropertyRef Name="is_finish" />
+            <PropertyRef Name="is_cancel" />
+            <PropertyRef Name="type_code" />
+            <PropertyRef Name="type_name" />
+            <PropertyRef Name="created_by" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="school" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="duration" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_plan" Type="Boolean" Nullable="false" />
+          <Property Name="is_finish" Type="Boolean" Nullable="false" />
+          <Property Name="is_cancel" Type="Boolean" Nullable="false" />
+          <Property Name="type_code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="type_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CM_SKILL_CM_SKILL_GROUP">
+          <End Type="TDHModel.CM_SKILL_GROUP" Role="CM_SKILL_GROUP" Multiplicity="1" />
+          <End Type="TDHModel.CM_SKILL" Role="CM_SKILL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CM_SKILL_GROUP">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CM_SKILL">
+              <PropertyRef Name="group_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CM_SKILL_DEFINDED_CM_SKILL">
+          <End Type="TDHModel.CM_SKILL" Role="CM_SKILL" Multiplicity="1" />
+          <End Type="TDHModel.CM_SKILL_DEFINDED" Role="CM_SKILL_DEFINDED" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CM_SKILL">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="CM_SKILL_DEFINDED">
+              <PropertyRef Name="skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PN_SKILL_CM_SKILL">
+          <End Type="TDHModel.CM_SKILL" Role="CM_SKILL" Multiplicity="1" />
+          <End Type="TDHModel.PN_SKILL" Role="PN_SKILL" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CM_SKILL">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PN_SKILL">
+              <PropertyRef Name="skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PN_EDUCATION_PN_EDUCATION_TYPE">
+          <End Type="TDHModel.PN_EDUCATION_TYPE" Role="PN_EDUCATION_TYPE" Multiplicity="1" />
+          <End Type="TDHModel.PN_EDUCATION" Role="PN_EDUCATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PN_EDUCATION_TYPE">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="PN_EDUCATION">
+              <PropertyRef Name="education_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PN_EVENT_PN_EVENT_TYPE">
+          <End Type="TDHModel.PN_EVENT_TYPE" Role="PN_EVENT_TYPE" Multiplicity="1" />
+          <End Type="TDHModel.PN_EVENT" Role="PN_EVENT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PN_EVENT_TYPE">
+              <PropertyRef Name="code" />
+            </Principal>
+            <Dependent Role="PN_EVENT">
+              <PropertyRef Name="event_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4004,6 +4567,183 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
                 <ScalarProperty Name="finish_time" ColumnName="finish_time" />
                 <ScalarProperty Name="finish" ColumnName="finish" />
                 <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CM_SKILL">
+            <EntityTypeMapping TypeName="TDHModel.CM_SKILL">
+              <MappingFragment StoreEntitySet="CM_SKILL">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CM_SKILL_DEFINDED">
+            <EntityTypeMapping TypeName="TDHModel.CM_SKILL_DEFINDED">
+              <MappingFragment StoreEntitySet="CM_SKILL_DEFINDED">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="point" ColumnName="point" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="skill_id" ColumnName="skill_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CM_SKILL_GROUP">
+            <EntityTypeMapping TypeName="TDHModel.CM_SKILL_GROUP">
+              <MappingFragment StoreEntitySet="CM_SKILL_GROUP">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PN_EDUCATION">
+            <EntityTypeMapping TypeName="TDHModel.PN_EDUCATION">
+              <MappingFragment StoreEntitySet="PN_EDUCATION">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="education_type" ColumnName="education_type" />
+                <ScalarProperty Name="is_cancel" ColumnName="is_cancel" />
+                <ScalarProperty Name="is_finish" ColumnName="is_finish" />
+                <ScalarProperty Name="is_plan" ColumnName="is_plan" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="school" ColumnName="school" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PN_EDUCATION_TYPE">
+            <EntityTypeMapping TypeName="TDHModel.PN_EDUCATION_TYPE">
+              <MappingFragment StoreEntitySet="PN_EDUCATION_TYPE">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PN_EVENT">
+            <EntityTypeMapping TypeName="TDHModel.PN_EVENT">
+              <MappingFragment StoreEntitySet="PN_EVENT">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="event_type" ColumnName="event_type" />
+                <ScalarProperty Name="is_cancel" ColumnName="is_cancel" />
+                <ScalarProperty Name="is_finish" ColumnName="is_finish" />
+                <ScalarProperty Name="is_plan" ColumnName="is_plan" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PN_EVENT_TYPE">
+            <EntityTypeMapping TypeName="TDHModel.PN_EVENT_TYPE">
+              <MappingFragment StoreEntitySet="PN_EVENT_TYPE">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PN_SKILL">
+            <EntityTypeMapping TypeName="TDHModel.PN_SKILL">
+              <MappingFragment StoreEntitySet="PN_SKILL">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="level" ColumnName="level" />
+                <ScalarProperty Name="skill_id" ColumnName="skill_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_TIMELINE">
+            <EntityTypeMapping TypeName="TDHModel.V_TIMELINE">
+              <MappingFragment StoreEntitySet="V_TIMELINE">
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="type_name" ColumnName="type_name" />
+                <ScalarProperty Name="type_code" ColumnName="type_code" />
+                <ScalarProperty Name="is_cancel" ColumnName="is_cancel" />
+                <ScalarProperty Name="is_finish" ColumnName="is_finish" />
+                <ScalarProperty Name="is_plan" ColumnName="is_plan" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="school" ColumnName="school" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

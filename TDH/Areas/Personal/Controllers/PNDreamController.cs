@@ -115,6 +115,11 @@ namespace TDH.Areas.Personal.Controllers
 
                 #region " [ Main processing ] "
 
+                if (model.FinishTimeString.Length > 0)
+                {
+                    string[] tmp = model.FinishTimeString.Split('/');
+                    model.FinishTime = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
+                }
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
@@ -171,6 +176,11 @@ namespace TDH.Areas.Personal.Controllers
 
                 #region " [ Main processing ] "
 
+                if (model.FinishTimeString.Length > 0)
+                {
+                    string[] tmp = model.FinishTimeString.Split('/');
+                    model.FinishTime = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
+                }
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;

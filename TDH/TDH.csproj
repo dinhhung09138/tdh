@@ -6847,7 +6847,6 @@
     <Folder Include="Areas\Money\Models\" />
     <Folder Include="Areas\Money\Views\Shared\" />
     <Folder Include="Areas\Personal\Models\" />
-    <Folder Include="Areas\Personal\Views\Shared\" />
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="Areas\Website\Models\" />

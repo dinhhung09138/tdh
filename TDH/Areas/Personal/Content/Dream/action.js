@@ -4,11 +4,20 @@
         checkboxClass: 'icheckbox_flat-green',
         radioClass: 'iradio_flat-green'
     });
+
     $(".datePicker").datepicker({
         format: "dd/mm/yyyy"
     }).on('changeDate', function (ev) {
         $('.datePicker').datepicker('hide');
         });
+
+    new AutoNumeric('#Ordering', {
+        minimumValue: '0',
+        maximumValue: '99',
+        decimalPlaces: 0,
+        selectNumberOnly: true,
+        allowDecimalPadding: false
+    });
 
     $(document).on('submit', "#form", function (e) {
         e.preventDefault();

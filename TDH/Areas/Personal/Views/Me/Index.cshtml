@@ -1,4 +1,4 @@
-﻿
+﻿@using TDH.Model.Personal;
 @{
     ViewBag.Title = ViewBag.userName;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
@@ -178,71 +178,78 @@
                                 </div>
                             </div>
                             <div class="tab-pane" id="timeline">
+                                @{ 
+                                    List<TimelineModel> _lTimeline = ViewBag.timeline as List<TimelineModel>;
+                                    var _lGroupMonth = _lTimeline.Select(m => m.MonthYear).Distinct();
+
+                                }
                                 <ul class="timeline timeline-inverse">
-                                    <li class="time-label">
-                                        <span class="bg-danger">
-                                            10 Feb. 2014
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-envelope bg-primary"></i>
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                                            <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-                                            <div class="timeline-body">
-                                                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                                                weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                                                jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                                                quora plaxo ideeli hulu weebly balihoo...
-                                            </div>
-                                            <div class="timeline-footer">
-                                                <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                                                <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-user bg-info"></i>
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
-                                            <h3 class="timeline-header no-border">
-                                                <a href="#">Sarah Young</a> accepted your friend request
-                                            </h3>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-comments bg-warning"></i>
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 27 mins ago</span>
-                                            <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-                                            <div class="timeline-body">
-                                                Take me to your leader!
-                                                Switzerland is small and neutral!
-                                                We are more like Germany, ambitious and misunderstood!
-                                            </div>
-                                            <div class="timeline-footer">
-                                                <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="time-label">
-                                        <span class="bg-success">
-                                            3 Jan. 2014
-                                        </span>
-                                    </li>
-                                    <li>
-                                        <i class="fa fa-camera bg-purple"></i>
-                                        <div class="timeline-item">
-                                            <span class="time"><i class="fa fa-clock-o"></i> 2 days ago</span>
-                                            <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-                                            <div class="timeline-body">
-                                                <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                                <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                                <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                                <img src="http://placehold.it/150x100" alt="..." class="margin">
-                                            </div>
-                                        </div>
-                                    </li>
+                                    @{
+                                        foreach (var item in _lGroupMonth)
+                                        {
+                                            var _lItem = _lTimeline.Where(m => m.MonthYear == item).ToList();
+                                            <li class="time-label">
+                                                <span class="bg-danger">
+                                                    @_lItem[0].Date.ToString("MM/yyyy")
+                                                </span>
+                                            </li>
+                                            foreach (var tl in _lItem)
+                                            {
+                                                if (tl.TypeCode.Contains("EDU_"))
+                                                {
+                                                    <li>
+                                                        <i class="fa fa-graduation-cap bg-warning"></i>
+                                                        <div class="timeline-item">
+                                                            <span class="time"><i class="fa fa-clock-o"></i> @tl.Duration</span>
+                                                            <h3 class="timeline-header"><a href="javascript:;">@tl.Name</a> tại: @tl.School</h3>
+                                                            <div class="timeline-body">
+                                                                <p style="font-weight: bold; color: red;"><span>Hình thức đào tạo: </span>@tl.TypeName</p>
+                                                                <p style="font-weight: bold;">Nội dung</p>
+                                                                @tl.Description
+                                                            </div>
+                                                            <div class="timeline-footer">
+                                                                <a href="javascript:;" class="btn btn-warning btn-flat btn-sm">Nội dung khóa học</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    continue;
+                                                }
+                                                else
+                                                {
+                                                    <li>
+
+                                                        @{
+                                                            switch (tl.TypeCode)
+                                                            {
+                                                                case "EVENT_TVL":
+                                                                    <i class="fa fa-motorcycle bg-info"></i>
+                                                                    break;
+                                                                case "EVENT_BTH":
+                                                                    <i class="fa fa-birthday-cake bg-info" style="background-color: #673597;"></i>
+                                                                    break;
+                                                                case "EVENT_ANY":
+                                                                    <i class="fa fa-heart bg-info" style="background-color: #d20c97;"></i>
+                                                                    break;
+                                                                default:
+                                                                    <i class="fa fa-bell bg-info"></i>
+                                                                    break;
+                                                            }
+                                                        }
+                                                        <div class="timeline-item">
+                                                            <span class="time"><i class="fa fa-clock-o"></i> @tl.Duration</span>
+                                                            <h3 class="timeline-header"><a href="javascript:;">@tl.Name</a></h3>
+                                                            <div class="timeline-body">
+                                                                @tl.Description
+                                                            </div>
+                                                            <div class="timeline-footer">
+                                                                <a href="javascript:;" class="btn btn-warning btn-flat btn-sm">Chi tiết hành trình</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                    }
                                     <li>
                                         <i class="fa fa-clock-o bg-gray"></i>
                                     </li>

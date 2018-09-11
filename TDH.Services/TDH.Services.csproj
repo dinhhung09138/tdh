@@ -72,6 +72,7 @@
     <Compile Include="Personal\EventService.cs" />
     <Compile Include="Personal\EventTypeService.cs" />
     <Compile Include="Personal\IdeaService.cs" />
+    <Compile Include="Personal\TimelineService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\ErrorLogService.cs" />
     <Compile Include="System\RoleService.cs" />

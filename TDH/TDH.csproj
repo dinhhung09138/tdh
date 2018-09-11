@@ -252,6 +252,7 @@
     <Compile Include="Areas\Personal\Controllers\MeController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNDreamController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNEducationController.cs" />
+    <Compile Include="Areas\Personal\Controllers\PNEventController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNIdeaController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
     <Compile Include="Areas\Personal\Utils\Message.cs" />

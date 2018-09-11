@@ -1,14 +1,34 @@
-﻿
+﻿@using TDH.Areas.Common.Utils;
+@using TDH.Model.Common;
+@model IEnumerable<SkillGroupModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Message.Skill.INDEX;
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+    List<SkillModel> skills = ViewBag.skills as List<SkillModel>;
+}
+@section header{
+    <style>
+        .ml-5 {
+            margin-left: 5px !important;
+        }
+        .bg-header {
+            background-color: #a77328 !important;
+        }
+    </style>
 }
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "common" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Message.Flow.INDEX</h3>
+        <h3 class="card-title">@Message.Skill.INDEX</h3>
         <div class="card-tools pull-right">
-
+            @{
+                if (ViewBag.Add == true)
+                {
+                    <a class="btn btn-box-tool" title="@Message.Skill.CREATE" onclick="addSkill();">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                }
+            }
         </div>
     </div>
     <div class="card-body">
@@ -16,386 +36,301 @@
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Folders</h3>
+                        <h3 class="card-title">Nhóm</h3>
                         <div class="card-tools">
-                            <button type="button" class="btn btn-tool">
-                                <i class="fa fa-plus"></i>
-                            </button>
+                            @{
+                                if (ViewBag.Add == true)
+                                {
+                                    <button type="button" class="btn btn-tool" onclick="addGroup();">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                }
+                            }
                             <button type="button" class="btn btn-tool" data-widget="collapse">
                                 <i class="fa fa-minus"></i>
                             </button>
                         </div>
                     </div>
                     <div class="card-body p-0">
-                        <ul class="nav nav-pills flex-column">
-                            <li class="nav-item">
-                                <a href="mailbox.html" class="nav-link">
-                                    <i class="fa fa-file-text-o"></i> Inbox
-                                    <span class="badge bg-warning float-right">12</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="mailbox.html" class="nav-link">
-                                    <i class="fa fa-file-text-o"></i> Inbox
-                                    <span class="badge bg-warning float-right">12</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="mailbox.html" class="nav-link">
-                                    <i class="fa fa-file-text-o"></i> Inbox
-                                    <span class="badge bg-warning float-right">12</span>
-                                </a>
-                            </li>
+                        <input type="hidden" id="selectedGroupID" value="@ViewBag.groupID" />
+                        <ul class="nav nav-pills flex-column mt-2" id="list_group_display">
+                            @{
+                                int _count = 0;
+                                foreach (var item in Model)
+                                {
+                                    <li class="nav-item group_item">
+                                        <a href="javascript:;" class="nav-link @(_count == 0 ? "active" : "") " data-id="@item.ID" data-name="@item.Name">
+                                            <i class="fa fa-file-text-o"></i> @item.Name
+                                            <i class="fa fa-trash-o float-right ml-5" onclick="confirmDeleteGroup('@item.ID');"></i>
+                                            <i class="fa fa-pencil-square-o float-right" onclick="editGroup('@item.ID');"></i>
+                                            <span class="badge bg-warning">@item.CountSkill</span>
+                                        </a>
+                                    </li>
+                                    _count++;
+                                }
+                            }
                         </ul>
                     </div>
-                    <!-- /.card-body -->
                 </div>
             </div>
             <div class="col-md-9">
-                <div class="row">
-                    <div class="col-md-6 col-xs-12">
-                        <div class="card direct-chat direct-chat-primary">
-                            <div class="card-header">
-                                <h3 class="card-title">Direct Chat</h3>
-                                <div class="card-tools">
-                                    <span data-toggle="tooltip" title="3 New Messages" class="badge badge-primary">3</span>
-                                    <button type="button" class="btn btn-tool" data-widget="collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-toggle="tooltip" title="Contacts"
-                                            data-widget="chat-pane-toggle">
-                                        <i class="fa fa-comments"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-widget="remove">
-                                        <i class="fa fa-times"></i>
-                                    </button>
+                <div class="row" id="list_skill_display">
+                    @{
+                        foreach (var item in skills)
+                        {
+                            <div class="col-md-6 col-xs-12">
+                                <div class="card">
+                                    <div class="card-header bg-header">
+                                        <h3 class="card-title">@item.Name</h3>
+                                        <div class="card-tools">
+                                            <span data-toggle="tooltip" title="@item.Defined.Count()" class="badge badge-primary">@item.Defined.Count()</span>
+                                            <button type="button" class="btn btn-tool" onclick="addDefined('@item.ID','@item.Name');">
+                                                <i class="fa fa-cog"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" onclick="editSkill('@item.ID');">
+                                                <i class="fa fa-pencil-square-o"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-widget="collapse">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" onclick="confirmDeleteSkill('@item.ID');">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body direct-chat-messages">
+                                        <ul class="todo-list">
+                                            @{
+                                                foreach (var d in item.Defined)
+                                                {
+                                                    <li>
+                                                        <span class="text">@d.Name</span>
+                                                        <div class="tools">
+                                                            <i class="fa fa-edit" onclick="editDefined('@d.ID', '@item.ID','@item.Name');"></i>
+                                                            <i class="fa fa-trash-o" onclick="confirmDeleteDefined('@d.ID');"></i>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <!-- Conversations are loaded here -->
-                                <div class="direct-chat-messages">
-                                    <!-- Message. Default to the left -->
-                                    <div class="direct-chat-msg">
-                                        <div class="direct-chat-info clearfix">
-                                            <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                            <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
-                                        </div>
-                                        <!-- /.direct-chat-info -->
-                                        <img class="direct-chat-img" src="/Areas/Administrator/Content/dist/img/user1-128x128.jpg" alt="message user image">
-                                        <!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">
-                                            Is this template really for free? That's unbelievable!
-                                        </div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
-                                    <!-- Message to the right -->
-                                    <div class="direct-chat-msg right">
-                                        <div class="direct-chat-info clearfix">
-                                            <span class="direct-chat-name float-right">Sarah Bullock</span>
-                                            <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
-                                        </div>
-                                        <!-- /.direct-chat-info -->
-                                        <img class="direct-chat-img" src="/Areas/Administrator/Content/dist/img/user3-128x128.jpg" alt="message user image">
-                                        <!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">
-                                            You better believe it!
-                                        </div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
-                                    <!-- Message. Default to the left -->
-                                    <div class="direct-chat-msg">
-                                        <div class="direct-chat-info clearfix">
-                                            <span class="direct-chat-name float-left">Alexander Pierce</span>
-                                            <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
-                                        </div>
-                                        <!-- /.direct-chat-info -->
-                                        <img class="direct-chat-img" src="/Areas/Administrator/Content/dist/img/user1-128x128.jpg" alt="message user image">
-                                        <!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">
-                                            Working with AdminLTE on a great new app! Wanna join?
-                                        </div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
-                                    <!-- Message to the right -->
-                                    <div class="direct-chat-msg right">
-                                        <div class="direct-chat-info clearfix">
-                                            <span class="direct-chat-name float-right">Sarah Bullock</span>
-                                            <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
-                                        </div>
-                                        <!-- /.direct-chat-info -->
-                                        <img class="direct-chat-img" src="/Areas/Administrator/Content/dist/img/user3-128x128.jpg" alt="message user image">
-                                        <!-- /.direct-chat-img -->
-                                        <div class="direct-chat-text">
-                                            I would love to.
-                                        </div>
-                                        <!-- /.direct-chat-text -->
-                                    </div>
-                                    <!-- /.direct-chat-msg -->
-                                </div>
-                                <!--/.direct-chat-messages-->
-                                <!-- Contacts are loaded here -->
-                                <div class="direct-chat-contacts">
-                                    <ul class="contacts-list">
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user1-128x128.jpg">
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Count Dracula
-                                                        <small class="contacts-list-date float-right">2/28/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">How have you been? I was...</span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user7-128x128.jpg">
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Sarah Doe
-                                                        <small class="contacts-list-date float-right">2/23/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">I will be waiting for...</span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user3-128x128.jpg">
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Nadia Jolie
-                                                        <small class="contacts-list-date float-right">2/20/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">I'll call you back at...</span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user5-128x128.jpg">
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Nora S. Vans
-                                                        <small class="contacts-list-date float-right">2/10/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">Where is your new...</span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user6-128x128.jpg">
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        John K.
-                                                        <small class="contacts-list-date float-right">1/27/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">Can I take a look at...</span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                        <li>
-                                            <a href="#">
-                                                <img class="contacts-list-img" src="dist/img/user8-128x128.jpg">
-                                                <div class="contacts-list-info">
-                                                    <span class="contacts-list-name">
-                                                        Kenneth M.
-                                                        <small class="contacts-list-date float-right">1/4/2015</small>
-                                                    </span>
-                                                    <span class="contacts-list-msg">Never mind I found...</span>
-                                                </div>
-                                                <!-- /.contacts-list-info -->
-                                            </a>
-                                        </li>
-                                        <!-- End Contact Item -->
-                                    </ul>
-                                    <!-- /.contacts-list -->
-                                </div>
-                                <!-- /.direct-chat-pane -->
-                            </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer">
-                                <form action="#" method="post">
-                                    <div class="input-group">
-                                        <input type="text" name="message" placeholder="Type Message ..." class="form-control">
-                                        <span class="input-group-append">
-                                            <button type="button" class="btn btn-primary">Send</button>
-                                        </span>
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- /.card-footer-->
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Direct Chat</h3>
-                                <div class="card-tools">
-                                    <span data-toggle="tooltip" title="3 New Messages" class="badge badge-primary">3</span>
-                                    <button type="button" class="btn btn-tool">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-widget="collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body direct-chat-messages">
-                                <ul class="todo-list">
-                                    <li>
-                                        <span class="text">Design a nice theme</span>
-                                        <!-- Emphasis label -->
-                                        <small class="badge badge-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
-                                        <!-- General tools such as edit or delete-->
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="text">Make the theme responsive</span>
-                                        <small class="badge badge-info"><i class="fa fa-clock-o"></i> 4 hours</small>
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="text">Let theme shine like a star</span>
-                                        <small class="badge badge-warning"><i class="fa fa-clock-o"></i> 1 day</small>
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="text">Let theme shine like a star</span>
-                                        <small class="badge badge-success"><i class="fa fa-clock-o"></i> 3 days</small>
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="text">Check your messages and notifications</span>
-                                        <small class="badge badge-primary"><i class="fa fa-clock-o"></i> 1 week</small>
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="text">Let theme shine like a star</span>
-                                        <small class="badge badge-secondary"><i class="fa fa-clock-o"></i> 1 month</small>
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Direct Chat</h3>
-                                <div class="card-tools">
-                                    <span data-toggle="tooltip" title="3 New Messages" class="badge badge-primary">3</span>
-                                    <button type="button" class="btn btn-tool">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-widget="collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body direct-chat-messages">
-                                <ul class="todo-list">
-                                    <li>
-                                        <span class="text">Design a nice theme</span>
-                                        <!-- Emphasis label -->
-                                        <small class="badge badge-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
-                                        <!-- General tools such as edit or delete-->
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="text">Make the theme responsive</span>
-                                        <small class="badge badge-info"><i class="fa fa-clock-o"></i> 4 hours</small>
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="text">Let theme shine like a star</span>
-                                        <small class="badge badge-warning"><i class="fa fa-clock-o"></i> 1 day</small>
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="text">Let theme shine like a star</span>
-                                        <small class="badge badge-success"><i class="fa fa-clock-o"></i> 3 days</small>
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="text">Check your messages and notifications</span>
-                                        <small class="badge badge-primary"><i class="fa fa-clock-o"></i> 1 week</small>
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="text">Let theme shine like a star</span>
-                                        <small class="badge badge-secondary"><i class="fa fa-clock-o"></i> 1 month</small>
-                                        <div class="tools">
-                                            <i class="fa fa-edit"></i>
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                            </div>
-                        </div>
-                    </div>
+                        }
+                    }
                 </div>
-                
+
             </div>
         </div>
     </div>
 </div>
+<div class="modal fade" id="groupModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h3 class="card-title">Nhóm kỹ năng</h3>
+                        <div class="card-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="frmGroup" class="form">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Tên nhóm
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="hidden" id="hdGroupID" value="" />
+                                    <input id="txtGroupName" type="text" class="form-control" maxlength="100" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="1" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Thứ tự
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtGroupOrdering" type="text" class="form-control" maxlength="2" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Mô tả
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtGroupNotes" type="text" class="form-control" maxlength="255" data-parsley-maxlength="255" data-parsley-maxlength-message="Nội dung tối đa 255 ký tự" tabindex="3" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="4">Hủy</button>
+                <button type="button" id="btnSaveGroup" class="btn btn-primary" onclick="saveGroup();" tabindex="5">Lưu</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" role="dialog" data-backdrop="static" data-keyboard="false" style="z-index: 1040; display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top: 229px;">
+            <div class="modal-header">
+                <h4 class="modal-title">Xác nhận</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h5>Bạn có muốn xóa dòng dữ liệu đang chọn</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="deleteItem();">Đồng ý</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="skillModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h3 class="card-title">Kỹ năng</h3>
+                        <div class="card-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="frmSkill" class="form">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Nhóm
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label id="lblSkillGroupName"></label>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Tên kỹ năng
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="hidden" id="hdSkillID" value="" />
+                                    <input id="txtSkillName" type="text" class="form-control" maxlength="200" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="1" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Thứ tự
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtSkillOrdering" type="text" class="form-control" maxlength="2" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Mô tả
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtSkillNotes" type="text" class="form-control" maxlength="255" data-parsley-maxlength="255" data-parsley-maxlength-message="Nội dung tối đa 255 ký tự" tabindex="3" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="4">Hủy</button>
+                <button type="button" id="btnSaveSkill" class="btn btn-primary" onclick="saveSkill();" tabindex="5">Lưu</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="skillDefinedModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h3 class="card-title">Tiêu chí đánh giá</h3>
+                        <div class="card-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="frmDefined" class="form">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Kỹ năng
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label id="lblSkillName"></label>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Tiêu chí
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="hidden" id="hdDefinedID" value="" />
+                                    <input id="txtDefinedName" type="text" class="form-control" maxlength="200" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="1" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Mô tả
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtDefinedDescription" type="text" class="form-control" maxlength="400" data-parsley-maxlength="400" data-parsley-maxlength-message="Nội dung tối đa 400 ký tự" tabindex="2" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Trọng số
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtDefinedPoint" type="text" class="form-control" value="100" maxlength="3" readonly tabindex="3" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="4">Hủy</button>
+                <button type="button" id="btnSaveSkillDefined" class="btn btn-primary" onclick="saveDefined();" tabindex="5">Lưu</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/autoNumeric/autoNumeric.min.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/parsleyjs/dist/parsley.min.js"></script>
+    <script src="~/Areas/Common/Content/Skill/index.js"></script>
+}

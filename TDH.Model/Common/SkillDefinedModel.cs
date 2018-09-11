@@ -9,9 +9,19 @@ namespace TDH.Model.Common
     public class SkillDefinedModel : Utils.Database.BaseModel
     {
         /// <summary>
+        /// The identifier
+        /// </summary>
+        public Guid ID { get; set; }
+
+        /// <summary>
         /// The skill identifier
         /// </summary>
         public Guid SkillID { get; set; }
+
+        /// <summary>
+        /// Skill name
+        /// </summary>
+        public string SkillName { get; set; } = "";
 
         /// <summary>
         /// Name
@@ -30,7 +40,7 @@ namespace TDH.Model.Common
         /// Point
         /// </summary>
         [Required(ErrorMessage = "Nội dung không được rỗng")]
-        public short Point { get; set; } = 0;
+        public short Point { get; set; } = 100;
 
         /// <summary>
         /// Ordering

@@ -9,39 +9,40 @@ using Utils;
 
 namespace TDH.Services.Common
 {
-    public class SkillService
+    public class SkillDefinedService
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/Common/SkillService.cs";
+        private readonly string FILE_NAME = "Services/Common/SkillDefinedService.cs";
 
         #endregion
 
         /// <summary>
         /// Get item by id and owner
         /// </summary>
-        /// <param name="model">skill model</param>
+        /// <param name="model">skill defined model</param>
         /// <returns>MoneyAccountModel. Throw exception if not found or get some error</returns>
-        public SkillModel GetItemByID(SkillModel model)
+        public SkillDefinedModel GetItemByID(SkillDefinedModel model)
         {
             try
             {
                 using (var _context = new TDHEntities())
                 {
-                    CM_SKILL _md = _context.CM_SKILL.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
+                    CM_SKILL_DEFINDED _md = _context.CM_SKILL_DEFINDED.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    var _return = new SkillModel()
+                    var _return = new SkillDefinedModel()
                     {
                         ID = _md.id,
                         Name = _md.name,
                         Ordering = _md.ordering,
-                        Notes = _md.notes
+                        Description = _md.description,
+                        Point = _md.point
                     };
                     return _return;
                 }
@@ -55,35 +56,29 @@ namespace TDH.Services.Common
         }
 
         /// <summary>
-        /// Get all item without deleted by group id
+        /// Get all item without deleted by skill id
         /// </summary>
-        /// <param name="groupID">The group identifier</param>
+        /// <param name="skillID">The skill identifier</param>
         /// <param name="userID">The user identifier</param>
         /// <returns></returns>
-        public List<SkillModel> GetAll(Guid groupID, Guid userID)
+        public List<SkillDefinedModel> GetAll(Guid skillID, Guid userID)
         {
             try
             {
-                List<SkillModel> _return = new List<SkillModel>();
+                List<SkillDefinedModel> _return = new List<SkillDefinedModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in _context.CM_SKILL
-                                 where !m.deleted && m.publish && m.created_by == userID && m.group_id == groupID
-                                 orderby m.ordering descending
+                    var _list = (from m in _context.CM_SKILL_DEFINDED
+                                 where !m.deleted && m.publish && m.created_by == userID && m.skill_id == skillID
+                                 orderby m.created_date ascending
                                  select new
                                  {
                                      m.id,
                                      m.name,
-                                     defined = (_context.CM_SKILL_DEFINDED.Where(s => s.skill_id == m.id && !s.deleted && s.created_by == userID).Select(s => new { s.id, s.name, s.skill_id }))
                                  }).ToList();
                     foreach (var item in _list)
                     {
-                        SkillModel md = new SkillModel() { ID = item.id, Name = item.name };
-                        foreach (var d in item.defined)
-                        {
-                            md.Defined.Add(new SkillDefinedModel() { ID = d.id, Name = d.name });
-                        }
-                        _return.Add(md);
+                        _return.Add(new SkillDefinedModel() { ID = item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -99,45 +94,45 @@ namespace TDH.Services.Common
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model">Skill model</param>
+        /// <param name="model">Skill defined model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Save(SkillModel model)
+        public ResponseStatusCodeHelper Save(SkillDefinedModel model)
         {
             try
             {
                 using (var _context = new TDHEntities())
                 {
-                    CM_SKILL _md = new CM_SKILL();
+                    CM_SKILL_DEFINDED _md = new CM_SKILL_DEFINDED();
                     if (model.Insert)
                     {
                         _md.id = Guid.NewGuid();
                     }
                     else
                     {
-                        _md = _context.CM_SKILL.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
+                        _md = _context.CM_SKILL_DEFINDED.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                         if (_md == null)
                         {
                             throw new FieldAccessException();
                         }
                     }
-                    _md.group_id = model.GroupID;
+                    _md.skill_id = model.SkillID;
                     _md.name = model.Name;
                     _md.ordering = model.Ordering;
-                    _md.notes = model.Notes;
+                    _md.description = model.Description;
                     _md.publish = true;
                     //Create or edit, only change the name and type
                     if (model.Insert)
                     {
                         _md.created_by = model.CreateBy;
                         _md.created_date = DateTime.Now;
-                        _context.CM_SKILL.Add(_md);
+                        _context.CM_SKILL_DEFINDED.Add(_md);
                         _context.Entry(_md).State = EntityState.Added;
                     }
                     else
                     {
                         _md.updated_by = model.UpdateBy;
                         _md.updated_date = DateTime.Now;
-                        _context.CM_SKILL.Attach(_md);
+                        _context.CM_SKILL_DEFINDED.Attach(_md);
                         _context.Entry(_md).State = EntityState.Modified;
                     }
                     _context.SaveChanges();
@@ -163,9 +158,9 @@ namespace TDH.Services.Common
         /// <summary>
         /// Delete
         /// </summary>
-        /// <param name="model">Skill model</param>
+        /// <param name="model">Skill defined model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Delete(SkillModel model)
+        public ResponseStatusCodeHelper Delete(SkillDefinedModel model)
         {
             try
             {
@@ -175,22 +170,14 @@ namespace TDH.Services.Common
                     {
                         try
                         {
-                            CM_SKILL _md = _context.CM_SKILL.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
+                            CM_SKILL_DEFINDED _md = _context.CM_SKILL_DEFINDED.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                             if (_md == null)
                             {
                                 throw new FieldAccessException();
                             }
-                            _md.deleted = true;
-                            _md.deleted_by = model.DeleteBy;
-                            _md.deleted_date = DateTime.Now;
-                            _context.CM_SKILL.Attach(_md);
-                            _context.Entry(_md).State = EntityState.Modified;
-
-                            var _lPerson = _context.PN_SKILL.Where(m => m.skill_id == _md.id).ToList();
-                            if (_lPerson.Count > 0)
-                            {
-                                _context.PN_SKILL.RemoveRange(_lPerson);
-                            }
+                           
+                            _context.CM_SKILL_DEFINDED.Remove(_md);
+                            _context.Entry(_md).State = EntityState.Deleted;
 
                             _context.SaveChanges();
                             trans.Commit();
@@ -213,39 +200,6 @@ namespace TDH.Services.Common
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
-        }
-
-        /// <summary>
-        /// Check Delete
-        /// </summary>
-        /// <param name="model">Skill model</param>
-        /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper CheckDelete(SkillModel model)
-        {
-            try
-            {
-                using (var _context = new TDHEntities())
-                {
-                    CM_SKILL _md = _context.CM_SKILL.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
-                    if (_md == null)
-                    {
-                        throw new FieldAccessException();
-                    }
-                    var _skills = _context.PN_SKILL.FirstOrDefault(m => m.skill_id == model.ID && !m.deleted);
-                    if (_skills != null)
-                    {
-                        Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
-                        return ResponseStatusCodeHelper.NG;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "CheckDelete", model.CreateBy, ex);
-                throw new ApplicationException();
-            }
-            return ResponseStatusCodeHelper.OK;
         }
 
     }

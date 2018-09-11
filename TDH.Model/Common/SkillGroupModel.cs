@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TDH.Model.Common
@@ -31,6 +32,16 @@ namespace TDH.Model.Common
         /// </summary>
         [Required(ErrorMessage = "Nội dung không được rỗng")]
         public short Ordering { get; set; }
+
+        /// <summary>
+        /// Number of skills
+        /// </summary>
+        public int CountSkill { get; set; } = 0;
+
+        /// <summary>
+        /// List skill
+        /// </summary>
+        public List<SkillModel> Skills { get; set; } = new List<SkillModel>();
 
     }
 }

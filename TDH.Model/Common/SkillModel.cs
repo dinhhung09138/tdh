@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TDH.Model.Common
@@ -41,6 +42,16 @@ namespace TDH.Model.Common
         /// </summary>
         [Required(ErrorMessage = "Nội dung không được rỗng")]
         public short Ordering { get; set; }
+
+        /// <summary>
+        /// The number of defiend
+        /// </summary>
+        public int CountDefiend { get; set; } = 0;
+
+        /// <summary>
+        /// List of skill defined
+        /// </summary>
+        public List<SkillDefinedModel> Defined { get; set; } = new List<SkillDefinedModel>();
 
     }
 }

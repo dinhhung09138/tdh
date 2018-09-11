@@ -80,6 +80,8 @@
     <Compile Include="PersonalWorking\CheckListItemDetailModel.cs" />
     <Compile Include="PersonalWorking\CheckListItemModel.cs" />
     <Compile Include="Personal\DreamModel.cs" />
+    <Compile Include="Personal\EducationModel.cs" />
+    <Compile Include="Personal\EducationTypeModel.cs" />
     <Compile Include="Personal\IdeaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SideBarViewModel.cs" />

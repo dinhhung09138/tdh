@@ -66,6 +66,8 @@
     <Compile Include="PersonalWorking\CheckListItemDetailService.cs" />
     <Compile Include="PersonalWorking\CheckListItemService.cs" />
     <Compile Include="Personal\DreamService.cs" />
+    <Compile Include="Personal\EducationService.cs" />
+    <Compile Include="Personal\EducationTypeService.cs" />
     <Compile Include="Personal\IdeaService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\ErrorLogService.cs" />

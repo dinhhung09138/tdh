@@ -446,6 +446,30 @@ namespace TDH.Common
                                 default:
                                     return "";
                             }
+                        case "pneducation":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "delete":
+                                    return "personal_education";
+                                default:
+                                    return "";
+                            }
+                        case "pnevent":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "delete":
+                                    return "personal_event";
+                                default:
+                                    return "";
+                            }
                         default:
                             return "";
                     }
@@ -456,6 +480,22 @@ namespace TDH.Common
                             switch (actionName)
                             {
                                 case "index":
+                                case "getgroup":
+                                case "getskillbygroup":
+                                case "getskillitem":
+                                case "getskilldefineditem":
+                                case "getgroupitem":
+                                case "createskill":
+                                case "creategroup":
+                                case "createskilldefined":
+                                case "editskill":
+                                case "editgroup":
+                                case "editskilldefined":
+                                case "checkdeletegroup":
+                                case "deletegroup":
+                                case "checkdeleteskill":
+                                case "deleteskill":
+                                case "deleteskilldefined":
                                     return "common_skill";
                                 default:
                                     return "";
@@ -809,6 +849,36 @@ namespace TDH.Common
                                 default:
                                     return ActionType.None;
                             }
+                        case "pneducation":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "pnevent":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
                         default:
                             return ActionType.None;
                     }
@@ -819,14 +889,25 @@ namespace TDH.Common
                             switch (actionName)
                             {
                                 case "index":
+                                case "getgroup":
+                                case "getgroupitem":
+                                case "getskilldefineditem":
+                                case "getskillbygroup":
+                                case "getskillitem":
                                     return ActionType.View;
-                                case "create":
+                                case "createskill":
+                                case "createskilldefined":
+                                case "creategroup":
                                     return ActionType.Create;
-                                case "edit":
-                                case "publish":
+                                case "editskill":
+                                case "editgroup":
+                                case "editskilldefined":
                                     return ActionType.Edit;
-                                case "checkdelete":
-                                case "delete":
+                                case "checkdeletegroup":
+                                case "deletegroup":
+                                case "checkdeleteskill":
+                                case "deleteskill":
+                                case "deleteskilldefined":
                                     return ActionType.Delete;
                                 default:
                                     return ActionType.None;

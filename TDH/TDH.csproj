@@ -251,6 +251,7 @@
     <Compile Include="Areas\Money\Utils\Message.cs" />
     <Compile Include="Areas\Personal\Controllers\MeController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNDreamController.cs" />
+    <Compile Include="Areas\Personal\Controllers\PNEducationController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNIdeaController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
     <Compile Include="Areas\Personal\Utils\Message.cs" />
@@ -6155,6 +6156,10 @@
     <Content Include="Areas\Money\Content\Type\index.js" />
     <Content Include="Areas\Personal\Content\Dream\action.js" />
     <Content Include="Areas\Personal\Content\Dream\index.js" />
+    <Content Include="Areas\Personal\Content\Education\action.js" />
+    <Content Include="Areas\Personal\Content\Education\index.js" />
+    <Content Include="Areas\Personal\Content\Event\action.js" />
+    <Content Include="Areas\Personal\Content\Event\index.js" />
     <Content Include="Areas\Personal\Content\Idea\action.js" />
     <Content Include="Areas\Personal\Content\Idea\index.js" />
     <Content Include="Areas\System\Content\Log\index.js" />
@@ -6796,6 +6801,14 @@
     <Content Include="Areas\Common\Views\web.config" />
     <Content Include="Areas\Common\Views\CMSkill\Index.cshtml" />
     <Content Include="Areas\Common\Views\CMSkill\Home.cshtml" />
+    <Content Include="Areas\Personal\Views\PNEducation\Index.cshtml" />
+    <Content Include="Areas\Personal\Views\PNEducation\Create.cshtml" />
+    <Content Include="Areas\Personal\Views\PNEducation\Edit.cshtml" />
+    <Content Include="Areas\Personal\Views\PNEducation\_Form.cshtml" />
+    <Content Include="Areas\Personal\Views\PNEvent\Index.cshtml" />
+    <Content Include="Areas\Personal\Views\PNEvent\Create.cshtml" />
+    <Content Include="Areas\Personal\Views\PNEvent\Edit.cshtml" />
+    <Content Include="Areas\Personal\Views\PNEvent\_Form.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

@@ -27,5 +27,11 @@ namespace TDH.Areas.Personal.Utils
             public static readonly string CREATE = "Thêm sự kiện";
             public static readonly string EDIT = "Cập nhật thông tin sự kiện";
         }
+        public static class Cetificate
+        {
+            public static readonly string LIST = "Chứng chỉ đào tạo";
+            public static readonly string CREATE = "Thêm chứng chỉ đào tạo";
+            public static readonly string EDIT = "Cập nhật chứng chỉ đào tạo";
+        }
     }
 }

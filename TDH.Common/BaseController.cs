@@ -470,6 +470,30 @@ namespace TDH.Common
                                 default:
                                     return "";
                             }
+                        case "pncetificate":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "delete":
+                                    return "personal_cetificate";
+                                default:
+                                    return "";
+                            }
+                        case "pnskill":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "create":
+                                case "edit":
+                                case "publish":
+                                case "delete":
+                                    return "personal_skill";
+                                default:
+                                    return "";
+                            }
                         default:
                             return "";
                     }
@@ -865,6 +889,36 @@ namespace TDH.Common
                                     return ActionType.None;
                             }
                         case "pnevent":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "pncetificate":
+                            switch (actionName)
+                            {
+                                case "index":
+                                    return ActionType.View;
+                                case "create":
+                                    return ActionType.Create;
+                                case "edit":
+                                case "publish":
+                                    return ActionType.Edit;
+                                case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "pnskill":
                             switch (actionName)
                             {
                                 case "index":

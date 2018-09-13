@@ -1,0 +1,53 @@
+﻿@model TDH.Model.Personal.CetificateModel
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.Insert)
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Tên chứng chỉ <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @maxlength = 100, @required = true, @focus = true, @tabindex = "1" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Trường <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.School, new { @class = "form-control", @maxlength = 100, @required = true, @tabindex = "2" })
+        @Html.ValidationMessageFor(m => m.School)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Thời gian học <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Time, new { @class = "form-control", @maxlength = 100, @required = true, @tabindex = "3" })
+        @Html.ValidationMessageFor(m => m.Time)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Thứ tự <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Ordering, new { @class = "form-control", @maxlength = 2, @required = true, @tabindex = "4" })
+        @Html.ValidationMessageFor(m => m.Ordering)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (ViewBag.Add == true || ViewBag.Edit == true)
+            {
+                <a href="/personal/pncetificate/index" class="btn btn-default" tabindex="5">Quay lại</a>
+                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="6">Lưu</button>
+            }
+        }
+    </div>
+</div>

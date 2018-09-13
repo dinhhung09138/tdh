@@ -250,10 +250,12 @@
     <Compile Include="Areas\Money\MoneyAreaRegistration.cs" />
     <Compile Include="Areas\Money\Utils\Message.cs" />
     <Compile Include="Areas\Personal\Controllers\MeController.cs" />
+    <Compile Include="Areas\Personal\Controllers\PNCetificateController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNDreamController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNEducationController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNEventController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNIdeaController.cs" />
+    <Compile Include="Areas\Personal\Controllers\PNSkillController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
     <Compile Include="Areas\Personal\Utils\Message.cs" />
     <Compile Include="Areas\System\Controllers\STErrorLogController.cs" />
@@ -6156,6 +6158,8 @@
     <Content Include="Areas\Money\Content\Report\index.js" />
     <Content Include="Areas\Money\Content\Type\action.js" />
     <Content Include="Areas\Money\Content\Type\index.js" />
+    <Content Include="Areas\Personal\Content\Cetificate\action.js" />
+    <Content Include="Areas\Personal\Content\Cetificate\index.js" />
     <Content Include="Areas\Personal\Content\Dream\action.js" />
     <Content Include="Areas\Personal\Content\Dream\index.js" />
     <Content Include="Areas\Personal\Content\Education\action.js" />
@@ -6811,6 +6815,10 @@
     <Content Include="Areas\Personal\Views\PNEvent\Create.cshtml" />
     <Content Include="Areas\Personal\Views\PNEvent\Edit.cshtml" />
     <Content Include="Areas\Personal\Views\PNEvent\_Form.cshtml" />
+    <Content Include="Areas\Personal\Views\PNCetificate\Index.cshtml" />
+    <Content Include="Areas\Personal\Views\PNCetificate\Create.cshtml" />
+    <Content Include="Areas\Personal\Views\PNCetificate\Edit.cshtml" />
+    <Content Include="Areas\Personal\Views\PNCetificate\_Form.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6870,6 +6878,7 @@
     <Folder Include="Areas\Money\Models\" />
     <Folder Include="Areas\Money\Views\Shared\" />
     <Folder Include="Areas\Personal\Models\" />
+    <Folder Include="Areas\Personal\Views\PNSkill\" />
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
     <Folder Include="Areas\Website\Models\" />

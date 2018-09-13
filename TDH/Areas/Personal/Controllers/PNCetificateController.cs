@@ -12,27 +12,25 @@ using Utils.JqueryDatatable;
 namespace TDH.Areas.Personal.Controllers
 {
     /// <summary>
-    /// Education controller
+    /// Cetificate controller
     /// </summary>
-    public class PNEducationController : BaseController
+    public class PNCetificateController : BaseController
     {
+
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Personal.Controllers/PNEducationController.cs";
+        private readonly string FILE_NAME = "Personal.Controllers/PNCetificateController.cs";
 
         #endregion
-        
+
         [HttpGet]
         public ActionResult Index()
         {
             try
             {
-                EducationTypeService _typeService = new EducationTypeService();
-                ViewBag.type = _typeService.GetAll(UserID);
-
                 return View();
             }
             catch (Exception ex)
@@ -49,27 +47,25 @@ namespace TDH.Areas.Personal.Controllers
             {
                 #region " [ Declaration ] "
 
-                EducationService _service = new EducationService();
+                CetificateService _service = new CetificateService();
 
                 #endregion
 
                 #region " [ Main processing ] "
 
-                if(requestData.Parameter1 == null)
-                {
-                    requestData.Parameter1 = "";
-                }
+                requestData = requestData.SetOrderingColumnName();
+
                 #endregion
 
                 //Call to service
                 Dictionary<string, object> _return = _service.List(requestData, UserID);
                 if ((ResponseStatusCodeHelper)_return[DatatableCommonSetting.Response.STATUS] == ResponseStatusCodeHelper.OK)
                 {
-                    DataTableResponse<EducationModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<EducationModel>;
+                    DataTableResponse<CetificateModel> itemResponse = _return[DatatableCommonSetting.Response.DATA] as DataTableResponse<CetificateModel>;
                     return this.Json(itemResponse, JsonRequestBehavior.AllowGet);
                 }
                 //
-                return this.Json(new DataTableResponse<EducationModel>(), JsonRequestBehavior.AllowGet);
+                return this.Json(new DataTableResponse<CetificateModel>(), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -85,18 +81,14 @@ namespace TDH.Areas.Personal.Controllers
             {
 
                 #region " [ Declaration ] "
-
-                EducationTypeService _typeService = new EducationTypeService();
-
-                EducationModel model = new EducationModel()
+                
+                CetificateModel model = new CetificateModel()
                 {
                     ID = Guid.NewGuid(),
                     CreateBy = UserID,
                     Insert = true
                 };
-
-                ViewBag.type = _typeService.GetAll(UserID);
-
+                
                 #endregion
 
                 return View(model);
@@ -110,22 +102,19 @@ namespace TDH.Areas.Personal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)]
-        public ActionResult Create(EducationModel model)
+        public ActionResult Create(CetificateModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                EducationService _service = new EducationService();
+                CetificateService _service = new CetificateService();
 
                 #endregion
 
                 #region " [ Main processing ] "
 
-                string[] tmp = model.DateString.Split('/');
-                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
-
+                model.Publish = true;
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
@@ -149,18 +138,15 @@ namespace TDH.Areas.Personal.Controllers
             try
             {
                 #region " [ Declaration ] "
-
-                EducationTypeService _typeService = new EducationTypeService();
-
-                EducationService _service = new EducationService();
+                
+                CetificateService _service = new CetificateService();
                 //
                 ViewBag.id = id;
-                ViewBag.type = _typeService.GetAll(UserID);
 
                 #endregion
 
                 // Call to service
-                EducationModel model = _service.GetItemByID(new EducationModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+                CetificateModel model = _service.GetItemByID(new CetificateModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 return View(model);
             }
             catch (Exception ex)
@@ -172,22 +158,19 @@ namespace TDH.Areas.Personal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ValidateInput(false)]
-        public ActionResult Edit(EducationModel model)
+        public ActionResult Edit(CetificateModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                EducationService _service = new EducationService();
+                CetificateService _service = new CetificateService();
 
                 #endregion
 
                 #region " [ Main processing ] "
 
-                string[] tmp = model.DateString.Split('/');
-                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
-
+                model.Publish = true;
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
@@ -206,13 +189,13 @@ namespace TDH.Areas.Personal.Controllers
         }
 
         [HttpPost]
-        public ActionResult Delete(EducationModel model)
+        public ActionResult Delete(CetificateModel model)
         {
             try
             {
                 #region " [ Declaration ] "
 
-                EducationService _service = new EducationService();
+                CetificateService _service = new CetificateService();
 
                 #endregion
 
@@ -233,6 +216,6 @@ namespace TDH.Areas.Personal.Controllers
                 throw new HttpException();
             }
         }
-        
+
     }
 }

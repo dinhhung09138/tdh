@@ -243,6 +243,7 @@
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\Common\Controllers\CMSkillController.cs" />
     <Compile Include="Areas\Common\Utils\Message.cs" />
+    <Compile Include="Areas\Marketing\Controllers\FacebookController.cs" />
     <Compile Include="Areas\Marketing\Controllers\YoutubeController.cs" />
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
     <Compile Include="Areas\Money\Controllers\MNAccountController.cs" />
@@ -6825,6 +6826,10 @@
     <Content Include="Areas\Personal\Views\PNCetificate\Create.cshtml" />
     <Content Include="Areas\Personal\Views\PNCetificate\Edit.cshtml" />
     <Content Include="Areas\Personal\Views\PNCetificate\_Form.cshtml" />
+    <Content Include="Areas\Marketing\Views\Facebook\Index.cshtml" />
+    <Content Include="Areas\Marketing\Views\Facebook\Fanpage.cshtml" />
+    <Content Include="Areas\Marketing\Views\Facebook\Group.cshtml" />
+    <Content Include="Areas\Marketing\Views\Facebook\PostType.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

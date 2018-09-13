@@ -1,0 +1,183 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "user_info" })
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Name</h3>
+        <div class="card-tools pull-right">
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Latest Members</h3>
+                        <div class="card-tools">
+                            <span class="badge badge-danger">8 New Members</span>
+                            <button type="button" class="btn btn-tool">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="users-list clearfix">
+                            <li>
+                                <img src="/Areas/Administrator/Content/dist/img/user1-128x128.jpg" alt="User Image">
+                                <a class="users-list-name" href="#">Alexander Pierce</a>
+                                <span class="users-list-date">Today</span>
+                            </li>
+                            <li>
+                                <img src="/Areas/Administrator/Content/dist/img/user8-128x128.jpg" alt="User Image">
+                                <a class="users-list-name" href="#">Norman Norman Norman Norman Norman Norman</a>
+                                <span class="users-list-date">Yesterday</span>
+                            </li>
+                            <li>
+                                <img src="/Areas/Administrator/Content/dist/img/user7-128x128.jpg" alt="User Image">
+                                <a class="users-list-name" href="#">Jane</a>
+                                <span class="users-list-date">12 Jan</span>
+                            </li>
+                            <li>
+                                <img src="/Areas/Administrator/Content/dist/img/user3-128x128.jpg" alt="User Image">
+                                <a class="users-list-name" href="#">Nadia</a>
+                                <span class="users-list-date">15 Jan</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Recently Added Products</h3>
+                        <div class="card-tools">
+                            <span class="badge badge-danger">8 New Members</span>
+                            <button type="button" class="btn btn-tool">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="products-list product-list-in-card pl-2 pr-2">
+                            <li class="item">
+                                <div class="product-img">
+                                    <img src="/Areas/Administrator/Content/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        Samsung TV
+                                        <span class="badge badge-warning float-right">$1800</span>
+                                    </a>
+                                    <span class="product-description">
+                                        Samsung 32" 1080p 60Hz LED Smart HDTV.
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="product-img">
+                                    <img src="/Areas/Administrator/Content/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        Bicycle
+                                        <span class="badge badge-info float-right">$700</span>
+                                    </a>
+                                    <span class="product-description">
+                                        26" Mongoose Dolomite Men's 7-speed, Navy Blue.
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="product-img">
+                                    <img src="/Areas/Administrator/Content/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        Xbox One <span class="badge badge-danger float-right">
+                                            $350
+                                        </span>
+                                    </a>
+                                    <span class="product-description">
+                                        Xbox One Console Bundle with Halo Master Chief Collection.
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Recently Added Products</h3>
+                        <div class="card-tools">
+                            <span class="badge badge-danger">8 New Members</span>
+                            <button type="button" class="btn btn-tool">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="products-list product-list-in-card pl-2 pr-2">
+                            <li class="item">
+                                <div class="product-img">
+                                    <img src="/Areas/Administrator/Content/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        Samsung TV
+                                        <span class="badge badge-warning float-right">$1800</span>
+                                    </a>
+                                    <span class="product-description">
+                                        Samsung 32" 1080p 60Hz LED Smart HDTV.
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="product-img">
+                                    <img src="/Areas/Administrator/Content/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        Bicycle
+                                        <span class="badge badge-info float-right">$700</span>
+                                    </a>
+                                    <span class="product-description">
+                                        26" Mongoose Dolomite Men's 7-speed, Navy Blue.
+                                    </span>
+                                </div>
+                            </li>
+                            <li class="item">
+                                <div class="product-img">
+                                    <img src="/Areas/Administrator/Content/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                                </div>
+                                <div class="product-info">
+                                    <a href="javascript:void(0)" class="product-title">
+                                        Xbox One <span class="badge badge-danger float-right">
+                                            $350
+                                        </span>
+                                    </a>
+                                    <span class="product-description">
+                                        Xbox One Console Bundle with Halo Master Chief Collection.
+                                    </span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section script {
+
+}
+
+

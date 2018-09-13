@@ -1,4 +1,6 @@
-﻿namespace TDH.Model
+﻿using System.Collections.Generic;
+
+namespace TDH.Model
 {
     /// <summary>
     /// Module sidebar navigation view model
@@ -19,6 +21,12 @@
         /// Default Url
         /// </summary>
         public string DefaultUrl { get; set; }
+
+        /// <summary>
+        /// List of function detail, for
+        /// For marketin module
+        /// </summary>
+        public List<SideBarViewModel> functions { get; set; } = new List<SideBarViewModel>();
 
     }
 }

@@ -86,6 +86,7 @@ namespace TDH.DataAccess
         public virtual DbSet<FB_GROUP> FB_GROUP { get; set; }
         public virtual DbSet<FB_POST_TYPE> FB_POST_TYPE { get; set; }
         public virtual DbSet<FB_USER> FB_USER { get; set; }
+        public virtual DbSet<V_RENDER_NAVIGATION> V_RENDER_NAVIGATION { get; set; }
     
         [DbFunction("TDHEntities", "FNC_REPORT_INCOME_BY_CATEGORY")]
         public virtual IQueryable<FNC_REPORT_INCOME_BY_CATEGORY_Result> FNC_REPORT_INCOME_BY_CATEGORY()

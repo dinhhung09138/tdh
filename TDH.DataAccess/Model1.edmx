@@ -1067,6 +1067,30 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not h
           <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_RENDER_NAVIGATION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_RENDER_NAVIGATION">
+          <Key>
+            <PropertyRef Name="module_code" />
+            <PropertyRef Name="module_title" />
+            <PropertyRef Name="module_order" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="ordering" />
+            <PropertyRef Name="function_ordering" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="module_code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="module_title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="default_action" Type="varchar" MaxLength="60" />
+          <Property Name="icon" Type="nvarchar" MaxLength="20" />
+          <Property Name="module_order" Type="smallint" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="153" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="30" />
+          <Property Name="function_ordering" Type="smallint" Nullable="false" />
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="V_TIMELINE">
           <Key>
@@ -1823,6 +1847,21 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
     [V_MONEY_FLOW].[type] AS [type]
     FROM [dbo].[V_MONEY_FLOW] AS [V_MONEY_FLOW]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="V_RENDER_NAVIGATION" EntityType="Self.V_RENDER_NAVIGATION" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_RENDER_NAVIGATION].[module_code] AS [module_code], 
+    [V_RENDER_NAVIGATION].[module_title] AS [module_title], 
+    [V_RENDER_NAVIGATION].[default_action] AS [default_action], 
+    [V_RENDER_NAVIGATION].[icon] AS [icon], 
+    [V_RENDER_NAVIGATION].[module_order] AS [module_order], 
+    [V_RENDER_NAVIGATION].[code] AS [code], 
+    [V_RENDER_NAVIGATION].[url] AS [url], 
+    [V_RENDER_NAVIGATION].[ordering] AS [ordering], 
+    [V_RENDER_NAVIGATION].[title] AS [title], 
+    [V_RENDER_NAVIGATION].[function_ordering] AS [function_ordering], 
+    [V_RENDER_NAVIGATION].[id] AS [id]
+    FROM [dbo].[V_RENDER_NAVIGATION] AS [V_RENDER_NAVIGATION]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="V_TIMELINE" EntityType="Self.V_TIMELINE" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [V_TIMELINE].[id] AS [id], 
@@ -2307,6 +2346,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             <End Role="SYS_USER" EntitySet="SYS_USER" />
             <End Role="FB_USER" EntitySet="FB_USER" />
           </AssociationSet>
+          <EntitySet Name="V_RENDER_NAVIGATION" EntityType="TDHModel.V_RENDER_NAVIGATION" />
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -4044,6 +4084,28 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="V_RENDER_NAVIGATION">
+          <Key>
+            <PropertyRef Name="module_code" />
+            <PropertyRef Name="module_title" />
+            <PropertyRef Name="module_order" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="ordering" />
+            <PropertyRef Name="function_ordering" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="module_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="module_title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="default_action" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="icon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="module_order" Type="Int16" Nullable="false" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="url" Type="String" MaxLength="153" FixedLength="false" Unicode="false" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="function_ordering" Type="Int16" Nullable="false" />
+          <Property Name="id" Type="Guid" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5233,6 +5295,23 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <ScalarProperty Name="mobile" ColumnName="mobile" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="uid" ColumnName="uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_RENDER_NAVIGATION">
+            <EntityTypeMapping TypeName="TDHModel.V_RENDER_NAVIGATION">
+              <MappingFragment StoreEntitySet="V_RENDER_NAVIGATION">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="function_ordering" ColumnName="function_ordering" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="module_order" ColumnName="module_order" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="default_action" ColumnName="default_action" />
+                <ScalarProperty Name="module_title" ColumnName="module_title" />
+                <ScalarProperty Name="module_code" ColumnName="module_code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

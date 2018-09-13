@@ -6149,6 +6149,7 @@
     <Content Include="Areas\Administrator\Content\vendors\pdfmake\build\pdfmake.min.js" />
     <Content Include="Areas\Administrator\Content\vendors\pdfmake\build\vfs_fonts.js" />
     <Content Include="Areas\Common\Content\Skill\index.js" />
+    <Content Include="Areas\Marketing\Content\Facebook\init.js" />
     <Content Include="Areas\Marketing\Content\Youtube\init.js" />
     <Content Include="Areas\Marketing\Content\Youtube\listchannel.js" />
     <Content Include="Areas\Money\Content\Account\action.js" />

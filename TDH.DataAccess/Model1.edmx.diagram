@@ -98,6 +98,9 @@
         <AssociationConnector Association="TDHModel.FK_PN_SKILL_CM_SKILL" />
         <AssociationConnector Association="TDHModel.FK_PN_EDUCATION_PN_EDUCATION_TYPE" />
         <AssociationConnector Association="TDHModel.FK_PN_EVENT_PN_EVENT_TYPE" />
+        <EntityTypeShape EntityType="TDHModel.PN_CETIFICATE" Width="1.5" PointX="7.375" PointY="22.75" />
+        <EntityTypeShape EntityType="TDHModel.PN_SKILL_DEFINDED" Width="1.5" PointX="31.5" PointY="6.75" />
+        <AssociationConnector Association="TDHModel.FK_PN_SKILL_DEFINDED_PN_SKILL" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

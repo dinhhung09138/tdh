@@ -12,16 +12,12 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class PN_SKILL
+    public partial class PN_CETIFICATE
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PN_SKILL()
-        {
-            this.PN_SKILL_DEFINDED = new HashSet<PN_SKILL_DEFINDED>();
-        }
-    
-        public System.Guid skill_id { get; set; }
-        public short level { get; set; }
+        public System.Guid id { get; set; }
+        public string name { get; set; }
+        public string school { get; set; }
+        public string time { get; set; }
         public short ordering { get; set; }
         public bool publish { get; set; }
         public System.Guid created_by { get; set; }
@@ -31,9 +27,5 @@ namespace TDH.DataAccess
         public bool deleted { get; set; }
         public Nullable<System.Guid> deleted_by { get; set; }
         public Nullable<System.DateTime> deleted_date { get; set; }
-    
-        public virtual CM_SKILL CM_SKILL { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PN_SKILL_DEFINDED> PN_SKILL_DEFINDED { get; set; }
     }
 }

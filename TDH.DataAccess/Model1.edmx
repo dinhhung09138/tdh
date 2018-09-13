@@ -262,6 +262,24 @@
           <Property Name="delete_date" Type="datetime" />
           <Property Name="date" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="PN_CETIFICATE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="school" Type="nvarchar" MaxLength="100" />
+          <Property Name="time" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="PN_DREAM">
           <Key>
             <PropertyRef Name="id" />
@@ -428,6 +446,14 @@
           <Property Name="deleted" Type="bit" Nullable="false" />
           <Property Name="deleted_by" Type="uniqueidentifier" />
           <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PN_SKILL_DEFINDED">
+          <Key>
+            <PropertyRef Name="defined_id" />
+          </Key>
+          <Property Name="defined_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="skill_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="point" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="PN_TARGET">
           <Key>
@@ -1196,6 +1222,20 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PN_SKILL_DEFINDED_PN_SKILL">
+          <End Role="PN_SKILL" Type="Self.PN_SKILL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PN_SKILL_DEFINDED" Type="Self.PN_SKILL_DEFINDED" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PN_SKILL">
+              <PropertyRef Name="skill_id" />
+            </Principal>
+            <Dependent Role="PN_SKILL_DEFINDED">
+              <PropertyRef Name="skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PN_TARGET_PLANING_SPRINT_PN_TARGET_PLANNING">
           <End Role="PN_TARGET_PLANNING" Type="Self.PN_TARGET_PLANNING" Multiplicity="1" />
           <End Role="PN_TARGET_PLANNING_SPRINT" Type="Self.PN_TARGET_PLANNING_SPRINT" Multiplicity="*" />
@@ -1588,6 +1628,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySet Name="MN_INCOME" EntityType="Self.MN_INCOME" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MN_PAYMENT" EntityType="Self.MN_PAYMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MN_TRANSFER" EntityType="Self.MN_TRANSFER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PN_CETIFICATE" EntityType="Self.PN_CETIFICATE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_DREAM" EntityType="Self.PN_DREAM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_EDUCATION" EntityType="Self.PN_EDUCATION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_EDUCATION_TYPE" EntityType="Self.PN_EDUCATION_TYPE" Schema="dbo" store:Type="Tables" />
@@ -1597,6 +1638,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySet Name="PN_REPORT" EntityType="Self.PN_REPORT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_REPORT_KIND" EntityType="Self.PN_REPORT_KIND" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_SKILL" EntityType="Self.PN_SKILL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PN_SKILL_DEFINDED" EntityType="Self.PN_SKILL_DEFINDED" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_TARGET" EntityType="Self.PN_TARGET" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_TARGET_PLANNING" EntityType="Self.PN_TARGET_PLANNING" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_TARGET_PLANNING_REPORT" EntityType="Self.PN_TARGET_PLANNING_REPORT" Schema="dbo" store:Type="Tables" />
@@ -1740,6 +1782,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <AssociationSet Name="FK_PN_SKILL_CM_SKILL" Association="Self.FK_PN_SKILL_CM_SKILL">
             <End Role="CM_SKILL" EntitySet="CM_SKILL" />
             <End Role="PN_SKILL" EntitySet="PN_SKILL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PN_SKILL_DEFINDED_PN_SKILL" Association="Self.FK_PN_SKILL_DEFINDED_PN_SKILL">
+            <End Role="PN_SKILL" EntitySet="PN_SKILL" />
+            <End Role="PN_SKILL_DEFINDED" EntitySet="PN_SKILL_DEFINDED" />
           </AssociationSet>
           <AssociationSet Name="FK_PN_TARGET_PLANING_SPRINT_PN_TARGET_PLANNING" Association="Self.FK_PN_TARGET_PLANING_SPRINT_PN_TARGET_PLANNING">
             <End Role="PN_TARGET_PLANNING" EntitySet="PN_TARGET_PLANNING" />
@@ -2102,6 +2148,12 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <AssociationSet Name="FK_PN_EVENT_PN_EVENT_TYPE" Association="TDHModel.FK_PN_EVENT_PN_EVENT_TYPE">
             <End Role="PN_EVENT_TYPE" EntitySet="PN_EVENT_TYPE" />
             <End Role="PN_EVENT" EntitySet="PN_EVENT" />
+          </AssociationSet>
+          <EntitySet Name="PN_CETIFICATE" EntityType="TDHModel.PN_CETIFICATE" />
+          <EntitySet Name="PN_SKILL_DEFINDED" EntityType="TDHModel.PN_SKILL_DEFINDED" />
+          <AssociationSet Name="FK_PN_SKILL_DEFINDED_PN_SKILL" Association="TDHModel.FK_PN_SKILL_DEFINDED_PN_SKILL">
+            <End Role="PN_SKILL" EntitySet="PN_SKILL" />
+            <End Role="PN_SKILL_DEFINDED" EntitySet="PN_SKILL_DEFINDED" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
@@ -3583,6 +3635,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="deleted_by" Type="Guid" />
           <Property Name="deleted_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="CM_SKILL" Relationship="TDHModel.FK_PN_SKILL_CM_SKILL" FromRole="PN_SKILL" ToRole="CM_SKILL" />
+          <NavigationProperty Name="PN_SKILL_DEFINDED" Relationship="TDHModel.FK_PN_SKILL_DEFINDED_PN_SKILL" FromRole="PN_SKILL" ToRole="PN_SKILL_DEFINDED" />
         </EntityType>
         <EntityType Name="V_TIMELINE">
           <Key>
@@ -3669,6 +3722,47 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             </Principal>
             <Dependent Role="PN_EVENT">
               <PropertyRef Name="event_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PN_CETIFICATE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="school" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="time" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PN_SKILL_DEFINDED">
+          <Key>
+            <PropertyRef Name="defined_id" />
+          </Key>
+          <Property Name="defined_id" Type="Guid" Nullable="false" />
+          <Property Name="skill_id" Type="Guid" Nullable="false" />
+          <Property Name="point" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="PN_SKILL" Relationship="TDHModel.FK_PN_SKILL_DEFINDED_PN_SKILL" FromRole="PN_SKILL_DEFINDED" ToRole="PN_SKILL" />
+        </EntityType>
+        <Association Name="FK_PN_SKILL_DEFINDED_PN_SKILL">
+          <End Type="TDHModel.PN_SKILL" Role="PN_SKILL" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TDHModel.PN_SKILL_DEFINDED" Role="PN_SKILL_DEFINDED" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PN_SKILL">
+              <PropertyRef Name="skill_id" />
+            </Principal>
+            <Dependent Role="PN_SKILL_DEFINDED">
+              <PropertyRef Name="skill_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4745,6 +4839,34 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <ScalarProperty Name="school" ColumnName="school" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PN_CETIFICATE">
+            <EntityTypeMapping TypeName="TDHModel.PN_CETIFICATE">
+              <MappingFragment StoreEntitySet="PN_CETIFICATE">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="school" ColumnName="school" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PN_SKILL_DEFINDED">
+            <EntityTypeMapping TypeName="TDHModel.PN_SKILL_DEFINDED">
+              <MappingFragment StoreEntitySet="PN_SKILL_DEFINDED">
+                <ScalarProperty Name="point" ColumnName="point" />
+                <ScalarProperty Name="skill_id" ColumnName="skill_id" />
+                <ScalarProperty Name="defined_id" ColumnName="defined_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

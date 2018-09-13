@@ -80,6 +80,8 @@ namespace TDH.DataAccess
         public virtual DbSet<PN_EVENT_TYPE> PN_EVENT_TYPE { get; set; }
         public virtual DbSet<PN_SKILL> PN_SKILL { get; set; }
         public virtual DbSet<V_TIMELINE> V_TIMELINE { get; set; }
+        public virtual DbSet<PN_CETIFICATE> PN_CETIFICATE { get; set; }
+        public virtual DbSet<PN_SKILL_DEFINDED> PN_SKILL_DEFINDED { get; set; }
     
         [DbFunction("TDHEntities", "FNC_REPORT_INCOME_BY_CATEGORY")]
         public virtual IQueryable<FNC_REPORT_INCOME_BY_CATEGORY_Result> FNC_REPORT_INCOME_BY_CATEGORY()

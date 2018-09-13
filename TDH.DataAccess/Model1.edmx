@@ -59,6 +59,90 @@
           <Property Name="deleted_by" Type="uniqueidentifier" />
           <Property Name="deleted_date" Type="datetime" />
         </EntityType>
+        <EntityType Name="FB_FANPAGE">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="link" Type="nvarchar" MaxLength="300" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="300" />
+          <Property Name="display_name" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="website" Type="varchar" MaxLength="50" />
+          <Property Name="auth_token" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="start_on" Type="datetime" Nullable="false" />
+          <Property Name="last_execute" Type="datetime" Nullable="false" />
+          <Property Name="expires_on" Type="datetime" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="FB_GROUP">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="link" Type="nvarchar" MaxLength="300" />
+          <Property Name="name" Type="nvarchar" MaxLength="300" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="FB_POST_TYPE">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="on_profile" Type="bit" Nullable="false" />
+          <Property Name="on_fanpage" Type="bit" Nullable="false" />
+          <Property Name="on_group" Type="bit" Nullable="false" />
+          <Property Name="notes" Type="nvarchar" MaxLength="255" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="FB_USER">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="300" />
+          <Property Name="mobile" Type="nvarchar" MaxLength="255" />
+          <Property Name="email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="auth_token" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="start_on" Type="datetime" Nullable="false" />
+          <Property Name="last_execute" Type="datetime" Nullable="false" />
+          <Property Name="expires_on" Type="datetime" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="MN_ACCOUNT">
           <Key>
             <PropertyRef Name="id" />
@@ -1036,6 +1120,42 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FB_FANPAGE_SYS_USER">
+          <End Role="SYS_USER" Type="Self.SYS_USER" Multiplicity="1" />
+          <End Role="FB_FANPAGE" Type="Self.FB_FANPAGE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FB_FANPAGE">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FB_GROUP_SYS_USER">
+          <End Role="SYS_USER" Type="Self.SYS_USER" Multiplicity="1" />
+          <End Role="FB_GROUP" Type="Self.FB_GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FB_GROUP">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FB_USER_SYS_USER">
+          <End Role="SYS_USER" Type="Self.SYS_USER" Multiplicity="1" />
+          <End Role="FB_USER" Type="Self.FB_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FB_USER">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
           <End Role="MN_ACCOUNT_TYPE" Type="Self.MN_ACCOUNT_TYPE" Multiplicity="1" />
           <End Role="MN_ACCOUNT" Type="Self.MN_ACCOUNT" Multiplicity="*" />
@@ -1618,6 +1738,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySet Name="CM_SKILL" EntityType="Self.CM_SKILL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CM_SKILL_DEFINDED" EntityType="Self.CM_SKILL_DEFINDED" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CM_SKILL_GROUP" EntityType="Self.CM_SKILL_GROUP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FB_FANPAGE" EntityType="Self.FB_FANPAGE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FB_GROUP" EntityType="Self.FB_GROUP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FB_POST_TYPE" EntityType="Self.FB_POST_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FB_USER" EntityType="Self.FB_USER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MN_ACCOUNT" EntityType="Self.MN_ACCOUNT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MN_ACCOUNT_SETTING" EntityType="Self.MN_ACCOUNT_SETTING" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MN_ACCOUNT_TYPE" EntityType="Self.MN_ACCOUNT_TYPE" Schema="dbo" store:Type="Tables" />
@@ -1722,6 +1846,18 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <AssociationSet Name="FK_CM_SKILL_DEFINDED_CM_SKILL" Association="Self.FK_CM_SKILL_DEFINDED_CM_SKILL">
             <End Role="CM_SKILL" EntitySet="CM_SKILL" />
             <End Role="CM_SKILL_DEFINDED" EntitySet="CM_SKILL_DEFINDED" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FB_FANPAGE_SYS_USER" Association="Self.FK_FB_FANPAGE_SYS_USER">
+            <End Role="SYS_USER" EntitySet="SYS_USER" />
+            <End Role="FB_FANPAGE" EntitySet="FB_FANPAGE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FB_GROUP_SYS_USER" Association="Self.FK_FB_GROUP_SYS_USER">
+            <End Role="SYS_USER" EntitySet="SYS_USER" />
+            <End Role="FB_GROUP" EntitySet="FB_GROUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FB_USER_SYS_USER" Association="Self.FK_FB_USER_SYS_USER">
+            <End Role="SYS_USER" EntitySet="SYS_USER" />
+            <End Role="FB_USER" EntitySet="FB_USER" />
           </AssociationSet>
           <AssociationSet Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" Association="Self.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
             <End Role="MN_ACCOUNT_TYPE" EntitySet="MN_ACCOUNT_TYPE" />
@@ -2154,6 +2290,22 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <AssociationSet Name="FK_PN_SKILL_DEFINDED_PN_SKILL" Association="TDHModel.FK_PN_SKILL_DEFINDED_PN_SKILL">
             <End Role="PN_SKILL" EntitySet="PN_SKILL" />
             <End Role="PN_SKILL_DEFINDED" EntitySet="PN_SKILL_DEFINDED" />
+          </AssociationSet>
+          <EntitySet Name="FB_FANPAGE" EntityType="TDHModel.FB_FANPAGE" />
+          <EntitySet Name="FB_GROUP" EntityType="TDHModel.FB_GROUP" />
+          <EntitySet Name="FB_POST_TYPE" EntityType="TDHModel.FB_POST_TYPE" />
+          <EntitySet Name="FB_USER" EntityType="TDHModel.FB_USER" />
+          <AssociationSet Name="FK_FB_FANPAGE_SYS_USER" Association="TDHModel.FK_FB_FANPAGE_SYS_USER">
+            <End Role="SYS_USER" EntitySet="SYS_USER" />
+            <End Role="FB_FANPAGE" EntitySet="FB_FANPAGE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FB_GROUP_SYS_USER" Association="TDHModel.FK_FB_GROUP_SYS_USER">
+            <End Role="SYS_USER" EntitySet="SYS_USER" />
+            <End Role="FB_GROUP" EntitySet="FB_GROUP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FB_USER_SYS_USER" Association="TDHModel.FK_FB_USER_SYS_USER">
+            <End Role="SYS_USER" EntitySet="SYS_USER" />
+            <End Role="FB_USER" EntitySet="FB_USER" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
@@ -2955,6 +3107,9 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="delete_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="SYS_USER_ROLE" Relationship="TDHModel.FK_SYS_USER_ROLE_user_id" FromRole="SYS_USER" ToRole="SYS_USER_ROLE" />
           <Property Name="user_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="FB_FANPAGE" Relationship="TDHModel.FK_FB_FANPAGE_SYS_USER" FromRole="SYS_USER" ToRole="FB_FANPAGE" />
+          <NavigationProperty Name="FB_GROUP" Relationship="TDHModel.FK_FB_GROUP_SYS_USER" FromRole="SYS_USER" ToRole="FB_GROUP" />
+          <NavigationProperty Name="FB_USER" Relationship="TDHModel.FK_FB_USER_SYS_USER" FromRole="SYS_USER" ToRole="FB_USER" />
         </EntityType>
         <EntityType Name="SYS_USER_ROLE">
           <Key>
@@ -3763,6 +3918,129 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             </Principal>
             <Dependent Role="PN_SKILL_DEFINDED">
               <PropertyRef Name="skill_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FB_FANPAGE">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="link" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="user_name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="display_name" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="auth_token" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="start_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="last_execute" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="expires_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SYS_USER" Relationship="TDHModel.FK_FB_FANPAGE_SYS_USER" FromRole="FB_FANPAGE" ToRole="SYS_USER" />
+        </EntityType>
+        <EntityType Name="FB_GROUP">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="link" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SYS_USER" Relationship="TDHModel.FK_FB_GROUP_SYS_USER" FromRole="FB_GROUP" ToRole="SYS_USER" />
+        </EntityType>
+        <EntityType Name="FB_POST_TYPE">
+          <Key>
+            <PropertyRef Name="code" />
+          </Key>
+          <Property Name="code" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="on_profile" Type="Boolean" Nullable="false" />
+          <Property Name="on_fanpage" Type="Boolean" Nullable="false" />
+          <Property Name="on_group" Type="Boolean" Nullable="false" />
+          <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="FB_USER">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="mobile" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="auth_token" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="start_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="last_execute" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="expires_on" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SYS_USER" Relationship="TDHModel.FK_FB_USER_SYS_USER" FromRole="FB_USER" ToRole="SYS_USER" />
+        </EntityType>
+        <Association Name="FK_FB_FANPAGE_SYS_USER">
+          <End Type="TDHModel.SYS_USER" Role="SYS_USER" Multiplicity="1" />
+          <End Type="TDHModel.FB_FANPAGE" Role="FB_FANPAGE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FB_FANPAGE">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FB_GROUP_SYS_USER">
+          <End Type="TDHModel.SYS_USER" Role="SYS_USER" Multiplicity="1" />
+          <End Type="TDHModel.FB_GROUP" Role="FB_GROUP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FB_GROUP">
+              <PropertyRef Name="created_by" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FB_USER_SYS_USER">
+          <End Type="TDHModel.SYS_USER" Role="SYS_USER" Multiplicity="1" />
+          <End Type="TDHModel.FB_USER" Role="FB_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="FB_USER">
+              <PropertyRef Name="created_by" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4867,6 +5145,94 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <ScalarProperty Name="point" ColumnName="point" />
                 <ScalarProperty Name="skill_id" ColumnName="skill_id" />
                 <ScalarProperty Name="defined_id" ColumnName="defined_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FB_FANPAGE">
+            <EntityTypeMapping TypeName="TDHModel.FB_FANPAGE">
+              <MappingFragment StoreEntitySet="FB_FANPAGE">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="expires_on" ColumnName="expires_on" />
+                <ScalarProperty Name="last_execute" ColumnName="last_execute" />
+                <ScalarProperty Name="start_on" ColumnName="start_on" />
+                <ScalarProperty Name="auth_token" ColumnName="auth_token" />
+                <ScalarProperty Name="website" ColumnName="website" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FB_GROUP">
+            <EntityTypeMapping TypeName="TDHModel.FB_GROUP">
+              <MappingFragment StoreEntitySet="FB_GROUP">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FB_POST_TYPE">
+            <EntityTypeMapping TypeName="TDHModel.FB_POST_TYPE">
+              <MappingFragment StoreEntitySet="FB_POST_TYPE">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="on_group" ColumnName="on_group" />
+                <ScalarProperty Name="on_fanpage" ColumnName="on_fanpage" />
+                <ScalarProperty Name="on_profile" ColumnName="on_profile" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FB_USER">
+            <EntityTypeMapping TypeName="TDHModel.FB_USER">
+              <MappingFragment StoreEntitySet="FB_USER">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="expires_on" ColumnName="expires_on" />
+                <ScalarProperty Name="last_execute" ColumnName="last_execute" />
+                <ScalarProperty Name="start_on" ColumnName="start_on" />
+                <ScalarProperty Name="auth_token" ColumnName="auth_token" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

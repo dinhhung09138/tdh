@@ -78,6 +78,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\EPPlus.dll</HintPath>
     </Reference>
+    <Reference Include="FluentScheduler, Version=5.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\FluentScheduler.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Microsoft.AspNet.SignalR.Client.dll</HintPath>
@@ -6241,6 +6245,8 @@
     <Content Include="Libs\CKFinder_Watermark.dll" />
     <Content Include="Libs\EPPlus.dll" />
     <Content Include="Libs\EPPlus.xml" />
+    <Content Include="Libs\FluentScheduler.dll" />
+    <Content Include="Libs\FluentScheduler.pdb" />
     <Content Include="Libs\Microsoft.AspNet.SignalR.Client.dll" />
     <Content Include="Libs\Microsoft.AspNet.SignalR.Client.xml" />
     <Content Include="Libs\MvcPaging.dll" />

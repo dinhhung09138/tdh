@@ -50,6 +50,11 @@
     <Compile Include="Common\SkillDefinedModel.cs" />
     <Compile Include="Common\SkillGroupModel.cs" />
     <Compile Include="Common\SkillModel.cs" />
+    <Compile Include="Marketing\Facebook\FanpageModel.cs" />
+    <Compile Include="Marketing\Facebook\GroupModel.cs" />
+    <Compile Include="Marketing\Facebook\PostModel.cs" />
+    <Compile Include="Marketing\Facebook\PostTypeModel.cs" />
+    <Compile Include="Marketing\Facebook\UserModel.cs" />
     <Compile Include="Marketing\Youtube\Channel.cs" />
     <Compile Include="Marketing\Youtube\ChannelContentDetails.cs" />
     <Compile Include="Marketing\Youtube\ChannelContentDetailsRelatedPlaylists.cs" />

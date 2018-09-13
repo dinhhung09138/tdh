@@ -6,6 +6,7 @@ using Utils.JqueryDatatable;
 using TDH.Areas.Administrator.Models;
 using Utils;
 using TDH.Common;
+using System.Data.Entity;
 
 namespace TDH.Areas.Administrator.Services
 {
@@ -206,14 +207,14 @@ namespace TDH.Areas.Administrator.Services
                                 _md.create_by = model.CreateBy;
                                 _md.create_date = DateTime.Now;
                                 context.REPORTs.Add(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                                context.Entry(_md).State = EntityState.Added;
                             }
                             else
                             {
                                 _md.update_by = model.UpdateBy;
                                 _md.update_date = DateTime.Now;
                                 context.REPORTs.Attach(_md);
-                                context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                                context.Entry(_md).State = EntityState.Modified;
                             }
                             context.SaveChanges();
                             trans.Commit();
@@ -270,7 +271,7 @@ namespace TDH.Areas.Administrator.Services
                             _md.delete_by = model.DeleteBy;
                             _md.delete_date = DateTime.Now;
                             context.REPORTs.Attach(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Modified;
+                            context.Entry(_md).State = EntityState.Modified;
                             context.SaveChanges();
                             trans.Commit();
                         }
@@ -387,7 +388,7 @@ namespace TDH.Areas.Administrator.Services
                             _md.create_by = model.CreateBy;
                             _md.create_date = DateTime.Now;
                             context.REPORT_COMMENT.Add(_md);
-                            context.Entry(_md).State = System.Data.Entity.EntityState.Added;
+                            context.Entry(_md).State = EntityState.Added;
                             context.SaveChanges();
                             trans.Commit();
                         }

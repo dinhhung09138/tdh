@@ -53,6 +53,11 @@
     <Compile Include="Common\SkillDefinedService.cs" />
     <Compile Include="Common\SkillGroupService.cs" />
     <Compile Include="Common\SkillService.cs" />
+    <Compile Include="Marketing\Facebook\FanpageService.cs" />
+    <Compile Include="Marketing\Facebook\GroupService.cs" />
+    <Compile Include="Marketing\Facebook\PostService.cs" />
+    <Compile Include="Marketing\Facebook\PostTypeService.cs" />
+    <Compile Include="Marketing\Facebook\UserService.cs" />
     <Compile Include="Money\AccountService.cs" />
     <Compile Include="Money\AccountSettingService.cs" />
     <Compile Include="Money\AccountTypeService.cs" />

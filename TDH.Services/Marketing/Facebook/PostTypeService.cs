@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Utils.JqueryDatatable;
-using Utils;
 using TDH.Common;
-using TDH.Model.Personal;
 using TDH.DataAccess;
+using TDH.Model.Marketing.Facebook;
+using Utils;
+using Utils.JqueryDatatable;
 
-namespace TDH.Services.Personal
+namespace TDH.Services.Marketing.Facebook
 {
-    public class DreamService
+    public class PostTypeService
     {
         #region " [ Properties ] "
 
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/Personal/IdeaService.cs";
+        private readonly string FILE_NAME = "Services.Marketing.Facebook/PostService.cs";
 
         #endregion
 
@@ -33,20 +33,20 @@ namespace TDH.Services.Personal
             try
             {
                 //Declare response data to json object
-                DataTableResponse<DreamModel> _itemResponse = new DataTableResponse<DreamModel>();
+                DataTableResponse<PostTypeModel> _itemResponse = new DataTableResponse<PostTypeModel>();
                 //List of data
-                List<DreamModel> _list = new List<DreamModel>();
+                List<PostTypeModel> _list = new List<PostTypeModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _lData = context.PN_DREAM.Where(m => !m.deleted && m.created_by == userID)
-                                                .OrderByDescending(m => m.ordering)
+                    var _lData = context.FB_POST_TYPE.Where(m => !m.deleted)
+                                                .OrderByDescending(m => m.name)
                                                 .Select(m => new
                                                 {
-                                                    m.id,
-                                                    m.title,
-                                                    m.finish,
-                                                    m.ordering,
-                                                    m.finish_time
+                                                    m.code,
+                                                    m.name,
+                                                    m.on_group,
+                                                    m.on_fanpage,
+                                                    m.on_profile
                                                 }).ToList();
 
                     _itemResponse.draw = request.draw;
@@ -55,37 +55,34 @@ namespace TDH.Services.Personal
                     if (request.search != null && !string.IsNullOrWhiteSpace(request.search.Value))
                     {
                         string searchValue = request.search.Value.ToLower();
-                        _lData = _lData.Where(m => m.title.ToLower().Contains(searchValue)).ToList();
+                        _lData = _lData.Where(m => m.code.ToLower().Contains(searchValue) ||
+                                              m.name.ToLower().Contains(searchValue)).ToList();
                     }
 
                     foreach (var item in _lData)
                     {
-                        _list.Add(new DreamModel()
+                        _list.Add(new PostTypeModel()
                         {
-                            ID = item.id,
-                            Title = item.title,
-                            Finish = item.finish,
-                            Ordering = item.ordering,
-                            FinishTime = item.finish_time,
-                            FinishTimeString = item.finish_time.HasValue ? item.finish_time.Value.DateToString("dd/MM/yyyy") : ""
+                            Code = item.code,
+                            Name = item.name,
+                            OnFanpage = item.on_fanpage,
+                            OnGroup = item.on_group,
+                            OnProfile = item.on_profile
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
-                    IOrderedEnumerable<DreamModel> _sortList = null;
+                    IOrderedEnumerable<PostTypeModel> _sortList = null;
                     if (request.order != null)
                     {
                         foreach (var col in request.order)
                         {
                             switch (col.ColumnName)
                             {
-                                case "Title":
-                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Title) : _sortList.Sort(col.Dir, m => m.Title);
+                                case "Code":
+                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Code) : _sortList.Sort(col.Dir, m => m.Code);
                                     break;
-                                case "Ordering":
-                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Ordering) : _sortList.Sort(col.Dir, m => m.Ordering);
-                                    break;
-                                case "FinishTimeString":
-                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.FinishTimeString) : _sortList.Sort(col.Dir, m => m.FinishTimeString);
+                                case "Name":
+                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Name) : _sortList.Sort(col.Dir, m => m.Name);
                                     break;
                             }
                         }
@@ -113,17 +110,17 @@ namespace TDH.Services.Personal
         /// Get all item without deleted
         /// </summary>
         /// <returns></returns>
-        public List<DreamModel> GetAll(Guid userID)
+        public List<PostTypeModel> GetAll(Guid userID)
         {
             try
             {
-                List<DreamModel> _return = new List<DreamModel>();
+                List<PostTypeModel> _return = new List<PostTypeModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _list = context.PN_DREAM.Where(m => !m.deleted && m.created_by == userID).OrderByDescending(m => m.created_date).ToList();
+                    var _list = context.FB_POST_TYPE.Where(m => !m.deleted).OrderByDescending(m => m.name).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new DreamModel() { ID = item.id, Title = item.title });
+                        _return.Add(new PostTypeModel() { Code = item.code, Name = item.name });
                     }
                 }
                 return _return;
@@ -140,25 +137,27 @@ namespace TDH.Services.Personal
         /// Get item
         /// </summary>
         /// <param name="model"></param>
-        /// <returns>DreamModel. Throw exception if not found or get some error</returns>
-        public DreamModel GetItemByID(DreamModel model)
+        /// <returns>PostTypeModel. Throw exception if not found or get some error</returns>
+        public PostTypeModel GetItemByID(PostTypeModel model)
         {
             try
             {
                 using (var context = new TDHEntities())
                 {
-                    PN_DREAM _md = context.PN_DREAM.FirstOrDefault(m => m.id == model.ID && m.created_by == model.CreateBy && !m.deleted);
+                    FB_POST_TYPE _md = context.FB_POST_TYPE.FirstOrDefault(m => m.code == model.Code && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
                     }
-                    return new DreamModel()
+                    return new PostTypeModel()
                     {
-                        ID = _md.id,
-                        Title = _md.title,
-                        Finish = _md.finish,
-                        FinishTime = _md.finish_time,
-                        FinishTimeString = _md.finish_time.HasValue ? _md.finish_time.Value.DateToString("dd/MM/yyyy") : "",
+                        Code = _md.code,
+                        Name = _md.name,
+                        OnFanpage = _md.on_fanpage,
+                        OnProfile = _md.on_profile,
+                        OnGroup = _md.on_group,
+                        Ordering = _md.ordering,
+                        Publish = _md.publish,
                         Notes = _md.notes
                     };
                 }
@@ -176,42 +175,44 @@ namespace TDH.Services.Personal
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Save(DreamModel model)
+        public ResponseStatusCodeHelper Save(PostTypeModel model)
         {
             try
             {
                 using (var context = new TDHEntities())
                 {
-                    PN_DREAM _md = new PN_DREAM();
+                    FB_POST_TYPE _md = new FB_POST_TYPE();
                     if (model.Insert)
                     {
-                        _md.id = Guid.NewGuid();
+                        _md.code = "none";
                     }
                     else
                     {
-                        _md = context.PN_DREAM.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
+                        _md = context.FB_POST_TYPE.FirstOrDefault(m => m.code == model.Code && !m.deleted);
                         if (_md == null)
                         {
                             throw new FieldAccessException();
                         }
                     }
-                    _md.title = model.Title;
-                    _md.finish = model.Finish;
-                    _md.finish_time = model.FinishTime;
+                    _md.name = model.Name;
+                    _md.on_fanpage = model.OnFanpage;
+                    _md.on_group = model.OnGroup;
+                    _md.on_profile = model.OnProfile;
                     _md.notes = model.Notes;
+                    _md.publish = model.Publish;
                     _md.ordering = model.Ordering;
                     if (model.Insert)
                     {
                         _md.created_by = model.CreateBy;
                         _md.created_date = DateTime.Now;
-                        context.PN_DREAM.Add(_md);
+                        context.FB_POST_TYPE.Add(_md);
                         context.Entry(_md).State = EntityState.Added;
                     }
                     else
                     {
                         _md.updated_by = model.UpdateBy;
                         _md.updated_date = DateTime.Now;
-                        context.PN_DREAM.Attach(_md);
+                        context.FB_POST_TYPE.Attach(_md);
                         context.Entry(_md).State = EntityState.Modified;
                     }
                     context.SaveChanges();
@@ -239,13 +240,13 @@ namespace TDH.Services.Personal
         /// </summary>
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
-        public ResponseStatusCodeHelper Delete(DreamModel model)
+        public ResponseStatusCodeHelper Delete(PostTypeModel model)
         {
             try
             {
                 using (var context = new TDHEntities())
                 {
-                    PN_DREAM _md = context.PN_DREAM.FirstOrDefault(m => m.id == model.ID && m.created_by == model.CreateBy && !m.deleted);
+                    FB_POST_TYPE _md = context.FB_POST_TYPE.FirstOrDefault(m => m.code == model.Code && !m.deleted);
                     if (_md == null)
                     {
                         throw new FieldAccessException();
@@ -253,7 +254,7 @@ namespace TDH.Services.Personal
                     _md.deleted = true;
                     _md.deleted_by = model.DeleteBy;
                     _md.deleted_date = DateTime.Now;
-                    context.PN_DREAM.Attach(_md);
+                    context.FB_POST_TYPE.Attach(_md);
                     context.Entry(_md).State = EntityState.Modified;
                     context.SaveChanges();
                 }
@@ -267,6 +268,6 @@ namespace TDH.Services.Personal
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
-       
+
     }
 }

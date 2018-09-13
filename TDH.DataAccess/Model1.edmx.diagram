@@ -101,6 +101,13 @@
         <EntityTypeShape EntityType="TDHModel.PN_CETIFICATE" Width="1.5" PointX="7.375" PointY="22.75" />
         <EntityTypeShape EntityType="TDHModel.PN_SKILL_DEFINDED" Width="1.5" PointX="31.5" PointY="6.75" />
         <AssociationConnector Association="TDHModel.FK_PN_SKILL_DEFINDED_PN_SKILL" />
+        <EntityTypeShape EntityType="TDHModel.FB_FANPAGE" Width="1.5" PointX="8" PointY="27.875" />
+        <EntityTypeShape EntityType="TDHModel.FB_GROUP" Width="1.5" PointX="8" PointY="33.625" />
+        <EntityTypeShape EntityType="TDHModel.FB_POST_TYPE" Width="1.5" PointX="0.75" PointY="27.75" />
+        <EntityTypeShape EntityType="TDHModel.FB_USER" Width="1.5" PointX="8" PointY="37.875" />
+        <AssociationConnector Association="TDHModel.FK_FB_FANPAGE_SYS_USER" />
+        <AssociationConnector Association="TDHModel.FK_FB_GROUP_SYS_USER" />
+        <AssociationConnector Association="TDHModel.FK_FB_USER_SYS_USER" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

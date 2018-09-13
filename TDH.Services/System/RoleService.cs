@@ -144,7 +144,7 @@ namespace TDH.Services.System
             {
                 using (var context = new TDHEntities())
                 {
-                    List<SYS_FUNCTION> _lFunc = context.SYS_FUNCTION.OrderByDescending(m => m.ordering).ToList();
+                    List<SYS_FUNCTION> _lFunc = context.SYS_FUNCTION.OrderBy(m => m.module_code).OrderByDescending(m => m.ordering).ToList();
                     foreach (var item in _lFunc)
                     {
                         _return.Detail.Add(new RoleDetailModel()

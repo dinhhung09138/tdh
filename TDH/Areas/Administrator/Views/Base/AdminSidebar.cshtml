@@ -17,7 +17,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 @{
-                    
+
                     <li class="nav-item has-treeview">
                         <a href="@Url.Action("CheckList","AdmCheckList")" class="nav-link">
                             <i class="nav-icon fa fa-check"></i>
@@ -56,12 +56,54 @@
                     {
                         foreach (var item in _listSidebar)
                         {
-                            <li class="nav-item">
-                                <a href="@item.DefaultUrl" class="nav-link">
-                                    <i class="nav-icon fa @item.Icon"></i>
-                                    <p>@item.Title</p>
-                                </a>
-                            </li>
+                            if (item.functions.Count() > 0)
+                            {
+                                <li class="nav-item has-treeview menu-open">
+                                    <a href="#" class="nav-link">
+                                        <i class="nav-icon fa @item.Icon"></i>
+                                        <p>
+                                            @item.Title
+                                            <i class="right fa fa-angle-left"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @{
+                                            string icon = "";
+                                            foreach (var f in item.functions)
+                                            {
+                                                switch (f.Code)
+                                                {
+                                                    case "marketing_facebook":
+                                                        icon = "fa-facebook-official";
+                                                        break;
+                                                    case "marketing_youtube":
+                                                        icon = "fa-youtube-square";
+                                                        break;
+                                                    default:
+                                                        icon = "fa-circle-o";
+                                                        break;
+                                                }
+                                                <li class="nav-item">
+                                                    <a href="@f.Action" class="nav-link">
+                                                        <i class="fa @icon nav-icon"></i>
+                                                        <p>@f.Title</p>
+                                                    </a>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a href="@item.DefaultUrl" class="nav-link">
+                                        <i class="nav-icon fa @item.Icon"></i>
+                                        <p>@item.Title</p>
+                                    </a>
+                                </li>
+                            }
+
                         }
 
                     }

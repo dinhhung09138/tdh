@@ -96,18 +96,14 @@ namespace TDH.Services.Marketing.Facebook
             {
                 using (var context = new TDHEntities())
                 {
+                    model.Insert = false;
                     FB_GROUP _md = new FB_GROUP();
-                    if (model.Insert)
+                    _md = context.FB_GROUP.FirstOrDefault(m => m.uid == model.UID && !m.deleted && m.created_by == model.CreateBy);
+                    if (_md == null)
                     {
+                        model.Insert = true;
+                        _md = new FB_GROUP();
                         _md.uid = model.UID;
-                    }
-                    else
-                    {
-                        _md = context.FB_GROUP.FirstOrDefault(m => m.uid == model.UID && !m.deleted && m.created_by == model.CreateBy);
-                        if (_md == null)
-                        {
-                            throw new FieldAccessException();
-                        }
                     }
                     _md.link = model.Link;
                     _md.name = model.Name;

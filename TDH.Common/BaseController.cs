@@ -527,6 +527,29 @@ namespace TDH.Common
                         default:
                             return "";
                     }
+                case "marketing":
+                    switch (controllerName)
+                    {
+                        case "facebook":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "getuser":
+                                case "getgroup":
+                                case "getfanpage":
+                                case "saveuser":
+                                case "savegroup":
+                                case "savefanpage":
+                                case "deleteuser":
+                                case "deletefanpage":
+                                case "deletegroup":
+                                    return "marketing_facebook";
+                                default:
+                                    return "";
+                            }
+                        default:
+                            return "";
+                    }
                 default:
                     return "";
             }
@@ -963,6 +986,29 @@ namespace TDH.Common
                                 case "deleteskill":
                                 case "deleteskilldefined":
                                     return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        default:
+                            return ActionType.None;
+                    }
+                case "marketing":
+                    switch (controllerName)
+                    {
+                        case "facebook":
+                            switch (actionName)
+                            {
+                                case "index":
+                                case "getuser":
+                                case "getgroup":
+                                case "getfanpage":
+                                case "saveuser":
+                                case "savegroup":
+                                case "savefanpage":
+                                case "deleteuser":
+                                case "deletefanpage":
+                                case "deletegroup":
+                                    return ActionType.View;
                                 default:
                                     return ActionType.None;
                             }

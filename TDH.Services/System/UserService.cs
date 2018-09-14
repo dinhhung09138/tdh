@@ -407,28 +407,27 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _listFunction = (from u in _context.SYS_USER
-                                         join ur in _context.SYS_USER_ROLE on u.id equals ur.user_id
-                                         join r in _context.SYS_ROLE on ur.role_id equals r.id
-                                         join dt in _context.SYS_ROLE_DETAIL on r.id equals dt.role_id
-                                         join f in _context.SYS_FUNCTION on dt.function_code equals f.code
-                                         where dt.view && u.id == userID && r.publish & !r.deleted
-                                         orderby f.ordering descending
-                                         select new { f.module_code }).Distinct().ToList();
+                    var _listFunction = (from m in _context.V_RENDER_NAVIGATION
+                                         where m.id == userID
+                                         orderby m.module_order descending, m.function_ordering descending
+                                         select new { m.module_code, m.module_title, m.default_action, m.icon, m.code, m.title, m.url }).ToList();
 
-                    var _list = _context.SYS_MODULE.OrderByDescending(m => m.ordering).ToList();
-
-                    foreach (var item in _list)
+                    var _listModule = _listFunction.Select(m => m.module_code).Distinct().ToList();
+                    foreach (var m in _listModule)
                     {
-                        if (_listFunction.Count(m => m.module_code == item.code && m.module_code != "none") > 0)
+                        var _module = _listFunction.FirstOrDefault(f => f.module_code == m);
+
+                        ModuleSideBarViewModel _md = new ModuleSideBarViewModel()
                         {
-                            _return.Add(new ModuleSideBarViewModel()
-                            {
-                                Icon = item.icon,
-                                Title = item.title,
-                                DefaultUrl = item.default_action
-                            });
+                            Icon = _module.icon,
+                            Title = _module.module_title,
+                            DefaultUrl = _module.default_action
+                        };
+                        if (m == "marketing")
+                        {
+                            _md.functions = _listFunction.Where(f => f.module_code == m).Select(s => new SideBarViewModel() { Code = s.code, Title = s.title, Action = s.url }).ToList();
                         }
+                        _return.Add(_md);
                     }
                 }
             }
@@ -454,14 +453,10 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from u in _context.SYS_USER
-                                 join ur in _context.SYS_USER_ROLE on u.id equals ur.user_id
-                                 join r in _context.SYS_ROLE on ur.role_id equals r.id
-                                 join dt in _context.SYS_ROLE_DETAIL on r.id equals dt.role_id
-                                 join f in _context.SYS_FUNCTION on dt.function_code equals f.code
-                                 where dt.view && u.id == userID && r.publish && !r.deleted && f.module_code == moduleCode
-                                 orderby f.ordering descending
-                                 select new { f.code, f.title, f.area, f.controller, f.action }).ToList();
+                    var _list = (from m in _context.V_RENDER_NAVIGATION
+                                         where m.id == userID && m.module_code == moduleCode
+                                         orderby m.module_order descending, m.function_ordering descending
+                                         select new { m.code, m.title, m.url }).ToList();
 
                     foreach (var item in _list)
                     {
@@ -469,9 +464,7 @@ namespace TDH.Services.System
                         {
                             Code = item.code,
                             Title = item.title,
-                            Area = item.area,
-                            Controller = item.controller,
-                            Action = item.action
+                            Action = item.url
                         });
                     }
                 }

@@ -213,6 +213,7 @@
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
+    @RenderSection("facebook", required: false)
     <div class="wrapper">
         @Html.Action("AdminNavigation", "Base", new { @area = "administrator" })
         @Html.Action("AdminSidebar", "Base", new { @area = "administrator" })

@@ -220,31 +220,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
-    <Compile Include="Areas\Administrator\Controllers\AdmCheckListController.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdmErrorController.cs" />
-    <Compile Include="Areas\Administrator\Controllers\AdmWorkingController.cs" />
-    <Compile Include="Areas\Administrator\Controllers\AdmTargetController.cs" />
     <Compile Include="Areas\Administrator\Controllers\BaseController.cs" />
     <Compile Include="Areas\Administrator\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Administrator\Controllers\LoginController.cs" />
-    <Compile Include="Areas\Administrator\Models\CheckListGroupModel.cs" />
-    <Compile Include="Areas\Administrator\Models\CheckListItemDetailModel.cs" />
-    <Compile Include="Areas\Administrator\Models\CheckListItemModel.cs" />
-    <Compile Include="Areas\Administrator\Models\DailyTaskModel.cs" />
-    <Compile Include="Areas\Administrator\Models\ReportCommentModel.cs" />
-    <Compile Include="Areas\Administrator\Models\ReportModel.cs" />
-    <Compile Include="Areas\Administrator\Models\TargetModel.cs" />
-    <Compile Include="Areas\Administrator\Models\TargetTaskModel.cs" />
-    <Compile Include="Areas\Administrator\Services\CheckListGroupService.cs" />
-    <Compile Include="Areas\Administrator\Services\CheckListItemDetailService.cs" />
-    <Compile Include="Areas\Administrator\Services\CheckListItemService.cs" />
-    <Compile Include="Areas\Administrator\Services\ReportService.cs" />
-    <Compile Include="Areas\Administrator\Services\TargetService.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\Common\Controllers\CMSkillController.cs" />
     <Compile Include="Areas\Common\Utils\Message.cs" />
     <Compile Include="Areas\Marketing\Controllers\FacebookController.cs" />
     <Compile Include="Areas\Marketing\Controllers\YoutubeController.cs" />
+    <Compile Include="Areas\Marketing\Controllers\ZaloController.cs" />
     <Compile Include="Areas\Marketing\MarketingAreaRegistration.cs" />
     <Compile Include="Areas\Money\Controllers\MNAccountController.cs" />
     <Compile Include="Areas\Money\Controllers\MNAccountTypeController.cs" />
@@ -286,144 +271,6 @@
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\NotificationHub.cs" />
-    <Compile Include="Models\ABOUT.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CATEGORY.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CONFIGURATION.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DAILY_TASK.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ERROR_LOG.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FNC_REPORT_INCOME_BY_CATEGORY_Result.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FNC_REPORT_SUMMARY_BY_YEAR_Result.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FNC_REPORT_SUMMARY_Result.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\FUNCTION.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\HOME_CATEGORY.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\HOME_NAVIGATION.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\IDEA.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\IDEA_DETAIL.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MN_ACCOUNT.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MN_ACCOUNT_SETTING.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MN_ACCOUNT_TYPE.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MN_CATEGORY.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MN_CATEGORY_SETTING.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MN_GROUP.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MN_GROUP_SETTING.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MN_INCOME.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MN_PAYMENT.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MN_TRANSFER.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NAVIGATION.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\POST.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\REPORT.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\REPORT_COMMENT.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ROLE.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ROLE_DETAIL.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TARGET.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TARGET_TASK.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TDHModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TDHModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TDHModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TDHModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TDHModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\USER.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\USER_ROLE.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\V_ACCOUNT_HISTORY.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\V_CATEGORY_HISTORY.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\V_MONEY_FLOW.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WK_CHECKLIST_GROUP.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WK_CHECKLIST_ITEM.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\WK_CHECKLIST_ITEM_DETAIL.cs">
-      <DependentUpon>TDHModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -6259,16 +6106,6 @@
     <Content Include="Libs\Utils.dll" />
     <Content Include="Libs\Utils.pdb" />
     <Content Include="Libs\Utils.xml" />
-    <Content Include="Models\TDHModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TDHModel.Context.cs</LastGenOutput>
-      <DependentUpon>TDHModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\TDHModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TDHModel.edmx</DependentUpon>
-      <LastGenOutput>TDHModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -6722,13 +6559,6 @@
     <Content Include="Areas\Administrator\Content\vendors\pdfmake\build\pdfmake.min.js.map" />
     <Content Include="Areas\Administrator\Content\vendors\pdfmake\LICENSE" />
     <Content Include="Libs\NReco.VideoConverter.rar" />
-    <EntityDeploy Include="Models\TDHModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TDHModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\TDHModel.edmx.diagram">
-      <DependentUpon>TDHModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Administrator\Views\Shared\UnauthorizedAccess.cshtml" />
     <Content Include="Areas\Administrator\Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Areas\Administrator\Views\Shared\_DeleteModal.cshtml" />
@@ -6742,12 +6572,6 @@
     <Content Include="Areas\Administrator\Views\Shared\_AdminLogin.cshtml" />
     <Content Include="Areas\Administrator\Views\Login\ForgotPassword.cshtml" />
     <Content Include="Areas\Administrator\Views\Shared\_SignalR.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmWorking\Report.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmWorking\CreateReport.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmWorking\EditReport.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmWorking\_ReportForm.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmWorking\DetailReport.cshtml" />
-    <Content Include="Areas\Administrator\Views\AdmCheckList\CheckList.cshtml" />
     <Content Include="Areas\Administrator\Views\Base\ModuleNavigation.cshtml" />
     <Content Include="Areas\Money\Views\web.config" />
     <Content Include="Areas\System\Views\web.config" />

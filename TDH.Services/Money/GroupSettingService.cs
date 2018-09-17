@@ -190,10 +190,10 @@ namespace TDH.Services.Money
             try
             {
                 List<GroupSettingModel> _return = new List<GroupSettingModel>();
+                Save(yearMonth, userID);
+                //
                 using (var _context = new TDHEntities())
                 {
-                    Save(yearMonth, userID);
-                    //
                     var _list = (from m in _context.MN_GROUP_SETTING
                                  join n in _context.MN_GROUP on m.group_id equals n.id
                                  where !m.deleted && m.year_month == yearMonth && !n.deleted && !n.is_input
@@ -349,15 +349,16 @@ namespace TDH.Services.Money
             {
                 using (var _context = new TDHEntities())
                 {
+                    var _list = _context.MN_GROUP.Where(m => !m.deleted).ToList();
                     using (var trans = _context.Database.BeginTransaction())
                     {
                         try
                         {
-                            var _list = _context.MN_GROUP.Where(m => !m.deleted);
                             foreach (var item in _list)
                             {
                                 //Check if exists
-                                if (_context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == item.id && m.year_month == yearMonth) != null)
+                                var _stItem = _context.MN_GROUP_SETTING.FirstOrDefault(it => it.group_id == item.id && it.year_month == yearMonth);
+                                if ( _stItem != null)
                                 {
                                     continue;
                                 }

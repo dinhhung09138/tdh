@@ -27,12 +27,12 @@ namespace TDH.Model.Money
         /// <summary>
         /// Month
         /// </summary>
-        public decimal Month { get; set; }
+        public int Month { get; set; }
 
         /// <summary>
         /// Year
         /// </summary>
-        public decimal Year { get; set; }
+        public int Year { get; set; }
 
         /// <summary>
         /// The category identifier
@@ -46,23 +46,24 @@ namespace TDH.Model.Money
         public string CategoryName { get; set; } = "";
 
         /// <summary>
-        /// Percent setting value
-        /// </summary>
-        public short PercentSetting { get; set; } = 0;
-
-        /// <summary>
-        /// Percent current value,
-        /// </summary>
-        public short PercentCurrent { get; set; } = 0;
-
-        /// <summary>
         /// Total money setting value
         /// </summary>
         public decimal MoneySetting { get; set; } = 0;
 
         /// <summary>
+        /// Total money setting value as string format
+        /// </summary>
+        public string MoneySettingString { get; set; } = "0";
+
+        /// <summary>
         /// Total money current value
         /// </summary>
         public decimal MoneyCurrent { get; set; } = 0;
+
+        /// <summary>
+        /// Total money current value as string format
+        /// </summary>
+        public string MoneyCurrentString { get; set; } = "0";
+
     }
 }

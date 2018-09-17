@@ -428,5 +428,59 @@ namespace TDH.Areas.Money.Controllers
             }
         }
 
+        #region " [ Setting ] "
+
+
+        /// <summary>
+        /// All setting data by category in a month
+        /// </summary>
+        /// <param name="id">the category identifier</param>
+        /// <param name="yearMonth">Category name</param>
+        /// <returns>View</returns>
+        [HttpGet]
+        public ActionResult Setting(string id, string year)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                CategorySettingService _service = new CategorySettingService();
+
+                List<CategorySettingModel> _model = _service.GetAll(new Guid(id), int.Parse(year), UserID);
+
+                #endregion
+
+                return this.Json(_model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog(FILE_NAME, "Setting", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult SaveSetting(List<CategorySettingModel> model)
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                CategorySettingService _service = new CategorySettingService();
+                
+                #endregion
+
+                return this.Json(_service.Save(model, UserID), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                Log.WriteLog(FILE_NAME, "Setting", UserID, ex);
+                throw new HttpException();
+            }
+        }
+
+
+        #endregion
     }
 }

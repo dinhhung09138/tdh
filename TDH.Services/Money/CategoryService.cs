@@ -49,6 +49,7 @@ namespace TDH.Services.Money
                                       m.id,
                                       m.name,
                                       m.notes,
+                                      n.is_input,
                                       group_name = n.name
                                   }).ToList();
 
@@ -63,23 +64,24 @@ namespace TDH.Services.Money
                                                    m.group_name.ToLower().Contains(searchValue)).ToList();
                     }
                     //Add to list
-                    byte _percentSet = 0;
-                    byte _percentCur = 0;
                     decimal _moneySet = 0;
                     decimal _moneyCur = 0;
+                    int _year = int.Parse(request.Parameter2.Substring(0, 4));
+                    int _month = int.Parse(request.Parameter2.Substring(4, 2));
                     foreach (var item in _lData)
                     {
-                        _percentSet = 0;
-                        _percentCur = 0;
-                        _moneySet = 0;
                         _moneyCur = 0;
-                        var _cateSetting = _context.MN_CATEGORY_SETTING.FirstOrDefault(m => m.category_id == item.id && m.year_month.ToString() == request.Parameter2); //By month year
-                        if (_cateSetting != null)
+                        //Get curent money by month...
+                        //Base on input or outupt, get related data.
+                        if (item.is_input)
                         {
-                            _percentSet = _cateSetting.percent_setting;
-                            _percentCur = _cateSetting.percent_current;
-                            _moneySet = _cateSetting.money_setting;
-                            _moneyCur = _cateSetting.money_current;
+                            _moneyCur = _context.MN_INCOME.Where(m => m.category_id == item.id && m.date.Year == _year && m.date.Month == _month).Select(m => m.money).DefaultIfEmpty(0).Sum();
+                            _moneyCur += _context.MN_TRANSFER.Where(m => m.account_to == item.id && m.date.Year == _year && m.date.Month == _month).Select(m => m.money).DefaultIfEmpty(0).Sum();
+                        }
+                        else
+                        {
+                            _moneyCur = _context.MN_PAYMENT.Where(m => m.category_id == item.id && m.date.Year == _year && m.date.Month == _month).Select(m => m.money).DefaultIfEmpty(0).Sum();
+                            _moneyCur += _context.MN_TRANSFER.Where(m => m.account_from == item.id && m.date.Year == _year && m.date.Month == _month).Select(m => (m.money + m.fee)).DefaultIfEmpty(0).Sum();
                         }
                         _list.Add(new CategoryModel()
                         {
@@ -87,12 +89,11 @@ namespace TDH.Services.Money
                             Name = item.name,
                             GroupName = item.group_name,
                             Notes = item.notes,
-                            PercentCurrent = _percentCur,
-                            PercentSetting = _percentSet,
                             MoneyCurrent = _moneyCur,
                             MoneyCurrentString = _moneyCur.NumberToString(),
                             MoneySetting = _moneySet,
                             MoneySettingString = _moneySet.NumberToString(),
+                            IsIncome = item.is_input
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -301,8 +302,6 @@ namespace TDH.Services.Money
                         Notes = _md.notes,
                         GroupID = _md.group_id,
                         GroupName = _gr.name,
-                        PercentSetting = _md.percent_setting,
-                        PercentCurrent = _md.percent_current,
                         MoneyCurrent = _md.money_current,
                         MoneySetting = _md.money_setting,
                         Ordering = _md.ordering,
@@ -313,10 +312,8 @@ namespace TDH.Services.Money
                     {
                         _return.Setting.Add(new CategorySettingModel()
                         {
-                            Month = item.year_month % 100,
-                            Year = item.year_month / 100,
-                            PercentSetting = item.percent_setting,
-                            PercentCurrent = item.percent_current,
+                            Month = int.Parse(item.year_month.ToString().Substring(4, 2)),
+                            Year = int.Parse(item.year_month.ToString().Substring(0, 4)),
                             MoneySetting = item.money_setting,
                             MoneyCurrent = item.money_current,
                             YearMonthString = item.year_month.ToString()

@@ -18,7 +18,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    window.location.href = '/money/mncategory/category';
+    window.location.href = '/money/mncategory/index';
 };
 
 var OnFailure = function (response) {

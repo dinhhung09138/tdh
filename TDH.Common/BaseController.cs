@@ -314,6 +314,8 @@ namespace TDH.Common
                             {
                                 case "index":
                                 case "history":
+                                case "setting":
+                                case "savesetting":
                                 case "create":
                                 case "edit":
                                 case "publish":
@@ -746,11 +748,13 @@ namespace TDH.Common
                             {
                                 case "index":
                                 case "history":
+                                case "setting":
                                     return ActionType.View;
                                 case "create":
                                     return ActionType.Create;
                                 case "edit":
                                 case "publish":
+                                case "savesetting":
                                     return ActionType.Edit;
                                 case "checkdelete":
                                 case "delete":

@@ -44,12 +44,124 @@
                     <th>Loại</th>
                     <th>Tên</th>
                     <th>Ghi chú</th>
-                    <th>%</th>
-                    <th>Số tiền</th>
+                    <th>Thiết lập</th>
+                    <th>Thực tế</th>
                     <th>#</th>
                 </tr>
             </thead>
         </table>
+    </div>
+</div>
+<div class="modal fade" id="settingModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="settingTitleItemName">Thiết lập</h4>
+                <input type="hidden" id="settingTitleItemID" />
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 1</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="janID" type="hidden" />
+                        <input id="janValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 2</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="febID" type="hidden" />
+                        <input id="febValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 3</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="marID" type="hidden" />
+                        <input id="marValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 4</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="aprID" type="hidden" />
+                        <input id="aprValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 5</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="mayID" type="hidden" />
+                        <input id="mayValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 6</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="junID" type="hidden" />
+                        <input id="junValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 7</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="julID" type="hidden" />
+                        <input id="julValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 8</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="augID" type="hidden" />
+                        <input id="augValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 9</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="septID" type="hidden" />
+                        <input id="septValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 10</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="octID" type="hidden" />
+                        <input id="octValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 11</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="novID" type="hidden" />
+                        <input id="novValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        <label>Tháng 12</label>
+                    </div>
+                    <div class="col-md-4 col-xs-12">
+                        <input id="decID" type="hidden" />
+                        <input id="decValue" type="text" class="form-control" maxlength="15" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveSettingItem();">Lưu</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
     </div>
 </div>
 @Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
@@ -59,7 +171,8 @@
     <script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="~/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
-    <script src="~/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/autoNumeric/autoNumeric.min.js"></script>
     <script src="/Areas/Money/Content/Category/index.js"></script>
 }
 

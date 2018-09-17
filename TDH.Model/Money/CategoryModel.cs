@@ -39,16 +39,6 @@ namespace TDH.Model.Money
         public string Notes { get; set; }
 
         /// <summary>
-        /// Percent setting value
-        /// </summary>
-        public byte PercentSetting { get; set; } = 0;
-
-        /// <summary>
-        /// Percent current value
-        /// </summary>
-        public byte PercentCurrent { get; set; } = 0;
-
-        /// <summary>
         /// Total money setting value
         /// </summary>
         public decimal MoneySetting { get; set; } = 0;
@@ -99,6 +89,11 @@ namespace TDH.Model.Money
         /// Total money at the end of month, format as string
         /// </summary>
         public string EndMonthString { get; set; } = "";
+
+        /// <summary>
+        /// Income or payment
+        /// </summary>
+        public bool IsIncome { get; set; } = false;
 
         /// <summary>
         /// List of setting

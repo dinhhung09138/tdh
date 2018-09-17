@@ -134,135 +134,12 @@ namespace TDH.Services.Money
                             _context.MN_INCOME.Add(_md);
                             _context.Entry(_md).State = EntityState.Added;
                             _context.SaveChanges();
-                            
-                            decimal _yearMonth = decimal.Parse(model.Date.DateToString("yyyyMM"));
-
-                            #region " [ Category ] "
-
-                            MN_CATEGORY _cateMd = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.CategoryID);
-                            MN_CATEGORY_SETTING _cateSettingMd = _context.MN_CATEGORY_SETTING.FirstOrDefault(m => m.category_id == model.CategoryID && m.year_month == _yearMonth);
-                            //Category
-                            if (_yearMonth == _currentYearMonth)
-                            {
-                                _cateMd.money_current += model.Money;
-                                _cateMd.update_by = model.UpdateBy;
-                                _cateMd.update_date = DateTime.Now;
-                                _context.MN_CATEGORY.Attach(_cateMd);
-                                _context.Entry(_cateMd).State = EntityState.Modified;
-                            }
-                            //Category setting
-                            if (_cateSettingMd == null)
-                            {
-                                _cateSettingMd = new MN_CATEGORY_SETTING()
-                                {
-                                    id = Guid.NewGuid(),
-                                    category_id = model.CategoryID,
-                                    percent_setting = 0,
-                                    percent_current = 0,
-                                    money_setting = 0,
-                                    money_current = model.Money,
-                                    year_month = _yearMonth,
-                                    create_by = model.CreateBy,
-                                    create_date = DateTime.Now
-                                };
-                                _context.MN_CATEGORY_SETTING.Add(_cateSettingMd);
-                                _context.Entry(_cateSettingMd).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _cateSettingMd.money_current += model.Money;
-                                _cateSettingMd.update_by = model.UpdateBy;
-                                _cateSettingMd.update_date = DateTime.Now;
-                                _context.MN_CATEGORY_SETTING.Attach(_cateSettingMd);
-                                _context.Entry(_cateSettingMd).State = EntityState.Modified;
-                            }
+                            //MN_ACCOUNT
+                            MN_ACCOUNT _acc = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == _md.account_id);
+                            _acc.input += model.Money;
+                            _context.MN_ACCOUNT.Attach(_acc);
+                            _context.Entry(_acc).State = EntityState.Modified;
                             _context.SaveChanges();
-
-                            #endregion
-
-                            #region " [ Group ] "
-
-                            MN_GROUP _groupMd = _context.MN_GROUP.FirstOrDefault(m => m.id == _cateMd.group_id);
-                            MN_GROUP_SETTING _groupSettingMd = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == _groupMd.id && m.year_month == _yearMonth);
-                            //Group
-                            if (_yearMonth == _currentYearMonth)
-                            {
-                                _groupMd.money_current += model.Money;
-                                _groupMd.update_by = model.UpdateBy;
-                                _groupMd.update_date = DateTime.Now;
-                                _context.MN_GROUP.Attach(_groupMd);
-                                _context.Entry(_groupMd).State = EntityState.Modified;
-                            }
-                            //Group setting
-                            if (_groupSettingMd == null)
-                            {
-                                _groupSettingMd = new MN_GROUP_SETTING()
-                                {
-                                    id = Guid.NewGuid(),
-                                    group_id = _groupMd.id,
-                                    percent_setting = 0,
-                                    percent_current = 0,
-                                    money_setting = 0,
-                                    money_current = model.Money,
-                                    year_month = _yearMonth,
-                                    create_by = model.CreateBy,
-                                    create_date = DateTime.Now
-                                };
-                                _context.MN_GROUP_SETTING.Add(_groupSettingMd);
-                                _context.Entry(_groupSettingMd).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _groupSettingMd.money_current += model.Money;
-                                _groupSettingMd.update_by = model.UpdateBy;
-                                _groupSettingMd.update_date = DateTime.Now;
-                                _context.MN_GROUP_SETTING.Attach(_groupSettingMd);
-                                _context.Entry(_groupSettingMd).State = EntityState.Modified;
-                            }
-                            _context.SaveChanges();
-
-                            #endregion
-
-                            #region " [ Account ] "
-
-                            MN_ACCOUNT _accMd = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.AccountID);
-                            MN_ACCOUNT_SETTING _accSettingMd = _context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == model.AccountID && m.yearmonth == _yearMonth);
-                            
-                            _accMd.input += model.Money;
-                            _accMd.update_by = model.UpdateBy;
-                            _accMd.update_date = DateTime.Now;
-                            _context.MN_ACCOUNT.Attach(_accMd);
-                            _context.Entry(_accMd).State = EntityState.Modified;
-                            
-                            if (_accSettingMd == null)
-                            {
-                                _accSettingMd = new MN_ACCOUNT_SETTING()
-                                {
-                                    id = Guid.NewGuid(),
-                                    account_id = model.AccountID,
-                                    yearmonth = _yearMonth,
-                                    input = model.Money,
-                                    output = 0,
-                                    start = 0,
-                                    end = 0,
-                                    create_by = model.CreateBy,
-                                    create_date = DateTime.Now
-                                };
-                                _context.MN_ACCOUNT_SETTING.Add(_accSettingMd);
-                                _context.Entry(_accSettingMd).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _accSettingMd.input += model.Money;
-                                _accSettingMd.update_by = model.UpdateBy;
-                                _accSettingMd.update_date = DateTime.Now;
-                                _context.MN_ACCOUNT_SETTING.Attach(_accSettingMd);
-                                _context.Entry(_accSettingMd).State = EntityState.Modified;
-                            }
-                            
-                            _context.SaveChanges();
-
-                            #endregion
 
                             trans.Commit();
                         }
@@ -317,135 +194,12 @@ namespace TDH.Services.Money
                             _context.MN_PAYMENT.Add(_md);
                             _context.Entry(_md).State = EntityState.Added;
                             _context.SaveChanges();
-                            
-                            decimal _yearMonth = decimal.Parse(model.Date.DateToString("yyyyMM"));
-
-                            #region " [ Category ] "
-
-                            MN_CATEGORY _cateMd = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.CategoryID);
-                            MN_CATEGORY_SETTING _cateSettingMd = _context.MN_CATEGORY_SETTING.FirstOrDefault(m => m.category_id == model.CategoryID && m.year_month == _yearMonth);
-                            //Category
-                            if (_yearMonth == _currentYearMonth)
-                            {
-                                _cateMd.money_current += model.Money;
-                                _cateMd.update_by = model.UpdateBy;
-                                _cateMd.update_date = DateTime.Now;
-                                _context.MN_CATEGORY.Attach(_cateMd);
-                                _context.Entry(_cateMd).State = EntityState.Modified;
-                            }
-                            //Category setting
-                            if (_cateSettingMd == null)
-                            {
-                                _cateSettingMd = new MN_CATEGORY_SETTING()
-                                {
-                                    id = Guid.NewGuid(),
-                                    category_id = model.CategoryID,
-                                    percent_setting = 0,
-                                    percent_current = 0,
-                                    money_setting = 0,
-                                    money_current = model.Money,
-                                    year_month = _yearMonth,
-                                    create_by = model.CreateBy,
-                                    create_date = DateTime.Now
-                                };
-                                _context.MN_CATEGORY_SETTING.Add(_cateSettingMd);
-                                _context.Entry(_cateSettingMd).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _cateSettingMd.money_current += model.Money;
-                                _cateSettingMd.update_by = model.UpdateBy;
-                                _cateSettingMd.update_date = DateTime.Now;
-                                _context.MN_CATEGORY_SETTING.Attach(_cateSettingMd);
-                                _context.Entry(_cateSettingMd).State = EntityState.Modified;
-                            }
+                            //MN_ACCOUNT
+                            MN_ACCOUNT _acc = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == _md.account_id);
+                            _acc.output += model.Money;
+                            _context.MN_ACCOUNT.Attach(_acc);
+                            _context.Entry(_acc).State = EntityState.Modified;
                             _context.SaveChanges();
-
-                            #endregion
-
-                            #region " [ Group ] "
-
-                            MN_GROUP _groupMd = _context.MN_GROUP.FirstOrDefault(m => m.id == _cateMd.group_id);
-                            MN_GROUP_SETTING _groupSettingMd = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == _groupMd.id && m.year_month == _yearMonth);
-                            //Group
-                            if (_yearMonth == _currentYearMonth)
-                            {
-                                _groupMd.money_current += model.Money;
-                                _groupMd.update_by = model.UpdateBy;
-                                _groupMd.update_date = DateTime.Now;
-                                _context.MN_GROUP.Attach(_groupMd);
-                                _context.Entry(_groupMd).State = EntityState.Modified;
-                            }
-                            //Group setting
-                            if (_groupSettingMd == null)
-                            {
-                                _groupSettingMd = new MN_GROUP_SETTING()
-                                {
-                                    id = Guid.NewGuid(),
-                                    group_id = _groupMd.id,
-                                    percent_setting = 0,
-                                    percent_current = 0,
-                                    money_setting = 0,
-                                    money_current = model.Money,
-                                    year_month = _yearMonth,
-                                    create_by = model.CreateBy,
-                                    create_date = DateTime.Now
-                                };
-                                _context.MN_GROUP_SETTING.Add(_groupSettingMd);
-                                _context.Entry(_groupSettingMd).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _groupSettingMd.money_current += model.Money;
-                                _groupSettingMd.update_by = model.UpdateBy;
-                                _groupSettingMd.update_date = DateTime.Now;
-                                _context.MN_GROUP_SETTING.Attach(_groupSettingMd);
-                                _context.Entry(_groupSettingMd).State = EntityState.Modified;
-                            }
-                            _context.SaveChanges();
-
-                            #endregion
-
-                            #region " [ Account ] "
-
-                            MN_ACCOUNT _accMd = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.AccountID);
-                            MN_ACCOUNT_SETTING _accSettingMd = _context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == model.AccountID && m.yearmonth == _yearMonth);
-                            
-                            _accMd.output += model.Money;
-                            _accMd.update_by = model.UpdateBy;
-                            _accMd.update_date = DateTime.Now;
-                            _context.MN_ACCOUNT.Attach(_accMd);
-                            _context.Entry(_accMd).State = EntityState.Modified;
-                            
-                            if (_accSettingMd == null)
-                            {
-                                _accSettingMd = new MN_ACCOUNT_SETTING()
-                                {
-                                    id = Guid.NewGuid(),
-                                    account_id = model.AccountID,
-                                    yearmonth = _yearMonth,
-                                    input = 0,
-                                    output = model.Money,
-                                    start = 0,
-                                    end = 0,
-                                    create_by = model.CreateBy,
-                                    create_date = DateTime.Now
-                                };
-                                _context.MN_ACCOUNT_SETTING.Add(_accSettingMd);
-                                _context.Entry(_accSettingMd).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _accSettingMd.output += model.Money;
-                                _accSettingMd.update_by = model.UpdateBy;
-                                _accSettingMd.update_date = DateTime.Now;
-                                _context.MN_ACCOUNT_SETTING.Attach(_accSettingMd);
-                                _context.Entry(_accSettingMd).State = EntityState.Modified;
-                            }
-                            
-                            _context.SaveChanges();
-
-                            #endregion
 
                             trans.Commit();
                         }
@@ -501,84 +255,20 @@ namespace TDH.Services.Money
                             _context.MN_TRANSFER.Add(_md);
                             _context.Entry(_md).State = EntityState.Added;
                             _context.SaveChanges();
-                            
-                            decimal _yearMonth = decimal.Parse(model.Date.DateToString("yyyyMM"));
-
-                            #region " [ Account ] "
-
-                            MN_ACCOUNT _accFromMd = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.AccountFrom);
-                            MN_ACCOUNT _accToMd = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == model.AccountTo);
-                            MN_ACCOUNT_SETTING _accFromSettingMd = _context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == model.AccountFrom && m.yearmonth == _yearMonth);
-                            MN_ACCOUNT_SETTING _accToSettingMd = _context.MN_ACCOUNT_SETTING.FirstOrDefault(m => m.account_id == model.AccountTo && m.yearmonth == _yearMonth);
-                            
-                            _accFromMd.output += model.Money;
-                            _accFromMd.update_by = model.UpdateBy;
-                            _accFromMd.update_date = DateTime.Now;
-                            _context.MN_ACCOUNT.Attach(_accFromMd);
-                            _context.Entry(_accFromMd).State = EntityState.Modified;
-                            
-                            _accToMd.input += model.Money;
-                            _accToMd.update_by = model.UpdateBy;
-                            _accToMd.update_date = DateTime.Now;
-                            _context.MN_ACCOUNT.Attach(_accToMd);
-                            _context.Entry(_accToMd).State = EntityState.Modified;
-                            
-                            if (_accFromSettingMd == null)
-                            {
-                                _accFromSettingMd = new MN_ACCOUNT_SETTING()
-                                {
-                                    id = Guid.NewGuid(),
-                                    account_id = model.AccountFrom,
-                                    yearmonth = _yearMonth,
-                                    input = 0,
-                                    output = model.Money,
-                                    start = 0,
-                                    end = 0,
-                                    create_by = model.CreateBy,
-                                    create_date = DateTime.Now
-                                };
-                                _context.MN_ACCOUNT_SETTING.Add(_accFromSettingMd);
-                                _context.Entry(_accFromSettingMd).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _accFromSettingMd.output += model.Money;
-                                _accFromSettingMd.update_by = model.UpdateBy;
-                                _accFromSettingMd.update_date = DateTime.Now;
-                                _context.MN_ACCOUNT_SETTING.Attach(_accFromSettingMd);
-                                _context.Entry(_accFromSettingMd).State = EntityState.Modified;
-                            }
-                            
-                            if (_accToSettingMd == null)
-                            {
-                                _accToSettingMd = new MN_ACCOUNT_SETTING()
-                                {
-                                    id = Guid.NewGuid(),
-                                    account_id = model.AccountTo,
-                                    yearmonth = _yearMonth,
-                                    input = model.Money,
-                                    output = 0,
-                                    start = 0,
-                                    end = 0,
-                                    create_by = model.CreateBy,
-                                    create_date = DateTime.Now
-                                };
-                                _context.MN_ACCOUNT_SETTING.Add(_accToSettingMd);
-                                _context.Entry(_accToSettingMd).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _accToSettingMd.output += model.Money;
-                                _accToSettingMd.update_by = model.UpdateBy;
-                                _accToSettingMd.update_date = DateTime.Now;
-                                _context.MN_ACCOUNT_SETTING.Attach(_accToSettingMd);
-                                _context.Entry(_accToSettingMd).State = EntityState.Modified;
-                            }
-                            
+                            //MN_ACCOUNT receive 
+                            MN_ACCOUNT _accReceive = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == _md.account_to);
+                            _accReceive.input += model.Money;
+                            _context.MN_ACCOUNT.Attach(_accReceive);
+                            _context.Entry(_accReceive).State = EntityState.Modified;
                             _context.SaveChanges();
-
-                            #endregion
-
+                            //MN_ACCOUNT spend
+                            MN_ACCOUNT _accSpend = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == _md.account_from);
+                            _accSpend.input -= (model.Money + model.Fee);
+                            _accSpend.output += (model.Money + model.Fee);
+                            _context.MN_ACCOUNT.Attach(_accSpend);
+                            _context.Entry(_accSpend).State = EntityState.Modified;
+                            _context.SaveChanges();
+                            //
                             trans.Commit();
                         }
                         catch (Exception ex)

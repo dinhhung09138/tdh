@@ -22,10 +22,10 @@
 </div>
 <div class="row form-group">
     <div class="col-md-3 col-sm-4 col-xs-12 text-right">
-        Ghi chú
+        Ghi chú <span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextAreaFor(m => m.Notes, new { @class = "form-control", @rows = 3, @maxlength = 255, @tabindex = "3" })
+        @Html.TextAreaFor(m => m.Notes, new { @class = "form-control", @rows = 3, @required = true, @maxlength = 255, @tabindex = "3" })
         @Html.ValidationMessageFor(m => m.Notes)
     </div>
 </div>

@@ -28,7 +28,7 @@ var beginSubmit = function () {
 };
 
 var onSuccess = function (response, status, e) {
-    window.location.href = '/money/mnaccount/account';
+    window.location.href = '/money/mnaccount/index';
 };
 
 var OnFailure = function (response) {
@@ -46,7 +46,7 @@ function history(id, name, yearMonth) {
             document.title = 'Lịch sử giao dịch: ' + name;
             $('#main_layout').empty();
             $('#main_layout').append(response);
-            setTimeout(function () { loading($('body'), 'hide') }, 700);
+            setTimeout(function () { loading($('body'), 'hide'); }, 700);
         }
     });
 }

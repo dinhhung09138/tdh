@@ -37,8 +37,8 @@ $(document).ready(function () {
             url: '/money/mncategory/history',
             type: 'post',
             data: function (d) {
-                d.Parameter1 = $('#monthSelectValue').val(), //By month
-                    d.Parameter2 = $('#id').val() //By account id
+                d.Parameter1 = $('#monthSelectValue').val(); //By month
+                d.Parameter2 = $('#id').val(); //By account id
             }
         },
         columns: [

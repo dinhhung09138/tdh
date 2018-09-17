@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="card-body">
-        @using (Ajax.BeginForm("create", "account", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
+        @using (Ajax.BeginForm("create", "mnaccount", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
         {
             @Html.Partial("_Form", Model)
         }
@@ -39,6 +39,6 @@
     <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="/Areas/Administrator/Content/plugins/autoNumeric/autoNumeric.min.js"></script>
-    <script src="/Areas/Money/Content/account/history.js"></script>
+    <script src="/Areas/Money/Content/account/action.js"></script>
 }
 

@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+    <style>
+        .fbLoginMessage {
+            margin-bottom: 20px;
+        }
+
+        .fb-user-icon-login {
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "user_info" })
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Name</h3>
+        <div class="card-tools pull-right" id="toolboxbar">
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <span onclick="Zalo.auth('');">Login</span>
+        </div>
+    </div>
+</div>
+@section facebook{
+    @*<script>
+
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '828442780587442',
+                    cookie: true,
+                    xfbml: true,
+                    version: '3.1'
+                });
+
+                FB.AppEvents.logPageView();
+
+            };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) { return; }
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+
+            var clientID = '1982143715396700';
+            var clientSecrect = '5540cd3053d10b13bc4e482840db5836';
+
+        </script>*@
+
+    <script>
+        var Zalo = {
+            auth: function (text) {
+                $.get('https://oauth.zaloapp.com/v3/auth?app_id=807036068247903176&redirect_uri=http://localhost:53542/Marketing/Zalo/Index&state=h', function (data, status) {
+                    console.log(data);
+                });
+            },
+            myInfo: function () {
+                Zalo.api('/me',
+                    'GET',
+                    {
+                        fields: 'id, name, birthday, picture, gender'
+                    },
+                    function (response) {
+                        console.log('my information: ', response);
+                    }
+                );
+            }
+        };
+    </script>
+}
+

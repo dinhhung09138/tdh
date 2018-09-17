@@ -6656,6 +6656,7 @@
     <Content Include="Areas\Marketing\Views\Facebook\Fanpage.cshtml" />
     <Content Include="Areas\Marketing\Views\Facebook\Group.cshtml" />
     <Content Include="Areas\Marketing\Views\Facebook\PostType.cshtml" />
+    <Content Include="Areas\Marketing\Views\Zalo\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

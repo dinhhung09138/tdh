@@ -104,14 +104,7 @@ $(document).ready(function () {
                 searchable: false,
                 className: 'text-right',
                 render: function (obj, type, data, meta) {
-                    if (data.AccountType == 2 || data.AccountType == 3) {
-                        //2: Credit
-                        return '<span style="color: #dc3545;">' + data.BorrowMoneyString + "</span>";
-                    }
-                    if (data.AccountType == 4) {
-                        return '<span style="color: #359746;">' + data.BorrowMoneyString + "</span>";
-                    }
-                    return 0;
+                    return '<span style="color: #dc3545;">' + data.BorrowMoneyString + '</span>';
                 }
             },
             {
@@ -120,10 +113,7 @@ $(document).ready(function () {
                 searchable: false,
                 className: 'text-right',
                 render: function (obj, type, data, meta) {
-                    if (data.AccountType == 4) {
-                        return '<span style="color: #359746;">' + data.LoanMoneyString + "</span>";
-                    }
-                    return '0';
+                    return '<span style="color: #359746;">' + data.LoanMoneyString + '</span>';
                 }
             },
             {

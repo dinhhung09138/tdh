@@ -73,22 +73,26 @@ namespace TDH.Services.Money
                         {
                             ID = item.id,
                             Name = item.name,
-                            BorrowMoney = item.type == (short)AccountType.Credit ? item.input - item.output : 
-                                          item.type == (short)AccountType.Borrow ? item.input - item.max_payment :
-                                          item.input - item.output,
-                            BorrowMoneyString = item.type == (short)AccountType.Credit ? (item.input - item.output).NumberToString() : 
-                                                item.type == (short)AccountType.Borrow ? (item.input - item.max_payment).NumberToString() : //Borrow
-                                                (item.input - item.output).NumberToString(),
-                            MaxPayment = item.max_payment,
-                            MaxPaymentString = item.max_payment == 0 ? "" : item.max_payment.NumberToString(),
+                            MaxPayment = item.type == (short)AccountType.Debit || item.type == (short)AccountType.Saving || item.type == (short)AccountType.Cash ? 0 :
+                                          item.max_payment,
+                            MaxPaymentString = item.type == (short)AccountType.Debit || item.type == (short)AccountType.Saving || item.type == (short)AccountType.Cash ? "" :
+                                          item.max_payment.NumberToString(),
+                            BorrowMoney = item.type == (short)AccountType.Credit ? item.input - item.output : //
+                                          item.type == (short)AccountType.Borrow ? item.max_payment - item.input : //Can not use for pay bills, only receive money to pay for debt
+                                          0,
+                            BorrowMoneyString = item.type == (short)AccountType.Credit ? (item.input - item.output).NumberToString() :
+                                                item.type == (short)AccountType.Borrow ? (item.max_payment - item.input).NumberToString() : //Borrow
+                                                "",
                             LoanMoney = item.type == (short)AccountType.Loan ? item.max_payment - item.input : 0,
-                            LoanMoneyString = item.type == (short)AccountType.Loan ? (item.max_payment - item.input).NumberToString() : "0",
+                            LoanMoneyString = item.type == (short)AccountType.Loan ? (item.max_payment - item.input).NumberToString() : "",
                             AccountType = item.type,
                             Total = item.type == (short)AccountType.Credit ? 0 :
-                                    item.type == (short)AccountType.Borrow ? 0 : 
+                                    item.type == (short)AccountType.Borrow ? 0 :
+                                    item.type == (short)AccountType.Loan ? 0 :
                                     (item.input - item.output),
-                            TotalString = item.type == (short)AccountType.Credit ? "0" :
-                                          item.type == (short)AccountType.Borrow ? "0" :
+                            TotalString = item.type == (short)AccountType.Credit ? "" :
+                                          item.type == (short)AccountType.Borrow ? "" :
+                                          item.type == (short)AccountType.Loan ? "" :
                                           (item.input - item.output).NumberToString()
                         });
                     }

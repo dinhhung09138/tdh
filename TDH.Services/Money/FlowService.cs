@@ -264,7 +264,6 @@ namespace TDH.Services.Money
                             //MN_ACCOUNT spend
                             MN_ACCOUNT _accSpend = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == _md.account_from);
                             _accSpend.input -= (model.Money + model.Fee);
-                            _accSpend.output += (model.Money + model.Fee);
                             _context.MN_ACCOUNT.Attach(_accSpend);
                             _context.Entry(_accSpend).State = EntityState.Modified;
                             _context.SaveChanges();

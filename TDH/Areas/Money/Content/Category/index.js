@@ -405,6 +405,7 @@ function saveSettingItem() {
         data: JSON.stringify(list),
         success: function (response) {
             if (response === 0) {
+                table.ajax.reload();
                 $('#settingModal').modal('hide');
             }
         },

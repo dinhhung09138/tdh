@@ -63,26 +63,24 @@ namespace TDH.Services.Money
                                                    m.notes.ToLower().Contains(searchValue)).ToList();
                     }
                     //Add to list
+                    int _year = int.Parse(request.Parameter2.Substring(0, 4));
+                    int _month = int.Parse(request.Parameter2.Substring(4, 2));
                     int _count = 0;
                     byte _percentSet = 0;
-                    byte _percentCur = 0;
-                    decimal _moneySet = 0;
                     decimal _moneyCur = 0;
                     foreach (var item in _lData)
                     {
                         _count = _context.MN_CATEGORY.Count(m => m.group_id == item.id && !m.deleted);
                         _percentSet = 0;
-                        _percentCur = 0;
-                        _moneySet = 0;
                         _moneyCur = 0;
                         var _grSetting = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.group_id == item.id && m.year_month.ToString() == request.Parameter2); //By month year
                         if (_grSetting != null)
                         {
                             _percentSet = _grSetting.percent_setting;
-                            _percentCur = _grSetting.percent_current;
-                            _moneySet = _grSetting.money_setting;
-                            _moneyCur = _grSetting.money_current;
                         }
+                        _moneyCur = (from i in _context.V_MN_CATEGORY
+                                     where i.group_id == item.id && i.year == _year && i.month == _month
+                                     select new { i.current_income, i.current_payment }).ToList().Select(m => (item.is_input ? m.current_income : m.current_payment)).DefaultIfEmpty(0).Sum();
                         //
                         _list.Add(new GroupModel()
                         {
@@ -90,12 +88,9 @@ namespace TDH.Services.Money
                             Name = item.name,
                             Notes = item.notes,
                             IsInput = item.is_input,
-                            PercentCurrent = _percentCur,
                             PercentSetting = _percentSet,
                             MoneyCurrent = _moneyCur,
                             MoneyCurrentString = _moneyCur.NumberToString(),
-                            MoneySetting = _moneySet,
-                            MoneySettingString = _moneySet.NumberToString(),
                             Publish = item.publish,
                             Count = _count,
                             CountString = _count.NumberToString()

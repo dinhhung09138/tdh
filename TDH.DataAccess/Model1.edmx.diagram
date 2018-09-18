@@ -18,7 +18,7 @@
         <EntityTypeShape EntityType="TDHModel.WK_CHECKLIST_GROUP" Width="1.5" PointX="17.75" PointY="3.75" />
         <EntityTypeShape EntityType="TDHModel.WK_CHECKLIST_ITEM" Width="1.5" PointX="20" PointY="3.375" />
         <EntityTypeShape EntityType="TDHModel.WK_CHECKLIST_ITEM_DETAIL" Width="1.5" PointX="22.25" PointY="3.625" />
-        <EntityTypeShape EntityType="TDHModel.V_MONEY_FLOW" Width="1.5" PointX="11.75" PointY="23.125" />
+        <EntityTypeShape EntityType="TDHModel.V_MONEY_FLOW" Width="1.5" PointX="15.875" PointY="30.375" />
         <AssociationConnector Association="TDHModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" />
         <AssociationConnector Association="TDHModel.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" />
         <AssociationConnector Association="TDHModel.FK_MN_INCOME_MN_ACCOUNT" />
@@ -58,8 +58,7 @@
         <EntityTypeShape EntityType="TDHModel.WEB_HOME_NAVIGATION" Width="1.5" PointX="25.625" PointY="29.5" />
         <EntityTypeShape EntityType="TDHModel.WEB_NAVIGATION" Width="1.5" PointX="23.375" PointY="23.375" />
         <EntityTypeShape EntityType="TDHModel.WEB_POST" Width="1.5" PointX="30.875" PointY="22.25" />
-        <EntityTypeShape EntityType="TDHModel.V_ACCOUNT_HISTORY" Width="1.5" PointX="13.375" PointY="4.75" />
-        <EntityTypeShape EntityType="TDHModel.V_CATEGORY_HISTORY" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TDHModel.V_ACCOUNT_HISTORY" Width="1.5" PointX="11.75" PointY="30.125" />
         <AssociationConnector Association="TDHModel.FK_PN_TARGET_PN_IDEA" />
         <AssociationConnector Association="TDHModel.FK_PN_REPORT_PN_REPORT_KIND" />
         <AssociationConnector Association="TDHModel.FK_PN_TARGET_PLANNING_PN_TARGET" />
@@ -109,6 +108,8 @@
         <AssociationConnector Association="TDHModel.FK_FB_GROUP_SYS_USER" />
         <AssociationConnector Association="TDHModel.FK_FB_USER_SYS_USER" />
         <EntityTypeShape EntityType="TDHModel.V_RENDER_NAVIGATION" Width="1.5" PointX="25.375" PointY="17.75" />
+        <EntityTypeShape EntityType="TDHModel.V_MN_CATEGORY_HISTORY" Width="1.5" PointX="18.125" PointY="30.875" />
+        <EntityTypeShape EntityType="TDHModel.V_MN_CATEGORY" Width="1.5" PointX="13.625" PointY="29.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

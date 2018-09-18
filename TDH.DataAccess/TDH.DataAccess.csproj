@@ -215,7 +215,10 @@
     <Compile Include="V_ACCOUNT_HISTORY.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="V_CATEGORY_HISTORY.cs">
+    <Compile Include="V_MN_CATEGORY.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="V_MN_CATEGORY_HISTORY.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="V_MONEY_FLOW.cs">

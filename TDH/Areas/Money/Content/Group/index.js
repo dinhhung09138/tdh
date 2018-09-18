@@ -38,8 +38,8 @@ $(document).ready(function () {
             url: '/money/mngroup/index',
             type: 'post',
             data: function (d) {
-                d.Parameter1 = $('#ddlSelect').val(),
-                    d.Parameter2 = $('#monthSelectValue').val()
+                d.Parameter1 = $('#ddlSelect').val();
+                d.Parameter2 = $('#monthSelectValue').val();
             }
         },
         columns: [
@@ -78,44 +78,18 @@ $(document).ready(function () {
                 orderable: false,
                 searchable: false,
                 width: '100px',
+                className: 'ctn-center',
                 render: function (obj, type, data, meta) {
-                    var cls = '';
-                    if (((data.PercentCurrent * 100) / data.PercentSetting) <= 80) {
-                        cls = 'success';
-                    } else {
-                        cls = 'info';
-                    }
-                    var _str = '<div class="row">\
-                                    <div class="col-12">\
-                                        Thiết lập:  <h6><span class="badge badge-' + cls + '">' + data.PercentSetting + '%</span></h6>\
-                                    </div>\
-                                    <div class="col-12">\
-                                        Thực tế:  <h6><span class="badge badge-' + cls + '">' + data.PercentCurrent + '%</span></h6>\
-                                    </div>\
-                                </div>';
-                    return _str;
+                    return '<h6><span class="badge badge-info">' + data.PercentSetting + '%</span></h6>';
                 }
             },
             {
                 orderable: false,
                 searchable: false,
                 width: '90px',
+                className: 'text-right',
                 render: function (obj, type, data, meta) {
-                    var cls = '';
-                    if (((data.PercentCurrent * 100) / data.PercentSetting) <= 80) {
-                        cls = 'success';
-                    } else {
-                        cls = 'info';
-                    }
-                    var _str = '<div class="row">\
-                                    <div class="col-12">\
-                                        Thiết lập:  <h6><span class="badge badge-' + cls + '">' + data.MoneySettingString + '</span></h6>\
-                                    </div>\
-                                    <div class="col-12">\
-                                        Thực tế:  <h6><span class="badge badge-' + cls + '">' + data.MoneyCurrentString + '</span></h6>\
-                                    </div>\
-                                </div>';
-                    return _str;
+                    return '<h6><span class="badge badge-info">' + data.MoneyCurrentString + '</span></h6>';
                 }
             },
             {
@@ -124,40 +98,6 @@ $(document).ready(function () {
                 searchable: false,
                 className: 'ctn-center',
                 width: '80px'
-            },
-            {
-                data: 'Publish',
-                orderable: false,
-                searchable: false,
-                className: 'ctn-center',
-                width: '60px',
-                render: function (obj, type, data, meta) {
-                    if (allowEdit === 'True' && data.Count === 0) {
-                        if (data.Publish === true) {
-                            return '<input type="checkbox" class="flat" name="publish" checked  value="' + data.ID + '" />';
-                        } else {
-                            return '<input type="checkbox" class="flat" name="publish" value="' + data.ID + '" />';
-                        }
-                    } else {
-                        if (data.Publish === true) {
-                            return '<div class="icheckbox_flat-green checked" style="position: relative;">\
-                                        <input type="checkbox" class="flat" name="table_records" checked="" \
-                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
-                                        <ins class="iCheck-helper" \
-                                                style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
-                                        </ins>\
-                                    </div>';
-                        } else {
-                            return '<div class="icheckbox_flat-green" style="position: relative;">\
-                                        <input type="checkbox" class="flat" name="table_records" value="14" \
-                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
-                                        <ins class="iCheck-helper" \
-                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
-                                        </ins>\
-                                    </div>';
-                        }
-                    }
-                }
             },
             {
                 orderable: false,
@@ -178,26 +118,7 @@ $(document).ready(function () {
     });
 
     $(".dataTables_wrapper .toolbar").append(toolbarSearch);
-
-    table.on('draw', function () {
-        if ($('#tbList input[name="publish"]')[0]) {
-            $('#tbList input[name="publish"]').iCheck({
-                checkboxClass: 'icheckbox_flat-green',
-                radioClass: 'iradio_flat-green',
-                increaseArea: '20%'
-            });
-
-            $('#tbList input[name="publish"]').on('ifChecked', function () {
-                savePublish($(this).val(), true);
-            });
-
-            $('#tbList input[name="publish"]').on('ifUnchecked', function () {
-                savePublish($(this).val(), false);
-            });
-
-        }
-    });
-
+    
     $("#monthSelect").datepicker({
         language: 'vi',
         format: "yyyy/mm",
@@ -228,25 +149,6 @@ $(document).ready(function () {
 $(document).on('change', '#ddlSelect', function (e) {
     table.ajax.reload();
 });
-
-function savePublish(id, publish) {
-    $.ajax({
-        url: '/money/mngroup/publish',
-        type: 'POST',
-        contentType: 'application/json',
-        dataType: 'json',
-        data: JSON.stringify({ ID: id, Publish: publish }),
-        success: function (response) {
-            if (response === 0) {
-                table.ajax.reload();
-            }
-            id = '';
-        },
-        error: function (xhr, status, error) {
-            console.log(error);
-        }
-    });
-}
 
 function confirmDelete(deletedId) {
     $.ajax({

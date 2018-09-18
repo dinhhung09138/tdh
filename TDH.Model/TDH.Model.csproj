@@ -76,6 +76,7 @@
     <Compile Include="Money\FlowModel.cs" />
     <Compile Include="Money\GroupModel.cs" />
     <Compile Include="Money\GroupSettingModel.cs" />
+    <Compile Include="Money\IAccountType.cs" />
     <Compile Include="Money\IncomeModel.cs" />
     <Compile Include="Money\PaymentModel.cs" />
     <Compile Include="Money\Report\IncomeByYearModel.cs" />

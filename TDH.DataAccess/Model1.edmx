@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TDHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TDHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CM_SKILL">
           <Key>
             <PropertyRef Name="id" />
@@ -1027,8 +1027,47 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_ACCOUNT_HISTORY' does 
           <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_CATEGORY_HISTORY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="V_CATEGORY_HISTORY">
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_CATEGORY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_MN_CATEGORY">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="notes" />
+            <PropertyRef Name="group_id" />
+            <PropertyRef Name="group_name" />
+            <PropertyRef Name="is_input" />
+            <PropertyRef Name="year_month" />
+            <PropertyRef Name="percent_setting" />
+            <PropertyRef Name="percent_current" />
+            <PropertyRef Name="money_setting" />
+            <PropertyRef Name="money_current" />
+            <PropertyRef Name="current_income" />
+            <PropertyRef Name="current_payment" />
+            <PropertyRef Name="ordering" />
+            <PropertyRef Name="publish" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="notes" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="group_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="group_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="is_input" Type="bit" Nullable="false" />
+          <Property Name="setting_id" Type="uniqueidentifier" />
+          <Property Name="year_month" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="year" Type="int" />
+          <Property Name="month" Type="int" />
+          <Property Name="percent_setting" Type="tinyint" Nullable="false" />
+          <Property Name="percent_current" Type="tinyint" Nullable="false" />
+          <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="current_income" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="current_payment" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_CATEGORY_HISTORY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_MN_CATEGORY_HISTORY">
           <Key>
             <PropertyRef Name="category_id" />
             <PropertyRef Name="title" />
@@ -1823,14 +1862,36 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
     [V_ACCOUNT_HISTORY].[type] AS [type]
     FROM [dbo].[V_ACCOUNT_HISTORY] AS [V_ACCOUNT_HISTORY]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="V_CATEGORY_HISTORY" EntityType="Self.V_CATEGORY_HISTORY" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="V_MN_CATEGORY" EntityType="Self.V_MN_CATEGORY" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [V_CATEGORY_HISTORY].[category_id] AS [category_id], 
-    [V_CATEGORY_HISTORY].[title] AS [title], 
-    [V_CATEGORY_HISTORY].[date] AS [date], 
-    [V_CATEGORY_HISTORY].[money] AS [money], 
-    [V_CATEGORY_HISTORY].[type] AS [type]
-    FROM [dbo].[V_CATEGORY_HISTORY] AS [V_CATEGORY_HISTORY]</DefiningQuery>
+    [V_MN_CATEGORY].[id] AS [id], 
+    [V_MN_CATEGORY].[name] AS [name], 
+    [V_MN_CATEGORY].[notes] AS [notes], 
+    [V_MN_CATEGORY].[group_id] AS [group_id], 
+    [V_MN_CATEGORY].[group_name] AS [group_name], 
+    [V_MN_CATEGORY].[is_input] AS [is_input], 
+    [V_MN_CATEGORY].[setting_id] AS [setting_id], 
+    [V_MN_CATEGORY].[year_month] AS [year_month], 
+    [V_MN_CATEGORY].[year] AS [year], 
+    [V_MN_CATEGORY].[month] AS [month], 
+    [V_MN_CATEGORY].[percent_setting] AS [percent_setting], 
+    [V_MN_CATEGORY].[percent_current] AS [percent_current], 
+    [V_MN_CATEGORY].[money_setting] AS [money_setting], 
+    [V_MN_CATEGORY].[money_current] AS [money_current], 
+    [V_MN_CATEGORY].[current_income] AS [current_income], 
+    [V_MN_CATEGORY].[current_payment] AS [current_payment], 
+    [V_MN_CATEGORY].[ordering] AS [ordering], 
+    [V_MN_CATEGORY].[publish] AS [publish]
+    FROM [dbo].[V_MN_CATEGORY] AS [V_MN_CATEGORY]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="V_MN_CATEGORY_HISTORY" EntityType="Self.V_MN_CATEGORY_HISTORY" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_MN_CATEGORY_HISTORY].[category_id] AS [category_id], 
+    [V_MN_CATEGORY_HISTORY].[title] AS [title], 
+    [V_MN_CATEGORY_HISTORY].[date] AS [date], 
+    [V_MN_CATEGORY_HISTORY].[money] AS [money], 
+    [V_MN_CATEGORY_HISTORY].[type] AS [type]
+    FROM [dbo].[V_MN_CATEGORY_HISTORY] AS [V_MN_CATEGORY_HISTORY]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_MONEY_FLOW" EntityType="Self.V_MONEY_FLOW" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2204,7 +2265,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySet Name="WEB_NAVIGATION" EntityType="TDHModel.WEB_NAVIGATION" />
           <EntitySet Name="WEB_POST" EntityType="TDHModel.WEB_POST" />
           <EntitySet Name="V_ACCOUNT_HISTORY" EntityType="TDHModel.V_ACCOUNT_HISTORY" />
-          <EntitySet Name="V_CATEGORY_HISTORY" EntityType="TDHModel.V_CATEGORY_HISTORY" />
           <AssociationSet Name="FK_PN_TARGET_PN_IDEA" Association="TDHModel.FK_PN_TARGET_PN_IDEA">
             <End Role="PN_IDEA" EntitySet="PN_IDEA" />
             <End Role="PN_TARGET" EntitySet="PN_TARGET" />
@@ -2347,6 +2407,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             <End Role="FB_USER" EntitySet="FB_USER" />
           </AssociationSet>
           <EntitySet Name="V_RENDER_NAVIGATION" EntityType="TDHModel.V_RENDER_NAVIGATION" />
+          <EntitySet Name="V_MN_CATEGORY_HISTORY" EntityType="TDHModel.V_MN_CATEGORY_HISTORY" />
+          <EntitySet Name="V_MN_CATEGORY" EntityType="TDHModel.V_MN_CATEGORY" />
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -3348,19 +3410,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="money" Type="Decimal" Precision="19" Scale="1" />
           <Property Name="type" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="V_CATEGORY_HISTORY">
-          <Key>
-            <PropertyRef Name="category_id" />
-            <PropertyRef Name="title" />
-            <PropertyRef Name="money" />
-            <PropertyRef Name="type" />
-          </Key>
-          <Property Name="category_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="date" Type="DateTime" Precision="3" />
-          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
-          <Property Name="type" Type="Int32" Nullable="false" />
-        </EntityType>
         <Association Name="FK_PN_TARGET_PN_IDEA">
           <End Type="TDHModel.PN_IDEA" Role="PN_IDEA" Multiplicity="1" />
           <End Type="TDHModel.PN_TARGET" Role="PN_TARGET" Multiplicity="*" />
@@ -4105,6 +4154,56 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="function_ordering" Type="Int16" Nullable="false" />
           <Property Name="id" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="V_MN_CATEGORY_HISTORY">
+          <Key>
+            <PropertyRef Name="category_id" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="money" />
+            <PropertyRef Name="type" />
+          </Key>
+          <Property Name="category_id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="V_MN_CATEGORY">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="notes" />
+            <PropertyRef Name="group_id" />
+            <PropertyRef Name="group_name" />
+            <PropertyRef Name="is_input" />
+            <PropertyRef Name="year_month" />
+            <PropertyRef Name="percent_setting" />
+            <PropertyRef Name="percent_current" />
+            <PropertyRef Name="money_setting" />
+            <PropertyRef Name="money_current" />
+            <PropertyRef Name="current_income" />
+            <PropertyRef Name="current_payment" />
+            <PropertyRef Name="ordering" />
+            <PropertyRef Name="publish" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="notes" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="group_id" Type="Guid" Nullable="false" />
+          <Property Name="group_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="is_input" Type="Boolean" Nullable="false" />
+          <Property Name="setting_id" Type="Guid" />
+          <Property Name="year_month" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+          <Property Name="year" Type="Int32" />
+          <Property Name="month" Type="Int32" />
+          <Property Name="percent_setting" Type="Byte" Nullable="false" />
+          <Property Name="percent_current" Type="Byte" Nullable="false" />
+          <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="current_income" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="current_payment" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -4964,17 +5063,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="V_CATEGORY_HISTORY">
-            <EntityTypeMapping TypeName="TDHModel.V_CATEGORY_HISTORY">
-              <MappingFragment StoreEntitySet="V_CATEGORY_HISTORY">
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="money" ColumnName="money" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="category_id" ColumnName="category_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SYS_MODULE">
             <EntityTypeMapping TypeName="TDHModel.SYS_MODULE">
               <MappingFragment StoreEntitySet="SYS_MODULE">
@@ -5312,6 +5400,41 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <ScalarProperty Name="default_action" ColumnName="default_action" />
                 <ScalarProperty Name="module_title" ColumnName="module_title" />
                 <ScalarProperty Name="module_code" ColumnName="module_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_MN_CATEGORY_HISTORY">
+            <EntityTypeMapping TypeName="TDHModel.V_MN_CATEGORY_HISTORY">
+              <MappingFragment StoreEntitySet="V_MN_CATEGORY_HISTORY">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_MN_CATEGORY">
+            <EntityTypeMapping TypeName="TDHModel.V_MN_CATEGORY">
+              <MappingFragment StoreEntitySet="V_MN_CATEGORY">
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="current_payment" ColumnName="current_payment" />
+                <ScalarProperty Name="current_income" ColumnName="current_income" />
+                <ScalarProperty Name="money_current" ColumnName="money_current" />
+                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
+                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
+                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="year_month" ColumnName="year_month" />
+                <ScalarProperty Name="setting_id" ColumnName="setting_id" />
+                <ScalarProperty Name="is_input" ColumnName="is_input" />
+                <ScalarProperty Name="group_name" ColumnName="group_name" />
+                <ScalarProperty Name="group_id" ColumnName="group_id" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

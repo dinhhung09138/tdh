@@ -68,7 +68,6 @@ namespace TDH.DataAccess
         public virtual DbSet<WEB_NAVIGATION> WEB_NAVIGATION { get; set; }
         public virtual DbSet<WEB_POST> WEB_POST { get; set; }
         public virtual DbSet<V_ACCOUNT_HISTORY> V_ACCOUNT_HISTORY { get; set; }
-        public virtual DbSet<V_CATEGORY_HISTORY> V_CATEGORY_HISTORY { get; set; }
         public virtual DbSet<SYS_MODULE> SYS_MODULE { get; set; }
         public virtual DbSet<PN_DREAM> PN_DREAM { get; set; }
         public virtual DbSet<CM_SKILL> CM_SKILL { get; set; }
@@ -87,6 +86,8 @@ namespace TDH.DataAccess
         public virtual DbSet<FB_POST_TYPE> FB_POST_TYPE { get; set; }
         public virtual DbSet<FB_USER> FB_USER { get; set; }
         public virtual DbSet<V_RENDER_NAVIGATION> V_RENDER_NAVIGATION { get; set; }
+        public virtual DbSet<V_MN_CATEGORY_HISTORY> V_MN_CATEGORY_HISTORY { get; set; }
+        public virtual DbSet<V_MN_CATEGORY> V_MN_CATEGORY { get; set; }
     
         [DbFunction("TDHEntities", "FNC_REPORT_INCOME_BY_CATEGORY")]
         public virtual IQueryable<FNC_REPORT_INCOME_BY_CATEGORY_Result> FNC_REPORT_INCOME_BY_CATEGORY()

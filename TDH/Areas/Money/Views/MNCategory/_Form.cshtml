@@ -41,13 +41,10 @@
                     <thead>
                         <tr>
                             <th rowspan="2">Tháng</th>
-                            <th colspan="2">Tỷ lệ</th>
                             <th colspan="2">Tổng tiền</th>
                             <td rowspan="2"></td>
                         </tr>
                         <tr>
-                            <th>Thiết lập</th>
-                            <th>Thực tế</th>
                             <th>Thiết lập</th>
                             <th>Thực tế</th>
                         </tr>
@@ -59,8 +56,6 @@
                             {
                                 <tr>
                                     <td class="@_cls">@item.Month</td>
-                                    <td class="text-right">@item.PercentSetting.ToString("#,##0.##")</td>
-                                    <td class="text-right">@item.PercentCurrent.ToString("#,##0.##")</td>
                                     <td class="text-right">@item.MoneySetting.ToString("#,##0.##")</td>
                                     <td class="text-right">@item.MoneyCurrent.ToString("#,##0.##")</td>
                                     <td class="ctn-center">

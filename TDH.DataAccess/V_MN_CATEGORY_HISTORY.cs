@@ -12,7 +12,7 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class V_CATEGORY_HISTORY
+    public partial class V_MN_CATEGORY_HISTORY
     {
         public System.Guid category_id { get; set; }
         public string title { get; set; }

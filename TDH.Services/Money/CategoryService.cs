@@ -20,7 +20,7 @@ namespace TDH.Services.Money
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/CategoryService.cs";
+        private readonly string FILE_NAME = "Services.Money/CategoryService.cs";
 
         #endregion
 
@@ -35,22 +35,27 @@ namespace TDH.Services.Money
             Dictionary<string, object> _return = new Dictionary<string, object>();
             try
             {
+                int _year = int.Parse(request.Parameter2.Substring(0, 4));
+                int _month = int.Parse(request.Parameter2.Substring(4, 2));
                 //Declare response data to json object
                 DataTableResponse<CategoryModel> _itemResponse = new DataTableResponse<CategoryModel>();
                 //List of data
                 List<CategoryModel> _list = new List<CategoryModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in _context.MN_CATEGORY
-                                  join n in _context.MN_GROUP on m.group_id equals n.id
-                                  where !n.deleted && !m.deleted && request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.group_id.ToString())
+                    var _lData = (from m in _context.V_MN_CATEGORY
+                                  where request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.group_id.ToString()) &&
+                                        (m.year == 0 || m.year == _year) && (m.month == 0 || m.month == _month)
                                   select new
                                   {
                                       m.id,
                                       m.name,
                                       m.notes,
-                                      n.is_input,
-                                      group_name = n.name
+                                      m.is_input,
+                                      m.group_name,
+                                      m.current_income,
+                                      m.current_payment,
+                                      m.money_setting
                                   }).ToList();
 
                     _itemResponse.draw = request.draw;
@@ -64,35 +69,18 @@ namespace TDH.Services.Money
                                                    m.group_name.ToLower().Contains(searchValue)).ToList();
                     }
                     //Add to list
-                    decimal _moneySet = 0;
-                    decimal _moneyCur = 0;
-                    int _year = int.Parse(request.Parameter2.Substring(0, 4));
-                    int _month = int.Parse(request.Parameter2.Substring(4, 2));
                     foreach (var item in _lData)
                     {
-                        _moneyCur = 0;
-                        //Get curent money by month...
-                        //Base on input or outupt, get related data.
-                        if (item.is_input)
-                        {
-                            _moneyCur = _context.MN_INCOME.Where(m => m.category_id == item.id && m.date.Year == _year && m.date.Month == _month).Select(m => m.money).DefaultIfEmpty(0).Sum();
-                            _moneyCur += _context.MN_TRANSFER.Where(m => m.account_to == item.id && m.date.Year == _year && m.date.Month == _month).Select(m => m.money).DefaultIfEmpty(0).Sum();
-                        }
-                        else
-                        {
-                            _moneyCur = _context.MN_PAYMENT.Where(m => m.category_id == item.id && m.date.Year == _year && m.date.Month == _month).Select(m => m.money).DefaultIfEmpty(0).Sum();
-                            _moneyCur += _context.MN_TRANSFER.Where(m => m.account_from == item.id && m.date.Year == _year && m.date.Month == _month).Select(m => (m.money + m.fee)).DefaultIfEmpty(0).Sum();
-                        }
                         _list.Add(new CategoryModel()
                         {
                             ID = item.id,
                             Name = item.name,
                             GroupName = item.group_name,
                             Notes = item.notes,
-                            MoneyCurrent = _moneyCur,
-                            MoneyCurrentString = _moneyCur.NumberToString(),
-                            MoneySetting = _moneySet,
-                            MoneySettingString = _moneySet.NumberToString(),
+                            MoneyCurrent = item.is_input ? item.current_income : item.current_payment,
+                            MoneyCurrentString = (item.is_input ? item.current_income : item.current_payment).NumberToString(),
+                            MoneySetting = item.money_setting,
+                            MoneySettingString = item.money_setting.NumberToString(),
                             IsIncome = item.is_input
                         });
                     }
@@ -227,7 +215,7 @@ namespace TDH.Services.Money
                 List<CategoryHistoryModel> _list = new List<CategoryHistoryModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in _context.V_CATEGORY_HISTORY
+                    var _lData = (from m in _context.V_MN_CATEGORY_HISTORY
                                   where request.Parameter2 == (request.Parameter2.Length == 0 ? request.Parameter2 : m.category_id.ToString()) //By account id
                                   orderby m.date descending
                                   select new
@@ -287,38 +275,40 @@ namespace TDH.Services.Money
             {
                 using (var _context = new TDHEntities())
                 {
-                    MN_CATEGORY _md = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                    if (_md == null)
+                    List<V_MN_CATEGORY> _list = _context.V_MN_CATEGORY.Where(m => m.id == model.ID).ToList();
+                    if (_list == null && _list.Count() == 0)
                     {
                         throw new FieldAccessException();
                     }
-                    var _gr = _context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
-                    var _lSetting = _context.MN_CATEGORY_SETTING.Where(m => m.category_id == model.ID && m.year_month.ToString().Contains(DateTime.Now.Year.ToString())).OrderByDescending(m => m.year_month);
-                    
+
                     CategoryModel _return = new CategoryModel()
                     {
-                        ID = _md.id,
-                        Name = _md.name,
-                        Notes = _md.notes,
-                        GroupID = _md.group_id,
-                        GroupName = _gr.name,
-                        MoneyCurrent = _md.money_current,
-                        MoneySetting = _md.money_setting,
-                        Ordering = _md.ordering,
-                        Publish = _md.publish
+                        ID = _list[0].id,
+                        Name = _list[0].name,
+                        Notes = _list[0].notes,
+                        GroupID = _list[0].group_id,
+                        GroupName = _list[0].group_name,
+                        MoneyCurrent = _list[0].money_current,
+                        MoneySetting = _list[0].money_setting,
+                        Ordering = _list[0].ordering,
+                        Publish = _list[0].publish
                     };
-                    
-                    foreach (var item in _lSetting)
+
+                    if (_list.Count > 1)
                     {
-                        _return.Setting.Add(new CategorySettingModel()
+                        foreach (var item in _list)
                         {
-                            Month = int.Parse(item.year_month.ToString().Substring(4, 2)),
-                            Year = int.Parse(item.year_month.ToString().Substring(0, 4)),
-                            MoneySetting = item.money_setting,
-                            MoneyCurrent = item.money_current,
-                            YearMonthString = item.year_month.ToString()
-                        });
+                            _return.Setting.Add(new CategorySettingModel()
+                            {
+                                Month = item.month.Value,
+                                Year = item.year.Value,
+                                MoneySetting = item.money_setting,
+                                MoneyCurrent = item.is_input ? item.current_income : item.current_payment,
+                                YearMonthString = item.year_month.ToString()
+                            });
+                        }
                     }
+
                     return _return;
                 }
             }

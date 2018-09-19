@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
-using TDH.Common.Fillters;
+using TDH.Common.UserException;
 using TDH.Services.Money;
 
 namespace TDH.Areas.Money.Controllers
@@ -35,10 +32,17 @@ namespace TDH.Areas.Money.Controllers
             {
                 return View();
             }
+            catch(ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -66,10 +70,17 @@ namespace TDH.Areas.Money.Controllers
 
                 return this.Json(_model, JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "SummaryReport", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "SummaryReport", UserID, ex);
             }
         }
 
@@ -99,10 +110,17 @@ namespace TDH.Areas.Money.Controllers
 
                 return this.Json(_model, JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "SummaryReportByYear", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "SummaryReportByYear", UserID, ex);
             }
         }
 
@@ -131,10 +149,17 @@ namespace TDH.Areas.Money.Controllers
 
                 return this.Json(_model, JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "IncomeByYearReport", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "IncomeByYearReport", UserID, ex);
             }
         }
 

@@ -59,7 +59,6 @@
     <Compile Include="Marketing\Facebook\PostTypeService.cs" />
     <Compile Include="Marketing\Facebook\UserService.cs" />
     <Compile Include="Money\AccountService.cs" />
-    <Compile Include="Money\AccountSettingService.cs" />
     <Compile Include="Money\AccountTypeService.cs" />
     <Compile Include="Money\CategoryService.cs" />
     <Compile Include="Money\CategorySettingService.cs" />

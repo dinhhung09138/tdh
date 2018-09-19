@@ -30,7 +30,7 @@ namespace TDH.Common
                     _md.file_name = fileName;
                     _md.method_name = methodName;
                     _md.source = ex.Source;
-                    _md.stack_trace = ex.StackTrace;
+                    _md.stack_trace = "";// ex.StackTrace;
                     _md.inner_exception = ex.InnerException != null ? ex.InnerException.Message : "";
                     _md.message = ex.Message;
                     _md.date = DateTime.Now;

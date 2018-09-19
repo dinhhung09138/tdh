@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TDH.Model.Money.Report;
 using TDH.DataAccess;
 using TDH.Common;
+using TDH.Common.UserException;
 
 namespace TDH.Services.Money
 {
@@ -18,7 +19,7 @@ namespace TDH.Services.Money
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/ReportService.cs";
+        private readonly string FILE_NAME = "Services.Money/ReportService.cs";
 
         #endregion
 
@@ -49,9 +50,7 @@ namespace TDH.Services.Money
                 }
                 catch (Exception ex)
                 {
-                    Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                    Log.WriteLog(FILE_NAME, "Summary", userID, ex);
-                    throw new ApplicationException();
+                    throw new ServiceException(FILE_NAME, "Summary", userID, ex);
                 }
             });
             await _return;
@@ -86,9 +85,7 @@ namespace TDH.Services.Money
                 }
                 catch (Exception ex)
                 {
-                    Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                    Log.WriteLog(FILE_NAME, "SummaryByYear", userID, ex);
-                    throw new ApplicationException();
+                    throw new ServiceException(FILE_NAME, "SummaryByYear", userID, ex);
                 }
             });
             await _return;
@@ -139,9 +136,7 @@ namespace TDH.Services.Money
                 }
                 catch (Exception ex)
                 {
-                    Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                    Log.WriteLog(FILE_NAME, "SummaryByYear", userID, ex);
-                    throw new ApplicationException();
+                    throw new ServiceException(FILE_NAME, "SummaryIncomeByYear", userID, ex);
                 }
             });
             await _return;

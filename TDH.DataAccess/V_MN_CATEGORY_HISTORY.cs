@@ -19,5 +19,6 @@ namespace TDH.DataAccess
         public Nullable<System.DateTime> date { get; set; }
         public decimal money { get; set; }
         public int type { get; set; }
+        public System.Guid create_by { get; set; }
     }
 }

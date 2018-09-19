@@ -25,5 +25,6 @@ namespace TDH.DataAccess
         public decimal money { get; set; }
         public decimal fee { get; set; }
         public int type { get; set; }
+        public System.Guid create_by { get; set; }
     }
 }

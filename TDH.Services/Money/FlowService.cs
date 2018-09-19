@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.Money;
 using Utils;
@@ -20,7 +21,7 @@ namespace TDH.Services.Money
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/FlowService.cs";
+        private readonly string FILE_NAME = "Services.Money/FlowService.cs";
 
         #endregion
 
@@ -42,7 +43,7 @@ namespace TDH.Services.Money
                 using (var _context = new TDHEntities())
                 {
                     var _lData = (from m in _context.V_MN_MONEY_FLOW
-                                  where request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.type.ToString())
+                                  where m.create_by == userID && request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.type.ToString())
                                   orderby m.date descending
                                   select new
                                   {
@@ -96,9 +97,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
             return _return;
         }
@@ -145,19 +144,19 @@ namespace TDH.Services.Money
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "SaveIncome", model.CreateBy, ex);
-                            throw new ApplicationException();
+                            throw new ServiceException(FILE_NAME, "SaveIncome", model.CreateBy, ex);
                         }
                     }
                 }
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "SaveIncome", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "SaveIncome", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.InsertSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -205,19 +204,19 @@ namespace TDH.Services.Money
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "SavePayment", model.CreateBy, ex);
-                            throw new ApplicationException();
+                            throw new ServiceException(FILE_NAME, "SavePayment", model.CreateBy, ex);
                         }
                     }
                 }
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "SavePayment", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "SavePayment", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.InsertSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -272,19 +271,19 @@ namespace TDH.Services.Money
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "SaveTransfer", model.CreateBy, ex);
-                            throw new ApplicationException();
+                            throw new ServiceException(FILE_NAME, "SaveTransfer", model.CreateBy, ex);
                         }
                     }
                 }
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "SaveTransfer", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "SaveTransfer", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.InsertSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

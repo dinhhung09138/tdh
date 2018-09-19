@@ -6,6 +6,7 @@ using TDH.Common;
 using TDH.DataAccess;
 using TDH.Model.Money;
 using System.Data.Entity;
+using TDH.Common.UserException;
 
 namespace TDH.Services.Money
 {
@@ -19,7 +20,7 @@ namespace TDH.Services.Money
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/GroupSettingService.cs";
+        private readonly string FILE_NAME = "Services.Money/GroupSettingService.cs";
 
         #endregion
 
@@ -36,7 +37,7 @@ namespace TDH.Services.Money
                 using (var _context = new TDHEntities())
                 {
                     var _list = (from m in _context.MN_GROUP_SETTING
-                                 where !m.deleted
+                                 where !m.deleted && m.create_by == userID
                                  orderby m.group_id, m.year_month ascending
                                  select new
                                  {
@@ -68,9 +69,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -88,7 +87,7 @@ namespace TDH.Services.Money
                 using (var _context = new TDHEntities())
                 {
                     var _list = (from m in _context.MN_GROUP_SETTING
-                                 where !m.deleted && m.group_id == groupID
+                                 where !m.deleted && m.group_id == groupID && m.create_by == userID
                                  orderby m.group_id, m.year_month ascending
                                  select new
                                  {
@@ -120,9 +119,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -141,7 +138,7 @@ namespace TDH.Services.Money
                 using (var _context = new TDHEntities())
                 {
                     var _list = (from m in _context.MN_GROUP_SETTING
-                                 where !m.deleted && m.group_id == groupID && m.year_month == yearMonth
+                                 where !m.deleted && m.group_id == groupID && m.year_month == yearMonth && m.create_by == userID
                                  orderby m.group_id, m.year_month ascending
                                  select new
                                  {
@@ -173,9 +170,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -196,7 +191,7 @@ namespace TDH.Services.Money
                 {
                     var _list = (from m in _context.MN_GROUP_SETTING
                                  join n in _context.MN_GROUP on m.group_id equals n.id
-                                 where !m.deleted && m.year_month == yearMonth && !n.deleted && !n.is_input
+                                 where !m.deleted && m.year_month == yearMonth && !n.deleted && !n.is_input && n.create_by == userID
                                  orderby m.group_id, m.year_month ascending
                                  select new
                                  {
@@ -232,9 +227,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAllGroupByMonth", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -249,10 +242,10 @@ namespace TDH.Services.Money
             {
                 using (var _context = new TDHEntities())
                 {
-                    MN_GROUP_SETTING _md = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    MN_GROUP_SETTING _md = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.create_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
                     }
                     var _group = _context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
                     return new GroupSettingModel()
@@ -270,11 +263,13 @@ namespace TDH.Services.Money
                     };
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
         }
 
@@ -298,7 +293,7 @@ namespace TDH.Services.Money
                                 MN_GROUP_SETTING _md = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.id == item.ID && !m.deleted);
                                 if (_md == null)
                                 {
-                                    throw new FieldAccessException();
+                                    throw new DataAccessException(FILE_NAME, "Save", item.CreateBy);
                                 }
                                 _md.percent_setting = item.PercentSetting;
                                 _md.update_by = item.UpdateBy;
@@ -317,21 +312,26 @@ namespace TDH.Services.Money
                             }
                             trans.Commit();
                         }
+                        catch (DataAccessException fieldEx)
+                        {
+                            trans.Rollback();
+                            throw fieldEx;
+                        }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model[0].CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", model[0].CreateBy, ex);
-                            throw new ApplicationException();
+                            throw ex;
                         }
                     }
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model[0].CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model[0].CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model[0].CreateBy, ex);
             }
             Notifier.Notification(model[0].CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -357,7 +357,7 @@ namespace TDH.Services.Money
                             foreach (var item in _list)
                             {
                                 //Check if exists
-                                var _stItem = _context.MN_GROUP_SETTING.FirstOrDefault(it => it.group_id == item.id && it.year_month == yearMonth);
+                                var _stItem = _context.MN_GROUP_SETTING.FirstOrDefault(it => it.group_id == item.id && it.year_month == yearMonth && it.create_by == userID);
                                 if ( _stItem != null)
                                 {
                                     continue;
@@ -382,19 +382,15 @@ namespace TDH.Services.Money
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "SaveAllGroupByMonth", userID, ex);
-                            throw new ApplicationException();
+                            throw ex;
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "SaveAllGroupByMonth", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", userID, ex);
             }
             return ResponseStatusCodeHelper.Success;
         }

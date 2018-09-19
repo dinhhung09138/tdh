@@ -1019,12 +1019,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_ACCOUNT_HISTORY' do
             <PropertyRef Name="account_id" />
             <PropertyRef Name="title" />
             <PropertyRef Name="type" />
+            <PropertyRef Name="create_by" />
           </Key>
           <Property Name="account_id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="date" Type="datetime" />
           <Property Name="money" Type="numeric" Precision="19" Scale="1" />
           <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_CATEGORY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1045,6 +1047,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_CATEGORY' does not 
             <PropertyRef Name="current_payment" />
             <PropertyRef Name="ordering" />
             <PropertyRef Name="publish" />
+            <PropertyRef Name="create_by" />
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -1064,6 +1067,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_CATEGORY' does not 
           <Property Name="current_payment" Type="numeric" Precision="38" Scale="1" Nullable="false" />
           <Property Name="ordering" Type="smallint" Nullable="false" />
           <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_CATEGORY_HISTORY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1073,12 +1077,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_CATEGORY_HISTORY' d
             <PropertyRef Name="title" />
             <PropertyRef Name="money" />
             <PropertyRef Name="type" />
+            <PropertyRef Name="create_by" />
           </Key>
           <Property Name="category_id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="date" Type="datetime" />
           <Property Name="money" Type="numeric" Precision="18" Scale="1" Nullable="false" />
           <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_MONEY_FLOW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1092,6 +1098,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_MONEY_FLOW' does no
             <PropertyRef Name="money" />
             <PropertyRef Name="fee" />
             <PropertyRef Name="type" />
+            <PropertyRef Name="create_by" />
           </Key>
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="from_id" Type="uniqueidentifier" Nullable="false" />
@@ -1104,6 +1111,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_MONEY_FLOW' does no
           <Property Name="money" Type="numeric" Precision="18" Scale="1" Nullable="false" />
           <Property Name="fee" Type="numeric" Precision="18" Scale="1" Nullable="false" />
           <Property Name="type" Type="int" Nullable="false" />
+          <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_RENDER_NAVIGATION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1859,7 +1867,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
     [V_MN_ACCOUNT_HISTORY].[title] AS [title], 
     [V_MN_ACCOUNT_HISTORY].[date] AS [date], 
     [V_MN_ACCOUNT_HISTORY].[money] AS [money], 
-    [V_MN_ACCOUNT_HISTORY].[type] AS [type]
+    [V_MN_ACCOUNT_HISTORY].[type] AS [type], 
+    [V_MN_ACCOUNT_HISTORY].[create_by] AS [create_by]
     FROM [dbo].[V_MN_ACCOUNT_HISTORY] AS [V_MN_ACCOUNT_HISTORY]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_MN_CATEGORY" EntityType="Self.V_MN_CATEGORY" store:Type="Views" store:Schema="dbo">
@@ -1881,7 +1890,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
     [V_MN_CATEGORY].[current_income] AS [current_income], 
     [V_MN_CATEGORY].[current_payment] AS [current_payment], 
     [V_MN_CATEGORY].[ordering] AS [ordering], 
-    [V_MN_CATEGORY].[publish] AS [publish]
+    [V_MN_CATEGORY].[publish] AS [publish], 
+    [V_MN_CATEGORY].[create_by] AS [create_by]
     FROM [dbo].[V_MN_CATEGORY] AS [V_MN_CATEGORY]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_MN_CATEGORY_HISTORY" EntityType="Self.V_MN_CATEGORY_HISTORY" store:Type="Views" store:Schema="dbo">
@@ -1890,7 +1900,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
     [V_MN_CATEGORY_HISTORY].[title] AS [title], 
     [V_MN_CATEGORY_HISTORY].[date] AS [date], 
     [V_MN_CATEGORY_HISTORY].[money] AS [money], 
-    [V_MN_CATEGORY_HISTORY].[type] AS [type]
+    [V_MN_CATEGORY_HISTORY].[type] AS [type], 
+    [V_MN_CATEGORY_HISTORY].[create_by] AS [create_by]
     FROM [dbo].[V_MN_CATEGORY_HISTORY] AS [V_MN_CATEGORY_HISTORY]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_MN_MONEY_FLOW" EntityType="Self.V_MN_MONEY_FLOW" store:Type="Views" store:Schema="dbo">
@@ -1905,7 +1916,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
     [V_MN_MONEY_FLOW].[date] AS [date], 
     [V_MN_MONEY_FLOW].[money] AS [money], 
     [V_MN_MONEY_FLOW].[fee] AS [fee], 
-    [V_MN_MONEY_FLOW].[type] AS [type]
+    [V_MN_MONEY_FLOW].[type] AS [type], 
+    [V_MN_MONEY_FLOW].[create_by] AS [create_by]
     FROM [dbo].[V_MN_MONEY_FLOW] AS [V_MN_MONEY_FLOW]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_RENDER_NAVIGATION" EntityType="Self.V_RENDER_NAVIGATION" store:Type="Views" store:Schema="dbo">
@@ -4126,12 +4138,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             <PropertyRef Name="title" />
             <PropertyRef Name="money" />
             <PropertyRef Name="type" />
+            <PropertyRef Name="create_by" />
           </Key>
           <Property Name="category_id" Type="Guid" Nullable="false" />
           <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="date" Type="DateTime" Precision="3" />
           <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
           <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="V_MN_CATEGORY">
           <Key>
@@ -4150,6 +4164,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             <PropertyRef Name="current_payment" />
             <PropertyRef Name="ordering" />
             <PropertyRef Name="publish" />
+            <PropertyRef Name="create_by" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -4169,18 +4184,21 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="current_payment" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="V_MN_ACCOUNT_HISTORY">
           <Key>
             <PropertyRef Name="account_id" />
             <PropertyRef Name="title" />
             <PropertyRef Name="type" />
+            <PropertyRef Name="create_by" />
           </Key>
           <Property Name="account_id" Type="Guid" Nullable="false" />
           <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="date" Type="DateTime" Precision="3" />
           <Property Name="money" Type="Decimal" Precision="19" Scale="1" />
           <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="V_MN_MONEY_FLOW">
           <Key>
@@ -4192,6 +4210,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             <PropertyRef Name="money" />
             <PropertyRef Name="fee" />
             <PropertyRef Name="type" />
+            <PropertyRef Name="create_by" />
           </Key>
           <Property Name="id" Type="Guid" Nullable="false" />
           <Property Name="from_id" Type="Guid" Nullable="false" />
@@ -4204,6 +4223,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
           <Property Name="fee" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
           <Property Name="type" Type="Int32" Nullable="false" />
+          <Property Name="create_by" Type="Guid" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -5378,6 +5398,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySetMapping Name="V_MN_CATEGORY_HISTORY">
             <EntityTypeMapping TypeName="TDHModel.V_MN_CATEGORY_HISTORY">
               <MappingFragment StoreEntitySet="V_MN_CATEGORY_HISTORY">
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="money" ColumnName="money" />
                 <ScalarProperty Name="date" ColumnName="date" />
@@ -5389,6 +5410,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySetMapping Name="V_MN_CATEGORY">
             <EntityTypeMapping TypeName="TDHModel.V_MN_CATEGORY">
               <MappingFragment StoreEntitySet="V_MN_CATEGORY">
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
                 <ScalarProperty Name="publish" ColumnName="publish" />
                 <ScalarProperty Name="ordering" ColumnName="ordering" />
                 <ScalarProperty Name="current_payment" ColumnName="current_payment" />
@@ -5413,6 +5435,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySetMapping Name="V_MN_ACCOUNT_HISTORY">
             <EntityTypeMapping TypeName="TDHModel.V_MN_ACCOUNT_HISTORY">
               <MappingFragment StoreEntitySet="V_MN_ACCOUNT_HISTORY">
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="money" ColumnName="money" />
                 <ScalarProperty Name="date" ColumnName="date" />
@@ -5424,6 +5447,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySetMapping Name="V_MN_MONEY_FLOW">
             <EntityTypeMapping TypeName="TDHModel.V_MN_MONEY_FLOW">
               <MappingFragment StoreEntitySet="V_MN_MONEY_FLOW">
+                <ScalarProperty Name="create_by" ColumnName="create_by" />
                 <ScalarProperty Name="type" ColumnName="type" />
                 <ScalarProperty Name="fee" ColumnName="fee" />
                 <ScalarProperty Name="money" ColumnName="money" />

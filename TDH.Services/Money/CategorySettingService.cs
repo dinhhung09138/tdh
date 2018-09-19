@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.Money;
 using Utils;
@@ -20,7 +21,7 @@ namespace TDH.Services.Money
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/CategorySettingService.cs";
+        private readonly string FILE_NAME = "Services.Money/CategorySettingService.cs";
 
         #endregion
 
@@ -84,9 +85,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -130,18 +129,19 @@ namespace TDH.Services.Money
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Create", userID, ex);
-                            throw new ApplicationException();
+                            throw new ServiceException(FILE_NAME, "Create", userID, ex);
                         }
                     }
                 }
             }
+            catch (ServiceException servicedEx)
+            {
+                throw servicedEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Create", userID, ex);
-                return ResponseStatusCodeHelper.Error;
+                throw new ServiceException(FILE_NAME, "Create", userID, ex);
             }
             return ResponseStatusCodeHelper.Success;
         }
@@ -174,19 +174,19 @@ namespace TDH.Services.Money
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", userID, ex);
-                            throw new ApplicationException();
+                            throw new ServiceException(FILE_NAME, "Save", userID, ex);
                         }
                     }
                 }
             }
+            catch (ServiceException servicedEx)
+            {
+                throw servicedEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Save", userID, ex);
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                return ResponseStatusCodeHelper.Error;
+                throw new ServiceException(FILE_NAME, "Save", userID, ex);
             }
             Notifier.Notification(userID, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

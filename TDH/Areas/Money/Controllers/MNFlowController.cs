@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
-using TDH.Common.Fillters;
+using TDH.Common.UserException;
 using TDH.Model.Money;
 using TDH.Services.Money;
 using Utils;
@@ -49,10 +47,17 @@ namespace TDH.Areas.Money.Controllers
                 //
                 return View();
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -92,10 +97,17 @@ namespace TDH.Areas.Money.Controllers
                 //
                 return this.Json(new DataTableResponse<FlowModel>(), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -130,10 +142,17 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 return this.Json(_service.SaveIncome(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "SaveIncome", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "SaveIncome", UserID, ex);
             }
         }
 
@@ -168,10 +187,17 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 return this.Json(_service.SavePayment(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "SavePayment", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "SavePayment", UserID, ex);
             }
         }
 
@@ -206,10 +232,17 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 return this.Json(_service.SaveTransfer(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "SaveTransfer", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "SaveTransfer", UserID, ex);
             }
         }
 

@@ -32,5 +32,6 @@ namespace TDH.DataAccess
         public decimal current_payment { get; set; }
         public short ordering { get; set; }
         public bool publish { get; set; }
+        public System.Guid create_by { get; set; }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
-using TDH.Common.Fillters;
+using TDH.Common.UserException;
 using TDH.Model.Money;
 using TDH.Services.Money;
 using Utils;
@@ -37,10 +35,17 @@ namespace TDH.Areas.Money.Controllers
             {
                 return View();
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -87,10 +92,17 @@ namespace TDH.Areas.Money.Controllers
                 //
                 return this.Json(new DataTableResponse<GroupModel>(), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -114,10 +126,17 @@ namespace TDH.Areas.Money.Controllers
                 //
                 return View(model);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Create", UserID, ex);
             }
         }
 
@@ -151,10 +170,17 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Create", UserID, ex);
             }
         }
 
@@ -181,10 +207,17 @@ namespace TDH.Areas.Money.Controllers
                 //
                 return View(model);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Edit", UserID, ex);
             }
         }
 
@@ -209,10 +242,17 @@ namespace TDH.Areas.Money.Controllers
                 //
                 return this.Json(model, JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GroupSettingInfo", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "GetGroupSettingInfo", UserID, ex);
             }
         }
 
@@ -248,10 +288,17 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GroupSettingInfo", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "SaveGroupSettingInfo", UserID, ex);
             }
         }
 
@@ -285,10 +332,17 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Edit", UserID, ex);
             }
         }
 
@@ -319,10 +373,17 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 return this.Json(_service.Publish(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Publish", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Publish", UserID, ex);
             }
         }
 
@@ -353,10 +414,17 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 return this.Json(_service.Delete(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Delete", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Delete", UserID, ex);
             }
         }
 
@@ -385,10 +453,17 @@ namespace TDH.Areas.Money.Controllers
                 //Call to service
                 return this.Json(_service.CheckDelete(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CheckDelete", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "CheckDelete", UserID, ex);
             }
         }
 

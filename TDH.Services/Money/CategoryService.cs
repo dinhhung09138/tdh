@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.Money;
 using Utils;
@@ -44,7 +45,7 @@ namespace TDH.Services.Money
                 using (var _context = new TDHEntities())
                 {
                     var _lData = (from m in _context.V_MN_CATEGORY
-                                  where request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.group_id.ToString()) &&
+                                  where m.create_by == userID && request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.group_id.ToString()) &&
                                         (m.year == 0 || m.year == _year) && (m.month == 0 || m.month == _month)
                                   select new
                                   {
@@ -115,9 +116,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
             return _return;
         }
@@ -136,7 +135,7 @@ namespace TDH.Services.Money
                 {
                     var _list = (from m in _context.MN_CATEGORY
                                  join n in _context.MN_GROUP on m.group_id equals n.id
-                                 where n.publish && !n.deleted && !m.deleted
+                                 where n.publish && !n.deleted && !m.deleted && m.create_by == userID
                                  orderby m.ordering descending
                                  select new
                                  {
@@ -152,9 +151,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -173,7 +170,7 @@ namespace TDH.Services.Money
                 {
                     var _list = (from m in _context.MN_CATEGORY
                                  join n in _context.MN_GROUP on m.group_id equals n.id
-                                 where n.publish && !n.deleted && !m.deleted && n.is_input == isInput
+                                 where n.publish && !n.deleted && !m.deleted && n.is_input == isInput && m.create_by == userID
                                  orderby m.ordering descending
                                  select new
                                  {
@@ -189,9 +186,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -216,7 +211,7 @@ namespace TDH.Services.Money
                 using (var _context = new TDHEntities())
                 {
                     var _lData = (from m in _context.V_MN_CATEGORY_HISTORY
-                                  where request.Parameter2 == (request.Parameter2.Length == 0 ? request.Parameter2 : m.category_id.ToString()) //By account id
+                                  where m.create_by == userID && request.Parameter2 == (request.Parameter2.Length == 0 ? request.Parameter2 : m.category_id.ToString()) //By account id
                                   orderby m.date descending
                                   select new
                                   {
@@ -257,9 +252,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetHistory", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetHistory", userID, ex);
             }
             return _return;
         }
@@ -275,10 +268,10 @@ namespace TDH.Services.Money
             {
                 using (var _context = new TDHEntities())
                 {
-                    List<V_MN_CATEGORY> _list = _context.V_MN_CATEGORY.Where(m => m.id == model.ID).ToList();
+                    List<V_MN_CATEGORY> _list = _context.V_MN_CATEGORY.Where(m => m.id == model.ID && m.create_by == model.CreateBy).ToList();
                     if (_list == null && _list.Count() == 0)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
                     }
 
                     CategoryModel _return = new CategoryModel()
@@ -312,11 +305,13 @@ namespace TDH.Services.Money
                     return _return;
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
         }
 
@@ -342,10 +337,10 @@ namespace TDH.Services.Money
                             }
                             else
                             {
-                                _md = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                                _md = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.create_by == model.CreateBy);
                                 if (_md == null)
                                 {
-                                    throw new FieldAccessException();
+                                    throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                                 }
                             }
                             _md.group_id = model.GroupID;
@@ -369,21 +364,26 @@ namespace TDH.Services.Money
                             _context.SaveChanges();
                             trans.Commit();
                         }
+                        catch (DataAccessException fieldEx)
+                        {
+                            trans.Rollback();
+                            throw fieldEx;
+                        }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                            throw new ApplicationException();
+                            throw ex;
                         }
                     }
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -407,38 +407,26 @@ namespace TDH.Services.Money
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    MN_CATEGORY _md = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.create_by == model.CreateBy);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            MN_CATEGORY _md = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _md.publish = model.Publish;
-                            _md.update_by = model.UpdateBy;
-                            _md.update_date = DateTime.Now;
-                            _context.MN_CATEGORY.Attach(_md);
-                            _context.Entry(_md).State = EntityState.Modified;
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
                     }
+                    _md.publish = model.Publish;
+                    _md.update_by = model.UpdateBy;
+                    _md.update_date = DateTime.Now;
+                    _context.MN_CATEGORY.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Publish", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -455,38 +443,26 @@ namespace TDH.Services.Money
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    MN_CATEGORY _md = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.create_by == model.CreateBy);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            MN_CATEGORY _md = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _md.deleted = true;
-                            _md.delete_by = model.DeleteBy;
-                            _md.delete_date = DateTime.Now;
-                            _context.MN_CATEGORY.Attach(_md);
-                            _context.Entry(_md).State = EntityState.Modified;
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
                     }
+                    _md.deleted = true;
+                    _md.delete_by = model.DeleteBy;
+                    _md.delete_date = DateTime.Now;
+                    _context.MN_CATEGORY.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -504,18 +480,18 @@ namespace TDH.Services.Money
                 using (var _context = new TDHEntities())
                 {
 
-                    MN_CATEGORY _md = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    MN_CATEGORY _md = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.create_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "CheckDelete", model.CreateBy);
                     }
-                    var _payment = _context.MN_PAYMENT.FirstOrDefault(m => m.category_id == model.ID && !m.deleted);
+                    var _payment = _context.MN_PAYMENT.FirstOrDefault(m => m.category_id == model.ID && !m.deleted && m.create_by == model.CreateBy);
                     if (_payment != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
                     }
-                    var _income = _context.MN_INCOME.FirstOrDefault(m => m.category_id == model.ID && !m.deleted);
+                    var _income = _context.MN_INCOME.FirstOrDefault(m => m.category_id == model.ID && !m.deleted && m.create_by == model.CreateBy);
                     if (_income != null)
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
@@ -523,11 +499,13 @@ namespace TDH.Services.Money
                     }
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "CheckDelete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "CheckDelete", model.CreateBy, ex);
             }
             return ResponseStatusCodeHelper.OK;
         }

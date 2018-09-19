@@ -1013,8 +1013,8 @@
           <Property Name="delete_date" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_ACCOUNT_HISTORY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="V_ACCOUNT_HISTORY">
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_ACCOUNT_HISTORY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_MN_ACCOUNT_HISTORY">
           <Key>
             <PropertyRef Name="account_id" />
             <PropertyRef Name="title" />
@@ -1081,8 +1081,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_CATEGORY_HISTORY' d
           <Property Name="type" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MONEY_FLOW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="V_MONEY_FLOW">
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_MONEY_FLOW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_MN_MONEY_FLOW">
           <Key>
             <PropertyRef Name="id" />
             <PropertyRef Name="from_id" />
@@ -1853,14 +1853,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySet Name="WK_CHECKLIST_GROUP" EntityType="Self.WK_CHECKLIST_GROUP" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WK_CHECKLIST_ITEM" EntityType="Self.WK_CHECKLIST_ITEM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WK_CHECKLIST_ITEM_DETAIL" EntityType="Self.WK_CHECKLIST_ITEM_DETAIL" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="V_ACCOUNT_HISTORY" EntityType="Self.V_ACCOUNT_HISTORY" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="V_MN_ACCOUNT_HISTORY" EntityType="Self.V_MN_ACCOUNT_HISTORY" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [V_ACCOUNT_HISTORY].[account_id] AS [account_id], 
-    [V_ACCOUNT_HISTORY].[title] AS [title], 
-    [V_ACCOUNT_HISTORY].[date] AS [date], 
-    [V_ACCOUNT_HISTORY].[money] AS [money], 
-    [V_ACCOUNT_HISTORY].[type] AS [type]
-    FROM [dbo].[V_ACCOUNT_HISTORY] AS [V_ACCOUNT_HISTORY]</DefiningQuery>
+    [V_MN_ACCOUNT_HISTORY].[account_id] AS [account_id], 
+    [V_MN_ACCOUNT_HISTORY].[title] AS [title], 
+    [V_MN_ACCOUNT_HISTORY].[date] AS [date], 
+    [V_MN_ACCOUNT_HISTORY].[money] AS [money], 
+    [V_MN_ACCOUNT_HISTORY].[type] AS [type]
+    FROM [dbo].[V_MN_ACCOUNT_HISTORY] AS [V_MN_ACCOUNT_HISTORY]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_MN_CATEGORY" EntityType="Self.V_MN_CATEGORY" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -1893,20 +1893,20 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
     [V_MN_CATEGORY_HISTORY].[type] AS [type]
     FROM [dbo].[V_MN_CATEGORY_HISTORY] AS [V_MN_CATEGORY_HISTORY]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="V_MONEY_FLOW" EntityType="Self.V_MONEY_FLOW" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="V_MN_MONEY_FLOW" EntityType="Self.V_MN_MONEY_FLOW" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [V_MONEY_FLOW].[id] AS [id], 
-    [V_MONEY_FLOW].[from_id] AS [from_id], 
-    [V_MONEY_FLOW].[from_name] AS [from_name], 
-    [V_MONEY_FLOW].[to_id] AS [to_id], 
-    [V_MONEY_FLOW].[to_name] AS [to_name], 
-    [V_MONEY_FLOW].[category_name] AS [category_name], 
-    [V_MONEY_FLOW].[title] AS [title], 
-    [V_MONEY_FLOW].[date] AS [date], 
-    [V_MONEY_FLOW].[money] AS [money], 
-    [V_MONEY_FLOW].[fee] AS [fee], 
-    [V_MONEY_FLOW].[type] AS [type]
-    FROM [dbo].[V_MONEY_FLOW] AS [V_MONEY_FLOW]</DefiningQuery>
+    [V_MN_MONEY_FLOW].[id] AS [id], 
+    [V_MN_MONEY_FLOW].[from_id] AS [from_id], 
+    [V_MN_MONEY_FLOW].[from_name] AS [from_name], 
+    [V_MN_MONEY_FLOW].[to_id] AS [to_id], 
+    [V_MN_MONEY_FLOW].[to_name] AS [to_name], 
+    [V_MN_MONEY_FLOW].[category_name] AS [category_name], 
+    [V_MN_MONEY_FLOW].[title] AS [title], 
+    [V_MN_MONEY_FLOW].[date] AS [date], 
+    [V_MN_MONEY_FLOW].[money] AS [money], 
+    [V_MN_MONEY_FLOW].[fee] AS [fee], 
+    [V_MN_MONEY_FLOW].[type] AS [type]
+    FROM [dbo].[V_MN_MONEY_FLOW] AS [V_MN_MONEY_FLOW]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="V_RENDER_NAVIGATION" EntityType="Self.V_RENDER_NAVIGATION" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -2185,7 +2185,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySet Name="WK_CHECKLIST_GROUP" EntityType="TDHModel.WK_CHECKLIST_GROUP" />
           <EntitySet Name="WK_CHECKLIST_ITEM" EntityType="TDHModel.WK_CHECKLIST_ITEM" />
           <EntitySet Name="WK_CHECKLIST_ITEM_DETAIL" EntityType="TDHModel.WK_CHECKLIST_ITEM_DETAIL" />
-          <EntitySet Name="V_MONEY_FLOW" EntityType="TDHModel.V_MONEY_FLOW" />
           <AssociationSet Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" Association="TDHModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
             <End Role="MN_ACCOUNT_TYPE" EntitySet="MN_ACCOUNT_TYPE" />
             <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
@@ -2264,7 +2263,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySet Name="WEB_HOME_NAVIGATION" EntityType="TDHModel.WEB_HOME_NAVIGATION" />
           <EntitySet Name="WEB_NAVIGATION" EntityType="TDHModel.WEB_NAVIGATION" />
           <EntitySet Name="WEB_POST" EntityType="TDHModel.WEB_POST" />
-          <EntitySet Name="V_ACCOUNT_HISTORY" EntityType="TDHModel.V_ACCOUNT_HISTORY" />
           <AssociationSet Name="FK_PN_TARGET_PN_IDEA" Association="TDHModel.FK_PN_TARGET_PN_IDEA">
             <End Role="PN_IDEA" EntitySet="PN_IDEA" />
             <End Role="PN_TARGET" EntitySet="PN_TARGET" />
@@ -2409,6 +2407,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySet Name="V_RENDER_NAVIGATION" EntityType="TDHModel.V_RENDER_NAVIGATION" />
           <EntitySet Name="V_MN_CATEGORY_HISTORY" EntityType="TDHModel.V_MN_CATEGORY_HISTORY" />
           <EntitySet Name="V_MN_CATEGORY" EntityType="TDHModel.V_MN_CATEGORY" />
+          <EntitySet Name="V_MN_ACCOUNT_HISTORY" EntityType="TDHModel.V_MN_ACCOUNT_HISTORY" />
+          <EntitySet Name="V_MN_MONEY_FLOW" EntityType="TDHModel.V_MN_MONEY_FLOW" />
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -2692,29 +2692,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="delete_by" Type="Guid" />
           <Property Name="delete_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="WK_CHECKLIST_ITEM" Relationship="TDHModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" FromRole="WK_CHECKLIST_ITEM_DETAIL" ToRole="WK_CHECKLIST_ITEM" />
-        </EntityType>
-        <EntityType Name="V_MONEY_FLOW">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="from_id" />
-            <PropertyRef Name="from_name" />
-            <PropertyRef Name="category_name" />
-            <PropertyRef Name="title" />
-            <PropertyRef Name="money" />
-            <PropertyRef Name="fee" />
-            <PropertyRef Name="type" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="from_id" Type="Guid" Nullable="false" />
-          <Property Name="from_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="to_id" Type="Guid" />
-          <Property Name="to_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="category_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="date" Type="DateTime" Precision="3" />
-          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
-          <Property Name="fee" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
-          <Property Name="type" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
           <End Type="TDHModel.MN_ACCOUNT_TYPE" Role="MN_ACCOUNT_TYPE" Multiplicity="1" />
@@ -3397,18 +3374,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="comment" Type="Int32" Nullable="false" />
           <NavigationProperty Name="WEB_CATEGORY" Relationship="TDHModel.FK_WEB_POST_WEB_CATEGORY" FromRole="WEB_POST" ToRole="WEB_CATEGORY" />
           <NavigationProperty Name="WEB_NAVIGATION" Relationship="TDHModel.FK_WEB_POST_WEB_NAVIGATION" FromRole="WEB_POST" ToRole="WEB_NAVIGATION" />
-        </EntityType>
-        <EntityType Name="V_ACCOUNT_HISTORY">
-          <Key>
-            <PropertyRef Name="account_id" />
-            <PropertyRef Name="title" />
-            <PropertyRef Name="type" />
-          </Key>
-          <Property Name="account_id" Type="Guid" Nullable="false" />
-          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="date" Type="DateTime" Precision="3" />
-          <Property Name="money" Type="Decimal" Precision="19" Scale="1" />
-          <Property Name="type" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_PN_TARGET_PN_IDEA">
           <End Type="TDHModel.PN_IDEA" Role="PN_IDEA" Multiplicity="1" />
@@ -4205,6 +4170,41 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="ordering" Type="Int16" Nullable="false" />
           <Property Name="publish" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="V_MN_ACCOUNT_HISTORY">
+          <Key>
+            <PropertyRef Name="account_id" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="type" />
+          </Key>
+          <Property Name="account_id" Type="Guid" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="money" Type="Decimal" Precision="19" Scale="1" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="V_MN_MONEY_FLOW">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="from_id" />
+            <PropertyRef Name="from_name" />
+            <PropertyRef Name="category_name" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="money" />
+            <PropertyRef Name="fee" />
+            <PropertyRef Name="type" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="from_id" Type="Guid" Nullable="false" />
+          <Property Name="from_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="to_id" Type="Guid" />
+          <Property Name="to_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="category_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="fee" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4535,23 +4535,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <ScalarProperty Name="create_by" ColumnName="create_by" />
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="check_id" ColumnName="check_id" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="V_MONEY_FLOW">
-            <EntityTypeMapping TypeName="TDHModel.V_MONEY_FLOW">
-              <MappingFragment StoreEntitySet="V_MONEY_FLOW">
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="fee" ColumnName="fee" />
-                <ScalarProperty Name="money" ColumnName="money" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="category_name" ColumnName="category_name" />
-                <ScalarProperty Name="to_name" ColumnName="to_name" />
-                <ScalarProperty Name="to_id" ColumnName="to_id" />
-                <ScalarProperty Name="from_name" ColumnName="from_name" />
-                <ScalarProperty Name="from_id" ColumnName="from_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -5052,17 +5035,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="V_ACCOUNT_HISTORY">
-            <EntityTypeMapping TypeName="TDHModel.V_ACCOUNT_HISTORY">
-              <MappingFragment StoreEntitySet="V_ACCOUNT_HISTORY">
-                <ScalarProperty Name="type" ColumnName="type" />
-                <ScalarProperty Name="money" ColumnName="money" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="account_id" ColumnName="account_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SYS_MODULE">
             <EntityTypeMapping TypeName="TDHModel.SYS_MODULE">
               <MappingFragment StoreEntitySet="SYS_MODULE">
@@ -5434,6 +5406,34 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <ScalarProperty Name="group_id" ColumnName="group_id" />
                 <ScalarProperty Name="notes" ColumnName="notes" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_MN_ACCOUNT_HISTORY">
+            <EntityTypeMapping TypeName="TDHModel.V_MN_ACCOUNT_HISTORY">
+              <MappingFragment StoreEntitySet="V_MN_ACCOUNT_HISTORY">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_MN_MONEY_FLOW">
+            <EntityTypeMapping TypeName="TDHModel.V_MN_MONEY_FLOW">
+              <MappingFragment StoreEntitySet="V_MN_MONEY_FLOW">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="fee" ColumnName="fee" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="to_name" ColumnName="to_name" />
+                <ScalarProperty Name="to_id" ColumnName="to_id" />
+                <ScalarProperty Name="from_name" ColumnName="from_name" />
+                <ScalarProperty Name="from_id" ColumnName="from_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

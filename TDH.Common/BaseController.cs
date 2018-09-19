@@ -290,6 +290,7 @@ namespace TDH.Common
                                 case "publish":
                                 case "checkdelete":
                                 case "delete":
+                                case "history":
                                     return "money_account";
                                 default:
                                     return "";

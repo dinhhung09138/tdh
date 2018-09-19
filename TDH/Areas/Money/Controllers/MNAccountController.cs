@@ -102,23 +102,24 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="yearMonth">yearMonth</param>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult History(string id, string name, string yearMonth)
+        public ActionResult History(string id)
         {
             try
             {
+
+                AccountService _service = new AccountService();
+
                 ViewBag.accID = id;
-                ViewBag.name = name;
+                ViewBag.name = "";
                 ViewBag.yearMonth = DateTime.Now.ToString("yyyyMM");
                 ViewBag.yearMonthValue = DateTime.Now.ToString("yyyy/MM");
                 ViewBag.listAccount = "1"; //Back  to list account
-                if (yearMonth != "")
-                {
-                    ViewBag.yearMonth = yearMonth;
-                    ViewBag.yearMonthValue = yearMonth.Insert(4, "/");
-                    ViewBag.listAccount = "0";//Back to edit account
-                }
+               
+                //Call to service
+                AccountModel model = _service.GetItemByID(new AccountModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+                ViewBag.name = model.Name;
                 //
-                return PartialView();
+                return View();
             }
             catch (Exception ex)
             {
@@ -154,11 +155,8 @@ namespace TDH.Areas.Money.Controllers
                 {
                     requestData.Parameter2 = "";
                 }
-                if (requestData.Parameter3 == null)
-                {
-                    requestData.Parameter3 = "";
-                }
                 // Process sorting column
+                requestData = requestData.SetOrderingColumnName();
 
                 #endregion
 

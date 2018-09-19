@@ -12,18 +12,12 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class V_MONEY_FLOW
+    public partial class V_MN_ACCOUNT_HISTORY
     {
-        public System.Guid id { get; set; }
-        public System.Guid from_id { get; set; }
-        public string from_name { get; set; }
-        public Nullable<System.Guid> to_id { get; set; }
-        public string to_name { get; set; }
-        public string category_name { get; set; }
+        public System.Guid account_id { get; set; }
         public string title { get; set; }
         public Nullable<System.DateTime> date { get; set; }
-        public decimal money { get; set; }
-        public decimal fee { get; set; }
+        public Nullable<decimal> money { get; set; }
         public int type { get; set; }
     }
 }

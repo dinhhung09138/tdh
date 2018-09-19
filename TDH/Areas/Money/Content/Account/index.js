@@ -31,38 +31,29 @@ $(document).ready(function () {
             var _str = '';
             //Maximum payment for credit card
             total = api.column(3, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
+            
             _str = '';
-            _str = '<span style="color: #dc3545;">' + number_format(total, 2) + '</span>';
+            _str = '<span style="color: #dc3545;">' + formatMoney(total, 2) + '</span>';
             $(api.column(3).footer()).html(_str);
             //Month Payment
             //monthPayment = api.column(3, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
-            //_str = '<span style="color: #dc3545;">' + number_format(monthPayment, 2) + '</span>';
+            //_str = '<span style="color: #dc3545;">' + formatMoney(monthPayment, 2) + '</span>';
             //$(api.column(3).footer()).html(_str);
             //Month total
             total = api.column(4, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
             _str = '';
-            _str = '<span style="color: #359746;">' + number_format(total, 2) + '</span>';
+            _str = '<span style="color: #359746;">' + formatMoney(total, 2) + '</span>';
             $(api.column(4).footer()).html(_str);
             // Total over
             total = api.column(5, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
             _str = '';
             if (total > 0) {
-                _str = '<span style="color: #359746;">' + number_format(total, 2) + '</span>';
+                _str = '<span style="color: #359746;">' + formatMoney(total, 2) + '</span>';
             }
             else {
-                _str = '<span style="color: #dc3545;">' + number_format(total, 2) + '</span>';
+                _str = '<span style="color: #dc3545;">' + formatMoney(total, 2) + '</span>';
             }
             $(api.column(5).footer()).html(_str);
-            // Total over
-            //total = api.column(6, { page: 'current' }).data().reduce(function (a, b) { return intVal(a) + intVal(b); }, 0);
-            //_str = '';
-            //if (total > 0) {
-            //    _str = '<span style="color: #359746;">' + number_format(total, 2) + '</span>';
-            //}
-            //else {
-            //    _str = '<span style="color: #dc3545;">' + number_format(total, 2) + '</span>';
-            //}
-            //$(api.column(6).footer()).html(_str);
         },
         language: language,
         order: [[1, "asc"]],
@@ -135,7 +126,7 @@ $(document).ready(function () {
                 className: 'ctn-center',
                 render: function (obj, type, data, meta) {
                     var str = '';
-                    str = str + '<a href="javascript:;" onclick="history(\'' + data.ID + '\',\'' + data.Name + '\');" title="Lịch sử giao dịch" class="mg-lr-2"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+                    str = str + '<a href="/money/mnaccount/history/' + data.ID + '" title="Lịch sử giao dịch" class="mg-lr-2"><i class="fa fa-eye" aria-hidden="true"></i></a>';
                     if (allowEdit === "True") {
                         str = str + '<a href="/money/mnaccount/edit/' + data.ID + '\" title="Cập nhật tài khoản" title="Cập nhật" class="mg-lr-2"><i class="fa fa-edit" aria-hidden="true"></i></a>';
                     }
@@ -231,19 +222,3 @@ function deleteItem() {
     });
 }
 
-function history(id, name) {
-    loading($('body'), 'show');
-    $.ajax({
-        url: '/money/mnaccount/history/',
-        type: 'get',
-        async: false,
-        dataType: 'html',
-        data: { id: id, name: name, yearMonth: '' },
-        success: function (response) {
-            document.title = 'Lịch sử giao dịch: ' + name;
-            $('#main_layout').empty();
-            $('#main_layout').append(response);
-            setTimeout(function () { loading($('body'), 'hide') }, 700);
-        }
-    });
-}

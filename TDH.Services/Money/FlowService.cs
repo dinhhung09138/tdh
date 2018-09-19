@@ -41,7 +41,7 @@ namespace TDH.Services.Money
                 List<FlowModel> _list = new List<FlowModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in _context.V_MONEY_FLOW
+                    var _lData = (from m in _context.V_MN_MONEY_FLOW
                                   where request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.type.ToString())
                                   orderby m.date descending
                                   select new

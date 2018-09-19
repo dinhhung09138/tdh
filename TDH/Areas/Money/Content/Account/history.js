@@ -2,25 +2,11 @@
 var id = 0;
 
 $(document).ready(function () {
-
-    $("#monthSelect").datepicker({
-        language: 'vi',
-        format: "yyyy/mm",
-        viewMode: "months",
-        minViewMode: "months"
-    }).on('changeDate', function (ev) {
-        $('#monthSelect').datepicker('hide');
-        var month = $(this).val().substring(5, 8);
-        var year = $(this).val().substring(0, 4);
-        $('#monthSelectValue').val(parseInt(year + month));
-        table.ajax.reload();
-    });
-
     table = $('#tbList').DataTable({
         processing: true,
         serverSide: true,
-        searching: false,
-        ordering: false,
+        searching: true,
+        ordering: true,
         paging: true,
         responsive: true,
         pageLength: 10,
@@ -32,14 +18,13 @@ $(document).ready(function () {
             //Do something after finish
         },
         language: language,
-        order: [[1, "asc"]],
+        order: [[2, "asc"]],
         ajax: {
-            url: '/money/mnaccount/accounthistory',
+            url: '/money/mnaccount/history',
             type: 'post',
             data: function (d) {
-                d.Parameter1 = $('#monthSelectValue').val(), //By month
-                    d.Parameter2 = $('#id').val(), //By account id
-                    d.Parameter3 = $('#ddlSelect').val() //by type (income or payment)
+                d.Parameter1 = $('#id').val(); //By account id
+                d.Parameter2 = $('#ddlSelect').val(); //by type (income or payment)
             }
         },
         columns: [
@@ -54,6 +39,8 @@ $(document).ready(function () {
             {
                 className: 'ctn-center',
                 width: '50px',
+                orderable: false,
+                searchable: false,
                 render: function (obj, type, data, meta) {
                     if (data.Type === 1) {
                         return '<i class="fa fa-long-arrow-left" style="color: green;" aria-hidden="true"></i>';
@@ -72,7 +59,9 @@ $(document).ready(function () {
                 width: '200px'
             },
             {
-                data: 'Title'
+                data: 'Title',
+                orderable: false,
+                searchable: false
             }
         ]
     });

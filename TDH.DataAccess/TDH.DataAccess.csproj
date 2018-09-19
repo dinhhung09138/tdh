@@ -212,7 +212,7 @@
     <Compile Include="SYS_USER_ROLE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="V_ACCOUNT_HISTORY.cs">
+    <Compile Include="V_MN_ACCOUNT_HISTORY.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="V_MN_CATEGORY.cs">
@@ -221,7 +221,7 @@
     <Compile Include="V_MN_CATEGORY_HISTORY.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="V_MONEY_FLOW.cs">
+    <Compile Include="V_MN_MONEY_FLOW.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="V_RENDER_NAVIGATION.cs">

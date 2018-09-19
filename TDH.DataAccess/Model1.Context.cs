@@ -40,7 +40,6 @@ namespace TDH.DataAccess
         public virtual DbSet<WK_CHECKLIST_GROUP> WK_CHECKLIST_GROUP { get; set; }
         public virtual DbSet<WK_CHECKLIST_ITEM> WK_CHECKLIST_ITEM { get; set; }
         public virtual DbSet<WK_CHECKLIST_ITEM_DETAIL> WK_CHECKLIST_ITEM_DETAIL { get; set; }
-        public virtual DbSet<V_MONEY_FLOW> V_MONEY_FLOW { get; set; }
         public virtual DbSet<PN_IDEA> PN_IDEA { get; set; }
         public virtual DbSet<PN_REPORT> PN_REPORT { get; set; }
         public virtual DbSet<PN_REPORT_KIND> PN_REPORT_KIND { get; set; }
@@ -67,7 +66,6 @@ namespace TDH.DataAccess
         public virtual DbSet<WEB_HOME_NAVIGATION> WEB_HOME_NAVIGATION { get; set; }
         public virtual DbSet<WEB_NAVIGATION> WEB_NAVIGATION { get; set; }
         public virtual DbSet<WEB_POST> WEB_POST { get; set; }
-        public virtual DbSet<V_ACCOUNT_HISTORY> V_ACCOUNT_HISTORY { get; set; }
         public virtual DbSet<SYS_MODULE> SYS_MODULE { get; set; }
         public virtual DbSet<PN_DREAM> PN_DREAM { get; set; }
         public virtual DbSet<CM_SKILL> CM_SKILL { get; set; }
@@ -88,6 +86,8 @@ namespace TDH.DataAccess
         public virtual DbSet<V_RENDER_NAVIGATION> V_RENDER_NAVIGATION { get; set; }
         public virtual DbSet<V_MN_CATEGORY_HISTORY> V_MN_CATEGORY_HISTORY { get; set; }
         public virtual DbSet<V_MN_CATEGORY> V_MN_CATEGORY { get; set; }
+        public virtual DbSet<V_MN_ACCOUNT_HISTORY> V_MN_ACCOUNT_HISTORY { get; set; }
+        public virtual DbSet<V_MN_MONEY_FLOW> V_MN_MONEY_FLOW { get; set; }
     
         [DbFunction("TDHEntities", "FNC_REPORT_INCOME_BY_CATEGORY")]
         public virtual IQueryable<FNC_REPORT_INCOME_BY_CATEGORY_Result> FNC_REPORT_INCOME_BY_CATEGORY()

@@ -77,20 +77,20 @@ namespace TDH.Services.Money
                                           item.max_payment,
                             MaxPaymentString = item.type == (short)AccountType.Debit || item.type == (short)AccountType.Saving || item.type == (short)AccountType.Cash ? "" :
                                           item.max_payment.NumberToString(),
-                            BorrowMoney = item.type == (short)AccountType.Credit ? item.input - item.output : //
+                            BorrowMoney = item.type == (short)AccountType.Credit ? (item.input > item.output ? 0 : item.output - item.input) : //For credit card, show if income > payment, don't have debt
                                           item.type == (short)AccountType.Borrow ? item.max_payment - item.input : //Can not use for pay bills, only receive money to pay for debt
                                           0,
-                            BorrowMoneyString = item.type == (short)AccountType.Credit ? (item.input - item.output).NumberToString() :
+                            BorrowMoneyString = item.type == (short)AccountType.Credit ? (item.input > item.output ? "" : (item.output - item.input).NumberToString()) :
                                                 item.type == (short)AccountType.Borrow ? (item.max_payment - item.input).NumberToString() : //Borrow
                                                 "",
                             LoanMoney = item.type == (short)AccountType.Loan ? item.max_payment - item.input : 0,
                             LoanMoneyString = item.type == (short)AccountType.Loan ? (item.max_payment - item.input).NumberToString() : "",
                             AccountType = item.type,
-                            Total = item.type == (short)AccountType.Credit ? 0 :
+                            Total = item.type == (short)AccountType.Credit ? (item.input - item.output > 0 ? item.input - item.output : 0) : //For credit card, show if income > payment, don't have debt
                                     item.type == (short)AccountType.Borrow ? 0 :
                                     item.type == (short)AccountType.Loan ? 0 :
                                     (item.input - item.output),
-                            TotalString = item.type == (short)AccountType.Credit ? "" :
+                            TotalString = item.type == (short)AccountType.Credit ? (item.input - item.output > 0 ? (item.input - item.output).NumberToString() : "") :
                                           item.type == (short)AccountType.Borrow ? "" :
                                           item.type == (short)AccountType.Loan ? "" :
                                           (item.input - item.output).NumberToString()
@@ -181,15 +181,27 @@ namespace TDH.Services.Money
                 {
                     var _list = (from m in _context.MN_ACCOUNT
                                  join n in _context.MN_ACCOUNT_TYPE on m.account_type_id equals n.id
-                                 where !m.deleted && !n.deleted && n.publish && (m.input - m.output) > 0
+                                 where !m.deleted && !n.deleted && n.type < (short)AccountType.Borrow && n.publish
                                  orderby m.name descending
                                  select new
                                  {
                                      m.id,
-                                     m.name
+                                     m.name,
+                                     m.max_payment,
+                                     m.input,
+                                     m.output,
+                                     n.type
                                  }).ToList();
                     foreach (var item in _list)
                     {
+                        if ((item.type == (short)AccountType.Debit || item.type == (short)AccountType.Cash) && (item.input - item.output) <= 0)
+                        {
+                            continue;
+                        }
+                        if (item.type == (short)AccountType.Credit && item.output - item.input >= item.max_payment)
+                        {
+                            continue;
+                        }
                         _return.Add(new AccountModel() { ID = item.id, Name = item.name });
                     }
                 }
@@ -220,7 +232,6 @@ namespace TDH.Services.Money
                         throw new FieldAccessException();
                     }
                     MN_ACCOUNT_TYPE _type = _context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == _md.account_type_id);
-                    var _lSetting = _context.MN_ACCOUNT_SETTING.Where(m => m.account_id == model.ID && m.yearmonth.ToString().Contains(DateTime.Now.Year.ToString())).OrderByDescending(m => m.yearmonth);
 
                     var _return = new AccountModel()
                     {
@@ -231,19 +242,10 @@ namespace TDH.Services.Money
                         AccountType = _type.type,
                         AccountTypeID = _md.account_type_id,
                         AccountTypeName = _type.name,
-                        Total = _md.input - _md.output
+                        Total = _type.type == (short)AccountType.Borrow ? _md.input - _md.max_payment :
+                                _type.type == (short)AccountType.Loan ? _md.input - _md.max_payment :
+                                _md.input - _md.output
                     };
-                    foreach (var item in _lSetting)
-                    {
-                        _return.Setting.Add(new AccountSettingModel()
-                        {
-                            Month = item.yearmonth % 100,
-                            Year = item.yearmonth / 100,
-                            Input = item.input,
-                            Output = item.output,
-                            YearMonthString = item.yearmonth.ToString()
-                        });
-                    }
                     return _return;
                 }
             }
@@ -275,9 +277,9 @@ namespace TDH.Services.Money
                 List<AccountHistoryModel> _list = new List<AccountHistoryModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in _context.V_ACCOUNT_HISTORY
-                                  where request.Parameter2 == (request.Parameter2.Length == 0 ? request.Parameter2 : m.account_id.ToString()) && //By account id
-                                        request.Parameter3 == (request.Parameter3.Length == 0 ? request.Parameter3 : m.type.ToString()) //by type (income or payment)
+                    var _lData = (from m in _context.V_MN_ACCOUNT_HISTORY
+                                  where request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.account_id.ToString()) && //By account id
+                                        request.Parameter2 == (request.Parameter2.Length == 0 ? request.Parameter2 : m.type.ToString()) //by type (income or payment)
                                   orderby m.date descending
                                   select new
                                   {
@@ -286,17 +288,13 @@ namespace TDH.Services.Money
                                       m.money,
                                       m.type
                                   }).ToList();
-                    if (request.Parameter1.Length > 0) //by month
-                    {
-                        _lData = _lData.Where(m => m.date.Value.DateToString("yyyyMM") == request.Parameter1).ToList();
-                    }
                     _itemResponse.draw = request.draw;
                     _itemResponse.recordsTotal = _lData.Count;
                     //Search
                     if (request.search != null && !string.IsNullOrWhiteSpace(request.search.Value))
                     {
                         string searchValue = request.search.Value.ToLower();
-                        _lData = _lData.Where(m => m.title.ToLower().Contains(searchValue)).ToList();
+                        _lData = _lData.Where(m => m.title.ToLower().Contains(searchValue) || m.date.Value.ToString().ToLower().Contains(searchValue)).ToList();
                     }
                     //Add to list
                     foreach (var item in _lData)
@@ -306,12 +304,33 @@ namespace TDH.Services.Money
                             Title = item.title,
                             Date = item.date.Value,
                             DateString = item.date.Value.DateToString(),
+                            Money = item.money.Value,
                             MoneyString = item.money.Value.NumberToString(),
                             Type = item.type
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
-                    _itemResponse.data = _list.Skip(request.start).Take(request.length).ToList();
+                    IOrderedEnumerable<AccountHistoryModel> _sortList = null;
+                    if (request.order != null)
+                    {
+                        foreach (var col in request.order)
+                        {
+                            switch (col.ColumnName)
+                            {
+                                case "DateString":
+                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Date) : _sortList.Sort(col.Dir, m => m.Date);
+                                    break;
+                                case "MoneyString":
+                                    _sortList = _sortList == null ? _list.Sort(col.Dir, m => m.Money) : _sortList.Sort(col.Dir, m => m.Money);
+                                    break;
+                            }
+                        }
+                        _itemResponse.data = _sortList.Skip(request.start).Take(request.length).ToList();
+                    }
+                    else
+                    {
+                        _itemResponse.data = _list.Skip(request.start).Take(request.length).ToList();
+                    }
                     _return.Add(DatatableCommonSetting.Response.DATA, _itemResponse);
                 }
                 _return.Add(DatatableCommonSetting.Response.STATUS, ResponseStatusCodeHelper.OK);

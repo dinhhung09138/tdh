@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.Common;
 using Utils;
@@ -16,7 +17,7 @@ namespace TDH.Services.Common
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/Common/SkillDefinedService.cs";
+        private readonly string FILE_NAME = "Services.Common/SkillDefinedService.cs";
 
         #endregion
 
@@ -34,7 +35,7 @@ namespace TDH.Services.Common
                     CM_SKILL_DEFINDED _md = _context.CM_SKILL_DEFINDED.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
                     }
                     var _return = new SkillDefinedModel()
                     {
@@ -47,11 +48,13 @@ namespace TDH.Services.Common
                     return _return;
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
         }
 
@@ -85,9 +88,7 @@ namespace TDH.Services.Common
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -112,7 +113,7 @@ namespace TDH.Services.Common
                         _md = _context.CM_SKILL_DEFINDED.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                         if (_md == null)
                         {
-                            throw new FieldAccessException();
+                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                         }
                     }
                     _md.skill_id = model.SkillID;
@@ -138,11 +139,13 @@ namespace TDH.Services.Common
                     _context.SaveChanges();
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -166,37 +169,24 @@ namespace TDH.Services.Common
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    CM_SKILL_DEFINDED _md = _context.CM_SKILL_DEFINDED.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            CM_SKILL_DEFINDED _md = _context.CM_SKILL_DEFINDED.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                           
-                            _context.CM_SKILL_DEFINDED.Remove(_md);
-                            _context.Entry(_md).State = EntityState.Deleted;
-
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
                     }
+
+                    _context.CM_SKILL_DEFINDED.Remove(_md);
+                    _context.Entry(_md).State = EntityState.Deleted;
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

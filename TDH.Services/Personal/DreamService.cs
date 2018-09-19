@@ -18,7 +18,7 @@ namespace TDH.Services.Personal
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/Personal/IdeaService.cs";
+        private readonly string FILE_NAME = "Services.Personal/IdeaService.cs";
 
         #endregion
 

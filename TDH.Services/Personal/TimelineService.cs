@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.Personal;
 using Utils;
 
 namespace TDH.Services.Personal
 {
+    /// <summary>
+    /// Timeline service
+    /// </summary>
     public class TimelineService
     {
         #region " [ Properties ] "
@@ -17,7 +18,7 @@ namespace TDH.Services.Personal
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/Personal/TimelineService.cs";
+        private readonly string FILE_NAME = "Services.Personal/TimelineService.cs";
 
         #endregion
 
@@ -57,9 +58,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 

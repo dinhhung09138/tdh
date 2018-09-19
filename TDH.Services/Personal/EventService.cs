@@ -7,6 +7,7 @@ using TDH.Common;
 using TDH.DataAccess;
 using TDH.Model.Personal;
 using System.Data.Entity;
+using TDH.Common.UserException;
 
 namespace TDH.Services.Personal
 {
@@ -20,7 +21,7 @@ namespace TDH.Services.Personal
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/Personal/EventService.cs";
+        private readonly string FILE_NAME = "Services.Personal/EventService.cs";
 
         #endregion
 
@@ -43,7 +44,7 @@ namespace TDH.Services.Personal
                 {
                     var _lData = (from m in _context.PN_EVENT
                                   join t in _context.PN_EVENT_TYPE on m.event_type equals t.code
-                                  where !m.deleted && m.created_by == userID &&
+                                  where !m.deleted && m.created_by == userID && m.created_by == userID &&
                                         m.event_type == (request.Parameter1 == "" ? m.event_type : request.Parameter1)
                                   orderby m.date descending
                                   select new
@@ -115,9 +116,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
             return _return;
         }
@@ -152,9 +151,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -172,7 +169,7 @@ namespace TDH.Services.Personal
                     PN_EVENT _md = _context.PN_EVENT.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
                     }
                     return new EventModel()
                     {
@@ -192,11 +189,13 @@ namespace TDH.Services.Personal
                     };
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
         }
 
@@ -211,72 +210,56 @@ namespace TDH.Services.Personal
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    PN_EVENT _md = new PN_EVENT();
+                    if (model.Insert)
                     {
-                        try
+                        _md.id = Guid.NewGuid();
+                    }
+                    else
+                    {
+                        _md = _context.PN_EVENT.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
+                        if (_md == null)
                         {
-                            PN_EVENT _md = new PN_EVENT();
-                            if (model.Insert)
-                            {
-                                _md.id = Guid.NewGuid();
-                            }
-                            else
-                            {
-                                _md = _context.PN_EVENT.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
-                                if (_md == null)
-                                {
-                                    throw new FieldAccessException();
-                                }
-                            }
-                            _md.title = model.Title;
-                            _md.duration = model.Duration;
-                            _md.description = model.Description;
-                            _md.content = model.Content;
-                            _md.date = model.Date;
-                            _md.is_plan = model.IsPlan;
-                            _md.is_finish = model.IsFinish;
-                            _md.is_cancel = model.IsCancel;
-                            _md.event_type = model.TypeCode;
-                            _md.ordering = model.Ordering;
-                            _md.publish = model.Publish;
-                            //Setting value don't allow change when create or edit
-                            if (model.Insert)
-                            {
-                                _md.created_by = model.CreateBy;
-                                _md.created_date = DateTime.Now;
-                                _context.PN_EVENT.Add(_md);
-                                _context.Entry(_md).State = EntityState.Added;                                
-                            }
-                            else
-                            {
-                                _md.updated_by = model.UpdateBy;
-                                _md.updated_date = DateTime.Now;
-                                _context.PN_EVENT.Attach(_md);
-                                _context.Entry(_md).State = EntityState.Modified;
-
-                                #region " [ Timeline ] "
-
-                                #endregion
-
-                            }
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                            throw new ApplicationException();
+                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                         }
                     }
+                    _md.title = model.Title;
+                    _md.duration = model.Duration;
+                    _md.description = model.Description;
+                    _md.content = model.Content;
+                    _md.date = model.Date;
+                    _md.is_plan = model.IsPlan;
+                    _md.is_finish = model.IsFinish;
+                    _md.is_cancel = model.IsCancel;
+                    _md.event_type = model.TypeCode;
+                    _md.ordering = model.Ordering;
+                    _md.publish = model.Publish;
+                    //Setting value don't allow change when create or edit
+                    if (model.Insert)
+                    {
+                        _md.created_by = model.CreateBy;
+                        _md.created_date = DateTime.Now;
+                        _context.PN_EVENT.Add(_md);
+                        _context.Entry(_md).State = EntityState.Added;
+                    }
+                    else
+                    {
+                        _md.updated_by = model.UpdateBy;
+                        _md.updated_date = DateTime.Now;
+                        _context.PN_EVENT.Attach(_md);
+                        _context.Entry(_md).State = EntityState.Modified;
+                        
+                    }
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -300,38 +283,27 @@ namespace TDH.Services.Personal
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+
+                    PN_EVENT _md = _context.PN_EVENT.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            PN_EVENT _md = _context.PN_EVENT.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _md.publish = model.Publish;
-                            _md.updated_by = model.UpdateBy;
-                            _md.updated_date = DateTime.Now;
-                            _context.PN_EVENT.Attach(_md);
-                            _context.Entry(_md).State = EntityState.Modified;
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
                     }
+                    _md.publish = model.Publish;
+                    _md.updated_by = model.UpdateBy;
+                    _md.updated_date = DateTime.Now;
+                    _context.PN_EVENT.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Publish", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -348,38 +320,26 @@ namespace TDH.Services.Personal
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    PN_EVENT _md = _context.PN_EVENT.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            PN_EVENT _md = _context.PN_EVENT.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _md.deleted = true;
-                            _md.deleted_by = model.DeleteBy;
-                            _md.deleted_date = DateTime.Now;
-                            _context.PN_EVENT.Attach(_md);
-                            _context.Entry(_md).State = EntityState.Modified;
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
                     }
+                    _md.deleted = true;
+                    _md.deleted_by = model.DeleteBy;
+                    _md.deleted_date = DateTime.Now;
+                    _context.PN_EVENT.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

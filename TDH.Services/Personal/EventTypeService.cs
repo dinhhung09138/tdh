@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Utils.JqueryDatatable;
-using Utils;
-using TDH.Common;
 using TDH.DataAccess;
 using TDH.Model.Personal;
-using System.Data.Entity;
+using TDH.Common.UserException;
 
 namespace TDH.Services.Personal
 {
@@ -20,7 +17,7 @@ namespace TDH.Services.Personal
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/Personal/EventTypeService.cs";
+        private readonly string FILE_NAME = "Services.Personal/EventTypeService.cs";
 
         #endregion
 
@@ -53,9 +50,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 

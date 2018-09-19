@@ -7,6 +7,7 @@ using Utils;
 using TDH.Common;
 using TDH.Model.Personal;
 using TDH.DataAccess;
+using TDH.Common.UserException;
 
 namespace TDH.Services.Personal
 {
@@ -101,9 +102,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
 
             return _return;
@@ -130,9 +129,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -150,7 +147,7 @@ namespace TDH.Services.Personal
                     PN_DREAM _md = context.PN_DREAM.FirstOrDefault(m => m.id == model.ID && m.created_by == model.CreateBy && !m.deleted);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
                     }
                     return new DreamModel()
                     {
@@ -163,11 +160,13 @@ namespace TDH.Services.Personal
                     };
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
         }
 
@@ -192,7 +191,7 @@ namespace TDH.Services.Personal
                         _md = context.PN_DREAM.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                         if (_md == null)
                         {
-                            throw new FieldAccessException();
+                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                         }
                     }
                     _md.title = model.Title;
@@ -217,11 +216,13 @@ namespace TDH.Services.Personal
                     context.SaveChanges();
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -248,7 +249,7 @@ namespace TDH.Services.Personal
                     PN_DREAM _md = context.PN_DREAM.FirstOrDefault(m => m.id == model.ID && m.created_by == model.CreateBy && !m.deleted);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
                     }
                     _md.deleted = true;
                     _md.deleted_by = model.DeleteBy;
@@ -258,11 +259,13 @@ namespace TDH.Services.Personal
                     context.SaveChanges();
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.Website;
 using Utils;
@@ -17,7 +18,7 @@ namespace TDH.Services.Website
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/ConfigurationService.cs";
+        private readonly string FILE_NAME = "Services.Website/ConfigurationService.cs";
 
         #endregion
 
@@ -91,9 +92,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
             return _return;
         }
@@ -112,7 +111,7 @@ namespace TDH.Services.Website
                     WEB_CONFIGURATION _md = _context.WEB_CONFIGURATION.FirstOrDefault(m => m.key == model.Key);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
                     }
                     return new ConfigurationModel()
                     {
@@ -122,11 +121,13 @@ namespace TDH.Services.Website
                     };
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
         }
 
@@ -141,38 +142,26 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    WEB_CONFIGURATION _md = _context.WEB_CONFIGURATION.FirstOrDefault(m => m.key == model.Key);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            WEB_CONFIGURATION _md = _context.WEB_CONFIGURATION.FirstOrDefault(m => m.key == model.Key);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _md.key = model.Key;
-                            _md.description = model.Description;
-                            _md.value = model.Value;
-                            _context.WEB_CONFIGURATION.Attach(_md);
-                            _context.Entry(_md).State = EntityState.Modified;
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                     }
+                    _md.key = model.Key;
+                    _md.description = model.Description;
+                    _md.value = model.Value;
+                    _context.WEB_CONFIGURATION.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             if (model.Insert)
             {

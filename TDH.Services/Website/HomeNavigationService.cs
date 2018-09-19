@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.Website;
 using Utils;
@@ -20,7 +21,7 @@ namespace TDH.Services.Website
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/HomeNavigationService.cs";
+        private readonly string FILE_NAME = "Services.Website/HomeNavigationService.cs";
 
         #endregion
 
@@ -107,9 +108,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
             return _return;
         }
@@ -125,50 +124,34 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    WEB_HOME_NAVIGATION _md = _md = _context.WEB_HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
+                    if (!model.Selected)
                     {
-                        try
-                        {
-                            WEB_HOME_NAVIGATION _md = _md = _context.WEB_HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
-                            if (!model.Selected)
-                            {
-                                return Delete(model);
-                            }
-                            if (_md == null)
-                            {
-                                _md = new WEB_HOME_NAVIGATION()
-                                {
-                                    id = Guid.NewGuid(),
-                                    navigation_id = model.NavigationID,
-                                    ordering = 1
-                                };
-                                _context.WEB_HOME_NAVIGATION.Add(_md);
-                                _context.Entry(_md).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _md.ordering = model.Ordering;
-                                _context.WEB_HOME_NAVIGATION.Attach(_md);
-                                _context.Entry(_md).State = EntityState.Modified;
-                            }
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        return Delete(model);
                     }
+                    if (_md == null)
+                    {
+                        _md = new WEB_HOME_NAVIGATION()
+                        {
+                            id = Guid.NewGuid(),
+                            navigation_id = model.NavigationID,
+                            ordering = 1
+                        };
+                        _context.WEB_HOME_NAVIGATION.Add(_md);
+                        _context.Entry(_md).State = EntityState.Added;
+                    }
+                    else
+                    {
+                        _md.ordering = model.Ordering;
+                        _context.WEB_HOME_NAVIGATION.Attach(_md);
+                        _context.Entry(_md).State = EntityState.Modified;
+                    }
+                    _context.SaveChanges();
                 }
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -185,34 +168,23 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    WEB_HOME_NAVIGATION _md = _context.WEB_HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            WEB_HOME_NAVIGATION _md = _context.WEB_HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _context.WEB_HOME_NAVIGATION.Remove(_md);
-                            _context.Entry(_md).State = EntityState.Deleted;
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
                     }
+                    _context.WEB_HOME_NAVIGATION.Remove(_md);
+                    _context.Entry(_md).State = EntityState.Deleted;
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

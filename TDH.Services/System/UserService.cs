@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model;
 using TDH.Model.System;
@@ -22,7 +23,7 @@ namespace TDH.Services.System
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/UserService.cs";
+        private readonly string FILE_NAME = "Services.System/UserService.cs";
 
         #endregion
 
@@ -115,9 +116,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
             return _return;
         }
@@ -137,7 +136,7 @@ namespace TDH.Services.System
                     SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
                     }
                     var _role = (from m in _context.SYS_ROLE
                                  join r in _context.SYS_USER_ROLE on m.id equals r.role_id
@@ -154,11 +153,13 @@ namespace TDH.Services.System
                     };
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
         }
 
@@ -190,7 +191,7 @@ namespace TDH.Services.System
                                 _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
-                                    throw new FieldAccessException();
+                                    throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                                 }
                                 if (model.Password != null && model.Password.Length > 0)
                                 {
@@ -231,19 +232,23 @@ namespace TDH.Services.System
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                            throw new ApplicationException();
+                            throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
                         }
                     }
                 }
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -267,38 +272,26 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _md.locked = model.Locked;
-                            _md.update_by = model.UpdateBy;
-                            _md.update_date = DateTime.Now;
-                            _context.SYS_USER.Attach(_md);
-                            _context.Entry(_md).State = EntityState.Modified;
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
                     }
+                    _md.locked = model.Locked;
+                    _md.update_by = model.UpdateBy;
+                    _md.update_date = DateTime.Now;
+                    _context.SYS_USER.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Publish", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -322,7 +315,7 @@ namespace TDH.Services.System
                             SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                             if (_md == null)
                             {
-                                throw new FieldAccessException();
+                                throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
                             }
                             _md.deleted = true;
                             _md.delete_by = model.DeleteBy;
@@ -340,19 +333,23 @@ namespace TDH.Services.System
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                            throw new ApplicationException();
+                            throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
                         }
                     }
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -390,8 +387,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Login", new Guid(), ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Login", new Guid(), ex);
             }
         }
 
@@ -433,9 +429,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetSidebar", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetSidebar", userID, ex);
             }
             return _return;
         }
@@ -471,9 +465,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetSidebar", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetSidebar", userID, ex);
             }
             return _return;
         }

@@ -7,6 +7,7 @@ using Utils.JqueryDatatable;
 using TDH.Model.Website;
 using TDH.DataAccess;
 using Utils;
+using TDH.Common.UserException;
 
 namespace TDH.Services.Website
 {
@@ -20,7 +21,7 @@ namespace TDH.Services.Website
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/PostService.cs";
+        private readonly string FILE_NAME = "Services.Website/PostService.cs";
 
         #endregion
 
@@ -126,9 +127,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
             return _return;
         }
@@ -147,7 +146,7 @@ namespace TDH.Services.Website
                     WEB_POST _md = _context.WEB_POST.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
                     }
                     return new PostModel()
                     {
@@ -176,11 +175,13 @@ namespace TDH.Services.Website
                     };
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
         }
 
@@ -195,84 +196,72 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    WEB_POST _md = new WEB_POST();
+                    if (model.Insert)
                     {
-                        try
+                        _md.id = Guid.NewGuid();
+                    }
+                    else
+                    {
+                        _md = _context.WEB_POST.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                        if (_md == null)
                         {
-                            WEB_POST _md = new WEB_POST();
-                            if (model.Insert)
-                            {
-                                _md.id = Guid.NewGuid();
-                            }
-                            else
-                            {
-                                _md = _context.WEB_POST.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                                if (_md == null)
-                                {
-                                    throw new FieldAccessException();
-                                }
-                            }
-                            _md.is_navigation = model.IsNavigation;
-                            if (model.IsNavigation)
-                            {
-                                _md.navigation_id = model.NavigationID;
-                                _md.category_id = null;
-                            }
-                            else
-                            {
-                                _md.category_id = model.CategoryID;
-                                _md.navigation_id = null;
-                            }
-                            _md.title = model.Title;
-                            _md.alias = model.MetaTitle.TitleToAlias();
-                            _md.description = model.Description;
-                            _md.content = model.Content;
-                            _md.image = model.Image;
-                            _md.ordering = model.Ordering;
-                            _md.publish = model.Publish;
-                            _md.meta_title = model.MetaTitle;
-                            _md.meta_description = model.MetaDescription;
-                            _md.meta_keywords = model.MetaKeywords;
-                            _md.meta_next = model.MetaNext;
-                            _md.meta_og_site_name = model.MetaOgSiteName;
-                            _md.meta_og_image = model.MetaOgImage;
-                            _md.meta_twitter_image = model.MetaTwitterImage;
-                            _md.meta_article_name = model.MetaArticleName;
-                            _md.meta_article_tag = model.MetaArticleTag;
-                            _md.meta_article_section = model.MetaArticleSection;
-                            _md.meta_article_publish = DateTime.Now;
-                            if (model.Insert)
-                            {
-                                _md.create_by = model.CreateBy;
-                                _md.create_date = DateTime.Now;
-                                _context.WEB_POST.Add(_md);
-                                _context.Entry(_md).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _md.update_by = model.UpdateBy;
-                                _md.update_date = DateTime.Now;
-                                _context.WEB_POST.Attach(_md);
-                                _context.Entry(_md).State = EntityState.Modified;
-                            }
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                            throw new ApplicationException();
+                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                         }
                     }
+                    _md.is_navigation = model.IsNavigation;
+                    if (model.IsNavigation)
+                    {
+                        _md.navigation_id = model.NavigationID;
+                        _md.category_id = null;
+                    }
+                    else
+                    {
+                        _md.category_id = model.CategoryID;
+                        _md.navigation_id = null;
+                    }
+                    _md.title = model.Title;
+                    _md.alias = model.MetaTitle.TitleToAlias();
+                    _md.description = model.Description;
+                    _md.content = model.Content;
+                    _md.image = model.Image;
+                    _md.ordering = model.Ordering;
+                    _md.publish = model.Publish;
+                    _md.meta_title = model.MetaTitle;
+                    _md.meta_description = model.MetaDescription;
+                    _md.meta_keywords = model.MetaKeywords;
+                    _md.meta_next = model.MetaNext;
+                    _md.meta_og_site_name = model.MetaOgSiteName;
+                    _md.meta_og_image = model.MetaOgImage;
+                    _md.meta_twitter_image = model.MetaTwitterImage;
+                    _md.meta_article_name = model.MetaArticleName;
+                    _md.meta_article_tag = model.MetaArticleTag;
+                    _md.meta_article_section = model.MetaArticleSection;
+                    _md.meta_article_publish = DateTime.Now;
+                    if (model.Insert)
+                    {
+                        _md.create_by = model.CreateBy;
+                        _md.create_date = DateTime.Now;
+                        _context.WEB_POST.Add(_md);
+                        _context.Entry(_md).State = EntityState.Added;
+                    }
+                    else
+                    {
+                        _md.update_by = model.UpdateBy;
+                        _md.update_date = DateTime.Now;
+                        _context.WEB_POST.Attach(_md);
+                        _context.Entry(_md).State = EntityState.Modified;
+                    }
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -296,38 +285,26 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    WEB_POST _md = _context.WEB_POST.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            WEB_POST _md = _context.WEB_POST.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _md.publish = model.Publish;
-                            _md.update_by = model.UpdateBy;
-                            _md.update_date = DateTime.Now;
-                            _context.WEB_POST.Attach(_md);
-                            _context.Entry(_md).State = EntityState.Modified;
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
                     }
+                    _md.publish = model.Publish;
+                    _md.update_by = model.UpdateBy;
+                    _md.update_date = DateTime.Now;
+                    _context.WEB_POST.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Publish", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -344,38 +321,26 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    WEB_POST _md = _context.WEB_POST.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            WEB_POST _md = _context.WEB_POST.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _md.deleted = true;
-                            _md.delete_by = model.DeleteBy;
-                            _md.delete_date = DateTime.Now;
-                            _context.WEB_POST.Attach(_md);
-                            _context.Entry(_md).State = EntityState.Modified;
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
                     }
+                    _md.deleted = true;
+                    _md.delete_by = model.DeleteBy;
+                    _md.delete_date = DateTime.Now;
+                    _context.WEB_POST.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

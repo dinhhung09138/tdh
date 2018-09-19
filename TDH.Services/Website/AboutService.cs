@@ -5,6 +5,7 @@ using TDH.Model.Website;
 using TDH.DataAccess;
 using TDH.Common;
 using Utils;
+using TDH.Common.UserException;
 
 namespace TDH.Services.Website
 {
@@ -18,7 +19,7 @@ namespace TDH.Services.Website
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/AboutService.cs";
+        private readonly string FILE_NAME = "Services.Website/AboutService.cs";
 
         #endregion
 
@@ -84,9 +85,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
         }
 
@@ -101,68 +100,56 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    WEB_ABOUT _md = new WEB_ABOUT();
+                    if (model.Insert)
                     {
-                        try
+                        _md.id = Guid.NewGuid();
+                    }
+                    else
+                    {
+                        _md = _context.WEB_ABOUT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                        if (_md == null)
                         {
-                            WEB_ABOUT _md = new WEB_ABOUT();
-                            if (model.Insert)
-                            {
-                                _md.id = Guid.NewGuid();
-                            }
-                            else
-                            {
-                                _md = _context.WEB_ABOUT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                                if (_md == null)
-                                {
-                                    throw new FieldAccessException();
-                                }
-                            }
-                            _md.content = model.Content;
-                            _md.link = model.Link;
-                            _md.image = model.Image;
-                            _md.meta_title = model.MetaTitle;
-                            _md.meta_description = model.MetaDescription;
-                            _md.meta_keywords = model.MetaKeywords;
-                            _md.meta_next = model.MetaNext;
-                            _md.meta_og_site_name = model.MetaOgSiteName;
-                            _md.meta_og_image = model.MetaOgImage;
-                            _md.meta_twitter_image = model.MetaTwitterImage;
-                            _md.meta_article_name = model.MetaArticleName;
-                            _md.meta_article_tag = model.MetaArticleTag;
-                            _md.meta_article_section = model.MetaArticleSection;
-                            if (model.Insert)
-                            {
-                                _md.create_by = model.CreateBy;
-                                _md.create_date = DateTime.Now;
-                                _context.WEB_ABOUT.Add(_md);
-                                _context.Entry(_md).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _md.update_by = model.UpdateBy;
-                                _md.update_date = DateTime.Now;
-                                _context.WEB_ABOUT.Attach(_md);
-                                _context.Entry(_md).State = EntityState.Modified;
-                            }
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                            throw new ApplicationException();
+                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                         }
                     }
+                    _md.content = model.Content;
+                    _md.link = model.Link;
+                    _md.image = model.Image;
+                    _md.meta_title = model.MetaTitle;
+                    _md.meta_description = model.MetaDescription;
+                    _md.meta_keywords = model.MetaKeywords;
+                    _md.meta_next = model.MetaNext;
+                    _md.meta_og_site_name = model.MetaOgSiteName;
+                    _md.meta_og_image = model.MetaOgImage;
+                    _md.meta_twitter_image = model.MetaTwitterImage;
+                    _md.meta_article_name = model.MetaArticleName;
+                    _md.meta_article_tag = model.MetaArticleTag;
+                    _md.meta_article_section = model.MetaArticleSection;
+                    if (model.Insert)
+                    {
+                        _md.create_by = model.CreateBy;
+                        _md.create_date = DateTime.Now;
+                        _context.WEB_ABOUT.Add(_md);
+                        _context.Entry(_md).State = EntityState.Added;
+                    }
+                    else
+                    {
+                        _md.update_by = model.UpdateBy;
+                        _md.update_date = DateTime.Now;
+                        _context.WEB_ABOUT.Attach(_md);
+                        _context.Entry(_md).State = EntityState.Modified;
+                    }
+                    _context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             if (model.Insert)
             {

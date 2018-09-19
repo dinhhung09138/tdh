@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.System;
 using Utils;
@@ -19,7 +20,7 @@ namespace TDH.Services.System
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/ErrorLogService.cs";
+        private readonly string FILE_NAME = "Services.System/ErrorLogService.cs";
 
         #endregion
 
@@ -99,9 +100,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
             return _return;
         }
@@ -136,9 +135,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
             return _return;
         }

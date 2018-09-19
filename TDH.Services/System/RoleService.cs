@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.System;
 using Utils;
@@ -23,7 +24,7 @@ namespace TDH.Services.System
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/RoleService.cs";
+        private readonly string FILE_NAME = "Services.System/RoleService.cs";
         
         #endregion
 
@@ -97,9 +98,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
             return _return;
         }
@@ -126,9 +125,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -183,9 +180,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
             return _return;
         }
@@ -215,7 +210,7 @@ namespace TDH.Services.System
                                 _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
-                                    throw new FieldAccessException();
+                                    throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                                 }
                             }
                             _md.name = model.Name;
@@ -261,19 +256,23 @@ namespace TDH.Services.System
                         }
                         catch (Exception ex)
                         {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
                             trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                            throw new ApplicationException();
+                            throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
                         }
                     }
                 }
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -297,38 +296,26 @@ namespace TDH.Services.System
             {
                 using (var context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _md.publish = model.Publish;
-                            _md.updated_by = model.UpdateBy;
-                            _md.updated_date = DateTime.Now;
-                            context.SYS_ROLE.Attach(_md);
-                            context.Entry(_md).State = EntityState.Modified;
-                            context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
                     }
+                    _md.publish = model.Publish;
+                    _md.updated_by = model.UpdateBy;
+                    _md.updated_date = DateTime.Now;
+                    context.SYS_ROLE.Attach(_md);
+                    context.Entry(_md).State = EntityState.Modified;
+                    context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Publish", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Publish", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -345,37 +332,26 @@ namespace TDH.Services.System
             {
                 using (var context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _md.deleted = true;
-                            _md.deleted_by = model.DeleteBy;
-                            _md.deleted_date = DateTime.Now;
-                            context.SYS_ROLE.Attach(_md);
-                            context.Entry(_md).State = EntityState.Modified;
-                            context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
                     }
+                    _md.deleted = true;
+                    _md.deleted_by = model.DeleteBy;
+                    _md.deleted_date = DateTime.Now;
+                    context.SYS_ROLE.Attach(_md);
+                    context.Entry(_md).State = EntityState.Modified;
+                    context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -395,7 +371,7 @@ namespace TDH.Services.System
                     SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "CheckDelete", model.CreateBy);
                     }
                     var _user = context.SYS_USER_ROLE.FirstOrDefault(m => m.role_id == _md.id);
                     if (_user != null)
@@ -405,11 +381,13 @@ namespace TDH.Services.System
                     }
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "CheckDelete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "CheckDelete", model.CreateBy, ex);
             }
             return ResponseStatusCodeHelper.OK;
         }
@@ -452,9 +430,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "AllowAccess", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "AllowAccess", userID, ex);
             }
         }
     }

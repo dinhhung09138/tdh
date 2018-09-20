@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using TDH.Common;
+using Utils;
 
 namespace TDH
 {
@@ -24,11 +25,24 @@ namespace TDH
             Exception exception = Server.GetLastError();
             Response.Clear();
             HttpException httpException = exception as HttpException;
+
+
             if (httpException != null)
             {
+                var _user = Session[CommonHelper.SESSION_LOGIN_NAME] as Utils.CommonModel.UserLoginModel;
+                //
                 Log.WriteLog("Global.asax.cs", "Application_Error", new Guid(), exception);
                 Server.ClearError();
-                Response.Redirect("/error");
+                //
+                if (_user != null && _user.UserID.ToString().Length > 0 && _user.UserName.Length > 0)
+                {
+                    //User are logined. redirecto to admin page   
+                    Response.Redirect("/administrator/admerror/notfound");
+                }
+                else
+                {
+                    Response.Redirect("/error");
+                }
             }
         }
     }

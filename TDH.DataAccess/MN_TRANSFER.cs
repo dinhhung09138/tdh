@@ -30,8 +30,10 @@ namespace TDH.DataAccess
         public Nullable<System.Guid> delete_by { get; set; }
         public Nullable<System.DateTime> delete_date { get; set; }
         public System.DateTime date { get; set; }
+        public System.Guid category_id { get; set; }
     
         public virtual MN_ACCOUNT MN_ACCOUNT { get; set; }
         public virtual MN_ACCOUNT MN_ACCOUNT1 { get; set; }
+        public virtual MN_CATEGORY MN_CATEGORY { get; set; }
     }
 }

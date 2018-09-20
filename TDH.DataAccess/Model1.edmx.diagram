@@ -110,6 +110,7 @@
         <EntityTypeShape EntityType="TDHModel.V_MN_CATEGORY" Width="1.5" PointX="13.625" PointY="29.25" />
         <EntityTypeShape EntityType="TDHModel.V_MN_ACCOUNT_HISTORY" Width="1.5" PointX="11.75" PointY="29.75" />
         <EntityTypeShape EntityType="TDHModel.V_MN_MONEY_FLOW" Width="1.5" PointX="15.75" PointY="29.875" />
+        <AssociationConnector Association="TDHModel.FK_MN_TRANSFER_category_id" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

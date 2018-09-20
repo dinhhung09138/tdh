@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.Model.Marketing.Facebook;
 using TDH.Services.Marketing.Facebook;
-using Utils;
 
 namespace TDH.Areas.Marketing.Controllers
 {
@@ -43,10 +41,17 @@ namespace TDH.Areas.Marketing.Controllers
 
                 return View();
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -66,10 +71,17 @@ namespace TDH.Areas.Marketing.Controllers
                 // Call to service
                 return this.Json(_service.GetAll(UserID), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetUser", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "GetUser", UserID, ex);
             }
         }
 
@@ -97,10 +109,17 @@ namespace TDH.Areas.Marketing.Controllers
                 // Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "SaveUser", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "SaveUser", UserID, ex);
             }
         }
 
@@ -128,10 +147,17 @@ namespace TDH.Areas.Marketing.Controllers
                 // Call to service
                 return this.Json(_service.Delete(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "DeleteUser", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "DeleteUser", UserID, ex);
             }
         }
 
@@ -153,10 +179,17 @@ namespace TDH.Areas.Marketing.Controllers
                 // Call to service
                 return this.Json(_service.GetAll(UserID), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetFanpage", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "GetFanpage", UserID, ex);
             }
         }
 
@@ -184,10 +217,17 @@ namespace TDH.Areas.Marketing.Controllers
                 // Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "SaveFanpage", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "SaveFanpage", UserID, ex);
             }
         }
 
@@ -215,10 +255,17 @@ namespace TDH.Areas.Marketing.Controllers
                 // Call to service
                 return this.Json(_service.Delete(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "DeleteFanpage", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "DeleteFanpage", UserID, ex);
             }
         }
 
@@ -240,10 +287,17 @@ namespace TDH.Areas.Marketing.Controllers
                 // Call to service
                 return this.Json(_service.GetAll(UserID), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetGroup", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "GetGroup", UserID, ex);
             }
         }
 
@@ -271,10 +325,17 @@ namespace TDH.Areas.Marketing.Controllers
                 // Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "SaveGroup", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "SaveGroup", UserID, ex);
             }
         }
 
@@ -302,10 +363,17 @@ namespace TDH.Areas.Marketing.Controllers
                 // Call to service
                 return this.Json(_service.Delete(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "DeleteGroup", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "DeleteGroup", UserID, ex);
             }
         }
 
@@ -314,17 +382,62 @@ namespace TDH.Areas.Marketing.Controllers
 
         public ActionResult Fanpage()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "Fanpage", UserID, ex);
+            }
         }
 
         public ActionResult Group()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "Group", UserID, ex);
+            }
         }
 
         public ActionResult PostType()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "PostType", UserID, ex);
+            }
         }
 
     }

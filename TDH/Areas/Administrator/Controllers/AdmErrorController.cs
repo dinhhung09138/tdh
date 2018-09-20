@@ -6,17 +6,30 @@ using System.Web.Mvc;
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    public class AdmErrorController : Controller
+    [AllowAnonymous]
+    public class AdmErrorController : BaseController
     {
-        [AllowAnonymous]
         public ActionResult Forbiden()
         {
             return View();
         }
-        [AllowAnonymous]
+        /// <summary>
+        /// Error page
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Error()
         {
             return View();
         }
+
+        /// <summary>
+        /// Show when data access is permitted
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DataAccess()
+        {
+            return View();
+        }
+        
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.System;
@@ -144,10 +145,22 @@ namespace TDH.Common
         {
             base.OnException(filterContext);
             filterContext.ExceptionHandled = true;
+            
             //Try to collect data was deleted or without permission
             if (filterContext.Exception is DataAccessException)
             {
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                {
+                    area = "administrator",
+                    controller = "admerror",
+                    action = "dataaccess"
+                }));
+                return;
+            }
+            //controller or service exception
+            if (filterContext.Exception is ControllerException || filterContext.Exception is ServiceException)
+            {
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
                     area = "administrator",
                     controller = "admerror",
@@ -158,7 +171,7 @@ namespace TDH.Common
             //Member dont have permission try to access
             if (filterContext.Exception is MemberAccessException)
             {
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
                     area = "administrator",
                     controller = "admerror",
@@ -169,18 +182,7 @@ namespace TDH.Common
             //controller exception  
             if (filterContext.Exception is HttpException)
             {
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new
-                {
-                    area = "administrator",
-                    controller = "admerror",
-                    action = "error"
-                }));
-                return;
-            }
-            //controller exception
-            if (filterContext.Exception is ControllerException)
-            {
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
                     area = "administrator",
                     controller = "admerror",
@@ -192,7 +194,7 @@ namespace TDH.Common
             if (filterContext.Exception is ApplicationException)
             {
                 string msg = filterContext.Exception.Message;
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
                     area = "administrator",
                     controller = "admerror",

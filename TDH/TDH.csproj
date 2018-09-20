@@ -6657,6 +6657,7 @@
     <Content Include="Areas\Marketing\Views\Facebook\Group.cshtml" />
     <Content Include="Areas\Marketing\Views\Facebook\PostType.cshtml" />
     <Content Include="Areas\Marketing\Views\Zalo\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmError\DataAccess.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6719,8 +6720,6 @@
     <Folder Include="Areas\Personal\Views\PNSkill\" />
     <Folder Include="Areas\System\Models\" />
     <Folder Include="Areas\System\Views\Shared\" />
-    <Folder Include="Areas\Website\Models\" />
-    <Folder Include="Areas\Website\Views\Shared\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

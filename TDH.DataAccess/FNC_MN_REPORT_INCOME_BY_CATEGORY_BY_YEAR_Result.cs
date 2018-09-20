@@ -11,9 +11,8 @@ namespace TDH.DataAccess
 {
     using System;
     
-    public partial class FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result
+    public partial class FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result
     {
-        public string name { get; set; }
         public string cate_name { get; set; }
         public decimal t1 { get; set; }
         public decimal t2 { get; set; }

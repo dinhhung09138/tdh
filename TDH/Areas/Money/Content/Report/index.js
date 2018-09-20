@@ -42,7 +42,7 @@ function drawSummaryChart() {
             }
         });
     }
-    
+
     var options = {
         legend: { position: 'bottom' },
         //title: 'Báo cáo tình hình thu chi các năm',
@@ -121,7 +121,9 @@ function drawSummaryByYearChart() {
                 withCredentials: true,
             },
             dataType: 'json',
-            data: ({ year: 2018 }),
+            data: ({
+                year: $('#summaryByYearSelector').val()
+            }),
             success: function (response) {
                 $.each(response, function (idx, item) {
                     data.addRow([item.Month.toString(), item.Income, item.Payment, item.Total]);
@@ -135,7 +137,7 @@ function drawSummaryByYearChart() {
 
     var options = {
         legend: { position: 'bottom' },
-        //title: 'Báo cáo tình hình thu chi các tháng năm',
+        title: 'Báo cáo tình hình thu chi',
         titlePosition: 'out',
         hAxis: {
             title: 'Tháng'
@@ -208,7 +210,7 @@ function drawIncomeSummaryByYearChart() {
                 withCredentials: true,
             },
             dataType: 'json',
-            data: ({ year: 2018 }),
+            data: ({ year: $('#summaryByYearSelector').val() }),
             success: function (response) {
                 var t1 = [];
                 var t2 = [];
@@ -322,7 +324,7 @@ function drawIncomeSummaryByYearChart() {
 
     var options = {
         legend: { position: 'bottom' },
-        //title: 'Các nguồn thu nhập tháng năm',
+        title: 'Các nguồn thu nhập',
         titlePosition: 'out',
         hAxis: {
             title: 'Tháng'

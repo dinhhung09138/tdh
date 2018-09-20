@@ -25,6 +25,7 @@ namespace TDH.Services.Money
 
         /// <summary>
         /// Total summary
+        /// Get only 10 lasted years
         /// Line chart
         /// </summary>
         /// <param name="userID">The user identifier</param>
@@ -38,9 +39,9 @@ namespace TDH.Services.Money
                     List<CollectionByYearModel> _listResult = new List<CollectionByYearModel>();
                     using (var _context = new TDHEntities())
                     {
-                        var _list = (from m in _context.FNC_REPORT_SUMMARY()
+                        var _list = (from m in _context.FNC_MN_REPORT_SUMMARY()
                                      orderby m.year ascending
-                                     select m).ToList();
+                                     select m).Take(10).ToList();
                         foreach (var item in _list)
                         {
                             _listResult.Add(new CollectionByYearModel() { Year = item.year, Income = item.input, Payment = item.output, Total = item.final });
@@ -73,7 +74,7 @@ namespace TDH.Services.Money
                     List<CollectionByYearModel> _listResult = new List<CollectionByYearModel>();
                     using (var _context = new TDHEntities())
                     {
-                        var _list = (from m in _context.FNC_REPORT_SUMMARY_BY_YEAR(year)
+                        var _list = (from m in _context.FNC_MN_REPORT_SUMMARY_BY_YEAR(year)
                                      orderby m.month ascending
                                      select m).ToList();
                         foreach (var item in _list)
@@ -108,8 +109,7 @@ namespace TDH.Services.Money
                     List<IncomeByYearModel> _listResult = new List<IncomeByYearModel>();
                     using (var _context = new TDHEntities())
                     {
-                        var _list = (from m in _context.FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR(year)
-                                     where m.name == "money_current"
+                        var _list = (from m in _context.FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR(year)
                                      orderby m.cate_name ascending
                                      select m).ToList();
                         foreach (var item in _list)

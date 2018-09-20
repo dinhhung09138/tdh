@@ -95,32 +95,6 @@ namespace TDH.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_REPORT_INCOME_BY_CATEGORY_Result>("[TDHEntities].[FNC_REPORT_INCOME_BY_CATEGORY]()");
         }
     
-        [DbFunction("TDHEntities", "FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR")]
-        public virtual IQueryable<FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result> FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR(Nullable<int> i_Year)
-        {
-            var i_YearParameter = i_Year.HasValue ?
-                new ObjectParameter("I_Year", i_Year) :
-                new ObjectParameter("I_Year", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result>("[TDHEntities].[FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR](@I_Year)", i_YearParameter);
-        }
-    
-        [DbFunction("TDHEntities", "FNC_REPORT_SUMMARY")]
-        public virtual IQueryable<FNC_REPORT_SUMMARY_Result> FNC_REPORT_SUMMARY()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_REPORT_SUMMARY_Result>("[TDHEntities].[FNC_REPORT_SUMMARY]()");
-        }
-    
-        [DbFunction("TDHEntities", "FNC_REPORT_SUMMARY_BY_YEAR")]
-        public virtual IQueryable<FNC_REPORT_SUMMARY_BY_YEAR_Result> FNC_REPORT_SUMMARY_BY_YEAR(Nullable<int> i_Year)
-        {
-            var i_YearParameter = i_Year.HasValue ?
-                new ObjectParameter("I_Year", i_Year) :
-                new ObjectParameter("I_Year", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_REPORT_SUMMARY_BY_YEAR_Result>("[TDHEntities].[FNC_REPORT_SUMMARY_BY_YEAR](@I_Year)", i_YearParameter);
-        }
-    
         [DbFunction("TDHEntities", "FNC_MN_GROUP_SETTING_GET_BY_GROUP")]
         public virtual IQueryable<FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result> FNC_MN_GROUP_SETTING_GET_BY_GROUP(Nullable<System.Guid> i_GroupID, Nullable<int> i_Year, Nullable<System.Guid> i_UserID)
         {
@@ -143,6 +117,26 @@ namespace TDH.DataAccess
         public virtual IQueryable<FNC_MN_REPORT_SUMMARY_Result> FNC_MN_REPORT_SUMMARY()
         {
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_REPORT_SUMMARY_Result>("[TDHEntities].[FNC_MN_REPORT_SUMMARY]()");
+        }
+    
+        [DbFunction("TDHEntities", "FNC_MN_REPORT_SUMMARY_BY_YEAR")]
+        public virtual IQueryable<FNC_MN_REPORT_SUMMARY_BY_YEAR_Result> FNC_MN_REPORT_SUMMARY_BY_YEAR(Nullable<int> i_Year)
+        {
+            var i_YearParameter = i_Year.HasValue ?
+                new ObjectParameter("I_Year", i_Year) :
+                new ObjectParameter("I_Year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_REPORT_SUMMARY_BY_YEAR_Result>("[TDHEntities].[FNC_MN_REPORT_SUMMARY_BY_YEAR](@I_Year)", i_YearParameter);
+        }
+    
+        [DbFunction("TDHEntities", "FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR")]
+        public virtual IQueryable<FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result> FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR(Nullable<int> i_Year)
+        {
+            var i_YearParameter = i_Year.HasValue ?
+                new ObjectParameter("I_Year", i_Year) :
+                new ObjectParameter("I_Year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result>("[TDHEntities].[FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR](@I_Year)", i_YearParameter);
         }
     }
 }

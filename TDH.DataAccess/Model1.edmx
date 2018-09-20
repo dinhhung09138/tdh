@@ -1741,11 +1741,47 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="I_Year" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="cate_name" Type="nvarchar" MaxLength="150" Nullable="false" />
+                <Property Name="t1" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t2" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t3" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t4" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t5" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t6" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t7" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t8" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t9" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t10" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t11" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t12" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="FNC_MN_REPORT_SUMMARY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
               <RowType>
                 <Property Name="year" Type="int" Nullable="false" />
+                <Property Name="input" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="output" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="final" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
+        <Function Name="FNC_MN_REPORT_SUMMARY_BY_YEAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="I_Year" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="year" Type="int" Nullable="false" />
+                <Property Name="month" Type="int" Nullable="false" />
                 <Property Name="input" Type="numeric" Precision="38" Scale="1" Nullable="false" />
                 <Property Name="output" Type="numeric" Precision="38" Scale="1" Nullable="false" />
                 <Property Name="final" Type="numeric" Precision="38" Scale="1" Nullable="false" />
@@ -1764,43 +1800,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <Property Name="percent_current" Type="tinyint" Nullable="false" />
                 <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
                 <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="I_Year" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="name" Type="nvarchar" MaxLength="40" Nullable="false" />
-                <Property Name="cate_name" Type="nvarchar" MaxLength="150" Nullable="false" />
-                <Property Name="t1" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="t2" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="t3" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="t4" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="t5" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="t6" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="t7" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="t8" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="t9" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="t10" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="t11" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="t12" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="FNC_REPORT_SUMMARY_BY_YEAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="I_Year" Type="int" Mode="In" />
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="year" Type="int" Nullable="false" />
-                <Property Name="month" Type="int" Nullable="false" />
-                <Property Name="input" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="output" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="final" Type="numeric" Precision="38" Scale="1" Nullable="false" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -2141,44 +2140,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="money_setting" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
           <Property Name="money_current" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result">
-          <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="cate_name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="t1" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="t2" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="t3" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="t4" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="t5" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="t6" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="t7" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="t8" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="t9" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="t10" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="t11" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="t12" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="FNC_REPORT_SUMMARY_Result">
-          <Property Name="year" Type="Int32" Nullable="false" />
-          <Property Name="input" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="output" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="final" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="FNC_REPORT_SUMMARY_BY_YEAR_Result">
-          <Property Name="year" Type="Int32" Nullable="false" />
-          <Property Name="month" Type="Int32" Nullable="false" />
-          <Property Name="input" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="output" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="final" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-        </ComplexType>
         <EntityContainer Name="TDHEntities" annotation:LazyLoadingEnabled="true">
           <FunctionImport Name="FNC_REPORT_INCOME_BY_CATEGORY" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_INCOME_BY_CATEGORY_Result)" />
-          <FunctionImport Name="FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result)">
-          <Parameter Name="I_Year" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="FNC_REPORT_SUMMARY" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_SUMMARY_Result)" />
-          <FunctionImport Name="FNC_REPORT_SUMMARY_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_SUMMARY_BY_YEAR_Result)">
-          <Parameter Name="I_Year" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result)">
             <Parameter Name="I_GroupID" Mode="In" Type="Guid" />
             <Parameter Name="I_Year" Mode="In" Type="Int32" />
@@ -2422,6 +2385,12 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySet Name="V_MN_ACCOUNT_HISTORY" EntityType="TDHModel.V_MN_ACCOUNT_HISTORY" />
           <EntitySet Name="V_MN_MONEY_FLOW" EntityType="TDHModel.V_MN_MONEY_FLOW" />
           <FunctionImport Name="FNC_MN_REPORT_SUMMARY" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_REPORT_SUMMARY_Result)" />
+          <FunctionImport Name="FNC_MN_REPORT_SUMMARY_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_REPORT_SUMMARY_BY_YEAR_Result)">
+          <Parameter Name="I_Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result)">
+            <Parameter Name="I_Year" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -4232,6 +4201,28 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Type="Decimal" Name="output" Nullable="false" Precision="38" Scale="1" />
           <Property Type="Decimal" Name="final" Nullable="false" Precision="38" Scale="1" />
         </ComplexType>
+        <ComplexType Name="FNC_MN_REPORT_SUMMARY_BY_YEAR_Result">
+          <Property Type="Int32" Name="year" Nullable="false" />
+          <Property Type="Int32" Name="month" Nullable="false" />
+          <Property Type="Decimal" Name="input" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="output" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="final" Nullable="false" Precision="38" Scale="1" />
+        </ComplexType>
+        <ComplexType Name="FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result">
+          <Property Type="String" Name="cate_name" Nullable="false" MaxLength="150" />
+          <Property Type="Decimal" Name="t1" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t2" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t3" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t4" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t5" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t6" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t7" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t8" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t9" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t10" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t11" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t12" Nullable="false" Precision="38" Scale="1" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4248,37 +4239,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <ScalarProperty Name="percent_current" ColumnName="percent_current" />
                 <ScalarProperty Name="money_setting" ColumnName="money_setting" />
                 <ScalarProperty Name="money_current" ColumnName="money_current" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionName="TDHModel.Store.FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR" FunctionImportName="FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TDHModel.FNC_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="cate_name" ColumnName="cate_name" />
-                <ScalarProperty Name="t1" ColumnName="t1" />
-                <ScalarProperty Name="t2" ColumnName="t2" />
-                <ScalarProperty Name="t3" ColumnName="t3" />
-                <ScalarProperty Name="t4" ColumnName="t4" />
-                <ScalarProperty Name="t5" ColumnName="t5" />
-                <ScalarProperty Name="t6" ColumnName="t6" />
-                <ScalarProperty Name="t7" ColumnName="t7" />
-                <ScalarProperty Name="t8" ColumnName="t8" />
-                <ScalarProperty Name="t9" ColumnName="t9" />
-                <ScalarProperty Name="t10" ColumnName="t10" />
-                <ScalarProperty Name="t11" ColumnName="t11" />
-                <ScalarProperty Name="t12" ColumnName="t12" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionName="TDHModel.Store.FNC_REPORT_SUMMARY_BY_YEAR" FunctionImportName="FNC_REPORT_SUMMARY_BY_YEAR">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TDHModel.FNC_REPORT_SUMMARY_BY_YEAR_Result">
-                <ScalarProperty Name="year" ColumnName="year" />
-                <ScalarProperty Name="month" ColumnName="month" />
-                <ScalarProperty Name="input" ColumnName="input" />
-                <ScalarProperty Name="output" ColumnName="output" />
-                <ScalarProperty Name="final" ColumnName="final" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -5466,6 +5426,36 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <ScalarProperty Name="input" ColumnName="input" />
                 <ScalarProperty Name="output" ColumnName="output" />
                 <ScalarProperty Name="final" ColumnName="final" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FNC_MN_REPORT_SUMMARY_BY_YEAR" FunctionName="TDHModel.Store.FNC_MN_REPORT_SUMMARY_BY_YEAR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.FNC_MN_REPORT_SUMMARY_BY_YEAR_Result">
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="month" ColumnName="month" />
+                <ScalarProperty Name="input" ColumnName="input" />
+                <ScalarProperty Name="output" ColumnName="output" />
+                <ScalarProperty Name="final" ColumnName="final" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR" FunctionName="TDHModel.Store.FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result">
+                <ScalarProperty Name="cate_name" ColumnName="cate_name" />
+                <ScalarProperty Name="t1" ColumnName="t1" />
+                <ScalarProperty Name="t2" ColumnName="t2" />
+                <ScalarProperty Name="t3" ColumnName="t3" />
+                <ScalarProperty Name="t4" ColumnName="t4" />
+                <ScalarProperty Name="t5" ColumnName="t5" />
+                <ScalarProperty Name="t6" ColumnName="t6" />
+                <ScalarProperty Name="t7" ColumnName="t7" />
+                <ScalarProperty Name="t8" ColumnName="t8" />
+                <ScalarProperty Name="t9" ColumnName="t9" />
+                <ScalarProperty Name="t10" ColumnName="t10" />
+                <ScalarProperty Name="t11" ColumnName="t11" />
+                <ScalarProperty Name="t12" ColumnName="t12" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

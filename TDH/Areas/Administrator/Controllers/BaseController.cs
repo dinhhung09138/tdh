@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common.UserException;
 using TDH.Services.System;
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    [AllowAnonymous]
     public class BaseController : TDH.Common.BaseController
     {
         #region " [ Properties ] "
@@ -91,6 +89,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult AdminFooter()
         {

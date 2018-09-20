@@ -1,26 +1,21 @@
 ﻿<script>
     $(function () {
-        var chat = $.connection.notificationHub;
+        var notifyChat = $.connection.notificationHub;
+        if ($.connection.hub && $.connection.hub.state === $.signalR.connectionState.disconnected) {
+            $.connection.hub.start().done(function () { console.log('Signalr Hub Now connected, connection ID=' + $.connection.hub.id); }).fail(function () { console.log('Signalr Hub Could not Connect!'); });
+
+            $.connection.hub.disconnected(function () {
+                setTimeout(function () {
+                    $.connection.hub.start().done(function () { console.log('Signalr Hub Now Re Connected, connection ID=' + $.connection.hub.id); }).fail(function () { console.log('Signalr Hub Could not Connect!'); });
+                }, 500); // Restart connection after 0.5 seconds.
+            });
+        }
+
         // Create a function that the hub can call back to display messages.
-        chat.client.notificationToUser = function (userID, message, type) {
+        notifyChat.client.notificationToUser = function (userID, message, type) {
             if ('@ViewBag.userID' === userID) {
                 notification(message, type);
-            }            
+            }  
         };
-       
-        //$.connection.hub.start().done(function () {
-        //    $('#sendmessage').click(function () {
-        //        console.log($('#messageChat').val());
-        //        // Call the Send method on the hub.
-        //        chat.server.send($('#displayname').val(), $('#messageChat').val());
-        //        // Clear text box and reset focus for next comment.
-        //        $('#messageChat').val('').focus();
-        //    });
-        //});
     });
-    // This optional function html-encodes messages for display in the page.
-    function htmlEncode(value) {
-        var encodedValue = $('<div />').text(value).html();
-        return encodedValue;
-    }
 </script>

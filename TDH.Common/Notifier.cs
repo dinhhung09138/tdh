@@ -72,7 +72,7 @@ namespace TDH.Common
                 };
                 IHubProxy _hub = _hubConnection.CreateHubProxy(HUB_NAME);
                 _hubConnection.Start().Wait();
-                _hub.Invoke("SendNotification", userID.ToString(), message, type);
+                _hub.Invoke("sendNotification", userID.ToString(), message, type);
                 _hubConnection.Stop();
             }
             catch (Exception ex)

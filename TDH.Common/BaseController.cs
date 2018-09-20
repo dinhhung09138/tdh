@@ -119,22 +119,15 @@ namespace TDH.Common
         /// <param name="filterContext"></param>
         protected override void OnResultExecuting(ResultExecutingContext filterContext)
         {
-            base.OnResultExecuting(filterContext);
-            //Message show to show on view.
-            //Return after an action execute
-            ViewBag.message = "";
-            ViewBag.messageType = "";
-            if (filterContext.IsChildAction || filterContext.HttpContext.Request.IsAjaxRequest())
+            //Notification
+            if(TempData[CommonHelper.EXECUTE_RESULT] != null)
             {
-                return;
+                Utils.CommonModel.ExecuteResultModel _result = TempData[CommonHelper.EXECUTE_RESULT] as Utils.CommonModel.ExecuteResultModel;
+                ViewBag.msg = _result.Message;
+                ViewBag.msgT = _result.Status == ResponseStatusCodeHelper.Success ? Notifier.TYPE.Success : Notifier.TYPE.Error;
+                TempData.Clear();
             }
-            //if (TempData[CommonHelper.EXECUTE_RESULT] != null)
-            //{
-            //    Utils.CommonModel.ExecuteResultModel _result = TempData[CommonHelper.EXECUTE_RESULT] as Utils.CommonModel.ExecuteResultModel;
-            //    ViewBag.message = _result.Message;
-            //    ViewBag.messageType = _result.Status == ResponseStatusCodeHelper.Success ? "success" : "error";
-            //    TempData.Clear();
-            //}
+            base.OnResultExecuting(filterContext);
         }
 
         /// <summary>
@@ -169,6 +162,8 @@ namespace TDH.Common
                 return;
             }
             //Member dont have permission try to access
+            //Only use in Common module (this class)
+            //Return when check permision.
             if (filterContext.Exception is MemberAccessException)
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
@@ -179,18 +174,8 @@ namespace TDH.Common
                 }));
                 return;
             }
-            //controller exception  
-            if (filterContext.Exception is HttpException)
-            {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
-                {
-                    area = "administrator",
-                    controller = "admerror",
-                    action = "error"
-                }));
-                return;
-            }
             //Error accur in business logic code
+            //Only use in Common module (get access, get setting)
             if (filterContext.Exception is ApplicationException)
             {
                 string msg = filterContext.Exception.Message;

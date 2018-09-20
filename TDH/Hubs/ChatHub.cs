@@ -8,14 +8,10 @@ namespace TDH
 {
     public class ChatHub : Hub
     {
-        public void Hello()
-        {
-            Clients.All.hello();
-        }
-
         public void Send(string name, string message)
         {
-            Clients.All.addNewMessageToPage(name, message);
+            // Call the broadcastMessage method to update clients.
+            Clients.All.broadcastMessage(name, message);
         }
     }
 }

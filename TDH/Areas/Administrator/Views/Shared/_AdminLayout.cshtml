@@ -14,166 +14,209 @@
     <link href="/trandinhhung.ico" rel="shortcut icon" type="image/x-icon" />
     @RenderSection("header", required: false)
     <style>
-        .pd-5{
+        .pd-5 {
             padding: 5px !important;
         }
+
         .mg-lr-2 {
             margin-left: 2px;
             margin-right: 2px;
         }
+
         .navbar-expand .navbar-nav .dropdown-menu {
             background-color: #359746;
             color: black;
         }
-        .navbar-expand .navbar-nav .dropdown-menu .text-muted {
-            color: white !important;
-        }
+
+            .navbar-expand .navbar-nav .dropdown-menu .text-muted {
+                color: white !important;
+            }
+
         .dropdown-menu-lg .dropdown-item:hover {
             background-color: #ffc107;
         }
+
         .dropdown-footer, .dropdown-header {
             color: white;
             font-weight: bold;
         }
+
         body {
             font-size: 13px !important;
             font-family: sans-serif;
         }
+
         .card-header {
             border-bottom-color: #359746;
         }
+
         .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
             color: #fff;
             background-color: #359746;
         }
+
         .nav-pills .nav-item:hover {
             color: #359746;
             border-top-color: #359746;
         }
+
         .nav-pills .nav-link a:hover {
             color: #359746;
         }
+
         .nav-pills .nav-link {
             color: #359746;
         }
+
         .field-validation-error {
             color: red;
         }
+
         .form-control, .btn {
             padding: .2rem .5rem;
         }
+
         .main-header .nav-link {
             height: unset;
         }
+
         .brand-link {
             padding: .68rem .2rem;
         }
+
         .content-header {
             padding: 5px 15px 0px 7px;
         }
+
         .card-body {
             padding: .5rem;
         }
+
         .mgt-22 {
             margin-top: -22px;
         }
+
         .page-item.active .page-link {
             background-color: #359746;
             border-color: #359746;
         }
+
         a {
             color: #359746;
         }
-        a:hover {
-            color: #0d7283;
-        }
+
+            a:hover {
+                color: #0d7283;
+            }
+
         .btn-primary {
             background-color: #359746;
             border-color: #359746;
             box-shadow: 0 1px 1px rgba(0,0,0,.075);
         }
-        .btn-primary:hover, 
-        .btn-primary:focus {
-            border-color: #0d7283;
-            background-color: #0d7283;
-        }
+
+            .btn-primary:hover,
+            .btn-primary:focus {
+                border-color: #0d7283;
+                background-color: #0d7283;
+            }
+
         .nav-sidebar .nav-item > .nav-link {
             margin-bottom: 2px;
         }
-        .nav-sidebar .nav-item > .nav-link:hover {
-            color: #0d7283;
-        }
+
+            .nav-sidebar .nav-item > .nav-link:hover {
+                color: #0d7283;
+            }
+
         .sidebar-mini.sidebar-collapse .main-sidebar, .sidebar-mini.sidebar-collapse .main-sidebar::before {
             width: 5.6rem;
         }
+
         .elevation-4 {
             box-shadow: unset;
         }
+
         .form-control {
             border-radius: unset;
             box-shadow: unset;
             transition: unset;
         }
-        .btn{
+
+        .btn {
             border-radius: unset;
         }
-        .callout, .elevation-1, .sidebar-dark-danger .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-dark .nav-sidebar > .nav-item > .nav-link.active, 
-        .sidebar-dark-info .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-light .nav-sidebar > .nav-item > .nav-link.active, 
-        .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-secondary .nav-sidebar > .nav-item > .nav-link.active, 
-        .sidebar-dark-success .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-warning .nav-sidebar > .nav-item > .nav-link.active, 
-        .sidebar-light-danger .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-dark .nav-sidebar > .nav-item > .nav-link.active, 
-        .sidebar-light-info .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-light .nav-sidebar > .nav-item > .nav-link.active, 
-        .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-secondary .nav-sidebar > .nav-item > .nav-link.active, 
+
+        .callout, .elevation-1, .sidebar-dark-danger .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-dark .nav-sidebar > .nav-item > .nav-link.active,
+        .sidebar-dark-info .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-light .nav-sidebar > .nav-item > .nav-link.active,
+        .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-secondary .nav-sidebar > .nav-item > .nav-link.active,
+        .sidebar-dark-success .nav-sidebar > .nav-item > .nav-link.active, .sidebar-dark-warning .nav-sidebar > .nav-item > .nav-link.active,
+        .sidebar-light-danger .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-dark .nav-sidebar > .nav-item > .nav-link.active,
+        .sidebar-light-info .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-light .nav-sidebar > .nav-item > .nav-link.active,
+        .sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-secondary .nav-sidebar > .nav-item > .nav-link.active,
         .sidebar-light-success .nav-sidebar > .nav-item > .nav-link.active, .sidebar-light-warning .nav-sidebar > .nav-item > .nav-link.active {
             box-shadow: none;
         }
+
         .modal-header {
             display: block;
         }
+
         .no-bg {
             background-color: unset !important;
         }
-        .no-bg .card-title {
-            color: #359746 !important;
-            font-weight:bold;
-            border-bottom: #359746 solid 1px;
-            padding-bottom: 7px;
-        }
+
+            .no-bg .card-title {
+                color: #359746 !important;
+                font-weight: bold;
+                border-bottom: #359746 solid 1px;
+                padding-bottom: 7px;
+            }
+
         a.btn-box-tool {
             color: rgba(255,255,255, 1) !important;
             background-color: #359746 !important;
         }
-        a.btn-box-tool:hover, a.btn-box-tool:active {
-            background-color: #0D7283 !important;
-        }
+
+            a.btn-box-tool:hover, a.btn-box-tool:active {
+                background-color: #0D7283 !important;
+            }
+
         a.btn-box-tool-inner {
             color: #359746 !important;
             background-color: transparent !important;
         }
+
         .nav-sidebar > .nav-item .nav-icon {
             color: #359746;
         }
+
         .page-link {
             color: #359746;
         }
-        #formMain{
+
+        #formMain {
             min-height: 500px;
         }
+
         .modal-content {
             border: unset;
             border-radius: 0rem;
             box-shadow: none !important;
         }
-        .parsley-errors-list{
+
+        .parsley-errors-list {
             color: red;
             list-style: none;
         }
+
         .disabledAnchor {
             pointer-events: none !important;
             cursor: default;
             color: white;
             opacity: .5;
         }
+
         .datepicker table tr td span.active:hover, .datepicker table tr td span.active:hover:hover, .datepicker table tr td span.active.disabled:hover,
         .datepicker table tr td span.active.disabled:hover:hover, .datepicker table tr td span.active:focus, .datepicker table tr td span.active:hover:focus,
         .datepicker table tr td span.active.disabled:focus, .datepicker table tr td span.active.disabled:hover:focus, .datepicker table tr td span.active:active,
@@ -184,16 +227,19 @@
             background-color: #359746 !important;
             border-color: #359746 !important;
         }
+
         .datepicker table tr td span {
             height: 40px !important;
             line-height: 40px !important;
             border-radius: 0px !important;
         }
+
         .table i.fa-plus {
             font-size: 15px;
             padding-right: 5px;
             color: #359746;
         }
+
         body.modal-open {
             padding-right: 0 !important;
         }
@@ -217,9 +263,9 @@
     <div class="wrapper">
         @Html.Action("AdminNavigation", "Base", new { @area = "administrator" })
         @Html.Action("AdminSidebar", "Base", new { @area = "administrator" })
+        <input type="hidden" id="msg" value="@ViewBag.msg" />
+        <input type="hidden" id="msgT" value="@ViewBag.msgT" />
         <div class="content-wrapper">
-            <input type="hidden" id="message" value="@ViewBag.message" />
-            <input type="hidden" id="messageType" value="@ViewBag.messageType" />
             <section class="content">
                 <div class="container-fluid" id="main_layout">
                 </div>
@@ -238,9 +284,9 @@
     <script src="/Areas/Administrator/Content/dist/js/adminlte.min.js"></script>
     <script src="/Areas/Administrator/Content/plugins/waitMe/waitMe.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/Areas/Administrator/Content/custom/custom.js"></script>
     <script src="/Scripts/jquery.signalR-2.3.0.min.js"></script>
     <script src="~/signalr/hubs"></script>
-    <script src="/Areas/Administrator/Content/custom/custom.js"></script>
 
     @RenderSection("script", required: false)
     @{Html.RenderPartial("~/Areas/Administrator/Views/Shared/_SignalR.cshtml");}

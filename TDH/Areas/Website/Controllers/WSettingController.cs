@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
-using TDH.Common.Fillters;
+using TDH.Common.UserException;
 using TDH.Model.Website;
 using TDH.Services.Website;
 using Utils;
@@ -12,7 +10,7 @@ using Utils.JqueryDatatable;
 
 namespace TDH.Areas.Website.Controllers
 {
-    public class WSettingController : TDH.Common.BaseController
+    public class WSettingController : BaseController
     {
         #region " [ Properties ] "
 
@@ -36,10 +34,17 @@ namespace TDH.Areas.Website.Controllers
             {
                 return View();
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Navigation", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Navigation", UserID, ex);
             }
         }
 
@@ -77,10 +82,17 @@ namespace TDH.Areas.Website.Controllers
                 //
                 return this.Json(new DataTableResponse<HomeNavigationModel>(), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Navigation", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Navigation", UserID, ex);
             }
         }
 
@@ -113,10 +125,17 @@ namespace TDH.Areas.Website.Controllers
                 //Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "SaveNavigation", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "SaveNavigation", UserID, ex);
             }
         }
 
@@ -135,10 +154,17 @@ namespace TDH.Areas.Website.Controllers
             {
                 return View();
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Category", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Category", UserID, ex);
             }
         }
 
@@ -176,10 +202,17 @@ namespace TDH.Areas.Website.Controllers
 
                 return this.Json(new DataTableResponse<HomeCategoryModel>(), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Category", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Category", UserID, ex);
             }
         }
 
@@ -211,10 +244,17 @@ namespace TDH.Areas.Website.Controllers
                 //Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "SaveCategory", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "SaveCategory", UserID, ex);
             }
         }
 
@@ -233,10 +273,17 @@ namespace TDH.Areas.Website.Controllers
             {
                 return View();
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Configuration", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Configuration", UserID, ex);
             }
         }
 
@@ -275,10 +322,17 @@ namespace TDH.Areas.Website.Controllers
 
                 return this.Json(new DataTableResponse<ConfigurationModel>(), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Configuration", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Configuration", UserID, ex);
             }
         }
 
@@ -304,10 +358,17 @@ namespace TDH.Areas.Website.Controllers
                 ConfigurationModel model = _service.GetItemByID(new ConfigurationModel() { Key = id, CreateBy = UserID, Insert = false });
                 return View(model);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditConfiguration", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "EditConfiguration", UserID, ex);
             }
         }
 
@@ -339,10 +400,17 @@ namespace TDH.Areas.Website.Controllers
                 //Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "EditConfiguration", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "EditConfiguration", UserID, ex);
             }
         }
 

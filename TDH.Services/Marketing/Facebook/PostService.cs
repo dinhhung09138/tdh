@@ -17,7 +17,7 @@ namespace TDH.Services.Marketing.Facebook
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services.Marketing.Facebook/PostService.cs";
+        private readonly string FILE_NAME = "Services.Marketings/PostService.cs";
 
         #endregion
 

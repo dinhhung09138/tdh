@@ -251,57 +251,40 @@ namespace TDH.Services.Money
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    MN_GROUP _md = new MN_GROUP();
+                    if (model.Insert)
                     {
-                        try
+                        _md.id = Guid.NewGuid();
+                        _md.is_input = model.IsInput;
+                    }
+                    else
+                    {
+                        _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.create_by == model.CreateBy);
+                        if (_md == null)
                         {
-                            MN_GROUP _md = new MN_GROUP();
-                            if (model.Insert)
-                            {
-                                _md.id = Guid.NewGuid();
-                                _md.is_input = model.IsInput;
-                            }
-                            else
-                            {
-                                _md = _context.MN_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.create_by == model.CreateBy);
-                                if (_md == null)
-                                {
-                                    throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
-                                }
-                            }
-                            _md.name = model.Name;
-                            _md.notes = model.Notes;
-                            _md.ordering = model.Ordering;
-                            _md.publish = model.Publish;
-                            //Setting value don't allow change when create or edit
-                            if (model.Insert)
-                            {
-                                _md.create_by = model.CreateBy;
-                                _md.create_date = DateTime.Now;
-                                _context.MN_GROUP.Add(_md);
-                                _context.Entry(_md).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _md.update_by = model.UpdateBy;
-                                _md.update_date = DateTime.Now;
-                                _context.MN_GROUP.Attach(_md);
-                                _context.Entry(_md).State = EntityState.Modified;
-                            }
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (DataAccessException fieldEx)
-                        {
-                            trans.Rollback();
-                            throw fieldEx;
-                        }
-                        catch (Exception ex)
-                        {
-                            trans.Rollback();
-                            throw ex;
+                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                         }
                     }
+                    _md.name = model.Name;
+                    _md.notes = model.Notes;
+                    _md.ordering = model.Ordering;
+                    _md.publish = model.Publish;
+                    //Setting value don't allow change when create or edit
+                    if (model.Insert)
+                    {
+                        _md.create_by = model.CreateBy;
+                        _md.create_date = DateTime.Now;
+                        _context.MN_GROUP.Add(_md);
+                        _context.Entry(_md).State = EntityState.Added;
+                    }
+                    else
+                    {
+                        _md.update_by = model.UpdateBy;
+                        _md.update_date = DateTime.Now;
+                        _context.MN_GROUP.Attach(_md);
+                        _context.Entry(_md).State = EntityState.Modified;
+                    }
+                    _context.SaveChanges();
                 }
             }
             catch (DataAccessException fieldEx)

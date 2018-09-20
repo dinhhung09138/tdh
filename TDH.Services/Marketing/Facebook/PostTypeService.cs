@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.Marketing.Facebook;
 using Utils;
@@ -10,6 +11,9 @@ using Utils.JqueryDatatable;
 
 namespace TDH.Services.Marketing.Facebook
 {
+    /// <summary>
+    /// Post type service
+    /// </summary>
     public class PostTypeService
     {
         #region " [ Properties ] "
@@ -17,7 +21,7 @@ namespace TDH.Services.Marketing.Facebook
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services.Marketing.Facebook/PostService.cs";
+        private readonly string FILE_NAME = "Services.Marketing/PostService.cs";
 
         #endregion
 
@@ -98,9 +102,7 @@ namespace TDH.Services.Marketing.Facebook
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
 
             return _return;
@@ -127,9 +129,7 @@ namespace TDH.Services.Marketing.Facebook
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -147,7 +147,7 @@ namespace TDH.Services.Marketing.Facebook
                     FB_POST_TYPE _md = context.FB_POST_TYPE.FirstOrDefault(m => m.code == model.Code && !m.deleted);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
                     }
                     return new PostTypeModel()
                     {
@@ -162,11 +162,13 @@ namespace TDH.Services.Marketing.Facebook
                     };
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
         }
 
@@ -191,7 +193,7 @@ namespace TDH.Services.Marketing.Facebook
                         _md = context.FB_POST_TYPE.FirstOrDefault(m => m.code == model.Code && !m.deleted);
                         if (_md == null)
                         {
-                            throw new FieldAccessException();
+                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                         }
                     }
                     _md.name = model.Name;
@@ -218,11 +220,13 @@ namespace TDH.Services.Marketing.Facebook
                     context.SaveChanges();
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -249,7 +253,7 @@ namespace TDH.Services.Marketing.Facebook
                     FB_POST_TYPE _md = context.FB_POST_TYPE.FirstOrDefault(m => m.code == model.Code && !m.deleted);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
                     }
                     _md.deleted = true;
                     _md.deleted_by = model.DeleteBy;
@@ -259,11 +263,13 @@ namespace TDH.Services.Marketing.Facebook
                     context.SaveChanges();
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

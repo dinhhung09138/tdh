@@ -1741,6 +1741,18 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="FNC_MN_REPORT_SUMMARY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="year" Type="int" Nullable="false" />
+                <Property Name="input" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="output" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="final" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="FNC_REPORT_INCOME_BY_CATEGORY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -1775,18 +1787,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <Property Name="t10" Type="numeric" Precision="38" Scale="1" Nullable="false" />
                 <Property Name="t11" Type="numeric" Precision="38" Scale="1" Nullable="false" />
                 <Property Name="t12" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="FNC_REPORT_SUMMARY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="year" Type="int" Nullable="false" />
-                <Property Name="input" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="output" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="final" Type="numeric" Precision="38" Scale="1" Nullable="false" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -2421,6 +2421,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySet Name="V_MN_CATEGORY" EntityType="TDHModel.V_MN_CATEGORY" />
           <EntitySet Name="V_MN_ACCOUNT_HISTORY" EntityType="TDHModel.V_MN_ACCOUNT_HISTORY" />
           <EntitySet Name="V_MN_MONEY_FLOW" EntityType="TDHModel.V_MN_MONEY_FLOW" />
+          <FunctionImport Name="FNC_MN_REPORT_SUMMARY" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_REPORT_SUMMARY_Result)" />
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -4225,6 +4226,12 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="type" Type="Int32" Nullable="false" />
           <Property Name="create_by" Type="Guid" Nullable="false" />
         </EntityType>
+        <ComplexType Name="FNC_MN_REPORT_SUMMARY_Result">
+          <Property Type="Int32" Name="year" Nullable="false" />
+          <Property Type="Decimal" Name="input" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="output" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="final" Nullable="false" Precision="38" Scale="1" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4261,16 +4268,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <ScalarProperty Name="t10" ColumnName="t10" />
                 <ScalarProperty Name="t11" ColumnName="t11" />
                 <ScalarProperty Name="t12" ColumnName="t12" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionName="TDHModel.Store.FNC_REPORT_SUMMARY" FunctionImportName="FNC_REPORT_SUMMARY">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TDHModel.FNC_REPORT_SUMMARY_Result">
-                <ScalarProperty Name="year" ColumnName="year" />
-                <ScalarProperty Name="input" ColumnName="input" />
-                <ScalarProperty Name="output" ColumnName="output" />
-                <ScalarProperty Name="final" ColumnName="final" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -5462,6 +5459,16 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FNC_MN_REPORT_SUMMARY" FunctionName="TDHModel.Store.FNC_MN_REPORT_SUMMARY">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.FNC_MN_REPORT_SUMMARY_Result">
+                <ScalarProperty Name="year" ColumnName="year" />
+                <ScalarProperty Name="input" ColumnName="input" />
+                <ScalarProperty Name="output" ColumnName="output" />
+                <ScalarProperty Name="final" ColumnName="final" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

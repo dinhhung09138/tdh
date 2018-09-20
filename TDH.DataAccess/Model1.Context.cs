@@ -138,5 +138,11 @@ namespace TDH.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result>("[TDHEntities].[FNC_MN_GROUP_SETTING_GET_BY_GROUP](@I_GroupID, @I_Year, @I_UserID)", i_GroupIDParameter, i_YearParameter, i_UserIDParameter);
         }
+    
+        [DbFunction("TDHEntities", "FNC_MN_REPORT_SUMMARY")]
+        public virtual IQueryable<FNC_MN_REPORT_SUMMARY_Result> FNC_MN_REPORT_SUMMARY()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_REPORT_SUMMARY_Result>("[TDHEntities].[FNC_MN_REPORT_SUMMARY]()");
+        }
     }
 }

@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace TDH.Areas.Administrator.Controllers
 {
     [AllowAnonymous]
-    public class AdmErrorController : BaseController
+    public class AdmErrorController : TDH.Common.BaseController
     {
         public ActionResult Forbiden()
         {

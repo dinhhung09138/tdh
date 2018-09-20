@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using TDH.Common.UserException;
 using TDH.Model.System;
 using TDH.Services.System;
 
@@ -13,41 +11,80 @@ namespace TDH.Areas.Administrator.Controllers
     /// </summary>
     public class LoginController : TDH.Common.BaseController
     {
+        #region " [ Properties ] "
+
+        /// <summary>
+        /// File name
+        /// </summary>
+        private readonly string FILE_NAME = "Administrator.Controllers/LoginController.cs";
+
+        #endregion
+
         [AllowAnonymous]
         public ActionResult Index()
         {
-            LoginModel model = new LoginModel();
-            if(TempData["model"] != null)
+            try
             {
-                model = TempData["model"] as LoginModel;
+                LoginModel model = new LoginModel();
+                if (TempData["model"] != null)
+                {
+                    model = TempData["model"] as LoginModel;
+                }
+                ViewBag.msg = "";
+                if (TempData["msg"] != null)
+                {
+                    ViewBag.msg = TempData["msg"].ToString();
+                }
+                return View(model);
             }
-            ViewBag.msg = "";
-            if (TempData["msg"] != null)
+            catch (ServiceException serviceEx)
             {
-                ViewBag.msg = TempData["msg"].ToString();
+                throw serviceEx;
             }
-            return View(model);
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+            }
         }
 
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Index(LoginModel model)
         {
-            UserService _services = new UserService();
-            UserModel _model = _services.Login(model);
-            if(_model.UserName == null || _model.UserName == "" )
+            try
             {
-                TempData["model"] = new LoginModel() { UserName = model.UserName, RememberMe = model.RememberMe };
-                TempData["msg"] = "Tên đăng nhập hoặc mật khẩu không hợp lệ";
-                return RedirectToAction("Index");
+                UserService _services = new UserService();
+                UserModel _model = _services.Login(model);
+                if (_model.UserName == null || _model.UserName == "")
+                {
+                    TempData["model"] = new LoginModel() { UserName = model.UserName, RememberMe = model.RememberMe };
+                    TempData["msg"] = "Tên đăng nhập hoặc mật khẩu không hợp lệ";
+                    return RedirectToAction("Index");
+                }
+                Utils.CommonModel.UserLoginModel userModel = new Utils.CommonModel.UserLoginModel()
+                {
+                    UserID = _model.ID,
+                    UserName = _model.UserName
+                };
+                Session[Utils.CommonHelper.SESSION_LOGIN_NAME] = userModel;
+                return RedirectToAction("index", "dashboard", new { area = "administrator" });
             }
-            Utils.CommonModel.UserLoginModel userModel = new Utils.CommonModel.UserLoginModel()
+            catch (ServiceException serviceEx)
             {
-                UserID = _model.ID,
-                UserName = _model.UserName
-            };
-            Session[Utils.CommonHelper.SESSION_LOGIN_NAME] = userModel;
-            return RedirectToAction("index", "dashboard",new { area = "administrator" });
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+            }
         }
     }
 }

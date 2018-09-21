@@ -12,19 +12,18 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class V_TIMELINE
+    public partial class V_SYS_RENDER_NAVIGATION
     {
+        public string module_code { get; set; }
+        public string module_title { get; set; }
+        public string default_action { get; set; }
+        public string icon { get; set; }
+        public short module_order { get; set; }
+        public string code { get; set; }
+        public string url { get; set; }
+        public short ordering { get; set; }
+        public string title { get; set; }
+        public short function_ordering { get; set; }
         public System.Guid id { get; set; }
-        public string name { get; set; }
-        public string school { get; set; }
-        public string duration { get; set; }
-        public string description { get; set; }
-        public System.DateTime date { get; set; }
-        public bool is_plan { get; set; }
-        public bool is_finish { get; set; }
-        public bool is_cancel { get; set; }
-        public string type_code { get; set; }
-        public string type_name { get; set; }
-        public System.Guid created_by { get; set; }
     }
 }

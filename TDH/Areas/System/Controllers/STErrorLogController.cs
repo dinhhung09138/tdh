@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
-using TDH.Common.Fillters;
+using TDH.Common.UserException;
 using TDH.Model.System;
 using TDH.Services.System;
 using Utils;
@@ -38,10 +36,17 @@ namespace TDH.Areas.System.Controllers
             {
                 return PartialView();
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -77,10 +82,17 @@ namespace TDH.Areas.System.Controllers
 
                 return this.Json(new DataTableResponse<ErrorLogModel>(), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -107,13 +119,19 @@ namespace TDH.Areas.System.Controllers
 
                 return this.Json(model, JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Detail", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Detail", UserID, ex);
             }
         }
-
 
     }
 }

@@ -6657,6 +6657,9 @@
     <Content Include="Areas\Marketing\Views\Facebook\Group.cshtml" />
     <Content Include="Areas\Marketing\Views\Facebook\PostType.cshtml" />
     <Content Include="Areas\Marketing\Views\Zalo\Index.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmError\DataAccess.cshtml" />
+    <Content Include="Areas\Administrator\Views\AdmError\NotFound.cshtml" />
+    <Content Include="Areas\Money\Views\MNReport\Partials\_BorrowAccountStatus.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6711,16 +6714,10 @@
     <Folder Include="Areas\Administrator\Content\ckeditor\skins\moono\images\hidpi\" />
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Views\Shared\" />
-    <Folder Include="Areas\Marketing\Models\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Money\Models\" />
     <Folder Include="Areas\Money\Views\Shared\" />
-    <Folder Include="Areas\Personal\Models\" />
     <Folder Include="Areas\Personal\Views\PNSkill\" />
-    <Folder Include="Areas\System\Models\" />
-    <Folder Include="Areas\System\Views\Shared\" />
-    <Folder Include="Areas\Website\Models\" />
-    <Folder Include="Areas\Website\Views\Shared\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

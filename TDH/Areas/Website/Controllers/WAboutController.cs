@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
-using TDH.Common.Fillters;
+using TDH.Common.UserException;
 using TDH.Model.Website;
 using TDH.Services.Website;
 
@@ -37,10 +37,17 @@ namespace TDH.Areas.Website.Controllers
 
                 return View(_model);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -75,10 +82,17 @@ namespace TDH.Areas.Website.Controllers
                 //Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 

@@ -1,48 +1,114 @@
 ﻿using System;
-using System.Web;
 using System.Web.Mvc;
+using TDH.Common.UserException;
 using TDH.Services.System;
 
 namespace TDH.Areas.Administrator.Controllers
 {
     public class BaseController : TDH.Common.BaseController
     {
+        #region " [ Properties ] "
+
+        /// <summary>
+        /// File name
+        /// </summary>
+        private readonly string FILE_NAME = "Administrator.Controllers/BaseController.cs";
+
+        #endregion
+
         /// <summary>
         /// Module navigation
         /// </summary>
         /// <param name="moduleCode">module name</param>
         /// <returns>View</returns>
         [HttpGet]
-        [AllowAnonymous]
         public ActionResult ModuleNavigation(string moduleCode)
         {
-            UserService _uService = new UserService();
-            ViewBag.moduleCode = moduleCode;
-            ViewBag.sidebar = _uService.GetSidebar(UserID, moduleCode);
-            return PartialView();
+            try
+            {
+                UserService _uService = new UserService();
+                ViewBag.moduleCode = moduleCode;
+                ViewBag.sidebar = _uService.GetSidebar(UserID, moduleCode);
+                return PartialView();
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "ModuleNavigation", UserID, ex);
+            }
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public ActionResult AdminNavigation()
         {
-            return PartialView();
+            try
+            {
+                return PartialView();
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "AdminNavigation", UserID, ex);
+            }
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public ActionResult AdminSidebar()
         {
-            UserService _uService = new UserService();
-            ViewBag.sidebar = _uService.GetSidebar(UserID);
-            return PartialView();
+            try
+            {
+                UserService _uService = new UserService();
+                ViewBag.sidebar = _uService.GetSidebar(UserID);
+                return PartialView();
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "AdminSidebar", UserID, ex);
+            }
         }
 
-        [HttpGet]
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult AdminFooter()
         {
-            return PartialView();
+            try
+            {
+                return PartialView();
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "AdminFooter", UserID, ex);
+            }
         }
         
     }

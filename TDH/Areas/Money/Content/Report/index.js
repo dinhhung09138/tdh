@@ -5,6 +5,7 @@ google.charts.load('current', { 'packages': ['line', 'corechart'] });
 google.charts.setOnLoadCallback(drawSummaryChart);
 google.charts.setOnLoadCallback(drawSummaryByYearChart);
 google.charts.setOnLoadCallback(drawIncomeSummaryByYearChart);
+google.charts.setOnLoadCallback(drawPaymentSummaryByYearChart);
 
 /**
  * Summary dashboard
@@ -42,7 +43,7 @@ function drawSummaryChart() {
             }
         });
     }
-    
+
     var options = {
         legend: { position: 'bottom' },
         //title: 'Báo cáo tình hình thu chi các năm',
@@ -121,7 +122,9 @@ function drawSummaryByYearChart() {
                 withCredentials: true,
             },
             dataType: 'json',
-            data: ({ year: 2018 }),
+            data: ({
+                year: $('#summaryByYearSelector').val()
+            }),
             success: function (response) {
                 $.each(response, function (idx, item) {
                     data.addRow([item.Month.toString(), item.Income, item.Payment, item.Total]);
@@ -135,7 +138,7 @@ function drawSummaryByYearChart() {
 
     var options = {
         legend: { position: 'bottom' },
-        //title: 'Báo cáo tình hình thu chi các tháng năm',
+        title: 'Báo cáo tình hình thu chi',
         titlePosition: 'out',
         hAxis: {
             title: 'Tháng'
@@ -208,7 +211,7 @@ function drawIncomeSummaryByYearChart() {
                 withCredentials: true,
             },
             dataType: 'json',
-            data: ({ year: 2018 }),
+            data: ({ year: $('#summaryByYearSelector').val() }),
             success: function (response) {
                 var t1 = [];
                 var t2 = [];
@@ -322,7 +325,7 @@ function drawIncomeSummaryByYearChart() {
 
     var options = {
         legend: { position: 'bottom' },
-        //title: 'Các nguồn thu nhập tháng năm',
+        title: 'Các nguồn thu nhập',
         titlePosition: 'out',
         hAxis: {
             title: 'Tháng'
@@ -361,5 +364,183 @@ function drawIncomeSummaryByYearChart() {
         window.resize = drawChart;
     }
 }
+
+/**
+ * Income dashboard
+ *
+ * Report payment summary by month in a year
+ */
+function drawPaymentSummaryByYearChart() {
+
+    var chartDiv = document.getElementById('divPaymentSummaryByCategory');
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Tháng');
+
+    function loadDataPaymentSummaryByYearChart(callback) {
+        $.ajax({
+            url: '/money/mnreport/paymentbyyearreport',
+            type: 'POST',
+            cache: false,
+            async: true,
+            xhrFields: {
+                withCredentials: true,
+            },
+            dataType: 'json',
+            data: ({ year: $('#summaryByYearSelector').val() }),
+            success: function (response) {
+                var t1 = [];
+                var t2 = [];
+                var t3 = [];
+                var t4 = [];
+                var t5 = [];
+                var t6 = [];
+                var t7 = [];
+                var t8 = [];
+                var t9 = [];
+                var t10 = [];
+                var t11 = [];
+                var t12 = [];
+                $.each(response, function (idx, item) {
+                    data.addColumn('number', item.Name);
+                });
+                $.each(response, function (idx, item) {
+                    t1.push(item.T01);
+                    t2.push(item.T02);
+                    t3.push(item.T03);
+                    t4.push(item.T04);
+                    t5.push(item.T05);
+                    t6.push(item.T06);
+                    t7.push(item.T07);
+                    t8.push(item.T08);
+                    t9.push(item.T09);
+                    t10.push(item.T10);
+                    t11.push(item.T11);
+                    t12.push(item.T12);
+                });
+                var arrayLength = t1.length;
+                var row = [];
+                row.push('01');
+                for (var i = 0; i < arrayLength; i++) {
+                    row.push(t1[i]);
+                }
+                data.addRow(row);
+                row = [];
+                row.push('02');
+                for (i = 0; i < arrayLength; i++) {
+                    row.push(t2[i]);
+                }
+                data.addRow(row);
+                row = [];
+                row.push('03');
+                for (i = 0; i < arrayLength; i++) {
+                    row.push(t3[i]);
+                }
+                data.addRow(row);
+                row = [];
+                row.push('04');
+                for (i = 0; i < arrayLength; i++) {
+                    row.push(t4[i]);
+                }
+                data.addRow(row);
+                row = [];
+                row.push('05');
+                for (i = 0; i < arrayLength; i++) {
+                    row.push(t5[i]);
+                }
+                data.addRow(row);
+                row = [];
+                row.push('06');
+                for (i = 0; i < arrayLength; i++) {
+                    row.push(t6[i]);
+                }
+                data.addRow(row);
+                row = [];
+                row.push('07');
+                for (i = 0; i < arrayLength; i++) {
+                    row.push(t7[i]);
+                }
+                data.addRow(row);
+                row = [];
+                row.push('08');
+                for (i = 0; i < arrayLength; i++) {
+                    row.push(t8[i]);
+                }
+                data.addRow(row);
+                row = [];
+                row.push('09');
+                for (i = 0; i < arrayLength; i++) {
+                    row.push(t9[i]);
+                }
+                data.addRow(row);
+                row = [];
+                row.push('10');
+                for (i = 0; i < arrayLength; i++) {
+                    row.push(t10[i]);
+                }
+                data.addRow(row);
+                row = [];
+                row.push('11');
+                for (i = 0; i < arrayLength; i++) {
+                    row.push(t11[i]);
+                }
+                data.addRow(row);
+                row = [];
+                row.push('12');
+                for (i = 0; i < arrayLength; i++) {
+                    row.push(t12[i]);
+                }
+                data.addRow(row);
+                //data = google.visualization.arrayToDataTable(array);
+                callback();
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    var options = {
+        legend: { position: 'bottom' },
+        title: 'Chi tiêu theo nhóm',
+        titlePosition: 'out',
+        hAxis: {
+            title: 'Tháng'
+        },
+        vAxis: {
+            title: 'Tổng số tiền (vnd)',
+            format: 'short',
+            gridlines: { count: 8 },
+            scareType: 'mirrorLog'
+        },
+        //Makes the entire category's tooltip active
+        focusTarget: 'category',
+        //Use a html tooltip
+        tooltip: { isHtml: true },
+        asex: {
+
+        },
+        pointSize: 5,
+        backgroundColor: 'none'
+    };
+
+    function drawChart() {
+        var chart = new google.visualization.ComboChart(chartDiv);
+        chart.draw(data, options);
+    }
+
+    loadDataPaymentSummaryByYearChart(drawChart);
+
+    if (document.addEventListener) {
+        window.addEventListener('resize', drawChart);
+    }
+    else if (document.attachEvent) {
+        window.attachEvent('onresize', drawChart);
+    }
+    else {
+        window.resize = drawChart;
+    }
+}
+
+
 
 

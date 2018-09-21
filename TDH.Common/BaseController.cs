@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.System;
@@ -118,22 +119,15 @@ namespace TDH.Common
         /// <param name="filterContext"></param>
         protected override void OnResultExecuting(ResultExecutingContext filterContext)
         {
-            base.OnResultExecuting(filterContext);
-            //Message show to show on view.
-            //Return after an action execute
-            ViewBag.message = "";
-            ViewBag.messageType = "";
-            if (filterContext.IsChildAction || filterContext.HttpContext.Request.IsAjaxRequest())
+            //Notification
+            if(TempData[CommonHelper.EXECUTE_RESULT] != null)
             {
-                return;
+                Utils.CommonModel.ExecuteResultModel _result = TempData[CommonHelper.EXECUTE_RESULT] as Utils.CommonModel.ExecuteResultModel;
+                ViewBag.msg = _result.Message;
+                ViewBag.msgT = _result.Status == ResponseStatusCodeHelper.Success ? Notifier.TYPE.Success : Notifier.TYPE.Error;
+                TempData.Clear();
             }
-            //if (TempData[CommonHelper.EXECUTE_RESULT] != null)
-            //{
-            //    Utils.CommonModel.ExecuteResultModel _result = TempData[CommonHelper.EXECUTE_RESULT] as Utils.CommonModel.ExecuteResultModel;
-            //    ViewBag.message = _result.Message;
-            //    ViewBag.messageType = _result.Status == ResponseStatusCodeHelper.Success ? "success" : "error";
-            //    TempData.Clear();
-            //}
+            base.OnResultExecuting(filterContext);
         }
 
         /// <summary>
@@ -144,10 +138,22 @@ namespace TDH.Common
         {
             base.OnException(filterContext);
             filterContext.ExceptionHandled = true;
+            
             //Try to collect data was deleted or without permission
             if (filterContext.Exception is DataAccessException)
             {
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                {
+                    area = "administrator",
+                    controller = "admerror",
+                    action = "dataaccess"
+                }));
+                return;
+            }
+            //controller or service exception
+            if (filterContext.Exception is ControllerException || filterContext.Exception is ServiceException)
+            {
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
                     area = "administrator",
                     controller = "admerror",
@@ -156,9 +162,11 @@ namespace TDH.Common
                 return;
             }
             //Member dont have permission try to access
+            //Only use in Common module (this class)
+            //Return when check permision.
             if (filterContext.Exception is MemberAccessException)
             {
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
                     area = "administrator",
                     controller = "admerror",
@@ -166,33 +174,12 @@ namespace TDH.Common
                 }));
                 return;
             }
-            //controller exception  
-            if (filterContext.Exception is HttpException)
-            {
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new
-                {
-                    area = "administrator",
-                    controller = "admerror",
-                    action = "error"
-                }));
-                return;
-            }
-            //controller exception
-            if (filterContext.Exception is ControllerException)
-            {
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new
-                {
-                    area = "administrator",
-                    controller = "admerror",
-                    action = "error"
-                }));
-                return;
-            }
             //Error accur in business logic code
+            //Only use in Common module (get access, get setting)
             if (filterContext.Exception is ApplicationException)
             {
                 string msg = filterContext.Exception.Message;
-                filterContext.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
                     area = "administrator",
                     controller = "admerror",
@@ -377,6 +364,8 @@ namespace TDH.Common
                                 case "summaryreport":
                                 case "summaryreportbyyear":
                                 case "incomebyyearreport":
+                                case "paymentbyyearreport":
+                                case "borrowaccountstatus":
                                     return "money_report";
                                 default:
                                     return "";
@@ -815,6 +804,8 @@ namespace TDH.Common
                                 case "summaryreport":
                                 case "summaryreportbyyear":
                                 case "incomebyyearreport":
+                                case "paymentbyyearreport":
+                                case "borrowaccountstatus":
                                     return ActionType.View;
                                 default:
                                     return ActionType.None;

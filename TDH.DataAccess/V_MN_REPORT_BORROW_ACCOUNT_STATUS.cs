@@ -10,12 +10,16 @@
 namespace TDH.DataAccess
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class FNC_REPORT_SUMMARY_Result
+    public partial class V_MN_REPORT_BORROW_ACCOUNT_STATUS
     {
-        public int year { get; set; }
-        public decimal input { get; set; }
-        public decimal output { get; set; }
-        public decimal final { get; set; }
+        public System.Guid id { get; set; }
+        public string name { get; set; }
+        public decimal max_payment { get; set; }
+        public Nullable<decimal> remain { get; set; }
+        public string title { get; set; }
+        public decimal money { get; set; }
+        public System.DateTime date { get; set; }
     }
 }

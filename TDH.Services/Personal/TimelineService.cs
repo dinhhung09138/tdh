@@ -33,7 +33,7 @@ namespace TDH.Services.Personal
                 List<TimelineModel> _return = new List<TimelineModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _list = context.V_TIMELINE.Where(m => m.created_by == userID).OrderByDescending(m => m.date).ToList();
+                    var _list = context.V_PN_TIMELINE.Where(m => m.created_by == userID).OrderByDescending(m => m.date).ToList();
                     foreach (var item in _list)
                     {
                         _return.Add(new TimelineModel()

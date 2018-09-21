@@ -11,7 +11,7 @@ namespace TDH.DataAccess
 {
     using System;
     
-    public partial class FNC_REPORT_SUMMARY_BY_YEAR_Result
+    public partial class FNC_MN_REPORT_SUMMARY_BY_YEAR_Result
     {
         public int year { get; set; }
         public int month { get; set; }

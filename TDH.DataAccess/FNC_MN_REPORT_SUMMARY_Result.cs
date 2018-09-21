@@ -11,14 +11,11 @@ namespace TDH.DataAccess
 {
     using System;
     
-    public partial class FNC_REPORT_INCOME_BY_CATEGORY_Result
+    public partial class FNC_MN_REPORT_SUMMARY_Result
     {
-        public string name { get; set; }
-        public int month { get; set; }
         public int year { get; set; }
-        public byte percent_setting { get; set; }
-        public byte percent_current { get; set; }
-        public decimal money_setting { get; set; }
-        public decimal money_current { get; set; }
+        public decimal input { get; set; }
+        public decimal output { get; set; }
+        public decimal final { get; set; }
     }
 }

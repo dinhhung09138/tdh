@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.Model.Personal;
 using TDH.Services.Personal;
 using Utils;
@@ -33,10 +32,17 @@ namespace TDH.Areas.Personal.Controllers
             {
                 return View();
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -67,10 +73,17 @@ namespace TDH.Areas.Personal.Controllers
                 //
                 return this.Json(new DataTableResponse<CetificateModel>(), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -79,7 +92,6 @@ namespace TDH.Areas.Personal.Controllers
         {
             try
             {
-
                 #region " [ Declaration ] "
                 
                 CetificateModel model = new CetificateModel()
@@ -93,10 +105,17 @@ namespace TDH.Areas.Personal.Controllers
 
                 return View(model);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Create", UserID, ex);
             }
         }
 
@@ -125,10 +144,17 @@ namespace TDH.Areas.Personal.Controllers
                 // Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Create", UserID, ex);
             }
         }
 
@@ -149,10 +175,17 @@ namespace TDH.Areas.Personal.Controllers
                 CetificateModel model = _service.GetItemByID(new CetificateModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
                 return View(model);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Edit", UserID, ex);
             }
         }
 
@@ -181,10 +214,17 @@ namespace TDH.Areas.Personal.Controllers
                 // Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Edit", UserID, ex);
             }
         }
 
@@ -210,10 +250,17 @@ namespace TDH.Areas.Personal.Controllers
                 //Call to service
                 return this.Json(_service.Delete(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Delete", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Delete", UserID, ex);
             }
         }
 

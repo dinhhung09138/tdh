@@ -20,6 +20,7 @@ namespace TDH.DataAccess
             this.MN_CATEGORY_SETTING = new HashSet<MN_CATEGORY_SETTING>();
             this.MN_INCOME = new HashSet<MN_INCOME>();
             this.MN_PAYMENT = new HashSet<MN_PAYMENT>();
+            this.MN_TRANSFER = new HashSet<MN_TRANSFER>();
         }
     
         public System.Guid id { get; set; }
@@ -47,5 +48,7 @@ namespace TDH.DataAccess
         public virtual ICollection<MN_INCOME> MN_INCOME { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MN_PAYMENT> MN_PAYMENT { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MN_TRANSFER> MN_TRANSFER { get; set; }
     }
 }

@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.PersonalWorking;
 using Utils;
@@ -12,6 +11,9 @@ using Utils.JqueryDatatable;
 
 namespace TDH.Services.PersonalWorking
 {
+    /// <summary>
+    /// Check list group service
+    /// </summary>
     public class CheckListGroupService
     {
         #region " [ Properties ] "
@@ -19,7 +21,7 @@ namespace TDH.Services.PersonalWorking
         /// <summary>
         /// File name
         /// </summary>
-        private readonly string FILE_NAME = "Services/CheckListGroupService.cs";
+        private readonly string FILE_NAME = "Services.PersonalWorking/CheckListGroupService.cs";
 
         #endregion
 
@@ -104,9 +106,7 @@ namespace TDH.Services.PersonalWorking
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "List", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "List", userID, ex);
             }
             return _return;
         }
@@ -132,9 +132,7 @@ namespace TDH.Services.PersonalWorking
             }
             catch (Exception ex)
             {
-                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetAll", userID, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
 
@@ -152,23 +150,23 @@ namespace TDH.Services.PersonalWorking
                     WK_CHECKLIST_GROUP _md = context.WK_CHECKLIST_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new FieldAccessException();
+                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
                     }
                     return new CheckListGroupModel()
                     {
                         ID = _md.id,
                         title = _md.title,
-                        CreateDate = _md.create_date,
-
-
+                        CreateDate = _md.create_date
                     };
                 }
             }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "GetItemByID", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
             }
         }
 
@@ -183,59 +181,46 @@ namespace TDH.Services.PersonalWorking
             {
                 using (var context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    WK_CHECKLIST_GROUP _md = new WK_CHECKLIST_GROUP();
+                    if (model.Insert)
                     {
-                        try
+                        _md.id = Guid.NewGuid();
+                    }
+                    else
+                    {
+                        _md = context.WK_CHECKLIST_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                        if (_md == null)
                         {
-                            WK_CHECKLIST_GROUP _md = new WK_CHECKLIST_GROUP();
-                            if (model.Insert)
-                            {
-                                _md.id = Guid.NewGuid();
-                            }
-                            else
-                            {
-                                _md = context.WK_CHECKLIST_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                                if (_md == null)
-                                {
-                                    throw new FieldAccessException();
-                                }
-                            }
-                            _md.title = model.title;
-                            _md.update_date = model.updateDate;
-                            _md.delete_date = model.updateDate;
-                            if (model.Insert)
-                            {
-                                _md.create_by = model.CreateBy;
-                                _md.create_date = DateTime.Now;
-                                context.WK_CHECKLIST_GROUP.Add(_md);
-                                context.Entry(_md).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _md.update_by = model.UpdateBy;
-                                _md.update_date = DateTime.Now;
-                                context.WK_CHECKLIST_GROUP.Attach(_md);
-                                context.Entry(_md).State = EntityState.Modified;
-                            }
-                            context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                            throw new ApplicationException();
+                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                         }
                     }
-
+                    _md.title = model.title;
+                    _md.update_date = model.updateDate;
+                    _md.delete_date = model.updateDate;
+                    if (model.Insert)
+                    {
+                        _md.create_by = model.CreateBy;
+                        _md.create_date = DateTime.Now;
+                        context.WK_CHECKLIST_GROUP.Add(_md);
+                        context.Entry(_md).State = EntityState.Added;
+                    }
+                    else
+                    {
+                        _md.update_by = model.UpdateBy;
+                        _md.update_date = DateTime.Now;
+                        context.WK_CHECKLIST_GROUP.Attach(_md);
+                        context.Entry(_md).State = EntityState.Modified;
+                    }
+                    context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Save", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -259,38 +244,26 @@ namespace TDH.Services.PersonalWorking
             {
                 using (var context = new TDHEntities())
                 {
-                    using (var trans = context.Database.BeginTransaction())
+                    WK_CHECKLIST_GROUP _md = context.WK_CHECKLIST_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            WK_CHECKLIST_GROUP _md = context.WK_CHECKLIST_GROUP.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                            if (_md == null)
-                            {
-                                throw new FieldAccessException();
-                            }
-                            _md.deleted = true;
-                            _md.delete_by = model.DeleteBy;
-                            _md.delete_date = DateTime.Now;
-                            context.WK_CHECKLIST_GROUP.Attach(_md);
-                            context.Entry(_md).State = EntityState.Modified;
-                            context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            trans.Rollback();
-                            Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                            throw new ApplicationException();
-                        }
+                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
                     }
-
+                    _md.deleted = true;
+                    _md.delete_by = model.DeleteBy;
+                    _md.delete_date = DateTime.Now;
+                    context.WK_CHECKLIST_GROUP.Attach(_md);
+                    context.Entry(_md).State = EntityState.Modified;
+                    context.SaveChanges();
                 }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "Delete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -316,9 +289,7 @@ namespace TDH.Services.PersonalWorking
             }
             catch (Exception ex)
             {
-                Notifier.Notification(model.CreateBy, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "CheckDelete", model.CreateBy, ex);
-                throw new ApplicationException();
+                throw new ServiceException(FILE_NAME, "CheckDelete", model.CreateBy, ex);
             }
             return ResponseStatusCodeHelper.NG;
         }

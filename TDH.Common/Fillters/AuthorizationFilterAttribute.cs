@@ -40,11 +40,7 @@ namespace TDH.Common.Fillters
             if (_user != null && _user.UserID.ToString().Length > 0 && _user.UserName.Length > 0)
             {
                 //Check token
-                filterContext.Result = new HttpUnauthorizedResult();
-                return;
-            }
-            if (filterContext.HttpContext.Request.IsAjaxRequest())
-            {
+                //TODO
                 filterContext.Result = new HttpUnauthorizedResult();
                 return;
             }

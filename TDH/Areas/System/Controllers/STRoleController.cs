@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
-using TDH.Common.Fillters;
+using TDH.Common.UserException;
 using TDH.Model.System;
 using TDH.Services.System;
 using Utils;
@@ -43,10 +41,17 @@ namespace TDH.Areas.System.Controllers
             {
                 return PartialView();
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -84,10 +89,17 @@ namespace TDH.Areas.System.Controllers
 
                 return this.Json(new DataTableResponse<RoleModel>(), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
             }
         }
 
@@ -111,10 +123,17 @@ namespace TDH.Areas.System.Controllers
 
                 return PartialView(model);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Create", UserID, ex);
             }
         }
 
@@ -181,10 +200,17 @@ namespace TDH.Areas.System.Controllers
                 //Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Create", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Create", UserID, ex);
             }
         }
 
@@ -209,12 +235,19 @@ namespace TDH.Areas.System.Controllers
                 //Call to service
                 RoleModel model = _service.GetItemByID(new RoleModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
 
-                return PartialView(model);
+                return View(model);
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Edit", UserID, ex);
             }
         }
 
@@ -281,10 +314,17 @@ namespace TDH.Areas.System.Controllers
                 //Call to service
                 return this.Json(_service.Save(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Edit", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Edit", UserID, ex);
             }
         }
 
@@ -315,10 +355,17 @@ namespace TDH.Areas.System.Controllers
                 //Call to service
                 return this.Json(_service.Publish(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Publish", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Publish", UserID, ex);
             }
         }
 
@@ -349,10 +396,17 @@ namespace TDH.Areas.System.Controllers
                 //Call to service
                 return this.Json(_service.Delete(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Delete", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "Delete", UserID, ex);
             }
         }
 
@@ -381,10 +435,17 @@ namespace TDH.Areas.System.Controllers
                 //Call to service
                 return this.Json(_service.CheckDelete(model), JsonRequestBehavior.AllowGet);
             }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CheckDelete", UserID, ex);
-                throw new HttpException();
+                throw new ControllerException(FILE_NAME, "CheckDelete", UserID, ex);
             }
         }
 

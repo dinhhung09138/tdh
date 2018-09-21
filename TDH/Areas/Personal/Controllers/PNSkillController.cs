@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
+using TDH.Common.UserException;
 using TDH.Model.Personal;
 using TDH.Services.Personal;
 using Utils;
@@ -16,10 +17,34 @@ namespace TDH.Areas.Personal.Controllers
     /// </summary>
     public class PNSkillController : BaseController
     {
-        // GET: Personal/PNSkill
+        #region " [ Properties ] "
+
+        /// <summary>
+        /// File name
+        /// </summary>
+        private readonly string FILE_NAME = "Personal.Controllers/PNSkillController.cs";
+
+        #endregion
+
+        
         public ActionResult Index()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+            }
         }
     }
 }

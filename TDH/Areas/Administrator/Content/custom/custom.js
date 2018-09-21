@@ -72,29 +72,29 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
+    if ($('#msg').val().length > 0) {
+        notification($('#msg').val(), $('#msgT').val());
+        //$('#msg').val('');
+        //$('#msgT').val('');
+    }
+
 });
 
-/**
- * formatMoney(number, decimals, decPoint, thousandsSep) in JavaScript.
- * It formats a number to a string with grouped thousands, with custom seperator and custom decimal point
- * param {number} number - number to format
- * param {number} [decimals=0] - (optional) count of decimals to show
- * param {string} [decPoint=.] - (optional) decimal point
- * param {string} [thousandsSep=,] - (optional) thousands seperator
- * author Felix Leupold <felix@xiel.de>
- */
+
 function formatMoney(number, decimals, decPoint, thousandsSep) {
-    var decimals = isNaN(decimals = Math.abs(decimals)) ? 2 : decimals,
-        decPoint = decPoint == undefined ? "." : decPoint,
-        thousandsSep = thousandsSep == undefined ? "," : thousandsSep,
-        s = number < 0 ? "-" : "",
-        i = String(parseInt(number = Math.abs(Number(number) || 0).toFixed(decimals))),
-        j = (j = i.length) > 3 ? j % 3 : 0;
+    decimals = isNaN(decimals = Math.abs(decimals)) ? 2 : decimals;
+    decPoint = decPoint === undefined ? "." : decPoint;
+    thousandsSep = thousandsSep === undefined ? "," : thousandsSep;
+    s = number < 0 ? "-" : "";
+    i = String(parseInt(number = Math.abs(Number(number) || 0).toFixed(decimals)));
+    j = (j = i.length) > 3 ? j % 3 : 0;
 
     return s + (j ? i.substr(0, j) + thousandsSep : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousandsSep) + (decimals ? decPoint + Math.abs(number - i).toFixed(decimals).slice(2) : "");
-};
+}
 
-function notification(mesage, type) {
+function notification(message, type) {
+    console.log(message);
+    console.log(type);
     if (message === 'undefined' | message.length === 0) {
         return;
     }
@@ -105,7 +105,7 @@ function notification(mesage, type) {
             size: 'mini',
             icon: false,
             position: 'bottom right',
-            msg: mesage
+            msg: message
         });
         return;
     }
@@ -116,7 +116,7 @@ function notification(mesage, type) {
             size: 'mini',
             icon: false,
             position: 'bottom right',
-            msg: mesage
+            msg: message
         });
         return;
     }
@@ -127,7 +127,7 @@ function notification(mesage, type) {
             size: 'mini',
             icon: false,
             position: 'bottom right',
-            msg: mesage
+            msg: message
         });
         return;
     }

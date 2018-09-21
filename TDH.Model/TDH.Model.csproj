@@ -115,5 +115,6 @@
     <Compile Include="Website\NavigationModel.cs" />
     <Compile Include="Website\PostModel.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -364,6 +364,8 @@ namespace TDH.Common
                                 case "summaryreport":
                                 case "summaryreportbyyear":
                                 case "incomebyyearreport":
+                                case "paymentbyyearreport":
+                                case "borrowaccountstatus":
                                     return "money_report";
                                 default:
                                     return "";
@@ -802,6 +804,8 @@ namespace TDH.Common
                                 case "summaryreport":
                                 case "summaryreportbyyear":
                                 case "incomebyyearreport":
+                                case "paymentbyyearreport":
+                                case "borrowaccountstatus":
                                     return ActionType.View;
                                 default:
                                     return ActionType.None;

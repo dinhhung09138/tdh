@@ -12,19 +12,14 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class V_TIMELINE
+    public partial class V_MN_REPORT_BORROW_ACCOUNT_STATUS
     {
         public System.Guid id { get; set; }
         public string name { get; set; }
-        public string school { get; set; }
-        public string duration { get; set; }
-        public string description { get; set; }
+        public decimal max_payment { get; set; }
+        public Nullable<decimal> remain { get; set; }
+        public string title { get; set; }
+        public decimal money { get; set; }
         public System.DateTime date { get; set; }
-        public bool is_plan { get; set; }
-        public bool is_finish { get; set; }
-        public bool is_cancel { get; set; }
-        public string type_code { get; set; }
-        public string type_name { get; set; }
-        public System.Guid created_by { get; set; }
     }
 }

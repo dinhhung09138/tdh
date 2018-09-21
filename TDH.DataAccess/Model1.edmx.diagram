@@ -89,7 +89,6 @@
         <EntityTypeShape EntityType="TDHModel.PN_EVENT" Width="1.5" PointX="17" PointY="23.125" />
         <EntityTypeShape EntityType="TDHModel.PN_EVENT_TYPE" Width="1.5" PointX="14.75" PointY="23.875" />
         <EntityTypeShape EntityType="TDHModel.PN_SKILL" Width="1.5" PointX="29.25" PointY="5.875" />
-        <EntityTypeShape EntityType="TDHModel.V_TIMELINE" Width="1.5" PointX="19.875" PointY="29.5" />
         <AssociationConnector Association="TDHModel.FK_CM_SKILL_CM_SKILL_GROUP" />
         <AssociationConnector Association="TDHModel.FK_CM_SKILL_DEFINDED_CM_SKILL" />
         <AssociationConnector Association="TDHModel.FK_PN_SKILL_CM_SKILL" />
@@ -105,12 +104,14 @@
         <AssociationConnector Association="TDHModel.FK_FB_FANPAGE_SYS_USER" />
         <AssociationConnector Association="TDHModel.FK_FB_GROUP_SYS_USER" />
         <AssociationConnector Association="TDHModel.FK_FB_USER_SYS_USER" />
-        <EntityTypeShape EntityType="TDHModel.V_RENDER_NAVIGATION" Width="1.5" PointX="14.75" PointY="22.25" />
-        <EntityTypeShape EntityType="TDHModel.V_MN_CATEGORY_HISTORY" Width="1.5" PointX="18.125" PointY="30.875" />
-        <EntityTypeShape EntityType="TDHModel.V_MN_CATEGORY" Width="1.5" PointX="13.625" PointY="29.25" />
-        <EntityTypeShape EntityType="TDHModel.V_MN_ACCOUNT_HISTORY" Width="1.5" PointX="11.75" PointY="29.75" />
-        <EntityTypeShape EntityType="TDHModel.V_MN_MONEY_FLOW" Width="1.5" PointX="15.75" PointY="29.875" />
+        <EntityTypeShape EntityType="TDHModel.V_MN_CATEGORY_HISTORY" Width="1.5" PointX="8.375" PointY="47.125" />
+        <EntityTypeShape EntityType="TDHModel.V_MN_CATEGORY" Width="1.5" PointX="3.875" PointY="45.5" />
+        <EntityTypeShape EntityType="TDHModel.V_MN_ACCOUNT_HISTORY" Width="1.5" PointX="2" PointY="46" />
+        <EntityTypeShape EntityType="TDHModel.V_MN_MONEY_FLOW" Width="1.5" PointX="6" PointY="46.125" />
         <AssociationConnector Association="TDHModel.FK_MN_TRANSFER_category_id" />
+        <EntityTypeShape EntityType="TDHModel.V_PN_TIMELINE" Width="1.5" PointX="3" PointY="51.5" />
+        <EntityTypeShape EntityType="TDHModel.V_SYS_RENDER_NAVIGATION" Width="1.5" PointX="0.5" PointY="51" />
+        <EntityTypeShape EntityType="TDHModel.V_MN_REPORT_BORROW_ACCOUNT_STATUS" Width="1.5" PointX="1.5" PointY="43.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

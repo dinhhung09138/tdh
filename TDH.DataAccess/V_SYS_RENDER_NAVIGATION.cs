@@ -12,7 +12,7 @@ namespace TDH.DataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class V_RENDER_NAVIGATION
+    public partial class V_SYS_RENDER_NAVIGATION
     {
         public string module_code { get; set; }
         public string module_title { get; set; }

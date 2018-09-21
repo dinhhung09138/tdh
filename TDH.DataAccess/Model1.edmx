@@ -1115,32 +1115,27 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_MONEY_FLOW' does no
           <Property Name="create_by" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_RENDER_NAVIGATION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="V_RENDER_NAVIGATION">
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_MN_REPORT_BORROW_ACCOUNT_STATUS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_MN_REPORT_BORROW_ACCOUNT_STATUS">
           <Key>
-            <PropertyRef Name="module_code" />
-            <PropertyRef Name="module_title" />
-            <PropertyRef Name="module_order" />
-            <PropertyRef Name="code" />
-            <PropertyRef Name="ordering" />
-            <PropertyRef Name="function_ordering" />
             <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="max_payment" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="money" />
+            <PropertyRef Name="date" />
           </Key>
-          <Property Name="module_code" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="module_title" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="default_action" Type="varchar" MaxLength="60" />
-          <Property Name="icon" Type="nvarchar" MaxLength="20" />
-          <Property Name="module_order" Type="smallint" Nullable="false" />
-          <Property Name="code" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="url" Type="varchar" MaxLength="153" />
-          <Property Name="ordering" Type="smallint" Nullable="false" />
-          <Property Name="title" Type="nvarchar" MaxLength="30" />
-          <Property Name="function_ordering" Type="smallint" Nullable="false" />
           <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="max_payment" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="remain" Type="numeric" Precision="20" Scale="1" />
+          <Property Name="title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="money" Type="numeric" Precision="18" Scale="1" Nullable="false" />
+          <Property Name="date" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="V_TIMELINE">
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_PN_TIMELINE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_PN_TIMELINE">
           <Key>
             <PropertyRef Name="id" />
             <PropertyRef Name="name" />
@@ -1167,6 +1162,30 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <Property Name="type_code" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="type_name" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="V_SYS_RENDER_NAVIGATION">
+          <Key>
+            <PropertyRef Name="module_code" />
+            <PropertyRef Name="module_title" />
+            <PropertyRef Name="module_order" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="ordering" />
+            <PropertyRef Name="function_ordering" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="module_code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="module_title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="default_action" Type="varchar" MaxLength="60" />
+          <Property Name="icon" Type="nvarchar" MaxLength="20" />
+          <Property Name="module_order" Type="smallint" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="153" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="30" />
+          <Property Name="function_ordering" Type="smallint" Nullable="false" />
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <Association Name="FK_CM_SKILL_CM_SKILL_GROUP">
           <End Role="CM_SKILL_GROUP" Type="Self.CM_SKILL_GROUP" Multiplicity="1" />
@@ -1776,6 +1795,28 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="I_Year" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+                <Property Name="t1" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t2" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t3" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t4" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t5" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t6" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t7" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t8" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t9" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t10" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t11" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+                <Property Name="t12" Type="numeric" Precision="38" Scale="1" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="FNC_MN_REPORT_SUMMARY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <ReturnType>
             <CollectionType>
@@ -1798,21 +1839,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
                 <Property Name="input" Type="numeric" Precision="38" Scale="1" Nullable="false" />
                 <Property Name="output" Type="numeric" Precision="38" Scale="1" Nullable="false" />
                 <Property Name="final" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-              </RowType>
-            </CollectionType>
-          </ReturnType>
-        </Function>
-        <Function Name="FNC_REPORT_INCOME_BY_CATEGORY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <ReturnType>
-            <CollectionType>
-              <RowType>
-                <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
-                <Property Name="month" Type="int" Nullable="false" />
-                <Property Name="year" Type="int" Nullable="false" />
-                <Property Name="percent_setting" Type="tinyint" Nullable="false" />
-                <Property Name="percent_current" Type="tinyint" Nullable="false" />
-                <Property Name="money_setting" Type="numeric" Precision="38" Scale="1" Nullable="false" />
-                <Property Name="money_current" Type="numeric" Precision="38" Scale="1" Nullable="false" />
               </RowType>
             </CollectionType>
           </ReturnType>
@@ -1932,36 +1958,47 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
     [V_MN_MONEY_FLOW].[create_by] AS [create_by]
     FROM [dbo].[V_MN_MONEY_FLOW] AS [V_MN_MONEY_FLOW]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="V_RENDER_NAVIGATION" EntityType="Self.V_RENDER_NAVIGATION" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="V_MN_REPORT_BORROW_ACCOUNT_STATUS" EntityType="Self.V_MN_REPORT_BORROW_ACCOUNT_STATUS" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [V_RENDER_NAVIGATION].[module_code] AS [module_code], 
-    [V_RENDER_NAVIGATION].[module_title] AS [module_title], 
-    [V_RENDER_NAVIGATION].[default_action] AS [default_action], 
-    [V_RENDER_NAVIGATION].[icon] AS [icon], 
-    [V_RENDER_NAVIGATION].[module_order] AS [module_order], 
-    [V_RENDER_NAVIGATION].[code] AS [code], 
-    [V_RENDER_NAVIGATION].[url] AS [url], 
-    [V_RENDER_NAVIGATION].[ordering] AS [ordering], 
-    [V_RENDER_NAVIGATION].[title] AS [title], 
-    [V_RENDER_NAVIGATION].[function_ordering] AS [function_ordering], 
-    [V_RENDER_NAVIGATION].[id] AS [id]
-    FROM [dbo].[V_RENDER_NAVIGATION] AS [V_RENDER_NAVIGATION]</DefiningQuery>
+    [V_MN_REPORT_BORROW_ACCOUNT_STATUS].[id] AS [id], 
+    [V_MN_REPORT_BORROW_ACCOUNT_STATUS].[name] AS [name], 
+    [V_MN_REPORT_BORROW_ACCOUNT_STATUS].[max_payment] AS [max_payment], 
+    [V_MN_REPORT_BORROW_ACCOUNT_STATUS].[remain] AS [remain], 
+    [V_MN_REPORT_BORROW_ACCOUNT_STATUS].[title] AS [title], 
+    [V_MN_REPORT_BORROW_ACCOUNT_STATUS].[money] AS [money], 
+    [V_MN_REPORT_BORROW_ACCOUNT_STATUS].[date] AS [date]
+    FROM [dbo].[V_MN_REPORT_BORROW_ACCOUNT_STATUS] AS [V_MN_REPORT_BORROW_ACCOUNT_STATUS]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="V_TIMELINE" EntityType="Self.V_TIMELINE" store:Type="Views" store:Schema="dbo">
+          <EntitySet Name="V_PN_TIMELINE" EntityType="Self.V_PN_TIMELINE" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [V_TIMELINE].[id] AS [id], 
-    [V_TIMELINE].[name] AS [name], 
-    [V_TIMELINE].[school] AS [school], 
-    [V_TIMELINE].[duration] AS [duration], 
-    [V_TIMELINE].[description] AS [description], 
-    [V_TIMELINE].[date] AS [date], 
-    [V_TIMELINE].[is_plan] AS [is_plan], 
-    [V_TIMELINE].[is_finish] AS [is_finish], 
-    [V_TIMELINE].[is_cancel] AS [is_cancel], 
-    [V_TIMELINE].[type_code] AS [type_code], 
-    [V_TIMELINE].[type_name] AS [type_name], 
-    [V_TIMELINE].[created_by] AS [created_by]
-    FROM [dbo].[V_TIMELINE] AS [V_TIMELINE]</DefiningQuery>
+    [V_PN_TIMELINE].[id] AS [id], 
+    [V_PN_TIMELINE].[name] AS [name], 
+    [V_PN_TIMELINE].[school] AS [school], 
+    [V_PN_TIMELINE].[duration] AS [duration], 
+    [V_PN_TIMELINE].[description] AS [description], 
+    [V_PN_TIMELINE].[date] AS [date], 
+    [V_PN_TIMELINE].[is_plan] AS [is_plan], 
+    [V_PN_TIMELINE].[is_finish] AS [is_finish], 
+    [V_PN_TIMELINE].[is_cancel] AS [is_cancel], 
+    [V_PN_TIMELINE].[type_code] AS [type_code], 
+    [V_PN_TIMELINE].[type_name] AS [type_name], 
+    [V_PN_TIMELINE].[created_by] AS [created_by]
+    FROM [dbo].[V_PN_TIMELINE] AS [V_PN_TIMELINE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="V_SYS_RENDER_NAVIGATION" EntityType="Self.V_SYS_RENDER_NAVIGATION" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [V_SYS_RENDER_NAVIGATION].[module_code] AS [module_code], 
+    [V_SYS_RENDER_NAVIGATION].[module_title] AS [module_title], 
+    [V_SYS_RENDER_NAVIGATION].[default_action] AS [default_action], 
+    [V_SYS_RENDER_NAVIGATION].[icon] AS [icon], 
+    [V_SYS_RENDER_NAVIGATION].[module_order] AS [module_order], 
+    [V_SYS_RENDER_NAVIGATION].[code] AS [code], 
+    [V_SYS_RENDER_NAVIGATION].[url] AS [url], 
+    [V_SYS_RENDER_NAVIGATION].[ordering] AS [ordering], 
+    [V_SYS_RENDER_NAVIGATION].[title] AS [title], 
+    [V_SYS_RENDER_NAVIGATION].[function_ordering] AS [function_ordering], 
+    [V_SYS_RENDER_NAVIGATION].[id] AS [id]
+    FROM [dbo].[V_SYS_RENDER_NAVIGATION] AS [V_SYS_RENDER_NAVIGATION]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_CM_SKILL_CM_SKILL_GROUP" Association="Self.FK_CM_SKILL_CM_SKILL_GROUP">
             <End Role="CM_SKILL_GROUP" EntitySet="CM_SKILL_GROUP" />
@@ -2148,17 +2185,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TDHModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <ComplexType Name="FNC_REPORT_INCOME_BY_CATEGORY_Result">
-          <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="month" Type="Int32" Nullable="false" />
-          <Property Name="year" Type="Int32" Nullable="false" />
-          <Property Name="percent_setting" Type="Byte" Nullable="false" />
-          <Property Name="percent_current" Type="Byte" Nullable="false" />
-          <Property Name="money_setting" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-          <Property Name="money_current" Type="Decimal" Precision="38" Scale="1" Nullable="false" />
-        </ComplexType>
         <EntityContainer Name="TDHEntities" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="FNC_REPORT_INCOME_BY_CATEGORY" IsComposable="true" ReturnType="Collection(TDHModel.FNC_REPORT_INCOME_BY_CATEGORY_Result)" />
           <FunctionImport Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result)">
             <Parameter Name="I_GroupID" Mode="In" Type="Guid" />
             <Parameter Name="I_Year" Mode="In" Type="Int32" />
@@ -2353,7 +2380,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <EntitySet Name="PN_EVENT" EntityType="TDHModel.PN_EVENT" />
           <EntitySet Name="PN_EVENT_TYPE" EntityType="TDHModel.PN_EVENT_TYPE" />
           <EntitySet Name="PN_SKILL" EntityType="TDHModel.PN_SKILL" />
-          <EntitySet Name="V_TIMELINE" EntityType="TDHModel.V_TIMELINE" />
           <AssociationSet Name="FK_CM_SKILL_CM_SKILL_GROUP" Association="TDHModel.FK_CM_SKILL_CM_SKILL_GROUP">
             <End Role="CM_SKILL_GROUP" EntitySet="CM_SKILL_GROUP" />
             <End Role="CM_SKILL" EntitySet="CM_SKILL" />
@@ -2396,7 +2422,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             <End Role="SYS_USER" EntitySet="SYS_USER" />
             <End Role="FB_USER" EntitySet="FB_USER" />
           </AssociationSet>
-          <EntitySet Name="V_RENDER_NAVIGATION" EntityType="TDHModel.V_RENDER_NAVIGATION" />
           <EntitySet Name="V_MN_CATEGORY_HISTORY" EntityType="TDHModel.V_MN_CATEGORY_HISTORY" />
           <EntitySet Name="V_MN_CATEGORY" EntityType="TDHModel.V_MN_CATEGORY" />
           <EntitySet Name="V_MN_ACCOUNT_HISTORY" EntityType="TDHModel.V_MN_ACCOUNT_HISTORY" />
@@ -2412,6 +2437,12 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
             <End Role="MN_TRANSFER" EntitySet="MN_TRANSFER" />
           </AssociationSet>
+          <EntitySet Name="V_PN_TIMELINE" EntityType="TDHModel.V_PN_TIMELINE" />
+          <EntitySet Name="V_SYS_RENDER_NAVIGATION" EntityType="TDHModel.V_SYS_RENDER_NAVIGATION" />
+          <FunctionImport Name="FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR_Result)">
+          <Parameter Name="I_Year" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="V_MN_REPORT_BORROW_ACCOUNT_STATUS" EntityType="TDHModel.V_MN_REPORT_BORROW_ACCOUNT_STATUS" />
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -3852,34 +3883,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
           <NavigationProperty Name="CM_SKILL" Relationship="TDHModel.FK_PN_SKILL_CM_SKILL" FromRole="PN_SKILL" ToRole="CM_SKILL" />
           <NavigationProperty Name="PN_SKILL_DEFINDED" Relationship="TDHModel.FK_PN_SKILL_DEFINDED_PN_SKILL" FromRole="PN_SKILL" ToRole="PN_SKILL_DEFINDED" />
         </EntityType>
-        <EntityType Name="V_TIMELINE">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="school" />
-            <PropertyRef Name="duration" />
-            <PropertyRef Name="description" />
-            <PropertyRef Name="date" />
-            <PropertyRef Name="is_plan" />
-            <PropertyRef Name="is_finish" />
-            <PropertyRef Name="is_cancel" />
-            <PropertyRef Name="type_code" />
-            <PropertyRef Name="type_name" />
-            <PropertyRef Name="created_by" />
-          </Key>
-          <Property Name="id" Type="Guid" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="school" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="duration" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="is_plan" Type="Boolean" Nullable="false" />
-          <Property Name="is_finish" Type="Boolean" Nullable="false" />
-          <Property Name="is_cancel" Type="Boolean" Nullable="false" />
-          <Property Name="type_code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="type_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="created_by" Type="Guid" Nullable="false" />
-        </EntityType>
         <Association Name="FK_CM_SKILL_CM_SKILL_GROUP">
           <End Type="TDHModel.CM_SKILL_GROUP" Role="CM_SKILL_GROUP" Multiplicity="1" />
           <End Type="TDHModel.CM_SKILL" Role="CM_SKILL" Multiplicity="*" />
@@ -4104,28 +4107,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="V_RENDER_NAVIGATION">
-          <Key>
-            <PropertyRef Name="module_code" />
-            <PropertyRef Name="module_title" />
-            <PropertyRef Name="module_order" />
-            <PropertyRef Name="code" />
-            <PropertyRef Name="ordering" />
-            <PropertyRef Name="function_ordering" />
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="module_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="module_title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="default_action" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="icon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="module_order" Type="Int16" Nullable="false" />
-          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="url" Type="String" MaxLength="153" FixedLength="false" Unicode="false" />
-          <Property Name="ordering" Type="Int16" Nullable="false" />
-          <Property Name="title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="function_ordering" Type="Int16" Nullable="false" />
-          <Property Name="id" Type="Guid" Nullable="false" />
-        </EntityType>
         <EntityType Name="V_MN_CATEGORY_HISTORY">
           <Key>
             <PropertyRef Name="category_id" />
@@ -4259,25 +4240,94 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="V_PN_TIMELINE">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="school" />
+            <PropertyRef Name="duration" />
+            <PropertyRef Name="description" />
+            <PropertyRef Name="date" />
+            <PropertyRef Name="is_plan" />
+            <PropertyRef Name="is_finish" />
+            <PropertyRef Name="is_cancel" />
+            <PropertyRef Name="type_code" />
+            <PropertyRef Name="type_name" />
+            <PropertyRef Name="created_by" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="school" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="duration" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_plan" Type="Boolean" Nullable="false" />
+          <Property Name="is_finish" Type="Boolean" Nullable="false" />
+          <Property Name="is_cancel" Type="Boolean" Nullable="false" />
+          <Property Name="type_code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="type_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+        </EntityType>
+        <EntityType Name="V_SYS_RENDER_NAVIGATION">
+          <Key>
+            <PropertyRef Name="module_code" />
+            <PropertyRef Name="module_title" />
+            <PropertyRef Name="module_order" />
+            <PropertyRef Name="code" />
+            <PropertyRef Name="ordering" />
+            <PropertyRef Name="function_ordering" />
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="module_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="module_title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="default_action" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="icon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="module_order" Type="Int16" Nullable="false" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="url" Type="String" MaxLength="153" FixedLength="false" Unicode="false" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="function_ordering" Type="Int16" Nullable="false" />
+          <Property Name="id" Type="Guid" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR_Result">
+          <Property Type="String" Name="name" Nullable="false" MaxLength="150" />
+          <Property Type="Decimal" Name="t1" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t2" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t3" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t4" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t5" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t6" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t7" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t8" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t9" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t10" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t11" Nullable="false" Precision="38" Scale="1" />
+          <Property Type="Decimal" Name="t12" Nullable="false" Precision="38" Scale="1" />
+        </ComplexType>
+        <EntityType Name="V_MN_REPORT_BORROW_ACCOUNT_STATUS">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="max_payment" />
+            <PropertyRef Name="title" />
+            <PropertyRef Name="money" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="max_payment" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="remain" Type="Decimal" Precision="20" Scale="1" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TDHModelStoreContainer" CdmEntityContainer="TDHEntities">
-          <FunctionImportMapping FunctionName="TDHModel.Store.FNC_REPORT_INCOME_BY_CATEGORY" FunctionImportName="FNC_REPORT_INCOME_BY_CATEGORY">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TDHModel.FNC_REPORT_INCOME_BY_CATEGORY_Result">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="month" ColumnName="month" />
-                <ScalarProperty Name="year" ColumnName="year" />
-                <ScalarProperty Name="percent_setting" ColumnName="percent_setting" />
-                <ScalarProperty Name="percent_current" ColumnName="percent_current" />
-                <ScalarProperty Name="money_setting" ColumnName="money_setting" />
-                <ScalarProperty Name="money_current" ColumnName="money_current" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="FNC_MN_GROUP_SETTING_GET_BY_GROUP" FunctionName="TDHModel.Store.FNC_MN_GROUP_SETTING_GET_BY_GROUP">
             <ResultMapping>
               <ComplexTypeMapping TypeName="TDHModel.FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
@@ -5238,24 +5288,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="V_TIMELINE">
-            <EntityTypeMapping TypeName="TDHModel.V_TIMELINE">
-              <MappingFragment StoreEntitySet="V_TIMELINE">
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="type_name" ColumnName="type_name" />
-                <ScalarProperty Name="type_code" ColumnName="type_code" />
-                <ScalarProperty Name="is_cancel" ColumnName="is_cancel" />
-                <ScalarProperty Name="is_finish" ColumnName="is_finish" />
-                <ScalarProperty Name="is_plan" ColumnName="is_plan" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="duration" ColumnName="duration" />
-                <ScalarProperty Name="school" ColumnName="school" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PN_CETIFICATE">
             <EntityTypeMapping TypeName="TDHModel.PN_CETIFICATE">
               <MappingFragment StoreEntitySet="PN_CETIFICATE">
@@ -5372,23 +5404,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="V_RENDER_NAVIGATION">
-            <EntityTypeMapping TypeName="TDHModel.V_RENDER_NAVIGATION">
-              <MappingFragment StoreEntitySet="V_RENDER_NAVIGATION">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="function_ordering" ColumnName="function_ordering" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="ordering" ColumnName="ordering" />
-                <ScalarProperty Name="url" ColumnName="url" />
-                <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="module_order" ColumnName="module_order" />
-                <ScalarProperty Name="icon" ColumnName="icon" />
-                <ScalarProperty Name="default_action" ColumnName="default_action" />
-                <ScalarProperty Name="module_title" ColumnName="module_title" />
-                <ScalarProperty Name="module_code" ColumnName="module_code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="V_MN_CATEGORY_HISTORY">
             <EntityTypeMapping TypeName="TDHModel.V_MN_CATEGORY_HISTORY">
               <MappingFragment StoreEntitySet="V_MN_CATEGORY_HISTORY">
@@ -5496,6 +5511,73 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_TIMELINE' does not hav
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="V_PN_TIMELINE">
+            <EntityTypeMapping TypeName="TDHModel.V_PN_TIMELINE">
+              <MappingFragment StoreEntitySet="V_PN_TIMELINE">
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="type_name" ColumnName="type_name" />
+                <ScalarProperty Name="type_code" ColumnName="type_code" />
+                <ScalarProperty Name="is_cancel" ColumnName="is_cancel" />
+                <ScalarProperty Name="is_finish" ColumnName="is_finish" />
+                <ScalarProperty Name="is_plan" ColumnName="is_plan" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="school" ColumnName="school" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="V_SYS_RENDER_NAVIGATION">
+            <EntityTypeMapping TypeName="TDHModel.V_SYS_RENDER_NAVIGATION">
+              <MappingFragment StoreEntitySet="V_SYS_RENDER_NAVIGATION">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="function_ordering" ColumnName="function_ordering" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="module_order" ColumnName="module_order" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="default_action" ColumnName="default_action" />
+                <ScalarProperty Name="module_title" ColumnName="module_title" />
+                <ScalarProperty Name="module_code" ColumnName="module_code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR" FunctionName="TDHModel.Store.FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR_Result">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="t1" ColumnName="t1" />
+                <ScalarProperty Name="t2" ColumnName="t2" />
+                <ScalarProperty Name="t3" ColumnName="t3" />
+                <ScalarProperty Name="t4" ColumnName="t4" />
+                <ScalarProperty Name="t5" ColumnName="t5" />
+                <ScalarProperty Name="t6" ColumnName="t6" />
+                <ScalarProperty Name="t7" ColumnName="t7" />
+                <ScalarProperty Name="t8" ColumnName="t8" />
+                <ScalarProperty Name="t9" ColumnName="t9" />
+                <ScalarProperty Name="t10" ColumnName="t10" />
+                <ScalarProperty Name="t11" ColumnName="t11" />
+                <ScalarProperty Name="t12" ColumnName="t12" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="V_MN_REPORT_BORROW_ACCOUNT_STATUS">
+            <EntityTypeMapping TypeName="TDHModel.V_MN_REPORT_BORROW_ACCOUNT_STATUS">
+              <MappingFragment StoreEntitySet="V_MN_REPORT_BORROW_ACCOUNT_STATUS">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="money" ColumnName="money" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="remain" ColumnName="remain" />
+                <ScalarProperty Name="max_payment" ColumnName="max_payment" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

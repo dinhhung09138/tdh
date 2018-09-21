@@ -76,13 +76,13 @@
     <Compile Include="FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="FNC_MN_REPORT_SUMMARY_BY_YEAR_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="FNC_MN_REPORT_SUMMARY_Result.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FNC_REPORT_INCOME_BY_CATEGORY_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="MN_ACCOUNT.cs">
@@ -224,10 +224,13 @@
     <Compile Include="V_MN_MONEY_FLOW.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="V_RENDER_NAVIGATION.cs">
+    <Compile Include="V_MN_REPORT_BORROW_ACCOUNT_STATUS.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="V_TIMELINE.cs">
+    <Compile Include="V_PN_TIMELINE.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="V_SYS_RENDER_NAVIGATION.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="WEB_ABOUT.cs">

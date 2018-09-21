@@ -76,24 +76,19 @@ namespace TDH.DataAccess
         public virtual DbSet<PN_EVENT> PN_EVENT { get; set; }
         public virtual DbSet<PN_EVENT_TYPE> PN_EVENT_TYPE { get; set; }
         public virtual DbSet<PN_SKILL> PN_SKILL { get; set; }
-        public virtual DbSet<V_TIMELINE> V_TIMELINE { get; set; }
         public virtual DbSet<PN_CETIFICATE> PN_CETIFICATE { get; set; }
         public virtual DbSet<PN_SKILL_DEFINDED> PN_SKILL_DEFINDED { get; set; }
         public virtual DbSet<FB_FANPAGE> FB_FANPAGE { get; set; }
         public virtual DbSet<FB_GROUP> FB_GROUP { get; set; }
         public virtual DbSet<FB_POST_TYPE> FB_POST_TYPE { get; set; }
         public virtual DbSet<FB_USER> FB_USER { get; set; }
-        public virtual DbSet<V_RENDER_NAVIGATION> V_RENDER_NAVIGATION { get; set; }
         public virtual DbSet<V_MN_CATEGORY_HISTORY> V_MN_CATEGORY_HISTORY { get; set; }
         public virtual DbSet<V_MN_CATEGORY> V_MN_CATEGORY { get; set; }
         public virtual DbSet<V_MN_ACCOUNT_HISTORY> V_MN_ACCOUNT_HISTORY { get; set; }
         public virtual DbSet<V_MN_MONEY_FLOW> V_MN_MONEY_FLOW { get; set; }
-    
-        [DbFunction("TDHEntities", "FNC_REPORT_INCOME_BY_CATEGORY")]
-        public virtual IQueryable<FNC_REPORT_INCOME_BY_CATEGORY_Result> FNC_REPORT_INCOME_BY_CATEGORY()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_REPORT_INCOME_BY_CATEGORY_Result>("[TDHEntities].[FNC_REPORT_INCOME_BY_CATEGORY]()");
-        }
+        public virtual DbSet<V_PN_TIMELINE> V_PN_TIMELINE { get; set; }
+        public virtual DbSet<V_SYS_RENDER_NAVIGATION> V_SYS_RENDER_NAVIGATION { get; set; }
+        public virtual DbSet<V_MN_REPORT_BORROW_ACCOUNT_STATUS> V_MN_REPORT_BORROW_ACCOUNT_STATUS { get; set; }
     
         [DbFunction("TDHEntities", "FNC_MN_GROUP_SETTING_GET_BY_GROUP")]
         public virtual IQueryable<FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result> FNC_MN_GROUP_SETTING_GET_BY_GROUP(Nullable<System.Guid> i_GroupID, Nullable<int> i_Year, Nullable<System.Guid> i_UserID)
@@ -137,6 +132,16 @@ namespace TDH.DataAccess
                 new ObjectParameter("I_Year", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result>("[TDHEntities].[FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR](@I_Year)", i_YearParameter);
+        }
+    
+        [DbFunction("TDHEntities", "FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR")]
+        public virtual IQueryable<FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR_Result> FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR(Nullable<int> i_Year)
+        {
+            var i_YearParameter = i_Year.HasValue ?
+                new ObjectParameter("I_Year", i_Year) :
+                new ObjectParameter("I_Year", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR_Result>("[TDHEntities].[FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR](@I_Year)", i_YearParameter);
         }
     }
 }

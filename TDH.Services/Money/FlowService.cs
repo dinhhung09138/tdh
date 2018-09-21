@@ -241,6 +241,7 @@ namespace TDH.Services.Money
                             
                             MN_TRANSFER _md = new MN_TRANSFER();
                             _md.id = Guid.NewGuid();
+                            _md.category_id = model.CategoryID;
                             _md.account_from = model.AccountFrom;
                             _md.account_to = model.AccountTo;
                             _md.title = model.Title;

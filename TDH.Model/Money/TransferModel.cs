@@ -13,6 +13,11 @@ namespace TDH.Model.Money
         /// </summary>
         public Guid ID { get; set; }
 
+        [Required(ErrorMessage = "Nội dung không được rỗng")]
+        public Guid CategoryID { get; set; }
+
+        public string CategoryName { get; set; } = "";
+
         /// <summary>
         /// Account send money
         /// </summary>

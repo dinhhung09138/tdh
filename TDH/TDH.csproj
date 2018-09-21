@@ -6659,6 +6659,7 @@
     <Content Include="Areas\Marketing\Views\Zalo\Index.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmError\DataAccess.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmError\NotFound.cshtml" />
+    <Content Include="Areas\Money\Views\MNReport\Partials\_BorrowAccountStatus.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

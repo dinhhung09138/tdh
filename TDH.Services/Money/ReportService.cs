@@ -143,6 +143,118 @@ namespace TDH.Services.Money
             return _return.Result;
         }
 
+        /// <summary>
+        /// Get summary payment by month in a year
+        /// line chart
+        /// </summary>
+        /// <param name="year">year</param>
+        /// <param name="userID">The user identifier</param>
+        /// <returns>List<PaymentByYearModel></returns>
+        public async Task<List<PaymentByYearModel>> SummaryPaymentByYear(int year, Guid userID)
+        {
+            Task<List<PaymentByYearModel>> _return = Task.Run(() =>
+            {
+                try
+                {
+                    List<PaymentByYearModel> _listResult = new List<PaymentByYearModel>();
+                    using (var _context = new TDHEntities())
+                    {
+                        var _list = (from m in _context.FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR(year)
+                                     orderby m.name ascending
+                                     select m).ToList();
+                        foreach (var item in _list)
+                        {
+                            _listResult.Add(new PaymentByYearModel()
+                            {
+                                Name = item.name,
+                                T01 = item.t1,
+                                T02 = item.t2,
+                                T03 = item.t3,
+                                T04 = item.t4,
+                                T05 = item.t5,
+                                T06 = item.t6,
+                                T07 = item.t7,
+                                T08 = item.t8,
+                                T09 = item.t9,
+                                T10 = item.t10,
+                                T11 = item.t11,
+                                T12 = item.t12
+                            });
+                        }
+                    }
+                    return _listResult;
+                }
+                catch (Exception ex)
+                {
+                    throw new ServiceException(FILE_NAME, "SummaryPaymentByYear", userID, ex);
+                }
+            });
 
+            await _return;
+            return _return.Result;
+        }
+
+        /// <summary>
+        /// Borrow accocunt status
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public async Task<List<BorrowAccountStatusModel>> BorrowAccountStatus(Guid userID)
+        {
+            Task<List<BorrowAccountStatusModel>> _return = Task.Run(() =>
+            {
+                try
+                {
+                    using (var _context = new TDHEntities())
+                    {
+                        return (from m in _context.V_MN_REPORT_BORROW_ACCOUNT_STATUS
+                                orderby m.name ascending
+                                select new BorrowAccountStatusModel()
+                                {
+                                    ID = m.id,
+                                    Name = m.name,
+                                    Max = m.max_payment,
+                                    Remain = m.remain.Value,
+                                    Title = m.title,
+                                    Money = m.money,
+                                    Date = m.date
+                                }).ToList();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ServiceException(FILE_NAME, "BorrowAccountStatus", userID, ex);
+                }
+            });
+
+            await _return;
+            return _return.Result;
+        }
+
+        public List<BorrowAccountStatusModel> BorrowAccountStatus1(Guid userID)
+        {
+            try
+            {
+                using (var _context = new TDHEntities())
+                {
+                    return (from m in _context.V_MN_REPORT_BORROW_ACCOUNT_STATUS
+                            orderby m.name ascending
+                            select new BorrowAccountStatusModel()
+                            {
+                                ID = m.id,
+                                Name = m.name,
+                                Max = m.max_payment,
+                                Remain = m.remain.Value,
+                                Title = m.title,
+                                Money = m.money,
+                                Date = m.date
+                            }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(FILE_NAME, "BorrowAccountStatus", userID, ex);
+            }
+        }
     }
 }

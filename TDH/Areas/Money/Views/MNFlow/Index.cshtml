@@ -238,7 +238,7 @@
                                     Ngày chuyển khoản
                                 </div>
                                 <div class="col-md-6 col-xs-12">
-
+                                    Mục đích chuyển khoản
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -246,7 +246,7 @@
                                     <input id="txtTransferDate" type="text" class="form-control datePicker" maxlength="10" readonly data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
                                 </div>
                                 <div class="col-md-6 col-xs-12">
-
+                                    @Html.DropDownList("cbTransferCategory", new SelectList(ViewBag.paymentCategory, "ID", "Name"), "Chọn hình thức chi", new { @class = "form-control", @tabindex = "3" })
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -259,10 +259,10 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-6 col-xs-12">
-                                    <input id="txtTransferMoney" type="text" class="form-control" maxlength="15" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="3" />
+                                    <input id="txtTransferMoney" type="text" class="form-control" maxlength="15" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="4" />
                                 </div>
                                 <div class="col-md-6 col-xs-12">
-                                    <input id="txtTransferFee" type="text" class="form-control" maxlength="9" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="4" />
+                                    <input id="txtTransferFee" type="text" class="form-control" maxlength="9" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="5" />
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -275,10 +275,10 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-6 col-xs-12">
-                                    @Html.DropDownList("cbTransferAccountFrom", new SelectList(ViewBag.accountHasMoney, "ID", "Name"), "Chọn tài khoản chuyển tiền", new { @class = "form-control", @tabindex = "5" })
+                                    @Html.DropDownList("cbTransferAccountFrom", new SelectList(ViewBag.accountHasMoney, "ID", "Name"), "Chọn tài khoản chuyển tiền", new { @class = "form-control", @tabindex = "6" })
                                 </div>
                                 <div class="col-md-6 col-xs-12">
-                                    @Html.DropDownList("cbTransferAccountTo", new SelectList(ViewBag.account, "ID", "Name"), "Chọn tài khoản nhận tiền", new { @class = "form-control", @tabindex = "6" })
+                                    @Html.DropDownList("cbTransferAccountTo", new SelectList(ViewBag.account, "ID", "Name"), "Chọn tài khoản nhận tiền", new { @class = "form-control", @tabindex = "7" })
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -288,7 +288,7 @@
                             </div>
                             <div class="row form-group">
                                 <div class="col-md-12">
-                                    <input id="txtTransferPurpose" type="text" class="form-control" maxlength="255" data-parsley-maxlength="255" data-parsley-maxlength-message="Nội dung tối đa 255 ký tự" tabindex="7" />
+                                    <input id="txtTransferPurpose" type="text" class="form-control" maxlength="255" data-parsley-maxlength="255" data-parsley-maxlength-message="Nội dung tối đa 255 ký tự" tabindex="8" />
                                 </div>
                             </div>
                         </form>
@@ -296,9 +296,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="8">Hủy</button>
-                <button type="button" id="btnSaveTransfer" class="btn btn-primary" onclick="saveTransfer(false);" tabindex="9">Lưu</button>
-                <button type="button" id="btnSaveTransferContinue" class="btn btn-primary" onclick="saveTransfer(true);" tabindex="10">Lưu và thêm mới</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="9">Hủy</button>
+                <button type="button" id="btnSaveTransfer" class="btn btn-primary" onclick="saveTransfer(false);" tabindex="10">Lưu</button>
+                <button type="button" id="btnSaveTransferContinue" class="btn btn-primary" onclick="saveTransfer(true);" tabindex="11">Lưu và thêm mới</button>
             </div>
         </div>
     </div>

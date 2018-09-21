@@ -163,6 +163,111 @@ namespace TDH.Areas.Money.Controllers
             }
         }
 
+        /// <summary>
+        /// Payment report
+        /// 
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns>Task<ActionResult></returns>
+        [HttpPost]
+        public async Task<ActionResult> PaymentByYearReport(int year)
+        {
+            try
+            {
+                #region " [ Declaration ] "
 
+                ReportService _service = new ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                var _model = await _service.SummaryPaymentByYear(year, UserID);
+
+                #endregion
+
+                return this.Json(_model, JsonRequestBehavior.AllowGet);
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "PaymentByYearReport", UserID, ex);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<ActionResult> BorrowAccountStatus()
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                ReportService _service = new ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                var _model = await _service.BorrowAccountStatus(UserID);
+
+                #endregion
+
+                return PartialView("Partials/_BorrowAccountStatus", _model);
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "BorrowAccountStatus", UserID, ex);
+            }
+        }
+
+        //[AllowAnonymous]
+        //[HttpGet]
+        //public ActionResult BorrowAccountStatus()
+        //{
+        //    try
+        //    {
+        //        #region " [ Declaration ] "
+
+        //        ReportService _service = new ReportService();
+
+        //        #endregion
+
+        //        #region " [ Main processing ] "
+
+        //        var _model = _service.BorrowAccountStatus(UserID);
+
+        //        #endregion
+
+        //        return PartialView("Partials/_BorrowAccountStatus", _model);
+        //    }
+        //    catch (ServiceException serviceEx)
+        //    {
+        //        throw serviceEx;
+        //    }
+        //    catch (DataAccessException accessEx)
+        //    {
+        //        throw accessEx;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new ControllerException(FILE_NAME, "BorrowAccountStatus", UserID, ex);
+        //    }
+        //}
     }
 }

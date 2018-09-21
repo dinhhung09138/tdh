@@ -1,0 +1,14 @@
+﻿@using Utils;
+@model IEnumerable<TDH.Model.Money.Report.BorrowAccountStatusModel>
+@{ 
+    if (Model.Count() > 0)
+    {
+        var _accList = Model.Select(m => m.ID).Distinct();
+        foreach (var item in _accList)
+        {
+            <h2>Hello @item</h2>
+        }
+    }
+}
+
+<h2>Hi</h2>

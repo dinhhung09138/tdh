@@ -45,13 +45,12 @@
                     </div>
                     <div class="col-md-6 col-xs-12">
                         <div class="row">
+                            <div id="divPaymentSummaryByCategory" class="col-md-12" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-
+        </div>  
         <div class="card card-success">
             <div class="card-header with-border no-bg">
                 <h3 class="card-title">Các nguồn thu nhập trong năm</h3>
@@ -60,7 +59,17 @@
                 </div>
             </div>
             <div class="card-body">
-                
+                <div class="row" id="borrowAccountStatus">
+                    <div class="col-md-4 col-sm-4 col-xs-12" style="background-color: aqua; padding: 20px;">
+                        @*@Html.Action("borrowaccountstatus", "mnreport", new { area = "money" });*@
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -255,68 +264,6 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="settingModel" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="card card-success">
-                    <div class="card-header with-border no-bg">
-                        <h3 class="card-title">Thiết lập quy tắc chi tiêu</h3>
-                        <div class="card-tools pull-right">
-                            <input type="text" id="monthSelect" readonly />
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <table id="tbListFullGroupSetting" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Tên</th>
-                                    <th>% thiết lập</th>
-                                    <th>% thực tế</th>
-                                    <th>Số tiền thiết lập</th>
-                                    <th>Số tiền thực tế</th>
-                                </tr>
-                            </thead>
-                            <tbody id="bodytbListFullGroupSetting"></tbody>
-                        </table>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <span style="color: red;">Lưu ý: Tổng số thiết lập trong tháng là 100%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="saveSpendSetting();">Lưu</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-<div class="modal fade" id="groupSettingModel" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Xác nhận</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <h5 id="groupTitle"></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="deleteItem();">Lưu</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="card">
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
@@ -353,6 +300,24 @@
             $('#summaryByYearSelector').datepicker('hide');
             drawSummaryByYearChart();
             drawIncomeSummaryByYearChart();
+            drawPaymentSummaryByYearChart();
+        });
+
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '/money/mnreport/borrowaccountstatus',
+                type: 'POST',
+                cache: false,
+                async: true,
+                contentType: 'html',
+                success: function (response) {
+                    $('#borrowAccountStatus').append(response);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr);
+                }
+            });
         });
 
         //

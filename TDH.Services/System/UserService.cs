@@ -403,7 +403,7 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _listFunction = (from m in _context.V_RENDER_NAVIGATION
+                    var _listFunction = (from m in _context.V_SYS_RENDER_NAVIGATION
                                          where m.id == userID
                                          orderby m.module_order descending, m.function_ordering descending
                                          select new { m.module_code, m.module_title, m.default_action, m.icon, m.code, m.title, m.url }).ToList();
@@ -447,7 +447,7 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in _context.V_RENDER_NAVIGATION
+                    var _list = (from m in _context.V_SYS_RENDER_NAVIGATION
                                          where m.id == userID && m.module_code == moduleCode
                                          orderby m.module_order descending, m.function_ordering descending
                                          select new { m.code, m.title, m.url }).ToList();

@@ -293,6 +293,7 @@ function transfer() {
     transferMoney.set(0);
     $('#txtTransferFee').val('');
     transferFee.set(0);
+    $('#cbTransferCategory').val('');
     $('#cbTransferAccountFrom').val('');
     $('#cbTransferAccountTo').val('');
     $('#txtTransferPurpose').val('');
@@ -313,6 +314,7 @@ function saveTransfer(ctn) {
             contentType: 'application/json',
             dataType: 'json',
             data: JSON.stringify({
+                CategoryID: $('#cbTransferCategory').val(),
                 AccountFrom: $('#cbTransferAccountFrom').val(),
                 AccountTo: $('#cbTransferAccountTo').val(),
                 Title: $('#txtTransferTitle').val(),

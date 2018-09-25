@@ -1,0 +1,48 @@
+﻿@using Utils;
+@model IEnumerable<TDH.Model.Money.Report.Top10>
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h5 class="card-title">Nhóm chi</h5>
+        <div class="card-tools">
+        </div>
+    </div>
+    <div class="card-body" style="display: block;">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                @foreach (var p in Model)
+                {
+                    <div class="progress-group">
+                        @p.Title
+                        <span class="float-right"><b>@Html.Raw(p.Money > 0 ? p.Money.NumberToString() : "0")</b>/@Html.Raw(p.Setting > 0 ? p.Setting.NumberToString() : "") / @Html.Raw(p.Money == 0 ? 0 : p.Money / p.Setting)</span>
+                        <div class="progress progress-sm">
+                            @{
+                                if (p.Money == 0 || (p.Money / p.Setting) <= (decimal)0.6)
+                                {
+                                    <div class="progress-bar bg-success" style="width: @Html.Raw(p.Money == 0 ? 0 : (p.Money / p.Setting) * 100)%"></div>
+                                }
+                                else
+                                {
+                                    if (p.Money / p.Setting <= (decimal)0.8)
+                                    {
+                                        <div class="progress-bar bg-warning" style="width: @Html.Raw((p.Money / p.Setting) * 100)%"></div>
+                                    }
+                                    else
+                                    {
+                                        if (p.Money >= p.Setting)
+                                        {
+                                            <div class="progress-bar bg-danger" style="width: 100%"></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="progress-bar bg-danger" style="width: @Html.Raw((p.Money / p.Setting) * 100)%"></div>
+                                        }
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

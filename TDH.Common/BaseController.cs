@@ -366,6 +366,10 @@ namespace TDH.Common
                                 case "incomebyyearreport":
                                 case "paymentbyyearreport":
                                 case "borrowaccountstatus":
+                                case "top10income":
+                                case "top10payment":
+                                case "percentbygroup":
+                                case "cateover":
                                     return "money_report";
                                 default:
                                     return "";
@@ -806,6 +810,10 @@ namespace TDH.Common
                                 case "incomebyyearreport":
                                 case "paymentbyyearreport":
                                 case "borrowaccountstatus":
+                                case "top10income":
+                                case "top10payment":
+                                case "percentbygroup":
+                                case "cateover":
                                     return ActionType.View;
                                 default:
                                     return ActionType.None;

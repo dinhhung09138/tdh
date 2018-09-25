@@ -6,6 +6,8 @@ google.charts.setOnLoadCallback(drawSummaryChart);
 google.charts.setOnLoadCallback(drawSummaryByYearChart);
 google.charts.setOnLoadCallback(drawIncomeSummaryByYearChart);
 google.charts.setOnLoadCallback(drawPaymentSummaryByYearChart);
+google.charts.setOnLoadCallback(drawPercentByGRoupChart);
+
 
 /**
  * Summary dashboard
@@ -542,5 +544,63 @@ function drawPaymentSummaryByYearChart() {
 }
 
 
+
+/**
+ * Payment dashboard
+ *
+ * Percent payment by group
+ */
+function drawPercentByGRoupChart() {
+    var chartDiv = document.getElementById('reportByMonthByGroup');
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Nhóm');
+    data.addColumn('number', 'Số tiền');
+    
+    var options = {
+        title: 'Tỉ lệ chi theo nhóm'
+    };
+
+    function LoadData(callback) {
+        $.ajax({
+            url: '/money/mnreport/percentbygroup',
+            type: 'POST',
+            cache: false,
+            async: true,
+            xhrFields: {
+                withCredentials: true,
+            },
+            dataType: 'json',
+            success: function (response) {
+                $.each(response, function (idx, item) {
+                    var row = [];
+                    row.push(item.Title);
+                    row.push(item.Money);
+                    data.addRow(row);
+                });
+                callback();
+            },
+            error: function (xhr, status, error) {
+            }
+        });
+    }
+
+    LoadData(drawChart);
+
+    function drawChart() {
+        var chart = new google.visualization.PieChart(chartDiv);
+        chart.draw(data, options);
+    }
+    if (document.addEventListener) {
+        window.addEventListener('resize', drawChart);
+    }
+    else if (document.attachEvent) {
+        window.attachEvent('onresize', drawChart);
+    }
+    else {
+        window.resize = drawChart;
+    }
+    
+}
 
 

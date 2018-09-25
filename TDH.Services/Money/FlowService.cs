@@ -36,6 +36,10 @@ namespace TDH.Services.Money
             Dictionary<string, object> _return = new Dictionary<string, object>();
             try
             {
+                int _year = int.Parse(request.Parameter2) / 100;
+                int _month = int.Parse(request.Parameter2) % 100;
+                DateTime _from = new DateTime(_year, _month, 1, 0, 0, 0);
+                DateTime _to = _from.AddMonths(1).AddDays(-1);
                 //Declare response data to json object
                 DataTableResponse<FlowModel> _itemResponse = new DataTableResponse<FlowModel>();
                 //List of data
@@ -43,7 +47,7 @@ namespace TDH.Services.Money
                 using (var _context = new TDHEntities())
                 {
                     var _lData = (from m in _context.V_MN_MONEY_FLOW
-                                  where m.create_by == userID && request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.type.ToString())
+                                  where m.create_by == userID && request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.type.ToString()) && m.date.Value >= _from && m.date.Value <= _to
                                   orderby m.date descending
                                   select new
                                   {

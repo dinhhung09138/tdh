@@ -6,6 +6,7 @@ using TDH.Model.Money.Report;
 using TDH.DataAccess;
 using TDH.Common;
 using TDH.Common.UserException;
+using Utils;
 
 namespace TDH.Services.Money
 {
@@ -199,39 +200,7 @@ namespace TDH.Services.Money
         /// </summary>
         /// <param name="userID"></param>
         /// <returns></returns>
-        public async Task<List<BorrowAccountStatusModel>> BorrowAccountStatus(Guid userID)
-        {
-            Task<List<BorrowAccountStatusModel>> _return = Task.Run(() =>
-            {
-                try
-                {
-                    using (var _context = new TDHEntities())
-                    {
-                        return (from m in _context.V_MN_REPORT_BORROW_ACCOUNT_STATUS
-                                orderby m.name ascending
-                                select new BorrowAccountStatusModel()
-                                {
-                                    ID = m.id,
-                                    Name = m.name,
-                                    Max = m.max_payment,
-                                    Remain = m.remain.Value,
-                                    Title = m.title,
-                                    Money = m.money,
-                                    Date = m.date
-                                }).ToList();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new ServiceException(FILE_NAME, "BorrowAccountStatus", userID, ex);
-                }
-            });
-
-            await _return;
-            return _return.Result;
-        }
-
-        public List<BorrowAccountStatusModel> BorrowAccountStatus1(Guid userID)
+        public List<BorrowAccountStatusModel> BorrowAccountStatus(Guid userID)
         {
             try
             {
@@ -256,5 +225,134 @@ namespace TDH.Services.Money
                 throw new ServiceException(FILE_NAME, "BorrowAccountStatus", userID, ex);
             }
         }
+
+        /// <summary>
+        /// Get top 10 payment in current month
+        /// </summary>
+        /// <param name="year">Year</param>
+        /// <param name="month">MOnth</param>
+        /// <param name="userID">user identifier</param>
+        /// <returns></returns>
+        public List<Top10> Top10Payment(int year, int month, Guid userID)
+        {
+            try
+            {
+                using (var _context = new TDHEntities())
+                {
+                    return (from m in _context.MN_PAYMENT
+                            join c in _context.MN_CATEGORY on m.category_id equals c.id
+                            join g in _context.MN_GROUP on c.group_id equals g.id
+                            where g.is_input == false && m.date.Year == year && m.date.Month == month
+                            orderby m.money descending
+                            select new Top10()
+                            {
+                                Title = m.title,
+                                Money = m.money,
+                                Date = m.date
+                            }).Take(10).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(FILE_NAME, "Top10", userID, ex);
+            }
+        }
+
+        /// <summary>
+        /// Get top 10 income in current month
+        /// </summary>
+        /// <param name="year">Year</param>
+        /// <param name="month">MOnth</param>
+        /// <param name="userID">user identifier</param>
+        /// <returns></returns>
+        public List<Top10> Top10Income(int year, int month, Guid userID)
+        {
+            try
+            {
+                using (var _context = new TDHEntities())
+                {
+                    return (from m in _context.MN_INCOME
+                            join c in _context.MN_CATEGORY on m.category_id equals c.id
+                            join g in _context.MN_GROUP on c.group_id equals g.id
+                            where g.is_input == true && m.date.Year == year && m.date.Month == month
+                            orderby m.money descending
+                            select new Top10()
+                            {
+                                Title = m.title,
+                                Money = m.money,
+                                Date = m.date
+                            }).Take(10).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(FILE_NAME, "Top10", userID, ex);
+            }
+        }
+
+        /// <summary>
+        /// Get percent of payment by group
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="month"></param>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public async Task<List<Top10>> GroupPercent(int year, int month, Guid userID)
+        {
+            Task<List<Top10>> _return = Task.Run(() =>
+            {
+                try
+                {
+                    using (var _context = new TDHEntities())
+                    {
+                        return (from m in _context.V_MN_CATEGORY
+                                where m.is_input == false && m.year == year && m.month == month
+                                group m by m.group_name into g
+                                select new Top10()
+                                {
+                                    Title = g.Key,
+                                    Money = g.Sum(m => m.current_payment)
+                                }).ToList().Where(m => m.Money > 0).ToList();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new ServiceException(FILE_NAME, "GroupPercent", userID, ex);
+                }
+            });
+            await _return;
+            return _return.Result;
+        }
+
+        /// <summary>
+        /// Get top 10 payment in current month
+        /// </summary>
+        /// <param name="year">Year</param>
+        /// <param name="month">MOnth</param>
+        /// <param name="userID">user identifier</param>
+        /// <returns></returns>
+        public List<Top10> CategorySettingByMonth(int year, int month, Guid userID)
+        {
+            try
+            {
+                using (var _context = new TDHEntities())
+                {
+                    return (from m in _context.V_MN_CATEGORY
+                            where m.is_input == false && m.year == year && m.month == month && (m.money_setting > 0 || m.current_payment > 0)
+                            orderby m.current_payment descending
+                            select new Top10()
+                            {
+                                Title = m.name,
+                                Money = m.current_payment,
+                                Setting = m.money_setting
+                            }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(FILE_NAME, "CategorySettingByMonth", userID, ex);
+            }
+        }
+
     }
 }

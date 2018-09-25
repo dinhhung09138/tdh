@@ -82,6 +82,7 @@
     <Compile Include="Money\Report\IncomeByYearModel.cs" />
     <Compile Include="Money\Report\CollectionByYearModel.cs" />
     <Compile Include="Money\Report\PaymentByYearModel.cs" />
+    <Compile Include="Money\Report\Top10.cs" />
     <Compile Include="Money\TransferModel.cs" />
     <Compile Include="PersonalWorking\CheckListGroupModel.cs" />
     <Compile Include="PersonalWorking\CheckListItemDetailModel.cs" />

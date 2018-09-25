@@ -5356,6 +5356,7 @@
     <Content Include="Areas\Administrator\Content\plugins\jquery\jquery.min.js" />
     <Content Include="Areas\Administrator\Content\plugins\jquery\jquery.slim.js" />
     <Content Include="Areas\Administrator\Content\plugins\jquery\jquery.slim.min.js" />
+    <Content Include="Areas\Administrator\Content\plugins\matchHeight\jquery.matchHeight-min.js" />
     <Content Include="Areas\Administrator\Content\plugins\slimScroll\jquery.slimscroll.js" />
     <Content Include="Areas\Administrator\Content\plugins\slimScroll\jquery.slimscroll.min.js" />
     <Content Include="Areas\Administrator\Content\plugins\timepicker\bootstrap-timepicker.css" />
@@ -6660,6 +6661,8 @@
     <Content Include="Areas\Administrator\Views\AdmError\DataAccess.cshtml" />
     <Content Include="Areas\Administrator\Views\AdmError\NotFound.cshtml" />
     <Content Include="Areas\Money\Views\MNReport\Partials\_BorrowAccountStatus.cshtml" />
+    <Content Include="Areas\Money\Views\MNReport\Partials\_Top10.cshtml" />
+    <Content Include="Areas\Money\Views\MNReport\Partials\_OverSetting.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

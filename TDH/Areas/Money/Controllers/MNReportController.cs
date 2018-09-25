@@ -201,10 +201,9 @@ namespace TDH.Areas.Money.Controllers
                 throw new ControllerException(FILE_NAME, "PaymentByYearReport", UserID, ex);
             }
         }
-
-        [AllowAnonymous]
+        
         [HttpGet]
-        public async Task<ActionResult> BorrowAccountStatus()
+        public ActionResult BorrowAccountStatus()
         {
             try
             {
@@ -216,7 +215,7 @@ namespace TDH.Areas.Money.Controllers
 
                 #region " [ Main processing ] "
 
-                var _model = await _service.BorrowAccountStatus(UserID);
+                var _model = _service.BorrowAccountStatus(UserID);
 
                 #endregion
 
@@ -236,38 +235,140 @@ namespace TDH.Areas.Money.Controllers
             }
         }
 
-        //[AllowAnonymous]
-        //[HttpGet]
-        //public ActionResult BorrowAccountStatus()
-        //{
-        //    try
-        //    {
-        //        #region " [ Declaration ] "
+        [HttpGet]
+        public ActionResult Top10Payment()
+        {
+            try
+            {
+                #region " [ Declaration ] "
 
-        //        ReportService _service = new ReportService();
+                ReportService _service = new ReportService();
 
-        //        #endregion
+                #endregion
 
-        //        #region " [ Main processing ] "
+                #region " [ Main processing ] "
 
-        //        var _model = _service.BorrowAccountStatus(UserID);
+                var _model = _service.Top10Payment(DateTime.Now.Year, DateTime.Now.Month, UserID);
 
-        //        #endregion
+                ViewBag.title = "Top 10 chi tiêu";
 
-        //        return PartialView("Partials/_BorrowAccountStatus", _model);
-        //    }
-        //    catch (ServiceException serviceEx)
-        //    {
-        //        throw serviceEx;
-        //    }
-        //    catch (DataAccessException accessEx)
-        //    {
-        //        throw accessEx;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new ControllerException(FILE_NAME, "BorrowAccountStatus", UserID, ex);
-        //    }
-        //}
+                #endregion
+
+                return PartialView("Partials/_Top10", _model);
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "Top10Payment", UserID, ex);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Top10Income()
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                ReportService _service = new ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                var _model = _service.Top10Income(DateTime.Now.Year, DateTime.Now.Month, UserID);
+
+                ViewBag.title = "Top 10 thu nhập";
+
+                #endregion
+
+                return PartialView("Partials/_Top10", _model);
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "Top10Income", UserID, ex);
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> PercentByGroup()
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                ReportService _service = new ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                var _model = await _service.GroupPercent(DateTime.Now.Year, DateTime.Now.Month, UserID);
+
+                #endregion
+
+                return this.Json(_model, JsonRequestBehavior.AllowGet);
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "PercentByGroup", UserID, ex);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult CateOver()
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                ReportService _service = new ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                var _model = _service.CategorySettingByMonth(DateTime.Now.Year, DateTime.Now.Month, UserID);
+                
+                #endregion
+
+                return PartialView("Partials/_OverSetting", _model);
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "CateOver", UserID, ex);
+            }
+        }
     }
 }

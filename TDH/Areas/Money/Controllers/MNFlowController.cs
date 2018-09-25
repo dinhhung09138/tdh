@@ -38,8 +38,15 @@ namespace TDH.Areas.Money.Controllers
                 CategoryService _categoryServices = new CategoryService();
                 AccountService _accountServices = new AccountService();
                 //
-                ViewBag.incomeCategory = _categoryServices.GetAll(UserID, true);
-                ViewBag.paymentCategory = _categoryServices.GetAll(UserID, false);
+                List<CategoryModel> _listIncomeCategory = _categoryServices.GetAll(UserID, true);
+                IEnumerable<CategoryModel> _listPaymentCategory = _categoryServices.GetAll(UserID, false);
+                ViewBag.incomeCategory = _listIncomeCategory;
+                ViewBag.paymentCategory = _listPaymentCategory;
+                foreach (var item in _listPaymentCategory)
+                {
+                    _listIncomeCategory.Insert(0, item);
+                }
+                ViewBag.allCategory = _listIncomeCategory;
                 ViewBag.account = _accountServices.GetAll(UserID);
                 ViewBag.accountHasMoney = _accountServices.GetAllWithFullMoney(UserID);
 
@@ -83,6 +90,10 @@ namespace TDH.Areas.Money.Controllers
                 if (requestData.Parameter1 == null)
                 {
                     requestData.Parameter1 = "";
+                }
+                if (requestData.Parameter2 == null) // By year month
+                {
+                    requestData.Parameter2 = DateTime.Now.ToString("yyyyMM");
                 }
                 #endregion
 

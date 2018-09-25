@@ -12,12 +12,21 @@
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
-<select id="ddlSelect" class="form-control form-control-sm">
-    <option value="" selected>Tất cả</option>
-    <option value="1">Thu nhập</option>
-    <option value="-1">Chi tiêu</option>
-    <option value="0">Chuyển khoản</option>
-</select>
+<div class="row" id="toolbarSearch">
+    <div class="col-md-6 col-xs-12">
+        <select id="ddlSelect" class="form-control form-control-sm">
+            <option value="" selected>Tất cả</option>
+            <option value="1">Thu nhập</option>
+            <option value="-1">Chi tiêu</option>
+            <option value="0">Chuyển khoản</option>
+        </select>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <input type="hidden" id="monthSelectValue" value="@DateTime.Now.ToString("yyyyMM")" />
+        <input type="text" id="monthSelect" class="form-control form-control-sm" value="@DateTime.Now.ToString("yyyy/MM")" readonly />
+    </div>
+</div>
+
 <div class="card card-success">
     <div class="card-header with-border no-bg">
         <h3 class="card-title">@Message.Flow.INDEX</h3>
@@ -246,7 +255,7 @@
                                     <input id="txtTransferDate" type="text" class="form-control datePicker" maxlength="10" readonly data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
                                 </div>
                                 <div class="col-md-6 col-xs-12">
-                                    @Html.DropDownList("cbTransferCategory", new SelectList(ViewBag.paymentCategory, "ID", "Name"), "Chọn hình thức chi", new { @class = "form-control", @tabindex = "3" })
+                                    @Html.DropDownList("cbTransferCategory", new SelectList(ViewBag.allCategory, "ID", "Name"), "Chọn hình thức", new { @class = "form-control", @tabindex = "3" })
                                 </div>
                             </div>
                             <div class="row form-group">

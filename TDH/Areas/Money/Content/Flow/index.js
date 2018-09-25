@@ -49,6 +49,15 @@ $(document).ready(function () {
     $(".datePicker").datepicker({
         format: "dd/mm/yyyy"
     }).on('changeDate', function (ev) {
+        if ($(this).attr('id') === 'txtTransferDate') {
+            $('#cbTransferCategory').focus();
+        } else {
+            if ($(this).attr('id') === 'txtPaymentDate') {
+                $('#txtPaymentMoney').focus();
+            } else {
+                $('#txtIncomeMoney').focus();
+            }
+        }
         $('.datePicker').datepicker('hide');
     });
     //
@@ -81,14 +90,15 @@ $(document).ready(function () {
             //Do something after finish
         },
         createdRow: function (row, data, dataIndex) {
-           
+
         },
         language: language,
         ajax: {
             url: '/money/mnflow/index',
             type: 'post',
             data: function (d) {
-                d.Parameter1 = $('#ddlSelect').val()
+                d.Parameter1 = $('#ddlSelect').val();
+                d.Parameter2 = $('#monthSelectValue').val();
             }
         },
         columns: [
@@ -142,7 +152,7 @@ $(document).ready(function () {
         ]
     });
 
-    $(".dataTables_wrapper .toolbar").append(ddlSelect);
+    $(".dataTables_wrapper .toolbar").append(toolbarSearch);
 
     table.on('draw', function () {
         if ($('#tbList input[name="publish"]')[0]) {
@@ -162,7 +172,20 @@ $(document).ready(function () {
 
         }
     });
-    
+
+    $("#monthSelect").datepicker({
+        language: 'vi',
+        format: "yyyy/mm",
+        viewMode: "months",
+        minViewMode: "months"
+    }).on('changeDate', function (ev) {
+        $('#monthSelect').datepicker('hide');
+        var month = $(this).val().substring(5, 8);
+        var year = $(this).val().substring(0, 4);
+        $('#monthSelectValue').val(parseInt(year + month));
+        table.ajax.reload();
+        });
+
 });
 
 $(document).on('change', '#ddlSelect', function (e) {
@@ -210,7 +233,7 @@ function saveIncome(ctn) {
                 } else {
                     income();
                 }
-                
+
             },
             error: function (xhr, status, error) {
                 console.log(error);

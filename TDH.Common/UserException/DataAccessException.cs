@@ -5,6 +5,7 @@ namespace TDH.Common.UserException
     /// <summary>
     /// Data access permision exception
     /// When user trying to access data with out owner. This exception will happen
+    /// Only use in area module
     /// </summary>
     public class DataAccessException : Exception
     {

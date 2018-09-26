@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TDH.Common.UserException
 {
     /// <summary>
     /// Controller exception
     /// This will happen when has any error happend in controller
+    /// Only use in area module
     /// </summary>
     public class ControllerException : Exception
     {
@@ -32,6 +29,8 @@ namespace TDH.Common.UserException
             this.FileName = fileName;
             this.ActionName = functionName;
             this.UserID = userID;
+            Log.WriteLog(FileName, ActionName, UserID, new Exception() { Source = ex.Source });
+            Notifier.Notification(userID, Common.Message.Error, Notifier.TYPE.Error);
         }
     }
 }

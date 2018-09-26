@@ -70,13 +70,13 @@
     <Compile Include="UserException\ControllerException.cs" />
     <Compile Include="Fillters\AuthorizationFilterAttribute.cs" />
     <Compile Include="Fillters\ExceptionFilterAttribute.cs" />
-    <Compile Include="Fillters\UserException.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Notifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserException\DataAccessException.cs" />
     <Compile Include="UserException\ServiceException.cs" />
+    <Compile Include="UserException\UserException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TDH.DataAccess\TDH.DataAccess.csproj">

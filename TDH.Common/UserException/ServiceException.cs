@@ -5,6 +5,7 @@ namespace TDH.Common.UserException
     /// <summary>
     /// Service exception
     /// This excetion happen when has any error in services
+    /// Only use in area module
     /// </summary>
     public class ServiceException : Exception
     {

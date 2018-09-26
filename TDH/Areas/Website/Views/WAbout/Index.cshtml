@@ -10,7 +10,7 @@
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "website" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h3 class="card-title">Giới thiệu</h3>
+        <h3 class="card-title">@Message.About.LIST</h3>
     </div>
     <div class="card-body">
         @using (Ajax.BeginForm("index", "wabout", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TDH.Model
 {
     /// <summary>
@@ -35,5 +30,6 @@ namespace TDH.Model
         /// Action name
         /// </summary>
         public string Action { get; set; } = "";
+
     }
 }

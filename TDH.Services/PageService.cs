@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TDH.Common;
-using TDH.Common.Fillters;
+using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.ViewModel.WebSite;
 
@@ -27,14 +25,18 @@ namespace TDH.Services
 
         #region " [ Home page ] "
 
+        /// <summary>
+        /// Get home page meta content
+        /// </summary>
+        /// <returns>MetaViewModel</returns>
         public static MetaViewModel getHomeMetaContent()
         {
             MetaViewModel _meta = new MetaViewModel();
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = context.WEB_CONFIGURATION.Where(m => m.key.Contains("homepage_")).ToList();
+                    var _list = _context.WEB_CONFIGURATION.Where(m => m.key.Contains("homepage_")).ToList();
                     _meta.MetaTitle = _list.FirstOrDefault(m => m.key == "homepage_title").value;
                     _meta.MetaDescription = _list.FirstOrDefault(m => m.key == "homepage_description").value;
                     _meta.MetaKeywords = _list.FirstOrDefault(m => m.key == "homepage_keyword").value;
@@ -46,70 +48,69 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "getHomeMetaContent", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Source };
+                throw new UserException(FILE_NAME, "getHomeMetaContent", ex);
             }
         }
 
         /// <summary>
         /// List of navigation
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<NavigationViewModel></returns>
         public static List<NavigationViewModel> GetListNavigation()
         {
-            List<NavigationViewModel> _return = new List<NavigationViewModel>();
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = context.WEB_NAVIGATION.Where(m => m.publish && !m.deleted)
-                                                     .OrderByDescending(m => m.ordering)
-                                                     .Select(m => new NavigationViewModel()
-                                                     {
-                                                         Title = m.title,
-                                                         Alias = "/" + m.alias,
-                                                         Categories = context.WEB_CATEGORY.Where(c => c.navigation_id == m.id && c.show_on_nav && c.publish && !c.deleted)
-                                                                                        .OrderByDescending(c => c.ordering)
-                                                                                        .Select(c => new CategoryViewModel()
-                                                                                        {
-                                                                                            Alias = "/" + m.alias + "/" + c.alias,
-                                                                                            Title = c.title
-                                                                                        }).ToList()
-                                                     }).ToList();
-                    return _list;
+                    return (from nav in _context.WEB_NAVIGATION
+                            where nav.publish && !nav.deleted
+                            orderby nav.ordering descending
+                            select new NavigationViewModel()
+                            {
+                                Title = nav.title,
+                                Alias = nav.alias,
+                                Categories = (from cate in _context.WEB_CATEGORY
+                                              where nav.id == cate.navigation_id && cate.publish && !cate.deleted && cate.show_on_nav
+                                              orderby cate.ordering descending
+                                              select new CategoryViewModel()
+                                              {
+                                                  Title = cate.title,
+                                                  Alias = cate.alias
+                                              }).ToList()
+                            }).ToList();
                 }
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetListNavigation", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Source };
+                throw new UserException(FILE_NAME, "GetListNavigation", ex);
             }
         }
 
         /// <summary>
         /// Get list category and post data to show on homepage
+        /// Get top 6 post for each navigation
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<NavigationViewModel></returns>
         public static List<NavigationViewModel> GetListNavigationShowOnHomePage()
         {
             List<NavigationViewModel> _return = new List<NavigationViewModel>();
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.WEB_HOME_NAVIGATION
-                                 join n in context.WEB_NAVIGATION on m.navigation_id equals n.id
+                    var _list = (from m in _context.WEB_HOME_NAVIGATION
+                                 join n in _context.WEB_NAVIGATION on m.navigation_id equals n.id
                                  where n.publish && !n.deleted
                                  select new NavigationViewModel()
                                  {
                                      Title = n.title,
-                                     Alias = "/" + n.alias,
-                                     Posts = context.WEB_POST.Where(p => p.navigation_id == n.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
+                                     Alias = n.alias,
+                                     Posts = _context.WEB_POST.Where(p => p.navigation_id == n.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
                                      {
                                          Title = p.title,
                                          Description = p.description,
                                          Image = p.image,
-                                         Alias = "/" + n.alias + "/" + p.alias,
+                                         Alias = p.alias,
                                          CreateDate = p.create_date
                                      }).Take(6).ToList()
                                  }).ToList();
@@ -118,36 +119,36 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetListNavigationShowOnHomePage", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Source };
+                throw new UserException(FILE_NAME, "GetListNavigationShowOnHomePage", ex);
             }
         }
 
         /// <summary>
         /// Get list category and post data to show on homepage
+        /// Get list of top 5 of post for each category
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<CategoryViewModel></returns>
         public static List<CategoryViewModel> GetListCategoryShowOnHomePage()
         {
             List<CategoryViewModel> _return = new List<CategoryViewModel>();
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.WEB_HOME_CATEGORY
-                                 join c in context.WEB_CATEGORY on m.category_id equals c.id
-                                 join n in context.WEB_NAVIGATION on c.navigation_id equals n.id
+                    var _list = (from m in _context.WEB_HOME_CATEGORY
+                                 join c in _context.WEB_CATEGORY on m.category_id equals c.id
+                                 join n in _context.WEB_NAVIGATION on c.navigation_id equals n.id
                                  where c.publish && !c.deleted && n.publish && !n.deleted
                                  select new CategoryViewModel()
                                  {
                                      Title = c.title,
-                                     Alias = "/" + n.alias + "/" + c.alias,
-                                     Posts = context.WEB_POST.Where(p => p.category_id == c.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
+                                     Alias = c.alias,
+                                     Posts = _context.WEB_POST.Where(p => p.category_id == c.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
                                      {
                                          Title = p.title,
                                          Description = p.description,
                                          Image = p.image,
-                                         Alias = "/" + n.alias + "/" + c.alias + "/" + p.alias,
+                                         Alias = p.alias,
                                          CreateDate = p.create_date
                                      }).Take(5).ToList()
                                  }).ToList();
@@ -156,109 +157,111 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetListCategoryShowOnHomePage", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Source };
+                throw new UserException(FILE_NAME, "GetListCategoryShowOnHomePage", ex);
             }
         }
 
         /// <summary>
         /// Get list category and count to show on footer
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<CategoryViewModel></returns>
         public static List<CategoryViewModel> GetListCategoryOnFooter()
         {
             List<CategoryViewModel> _return = new List<CategoryViewModel>();
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.WEB_CATEGORY
-                                 join n in context.WEB_NAVIGATION on m.navigation_id equals n.id
+                    var _list = (from m in _context.WEB_CATEGORY
+                                 join n in _context.WEB_NAVIGATION on m.navigation_id equals n.id
                                  where m.publish && !m.deleted && n.publish && !n.deleted
                                  select new CategoryViewModel()
                                  {
                                      Title = m.title,
-                                     Alias = "/" + n.alias + "/" + m.alias,
-                                     Count = context.WEB_POST.Count(p => p.category_id == m.id)
+                                     Alias = m.alias,
+                                     Count = _context.WEB_POST.Count(p => p.category_id == m.id)
                                  }).Take(9).ToList();
-                    var _lNavigation = (from m in context.WEB_NAVIGATION
+
+                    var _lNavigation = (from m in _context.WEB_NAVIGATION
                                         where m.publish && !m.deleted
                                         select new CategoryViewModel()
                                         {
                                             Title = m.title,
-                                            Alias = "/" + m.alias,
-                                            Count = context.WEB_POST.Count(p => p.navigation_id == m.id)
+                                            Alias = m.alias,
+                                            Count = _context.WEB_POST.Count(p => p.navigation_id == m.id)
                                         }).Take(9).ToList();
+
                     foreach (var item in _lNavigation)
                     {
                         _list.Add(item);
                     }
+
                     return _list.OrderByDescending(m => m.Count).Take(9).ToList();
                 }
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetListCategoryOnFooter", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Source };
+                throw new UserException(FILE_NAME, "GetListCategoryOnFooter", ex);
             }
         }
 
         /// <summary>
         /// Get two navigation item to show on footer
+        /// Get top 2 navigation
+        /// Get top 3 posts for each navigation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<NavigationViewModel></returns>
         public static List<NavigationViewModel> Get2NavigationOnFooter()
         {
-            List<NavigationViewModel> _return = new List<NavigationViewModel>();
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.WEB_NAVIGATION
-                                 where m.publish && !m.deleted && m.no_child
-                                 select new NavigationViewModel()
-                                 {
-                                     Title = m.title,
-                                     Alias = "/" + m.alias,
-                                     Posts = context.WEB_POST.Where(p => p.navigation_id == m.id && p.publish && !p.deleted)
-                                                          .OrderByDescending(p => p.create_date)
-                                                          .Select(p => new PostViewModel()
-                                                          {
-                                                              Image = p.image,
-                                                              Alias = "/" + m.alias + "/" + p.alias,
-                                                              Title = p.title,
-                                                              CreateDate = p.create_date
-                                                          }).Take(3).ToList()
-                                 }).Take(2).ToList();
-                    return _list;
+                    return (from hn in _context.WEB_HOME_NAVIGATION
+                            join nav in _context.WEB_NAVIGATION on hn.navigation_id equals nav.id
+                            orderby hn.ordering descending
+                            select new NavigationViewModel()
+                            {
+                                Title = nav.title,
+                                Alias = nav.alias,
+                                Posts = (from p in _context.WEB_POST
+                                         where p.navigation_id == nav.id && p.publish && !p.deleted
+                                         orderby p.create_date descending
+                                         select new PostViewModel()
+                                         {
+                                             Image = p.image,
+                                             Title = p.title,
+                                             Alias = p.alias,
+                                             CreateDate = p.create_date
+                                         }).Take(3).ToList()
+                            }).Take(2).ToList();
                 }
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Get2NavigationOnFooter", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Source };
+                throw new UserException(FILE_NAME, "Get2NavigationOnFooter", ex);
             }
         }
 
         /// <summary>
         /// Get banner infor
         /// </summary>
-        /// <returns></returns>
+        /// <returns>string</returns>
         public static string GetBannerInfor()
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    return context.WEB_CONFIGURATION.Where(m => m.key.Contains("banner")).FirstOrDefault().value;
+                    return _context.WEB_CONFIGURATION.Where(m => m.key.Contains("banner")).FirstOrDefault().value;
                 }
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetBannerInfor", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "GetBannerInfor", ex);
             }
         }
+
         #endregion
 
         #region " [ Post Common ] "
@@ -267,19 +270,30 @@ namespace TDH.Services
         /// Get navigation infor
         /// </summary>
         /// <param name="navAlias">Navigation alias</param>
-        /// <returns></returns>
+        /// <returns>NavigationViewModel</returns>
         public static NavigationViewModel GetNavigationInfor(string navAlias)
         {
             try
             {
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_NAVIGATION.Where(m => m.alias == navAlias && m.publish && !m.deleted)
-                                             .Select(m => new { m.id, m.alias, m.title, m.image, m.meta_title, m.meta_description, m.meta_keywords, m.meta_og_image, m.meta_twitter_image })
+                    var _item = context.WEB_NAVIGATION.Where(m => m.alias == ("/" + navAlias) && m.publish && !m.deleted)
+                                             .Select(m => new
+                                             {
+                                                 m.id,
+                                                 m.alias,
+                                                 m.title,
+                                                 m.image,
+                                                 m.meta_title,
+                                                 m.meta_description,
+                                                 m.meta_keywords,
+                                                 m.meta_og_image,
+                                                 m.meta_twitter_image
+                                             })
                                              .FirstOrDefault();
                     if (_item == null)
                     {
-                        throw new UserException();
+                        throw new UserException(FILE_NAME, "GetNavigationInfor", 204, string.Format("{0} not found", navAlias), new Exception());
                     }
                     return new NavigationViewModel()
                     {
@@ -295,30 +309,46 @@ namespace TDH.Services
                     };
                 }
             }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetNavigationInfor", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "GetNavigationInfor", 500, "Service has an error", ex);
             }
         }
 
         /// <summary>
         /// Get category infor
         /// </summary>
-        /// <param name="cateAlias">Category information</param>
-        /// <returns></returns>
-        public static CategoryViewModel GetCategoryInfor(string cateAlias)
+        /// <param name="navigationAlias">Navigation alias</param>
+        /// <param name="cateAlias">Category alias</param>
+        /// <returns>CategoryViewModel</returns>
+        public static CategoryViewModel GetCategoryInfor(string navigationAlias, string cateAlias)
         {
             try
             {
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_CATEGORY.Where(m => m.alias == cateAlias && m.publish && !m.deleted)
-                                             .Select(m => new { m.id, m.navigation_id, m.alias, m.title, m.image, m.meta_title, m.meta_description, m.meta_keywords, m.meta_og_image, m.meta_twitter_image })
+                    var _item = context.WEB_CATEGORY.Where(m => m.alias == ("/" + navigationAlias + "/" + cateAlias) && m.publish && !m.deleted)
+                                             .Select(m => new
+                                             {
+                                                 m.id,
+                                                 m.navigation_id,
+                                                 m.alias,
+                                                 m.title,
+                                                 m.image,
+                                                 m.meta_title,
+                                                 m.meta_description,
+                                                 m.meta_keywords,
+                                                 m.meta_og_image,
+                                                 m.meta_twitter_image
+                                             })
                                              .FirstOrDefault();
                     if (_item == null)
                     {
-                        throw new UserException();
+                        throw new UserException(FILE_NAME, "GetCategoryInfor", 204, string.Format("{0}/{1}: not found", navigationAlias, cateAlias), new Exception());
                     }
                     return new CategoryViewModel()
                     {
@@ -335,19 +365,22 @@ namespace TDH.Services
                     };
                 }
             }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetCategoryInfor", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "GetCategoryInfor", 500, "Service has an error", ex);
             }
         }
 
         /// <summary>
-        /// Get post infor
+        /// Get post infor which parent is navigation
         /// </summary>
         /// <param name="navAlias">Navigation alias</param>
-        /// <param name="postAlias"></param>
-        /// <returns></returns>
+        /// <param name="postAlias">Post alias</param>
+        /// <returns>PostViewModel</returns>
         public static PostViewModel GetPostInfor(string navAlias, string postAlias)
         {
             try
@@ -355,12 +388,26 @@ namespace TDH.Services
                 var _nav = GetNavigationInfor(navAlias);
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_POST.Where(m => m.alias == postAlias && m.publish && !m.deleted)
-                                             .Select(m => new { m.navigation_id, m.alias, m.title, m.description, m.content, m.image, m.is_navigation, m.meta_title, m.meta_description, m.meta_keywords, m.meta_og_image, m.meta_twitter_image })
+                    var _item = context.WEB_POST.Where(m => m.alias == ("/" + navAlias + "/" + postAlias) && m.publish && !m.deleted)
+                                             .Select(m => new
+                                             {
+                                                 m.navigation_id,
+                                                 m.alias,
+                                                 m.title,
+                                                 m.description,
+                                                 m.content,
+                                                 m.image,
+                                                 m.is_navigation,
+                                                 m.meta_title,
+                                                 m.meta_description,
+                                                 m.meta_keywords,
+                                                 m.meta_og_image,
+                                                 m.meta_twitter_image
+                                             })
                                              .FirstOrDefault();
                     if (_item == null || !_item.is_navigation)
                     {
-                        throw new UserException();
+                        throw new UserException(FILE_NAME, "GetPostInfor", 204, string.Format("{0}/{1} not found", navAlias, postAlias), new Exception());
                     }
                     return new PostViewModel()
                     {
@@ -379,34 +426,52 @@ namespace TDH.Services
                     };
                 }
             }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetPostInfor", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "GetPostInfor", ex);
             }
         }
 
         /// <summary>
-        /// Get post infor
+        /// Get post infor which parent is category
         /// </summary>
         /// <param name="navAlias">Navigation alias</param>
         /// <param name="cateAlias">Category alias</param>
-        /// <param name="postAlias"></param>
-        /// <returns></returns>
+        /// <param name="postAlias">Post alias</param>
+        /// <returns>PostViewModel</returns>
         public static PostViewModel GetPostInfor(string navAlias, string cateAlias, string postAlias)
         {
             try
             {
                 var _nav = GetNavigationInfor(navAlias);
-                var _cate = GetCategoryInfor(cateAlias);
+                var _cate = GetCategoryInfor(navAlias, cateAlias);
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_POST.Where(m => m.alias == postAlias && m.publish && !m.deleted)
-                                             .Select(m => new { m.alias, m.title, m.category_id, m.description, m.content, m.create_date, m.image, m.is_navigation, m.meta_title, m.meta_description, m.meta_keywords, m.meta_og_image, m.meta_twitter_image })
+                    var _item = context.WEB_POST.Where(m => m.alias == ("/" + navAlias + "/" + cateAlias + "/" + postAlias) && m.publish && !m.deleted)
+                                             .Select(m => new
+                                             {
+                                                 m.alias,
+                                                 m.title,
+                                                 m.category_id,
+                                                 m.description,
+                                                 m.content,
+                                                 m.create_date,
+                                                 m.image,
+                                                 m.is_navigation,
+                                                 m.meta_title,
+                                                 m.meta_description,
+                                                 m.meta_keywords,
+                                                 m.meta_og_image,
+                                                 m.meta_twitter_image
+                                             })
                                              .FirstOrDefault();
                     if (_item == null || _item.is_navigation)
                     {
-                        throw new UserException("Item not found");
+                        throw new UserException(FILE_NAME, "GetPostInfor", 204, string.Format("{0}/{1}/{2} not found", navAlias, cateAlias, postAlias), new Exception());
                     }
                     return new PostViewModel()
                     {
@@ -426,104 +491,69 @@ namespace TDH.Services
                     };
                 }
             }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetPostInfor", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "GetPostInfor", ex);
             }
         }
 
         /// <summary>
         /// Get top 4 lasted news
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<PostViewModel></returns>
         public static List<PostViewModel> GetTop4LastedNews()
         {
             try
             {
-                List<PostViewModel> _return = new List<PostViewModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    string _cateAlias = "";
-                    var _list = context.WEB_POST.Where(m => m.publish && !m.deleted)
+                    return _context.WEB_POST.Where(m => m.publish && !m.deleted)
                                              .OrderByDescending(m => m.create_date)
-                                             .Select(m => new { m.alias, m.title, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
+                                             .Select(m => new PostViewModel()
+                                             {
+                                                 Alias = m.alias,
+                                                 Title = m.title,
+                                                 Image = m.image,
+                                                 CreateDate = m.create_date
+                                             })
                                              .Take(4).ToList();
-                    foreach (var item in _list)
-                    {
-                        if (item.is_navigation)
-                        {
-                            var _nav = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == item.navigation_id);
-                            _cateAlias = "/" + _nav.alias;
-                        }
-                        else
-                        {
-                            var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.id == item.category_id);
-                            var _nav = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == _cate.navigation_id);
-                            _cateAlias = "/" + _nav.alias + "/" + _cate.alias;
-                        }
-                        _return.Add(new PostViewModel()
-                        {
-                            Title = item.title,
-                            Alias = _cateAlias + "/" + item.alias,
-                            Image = item.image,
-                            CreateDate = item.create_date
-                        });
-                    }
                 }
-                return _return;
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetTop4LastedNews", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "GetTop4LastedNews", ex);
             }
         }
 
         /// <summary>
         /// Get 2 news has largest view
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<PostViewModel></returns>
         public static List<PostViewModel> GetTop2Views()
         {
             try
             {
-                List<PostViewModel> _return = new List<PostViewModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    string _cateAlias = "";
-                    var _list = context.WEB_POST.Where(m => m.publish && !m.deleted)
+                    return _context.WEB_POST.Where(m => m.publish && !m.deleted)
                                              .OrderByDescending(m => m.view)
-                                             .Select(m => new { m.alias, m.title, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
+                                             .Select(m => new PostViewModel()
+                                             {
+                                                 Alias = m.alias,
+                                                 Title = m.title,
+                                                 Image = m.image,
+                                                 CreateDate = m.create_date
+                                             })
                                              .Take(2).ToList();
-                    foreach (var item in _list)
-                    {
-                        if (item.is_navigation)
-                        {
-                            var _nav = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == item.navigation_id);
-                            _cateAlias = "/" + _nav.alias;
-                        }
-                        else
-                        {
-                            var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.id == item.category_id);
-                            var _nav = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == _cate.navigation_id);
-                            _cateAlias = "/" + _nav.alias + "/" + _cate.alias;
-                        }
-                        _return.Add(new PostViewModel()
-                        {
-                            Title = item.title,
-                            Alias = _cateAlias + "/" + item.alias,
-                            Image = item.image,
-                            CreateDate = item.create_date
-                        });
-                    }
                 }
-                return _return;
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetTop2Views", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "GetTop2Views", ex);
             }
         }
 
@@ -535,38 +565,35 @@ namespace TDH.Services
         /// Get list category by navigation alias
         /// </summary>
         /// <param name="navigationAlias"></param>
-        /// <returns></returns>
+        /// <returns>List<CategoryViewModel></returns>
         public static List<CategoryViewModel> GetListCategoryDataByNavigation(string navigationAlias)
         {
-            List<CategoryViewModel> _return = new List<CategoryViewModel>();
             try
             {
                 using (var context = new TDHEntities())
                 {
-                    var _list = (from m in context.WEB_CATEGORY
-                                 join n in context.WEB_NAVIGATION on m.navigation_id equals n.id
-                                 where m.publish && !m.deleted && n.publish && !n.deleted && n.alias == navigationAlias
-                                 orderby m.ordering descending
-                                 select new CategoryViewModel()
-                                 {
-                                     Title = m.title,
-                                     Alias = "/" + n.alias + "/" + m.alias,
-                                     Posts = context.WEB_POST.Where(p => p.category_id == m.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
-                                     {
-                                         Title = p.title,
-                                         Description = p.description,
-                                         Image = p.image,
-                                         Alias = "/" + n.alias + "/" + m.alias + "/" + p.alias,
-                                         CreateDate = p.create_date
-                                     }).Take(12).ToList()
-                                 }).ToList();
-                    return _list;
+                    return (from m in context.WEB_CATEGORY
+                            join n in context.WEB_NAVIGATION on m.navigation_id equals n.id
+                            where m.publish && !m.deleted && n.publish && !n.deleted && n.alias == ("/" + navigationAlias)
+                            orderby m.ordering descending
+                            select new CategoryViewModel()
+                            {
+                                Title = m.title,
+                                Alias = m.alias,
+                                Posts = context.WEB_POST.Where(p => p.category_id == m.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
+                                {
+                                    Title = p.title,
+                                    Description = p.description,
+                                    Image = p.image,
+                                    Alias = p.alias,
+                                    CreateDate = p.create_date
+                                }).Take(12).ToList()
+                            }).ToList();
                 }
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetListCategoryDataByNavigation", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "GetListCategoryDataByNavigation", ex);
             }
         }
 
@@ -587,166 +614,156 @@ namespace TDH.Services
                 NavigationViewModel _nav = GetNavigationInfor(navigationAlias);
                 using (var context = new TDHEntities())
                 {
-                    var _post = context.WEB_POST.FirstOrDefault(m => m.alias == categoryAlias && m.publish && !m.deleted);
+                    //Get this is post which parent is navigation
+                    var _post = context.WEB_POST.FirstOrDefault(m => m.alias == ("/" + navigationAlias + "/" + categoryAlias) && m.publish && !m.deleted);
                     if (_post != null)
                     {
                         if (!_post.is_navigation || _nav.ID != _post.navigation_id)
                         {
-                            throw new UserException();
+                            throw new UserException(FILE_NAME, "CheckIsCategoryPage", 204, string.Format("{0}/{1} not found", navigationAlias, categoryAlias), new Exception());
                         }
                         return false;
                     }
-                    var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.alias == categoryAlias);
+                    //Check this is category which parent is navigation
+                    var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.alias == ("/" + navigationAlias + "/" + categoryAlias));
                     if (_cate == null || _cate.navigation_id != _nav.ID)
                     {
-                        throw new UserException();
+                        throw new UserException(FILE_NAME, "CheckIsCategoryPage", 204, string.Format("{0}/{1} not found", navigationAlias, categoryAlias), new Exception());
                     }
                     return true;
                 }
             }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "CheckIsCategoryPage", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "CheckIsCategoryPage", ex);
             }
         }
 
         /// <summary>
         /// Get list post data with has category and navigation
         /// </summary>
-        /// <param name="categoryAlias"></param>
-        /// <returns></returns>
+        /// <param name="navigationAlias">Navigation alias</param>
+        /// <param name="categoryAlias">Category alias</param>
+        /// <returns>List<PostViewModel></returns>
         public static List<PostViewModel> GetListPostDataByCategory(string navigationAlias, string categoryAlias)
         {
             try
             {
                 NavigationViewModel _nav = GetNavigationInfor(navigationAlias);
-                CategoryViewModel _cate = GetCategoryInfor(categoryAlias);
+                CategoryViewModel _cate = GetCategoryInfor(navigationAlias, categoryAlias);
                 if (_cate.NavigationID != _nav.ID)
                 {
-                    throw new UserException();
+                    throw new UserException(FILE_NAME, "GetListPostDataByCategory", 204, string.Format("{0}/{1} not found", navigationAlias, categoryAlias), new Exception());
                 }
                 List<PostViewModel> _return = new List<PostViewModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _list = context.WEB_POST.Where(p => p.category_id == _cate.ID)
+                    return context.WEB_POST.Where(p => p.category_id == _cate.ID)
                                              .OrderByDescending(m => m.create_date)
-                                             .Select(m => new { m.alias, m.title, m.description, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
+                                             .Select(m => new PostViewModel()
+                                             {
+                                                 Alias = m.alias,
+                                                 Title = m.title,
+                                                 Description = m.description,
+                                                 Image = m.image,
+                                                 CreateDate = m.create_date
+                                             })
                                              .Take(12).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new PostViewModel()
-                        {
-                            Title = item.title,
-                            Description = item.description,
-                            Alias = "/" + _nav.Alias + "/" + _cate.Alias + "/" + item.alias,
-                            Image = item.image,
-                            CreateDate = item.create_date
-                        });
-                    }
                 }
-                return _return;
+            }
+            catch (UserException uEx)
+            {
+                throw uEx;
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetListPostDataByCategory", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "GetListPostDataByCategory", ex);
             }
         }
-
 
         #endregion
 
         #region " [ Post ] "
 
         /// <summary>
-        /// Get top 6 news by navigation
+        /// Get top 6 news by navigation identifier
         /// </summary>
-        /// <param name="navID"></param>
-        /// <returns></returns>
+        /// <param name="navID">Navigation identifier</param>
+        /// <returns>List<PostViewModel></returns>
         public static List<PostViewModel> Top6LastedPostByNavigationID(Guid navID)
         {
             try
             {
-                List<PostViewModel> _return = new List<PostViewModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _navAlias = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == navID).alias;
-                    var _list = context.WEB_POST.Where(p => p.navigation_id == navID)
+                    return _context.WEB_POST.Where(p => p.navigation_id == navID)
                                              .OrderByDescending(m => m.create_date)
-                                             .Select(m => new { m.alias, m.title, m.description, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
+                                             .Select(m => new PostViewModel()
+                                             {
+                                                 Alias = m.alias,
+                                                 Title = m.title,
+                                                 Description = m.description,
+                                                 Image = m.image,
+                                                 CreateDate = m.create_date
+                                             })
                                              .Take(6).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new PostViewModel()
-                        {
-                            Title = item.title,
-                            Description = item.description,
-                            Alias = "/" + _navAlias + "/" + item.alias,
-                            Image = item.image,
-                            CreateDate = item.create_date
-                        });
-                    }
                 }
-                return _return;
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Top6LastedPostByNavigationID", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "Top6LastedPostByNavigationID", ex);
             }
         }
 
         /// <summary>
-        /// Get top 6 news by category
+        /// Get top 6 news by category identifier
         /// </summary>
-        /// <param name="cateID"></param>
-        /// <returns></returns>
+        /// <param name="cateID">Category identifier</param>
+        /// <returns>List<PostViewModel></returns>
         public static List<PostViewModel> Top6LastedPostByCategoryID(Guid cateID)
         {
             try
             {
                 List<PostViewModel> _return = new List<PostViewModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.id == cateID);
-                    var _navAlias = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == _cate.navigation_id).alias;
-                    var _list = context.WEB_POST.Where(p => p.category_id == cateID)
+                    return _context.WEB_POST.Where(p => p.category_id == cateID)
                                              .OrderByDescending(m => m.create_date)
-                                             .Select(m => new { m.alias, m.title, m.description, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
+                                             .Select(m => new PostViewModel()
+                                             {
+                                                 Alias = m.alias,
+                                                 Title = m.title,
+                                                 Description = m.description,
+                                                 Image = m.image,
+                                                 CreateDate = m.create_date
+                                             })
                                              .Take(6).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new PostViewModel()
-                        {
-                            Title = item.title,
-                            Description = item.description,
-                            Alias = "/" + _navAlias + "/" + _cate.alias + "/" + item.alias,
-                            Image = item.image,
-                            CreateDate = item.create_date
-                        });
-                    }
                 }
-                return _return;
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Top6LastedPostByCategoryID", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "Top6LastedPostByCategoryID", ex);
             }
         }
 
-
         #endregion
 
+        /// <summary>
+        /// Get short introduction about me
+        /// </summary>
+        /// <returns>MetaViewModel</returns>
         public static MetaViewModel GetShortIntroAboutMe()
         {
             MetaViewModel _meta = new MetaViewModel();
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = context.WEB_CONFIGURATION.Where(m => m.key.Contains("intro_")).ToList();
+                    var _list = _context.WEB_CONFIGURATION.Where(m => m.key.Contains("intro_")).ToList();
                     _meta.MetaDescription = _list.FirstOrDefault(m => m.key == "intro_content").value;
                     _meta.MetaImage = _list.FirstOrDefault(m => m.key == "intro_avatar").value;
                     return _meta;
@@ -754,8 +771,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "GetShortIntroAboutMe", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "GetShortIntroAboutMe", ex);
             }
         }
 
@@ -764,17 +780,17 @@ namespace TDH.Services
         /// <summary>
         /// About infor
         /// </summary>
-        /// <returns></returns>
+        /// <returns>PostViewModel</returns>
         public static PostViewModel About()
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _item = context.WEB_ABOUT.FirstOrDefault();
+                    var _item = _context.WEB_ABOUT.FirstOrDefault();
                     if (_item == null)
                     {
-                        throw new UserException();
+                        throw new UserException(FILE_NAME, "About", 204, "", new Exception());
                     }
                     return new PostViewModel()
                     {
@@ -792,13 +808,15 @@ namespace TDH.Services
                     };
                 }
             }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "About", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message) { Source = ex.Message };
+                throw new UserException(FILE_NAME, "About", ex);
             }
         }
-
 
         #endregion
     }

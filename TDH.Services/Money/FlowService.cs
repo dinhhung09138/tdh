@@ -38,8 +38,8 @@ namespace TDH.Services.Money
             {
                 int _year = int.Parse(request.Parameter2) / 100;
                 int _month = int.Parse(request.Parameter2) % 100;
-                DateTime _from = new DateTime(_year, _month, 1, 0, 0, 0);
-                DateTime _to = _from.AddMonths(1).AddDays(-1);
+                DateTime _fromDate = new DateTime(_year, _month, 1, 0, 0, 0);
+                DateTime _toDate = _fromDate.AddMonths(1).AddDays(-1);
                 //Declare response data to json object
                 DataTableResponse<FlowModel> _itemResponse = new DataTableResponse<FlowModel>();
                 //List of data
@@ -47,7 +47,7 @@ namespace TDH.Services.Money
                 using (var _context = new TDHEntities())
                 {
                     var _lData = (from m in _context.V_MN_MONEY_FLOW
-                                  where m.create_by == userID && request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.type.ToString()) && m.date.Value >= _from && m.date.Value <= _to
+                                  where m.create_by == userID && request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.type.ToString()) && m.date.Value >= _fromDate && m.date.Value <= _toDate
                                   orderby m.date descending
                                   select new
                                   {
@@ -107,7 +107,7 @@ namespace TDH.Services.Money
         }
 
         /// <summary>
-        /// Save
+        /// Save income
         /// </summary>
         /// <param name="model">Income model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
@@ -122,7 +122,7 @@ namespace TDH.Services.Money
                         try
                         {
                             decimal _currentYearMonth = decimal.Parse(DateTime.Now.DateToString("yyyyMM"));
-                            //
+                            
                             MN_INCOME _md = new MN_INCOME();
                             _md.id = Guid.NewGuid();
                             _md.account_id = model.AccountID;
@@ -137,7 +137,7 @@ namespace TDH.Services.Money
                             _context.MN_INCOME.Add(_md);
                             _context.Entry(_md).State = EntityState.Added;
                             _context.SaveChanges();
-                            //MN_ACCOUNT
+                            //MN_ACCOUNT. Update account income money
                             MN_ACCOUNT _acc = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == _md.account_id);
                             _acc.input += model.Money;
                             _context.MN_ACCOUNT.Attach(_acc);
@@ -167,7 +167,7 @@ namespace TDH.Services.Money
         }
 
         /// <summary>
-        /// Save
+        /// Save payment
         /// </summary>
         /// <param name="model">Payment model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
@@ -182,7 +182,7 @@ namespace TDH.Services.Money
                         try
                         {
                             decimal _currentYearMonth = decimal.Parse(DateTime.Now.DateToString("yyyyMM"));
-                            //
+                            
                             MN_PAYMENT _md = new MN_PAYMENT();
                             _md.id = Guid.NewGuid();
                             _md.account_id = model.AccountID;
@@ -197,7 +197,7 @@ namespace TDH.Services.Money
                             _context.MN_PAYMENT.Add(_md);
                             _context.Entry(_md).State = EntityState.Added;
                             _context.SaveChanges();
-                            //MN_ACCOUNT
+                            //MN_ACCOUNT. Update account payment money
                             MN_ACCOUNT _acc = _context.MN_ACCOUNT.FirstOrDefault(m => m.id == _md.account_id);
                             _acc.output += model.Money;
                             _context.MN_ACCOUNT.Attach(_acc);
@@ -227,7 +227,7 @@ namespace TDH.Services.Money
         }
 
         /// <summary>
-        /// Save
+        /// Save transfer
         /// </summary>
         /// <param name="model">Transfer model</param>
         /// <returns>ResponseStatusCodeHelper</returns>

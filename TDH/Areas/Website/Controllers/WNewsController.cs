@@ -10,6 +10,9 @@ using Utils.JqueryDatatable;
 
 namespace TDH.Areas.Website.Controllers
 {
+    /// <summary>
+    /// News controller
+    /// </summary>
     public class WNewsController : BaseController
     {
         #region " [ Properties ] "
@@ -106,16 +109,17 @@ namespace TDH.Areas.Website.Controllers
                 #region " [ Declaration ] "
 
                 NavigationService _nServices = new NavigationService();
-
-                ViewBag.navigation = _nServices.GetAll(UserID);
                 CategoryService _cServices = new CategoryService();
-                ViewBag.cate = _cServices.GetAll(UserID);
+
                 PostModel model = new PostModel()
                 {
                     ID = Guid.NewGuid(),
                     CreateBy = UserID,
                     Insert = true
                 };
+
+                ViewBag.navigation = _nServices.GetAll(UserID);
+                ViewBag.cate = _cServices.GetAll(UserID);
 
                 #endregion
 
@@ -144,7 +148,7 @@ namespace TDH.Areas.Website.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Create(PostModel model)
+        public JsonResult Create(PostModel model)
         {
             try
             {
@@ -230,7 +234,7 @@ namespace TDH.Areas.Website.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Edit(PostModel model)
+        public JsonResult Edit(PostModel model)
         {
             try
             {
@@ -273,7 +277,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Post model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Publish(PostModel model)
+        public JsonResult Publish(PostModel model)
         {
             try
             {
@@ -314,7 +318,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Post model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(PostModel model)
+        public JsonResult Delete(PostModel model)
         {
             try
             {

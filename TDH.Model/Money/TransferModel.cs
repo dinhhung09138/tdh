@@ -71,5 +71,6 @@ namespace TDH.Model.Money
         /// </summary>
         [Required(ErrorMessage = "Nội dung không được rỗng")]
         public decimal Fee { get; set; }
+
     }
 }

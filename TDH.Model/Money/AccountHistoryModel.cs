@@ -36,5 +36,6 @@ namespace TDH.Model.Money
         /// Type
         /// </summary>
         public int Type { get; set; }
+
     }
 }

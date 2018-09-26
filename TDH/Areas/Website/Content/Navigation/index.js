@@ -96,7 +96,7 @@ $(document).ready(function () {
                 width: '60px',
                 render: function (obj, type, data, meta) {
                     if (allowEdit === 'True') {
-                        if (data.Publish === true && data.Count === 0) {
+                        if (data.Publish === true) {
                             return '<input type="checkbox" class="flat" name="publish" checked  value="' + data.ID + '" />';
                         } else {
                             return '<input type="checkbox" class="flat" name="publish" value="' + data.ID + '" />';

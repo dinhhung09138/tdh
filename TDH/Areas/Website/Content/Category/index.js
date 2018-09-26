@@ -88,7 +88,7 @@ $(document).ready(function () {
                 width: '90px',
                 render: function (obj, type, data, meta) {
                     if (allowEdit === 'True') {
-                        if (data.ShowOnNav === true && data.Count === 0) {
+                        if (data.ShowOnNav === true) {
                             return '<input type="checkbox" class="flat" name="showOnNav" checked  value="' + data.ID + '" />';
                         } else {
                             return '<input type="checkbox" class="flat" name="showOnNav" value="' + data.ID + '" />';

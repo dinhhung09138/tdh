@@ -75,7 +75,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="requestData">Jquery datatable request</param>
         /// <returns>DataTableResponse<FlowModel></returns>
         [HttpPost]
-        public ActionResult Index(CustomDataTableRequestHelper requestData)
+        public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
             try
             {
@@ -128,7 +128,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">IncomeModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult SaveIncome(IncomeModel model)
+        public JsonResult SaveIncome(IncomeModel model)
         {
             try
             {
@@ -141,7 +141,7 @@ namespace TDH.Areas.Money.Controllers
                 #region " [ Main processing ] "
 
                 string[] tmp = model.DateString.Split('/');
-                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
+                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]), DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                 //
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
@@ -173,7 +173,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">PaymentModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult SavePayment(PaymentModel model)
+        public JsonResult SavePayment(PaymentModel model)
         {
             try
             {
@@ -186,7 +186,7 @@ namespace TDH.Areas.Money.Controllers
                 #region " [ Main processing ] "
 
                 string[] tmp = model.DateString.Split('/');
-                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
+                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]), DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                 //
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
@@ -218,7 +218,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">TransferModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult SaveTransfer(TransferModel model)
+        public JsonResult SaveTransfer(TransferModel model)
         {
             try
             {
@@ -231,7 +231,7 @@ namespace TDH.Areas.Money.Controllers
                 #region " [ Main processing ] "
 
                 string[] tmp = model.DateString.Split('/');
-                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
+                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]), DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                 //
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
@@ -256,7 +256,6 @@ namespace TDH.Areas.Money.Controllers
                 throw new ControllerException(FILE_NAME, "SaveTransfer", UserID, ex);
             }
         }
-
-
+        
     }
 }

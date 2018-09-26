@@ -29,7 +29,7 @@ namespace TDH.Services.Website
         /// Get list data using jquery datatable
         /// </summary>
         /// <param name="request">Jquery datatable request</param>
-        /// <param name="userID">User identifier</param>
+        /// <param name="userID">The user identifier</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -164,7 +164,7 @@ namespace TDH.Services.Website
         /// Get item
         /// </summary>
         /// <param name="model">Category model</param>
-        /// <returns>CategoryModel. Throw exception if not found or get some error</returns>
+        /// <returns>CategoryModel</returns>
         public CategoryModel GetItemByID(CategoryModel model)
         {
             try
@@ -237,9 +237,12 @@ namespace TDH.Services.Website
                             throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                         }
                     }
+
+                    var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == model.NavigationID);
+
                     _md.navigation_id = model.NavigationID;
                     _md.title = model.Title;
-                    _md.alias = model.MetaTitle.TitleToAlias();
+                    _md.alias = _nav.alias + "/" + model.MetaTitle.TitleToAlias();
                     _md.description = model.Description;
                     _md.show_on_nav = model.ShowOnNav;
                     _md.image = model.Image;
@@ -303,20 +306,17 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    WEB_CATEGORY _md = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    if (_md == null)
                     {
-                        WEB_CATEGORY _md = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                        if (_md == null)
-                        {
-                            throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
-                        }
-                        _md.publish = model.Publish;
-                        _md.update_by = model.UpdateBy;
-                        _md.update_date = DateTime.Now;
-                        _context.WEB_CATEGORY.Attach(_md);
-                        _context.Entry(_md).State = EntityState.Modified;
-                        _context.SaveChanges();
+                        throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
                     }
+                    _md.publish = model.Publish;
+                    _md.update_by = model.UpdateBy;
+                    _md.update_date = DateTime.Now;
+                    _context.WEB_CATEGORY.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
             }
             catch (DataAccessException fieldEx)
@@ -438,5 +438,6 @@ namespace TDH.Services.Website
             }
             return ResponseStatusCodeHelper.OK;
         }
+
     }
 }

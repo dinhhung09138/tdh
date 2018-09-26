@@ -36,8 +36,8 @@ namespace TDH.Services.Money
             Dictionary<string, object> _return = new Dictionary<string, object>();
             try
             {
-                int _year = int.Parse(request.Parameter2.Substring(0, 4));
-                int _month = int.Parse(request.Parameter2.Substring(4, 2));
+                int _year = int.Parse(request.Parameter2) / 100;
+                int _month = int.Parse(request.Parameter2) % 100;
                 //Declare response data to json object
                 DataTableResponse<CategoryModel> _itemResponse = new DataTableResponse<CategoryModel>();
                 //List of data
@@ -261,7 +261,7 @@ namespace TDH.Services.Money
         /// Get item
         /// </summary>
         /// <param name="model">Category model</param>
-        /// <returns>MoneyCategoryModel. Throw exception if not found or get some error</returns>
+        /// <returns>MoneyCategoryModel</returns>
         public CategoryModel GetItemByID(CategoryModel model)
         {
             try
@@ -326,55 +326,38 @@ namespace TDH.Services.Money
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    MN_CATEGORY _md = new MN_CATEGORY();
+                    if (model.Insert)
                     {
-                        try
+                        _md.id = Guid.NewGuid();
+                    }
+                    else
+                    {
+                        _md = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.create_by == model.CreateBy);
+                        if (_md == null)
                         {
-                            MN_CATEGORY _md = new MN_CATEGORY();
-                            if (model.Insert)
-                            {
-                                _md.id = Guid.NewGuid();
-                            }
-                            else
-                            {
-                                _md = _context.MN_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.create_by == model.CreateBy);
-                                if (_md == null)
-                                {
-                                    throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
-                                }
-                            }
-                            _md.group_id = model.GroupID;
-                            _md.name = model.Name;
-                            _md.notes = model.Notes;
-                            //Setting doesn't allow set in create or update
-                            if (model.Insert)
-                            {
-                                _md.create_by = model.CreateBy;
-                                _md.create_date = DateTime.Now;
-                                _context.MN_CATEGORY.Add(_md);
-                                _context.Entry(_md).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _md.update_by = model.UpdateBy;
-                                _md.update_date = DateTime.Now;
-                                _context.MN_CATEGORY.Attach(_md);
-                                _context.Entry(_md).State = EntityState.Modified;
-                            }
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (DataAccessException fieldEx)
-                        {
-                            trans.Rollback();
-                            throw fieldEx;
-                        }
-                        catch (Exception ex)
-                        {
-                            trans.Rollback();
-                            throw ex;
+                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                         }
                     }
+                    _md.group_id = model.GroupID;
+                    _md.name = model.Name;
+                    _md.notes = model.Notes;
+                    //Setting doesn't allow set in create or update
+                    if (model.Insert)
+                    {
+                        _md.create_by = model.CreateBy;
+                        _md.create_date = DateTime.Now;
+                        _context.MN_CATEGORY.Add(_md);
+                        _context.Entry(_md).State = EntityState.Added;
+                    }
+                    else
+                    {
+                        _md.update_by = model.UpdateBy;
+                        _md.update_date = DateTime.Now;
+                        _context.MN_CATEGORY.Attach(_md);
+                        _context.Entry(_md).State = EntityState.Modified;
+                    }
+                    _context.SaveChanges();
                 }
             }
             catch (DataAccessException fieldEx)
@@ -509,5 +492,6 @@ namespace TDH.Services.Money
             }
             return ResponseStatusCodeHelper.OK;
         }
+
     }
 }

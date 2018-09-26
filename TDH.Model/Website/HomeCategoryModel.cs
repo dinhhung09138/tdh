@@ -36,5 +36,6 @@ namespace TDH.Model.Website
         /// Selected status
         /// </summary>
         public bool Selected { get; set; } = false;
+
     }
 }

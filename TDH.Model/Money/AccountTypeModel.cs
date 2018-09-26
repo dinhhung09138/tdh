@@ -39,5 +39,6 @@ namespace TDH.Model.Money
         /// Account type
         /// </summary>
         public short Type { get; set; } = (short)AccountType.Cash;
+
     }
 }

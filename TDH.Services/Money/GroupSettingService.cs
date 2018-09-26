@@ -235,7 +235,7 @@ namespace TDH.Services.Money
         /// Get item
         /// </summary>
         /// <param name="model">Group setting model</param>
-        /// <returns>CategoryModel. Throw exception if not found or get some error</returns>
+        /// <returns>GroupSettingModel</returns>
         public GroupSettingModel GetItemByID(GroupSettingModel model)
         {
             try
@@ -276,7 +276,7 @@ namespace TDH.Services.Money
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model">Group setting model</param>
+        /// <param name="model">List of group setting model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(List<GroupSettingModel> model)
         {
@@ -340,7 +340,7 @@ namespace TDH.Services.Money
         /// <summary>
         /// Save all group by month
         /// </summary>
-        /// <param name="yearMonth">year month</param>
+        /// <param name="yearMonth">Year month</param>
         /// <param name="userID">The user identifier</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(decimal yearMonth, Guid userID)
@@ -360,6 +360,7 @@ namespace TDH.Services.Money
                                 var _stItem = _context.MN_GROUP_SETTING.FirstOrDefault(it => it.group_id == item.id && it.year_month == yearMonth && it.create_by == userID);
                                 if ( _stItem != null)
                                 {
+                                    // Don't save new setting items if current is exists
                                     continue;
                                 }
                                 MN_GROUP_SETTING _st = new MN_GROUP_SETTING()

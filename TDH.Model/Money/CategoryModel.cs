@@ -99,5 +99,6 @@ namespace TDH.Model.Money
         /// List of setting
         /// </summary>
         public List<CategorySettingModel> Setting { get; set; } = new List<CategorySettingModel>();
+
     }
 }

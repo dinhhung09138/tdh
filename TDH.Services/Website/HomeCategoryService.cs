@@ -29,7 +29,7 @@ namespace TDH.Services.Website
         /// Get list data using jquery datatable
         /// </summary>
         /// <param name="request">Jquery datatable request</param>
-        /// <param name="userID">User identififer</param>
+        /// <param name="userID">The user identififer</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -196,5 +196,6 @@ namespace TDH.Services.Website
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
+
     }
 }

@@ -55,7 +55,7 @@
     <div class="col-md-9 col-sm-8 col-xs-12">
         <div class="row form-group">
             <div class="col-md-12 col-xs-12">
-                <a href="javascript:;" id="selectImg" tabindex="5">Chọn ảnh (352x230)</a>
+                <a href="javascript:;" id="selectImg" tabindex="4">Chọn ảnh (352x230)</a>
             </div>
         </div>
         <div class="row form-group">
@@ -73,7 +73,7 @@
         Thứ tự <span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextBoxFor(m => m.Ordering, new { @class = "form-control", @maxlength = 2, @required = true, @tabindex = "6" })
+        @Html.TextBoxFor(m => m.Ordering, new { @class = "form-control", @maxlength = 2, @required = true, @tabindex = "5" })
         @Html.ValidationMessageFor(m => m.Ordering)
     </div>
 </div>
@@ -82,7 +82,7 @@
         Hiển thị <span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "7" })
+        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "6" })
     </div>
 </div>
 <div class="row form-group">
@@ -90,7 +90,7 @@
         [SEO] Tiêu đề <span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextBoxFor(m => m.MetaTitle, new { @class = "form-control", @maxlength = 100, @required = true, @tabindex = "8" })
+        @Html.TextBoxFor(m => m.MetaTitle, new { @class = "form-control", @maxlength = 100, @required = true, @tabindex = "7" })
         @Html.ValidationMessageFor(m => m.MetaTitle)
     </div>
 </div>
@@ -99,7 +99,7 @@
         [SEO] Mô tả <span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextAreaFor(m => m.MetaDescription, new { @class = "form-control", @rows = 2, @required = true, @maxlength = 160, @tabindex = "9" })
+        @Html.TextAreaFor(m => m.MetaDescription, new { @class = "form-control", @rows = 2, @required = true, @maxlength = 160, @tabindex = "8" })
         @Html.ValidationMessageFor(m => m.MetaDescription)
     </div>
 </div>
@@ -108,7 +108,7 @@
         [SEO] Từ khóa <span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextBoxFor(m => m.MetaKeywords, new { @class = "form-control", @maxlength = 250, @required = true, @tabindex = "10" })
+        @Html.TextBoxFor(m => m.MetaKeywords, new { @class = "form-control", @maxlength = 250, @required = true, @tabindex = "9" })
         @Html.ValidationMessageFor(m => m.MetaKeywords)
     </div>
 </div>
@@ -117,7 +117,7 @@
         [SEO] Trang kế
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextBoxFor(m => m.MetaNext, new { @class = "form-control", @maxlength = 170, @tabindex = "11" })
+        @Html.TextBoxFor(m => m.MetaNext, new { @class = "form-control", @maxlength = 170, @tabindex = "10" })
         @Html.ValidationMessageFor(m => m.MetaNext)
     </div>
 </div>
@@ -126,7 +126,7 @@
         [SEO] Site name
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextBoxFor(m => m.MetaOgSiteName, new { @class = "form-control", @maxlength = 100, @tabindex = "12" })
+        @Html.TextBoxFor(m => m.MetaOgSiteName, new { @class = "form-control", @maxlength = 100, @tabindex = "11" })
         @Html.ValidationMessageFor(m => m.MetaOgSiteName)
     </div>
 </div>
@@ -139,7 +139,7 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row form-group">
                     <div class="col-md-12 col-xs-12">
-                        <a href="javascript:;" id="selectImgG" tabindex="113">Chọn ảnh G+/Facebook (1200 x 630)</a>
+                        <a href="javascript:;" id="selectImgG" tabindex="12">Chọn ảnh G+/Facebook (1200 x 630)</a>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -154,7 +154,7 @@
             <div class="col-md-6 col-xs-12">
                 <div class="row form-group">
                     <div class="col-md-12 col-xs-12">
-                        <a href="javascript:;" id="selectImgTwitter" tabindex="14">Chọn ảnh Twitter (1200 x 630)</a>
+                        <a href="javascript:;" id="selectImgTwitter" tabindex="13">Chọn ảnh Twitter (1200 x 630)</a>
                     </div>
                 </div>
                 <div class="row form-group">
@@ -174,7 +174,7 @@
         [SEO] Article
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextBoxFor(m => m.MetaArticleName, new { @class = "form-control", @maxlength = 200, @tabindex = "15" })
+        @Html.TextBoxFor(m => m.MetaArticleName, new { @class = "form-control", @maxlength = 200, @tabindex = "14" })
         @Html.ValidationMessageFor(m => m.MetaArticleName)
     </div>
 </div>
@@ -183,7 +183,7 @@
         [SEO] Section
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextBoxFor(m => m.MetaArticleSection, new { @class = "form-control", @maxlength = 200, @tabindex = "16" })
+        @Html.TextBoxFor(m => m.MetaArticleSection, new { @class = "form-control", @maxlength = 200, @tabindex = "15" })
         @Html.ValidationMessageFor(m => m.MetaArticleSection)
     </div>
 </div>
@@ -192,7 +192,7 @@
         [SEO] Tags
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextBoxFor(m => m.MetaArticleTag, new { @class = "form-control", @maxlength = 255, @tabindex = "17" })
+        @Html.TextBoxFor(m => m.MetaArticleTag, new { @class = "form-control", @maxlength = 255, @tabindex = "16" })
         @Html.ValidationMessageFor(m => m.MetaArticleTag)
     </div>
 </div>
@@ -203,8 +203,8 @@
         @{
             if (ViewBag.Add == true || ViewBag.Edit == true)
             {
-                <a href="/website/wcategory/index" class="btn btn-default" tabindex="18">Quay lại</a>
-                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="19">Lưu</button>
+                <a href="/website/wcategory/index" class="btn btn-default" tabindex="17">Quay lại</a>
+                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="18">Lưu</button>
             }
         }
     </div>

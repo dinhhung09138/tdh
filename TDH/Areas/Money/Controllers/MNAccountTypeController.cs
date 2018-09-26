@@ -23,8 +23,7 @@ namespace TDH.Areas.Money.Controllers
         private readonly string FILE_NAME = "Money.Controllers/MNAccountTypeController.cs";
 
         #endregion
-
-
+        
         /// <summary>
         /// AccountType form
         /// </summary>
@@ -141,7 +140,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AccountTypeModel model)
+        public JsonResult Create(AccountTypeModel model)
         {
             try
             {
@@ -223,7 +222,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AccountTypeModel model)
+        public JsonResult Edit(AccountTypeModel model)
         {
             try
             {
@@ -265,7 +264,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">AccountTypeModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Publish(AccountTypeModel model)
+        public JsonResult Publish(AccountTypeModel model)
         {
             try
             {
@@ -306,7 +305,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">AccountTypeModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(AccountTypeModel model)
+        public JsonResult Delete(AccountTypeModel model)
         {
             try
             {
@@ -347,7 +346,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">AccountTypeModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDelete(AccountTypeModel model)
+        public JsonResult CheckDelete(AccountTypeModel model)
         {
             try
             {

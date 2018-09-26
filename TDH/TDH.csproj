@@ -264,8 +264,6 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostController.cs" />
-    <Compile Include="Filters\UserException.cs" />
-    <Compile Include="Filters\UserExceptionFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -6663,6 +6661,7 @@
     <Content Include="Areas\Money\Views\MNReport\Partials\_BorrowAccountStatus.cshtml" />
     <Content Include="Areas\Money\Views\MNReport\Partials\_Top10.cshtml" />
     <Content Include="Areas\Money\Views\MNReport\Partials\_OverSetting.cshtml" />
+    <Content Include="Areas\Money\Views\MNReport\Partials\_MonthSummary.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6709,6 +6708,7 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Post\About.cshtml" />
     <Content Include="tsconfig.json" />
+    <Content Include="Views\Error\PageNotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -6719,7 +6719,6 @@
     <Folder Include="Areas\Common\Views\Shared\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Money\Models\" />
-    <Folder Include="Areas\Money\Views\Shared\" />
     <Folder Include="Areas\Personal\Views\PNSkill\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

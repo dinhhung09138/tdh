@@ -134,7 +134,7 @@ namespace TDH.Services.Money
         /// Get all item without deleted
         /// </summary>
         /// <param name="userID">The user identifier</param>
-        /// <returns></returns>
+        /// <returns>List<AccountModel></returns>
         public List<AccountModel> GetAll(Guid userID)
         {
             try
@@ -214,7 +214,7 @@ namespace TDH.Services.Money
         /// Get item
         /// </summary>
         /// <param name="model">Account model</param>
-        /// <returns>MoneyAccountModel. Throw exception if not found or get some error</returns>
+        /// <returns>MoneyAccountModel</returns>
         public AccountModel GetItemByID(AccountModel model)
         {
             try
@@ -533,5 +533,6 @@ namespace TDH.Services.Money
             }
             return ResponseStatusCodeHelper.OK;
         }
+
     }
 }

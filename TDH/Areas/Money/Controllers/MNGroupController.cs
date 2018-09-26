@@ -148,7 +148,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(GroupModel model)
+        public JsonResult Create(GroupModel model)
         {
             try
             {
@@ -227,7 +227,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="year">Year</param>
         /// <returns>List<GroupSettingModel></returns>
         [HttpPost]
-        public ActionResult GetGroupSettingInfo(decimal year)
+        public JsonResult GetGroupSettingInfo(decimal year)
         {
             try
             {
@@ -263,7 +263,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">List<GroupSettingModel></param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult SaveGroupSettingInfo(List<GroupSettingModel> model)
+        public JsonResult SaveGroupSettingInfo(List<GroupSettingModel> model)
         {
             try
             {
@@ -310,7 +310,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(GroupModel model)
+        public JsonResult Edit(GroupModel model)
         {
             try
             {
@@ -352,7 +352,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">GroupModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Publish(GroupModel model)
+        public JsonResult Publish(GroupModel model)
         {
             try
             {
@@ -393,7 +393,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">GroupModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(GroupModel model)
+        public JsonResult Delete(GroupModel model)
         {
             try
             {
@@ -434,7 +434,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">GroupModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDelete(GroupModel model)
+        public JsonResult CheckDelete(GroupModel model)
         {
             try
             {

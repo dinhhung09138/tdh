@@ -110,6 +110,9 @@ namespace TDH.Model.Money
         /// </summary>
         public decimal MonthEnd { get; set; } = 0;
 
+        /// <summary>
+        /// MOney spend at the last day of month, format as string
+        /// </summary>
         public string MonthEndString { get; set; } = "";
 
         /// <summary>
@@ -142,5 +145,6 @@ namespace TDH.Model.Money
         /// List of detail setting
         /// </summary>
         public List<AccountSettingModel> Setting { get; set; } = new List<AccountSettingModel>();
+
     }
 }

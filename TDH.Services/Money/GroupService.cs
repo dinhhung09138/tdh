@@ -44,7 +44,7 @@ namespace TDH.Services.Money
                 {
                     var _lData = (from m in _context.MN_GROUP
                                   where !m.deleted && m.create_by == userID &&
-                                        m.is_input == (request.Parameter1 == "" ? m.is_input : request.Parameter1 == "0" ? false : true) //by Type (income of payment)
+                                        m.is_input == (request.Parameter1 == "" ? m.is_input : request.Parameter1 == "0" ? false : true) //by Type (income or payment)
                                   select new
                                   {
                                       m.id,
@@ -64,8 +64,8 @@ namespace TDH.Services.Money
                                                    m.notes.ToLower().Contains(searchValue)).ToList();
                     }
                     //Add to list
-                    int _year = int.Parse(request.Parameter2.Substring(0, 4));
-                    int _month = int.Parse(request.Parameter2.Substring(4, 2));
+                    int _year = int.Parse(request.Parameter2) / 100;
+                    int _month = int.Parse(request.Parameter2) % 100;
                     int _count = 0;
                     byte _percentSet = 0;
                     decimal _moneyCur = 0;
@@ -167,7 +167,7 @@ namespace TDH.Services.Money
         /// Get all item without deleted
         /// </summary>
         /// <param name="userID">The user identifier</param>
-        /// <param name="IsInput">true: input mean payment, false: income money</param>
+        /// <param name="IsInput">true: income, false: payment</param>
         /// <returns>List<GroupModel></returns>
         public List<GroupModel> GetAll(Guid userID, bool IsInput)
         {
@@ -198,10 +198,10 @@ namespace TDH.Services.Money
         }
 
         /// <summary>
-        /// Get item
+        /// Get item by id
         /// </summary>
         /// <param name="model">Group model</param>
-        /// <returns>MoneyGroupModel. Throw exception if not found or get some error</returns>
+        /// <returns>MoneyGroupModel</returns>
         public GroupModel GetItemByID(GroupModel model)
         {
             try
@@ -412,5 +412,6 @@ namespace TDH.Services.Money
             }
             return ResponseStatusCodeHelper.OK;
         }
+
     }
 }

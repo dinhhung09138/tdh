@@ -146,7 +146,7 @@ namespace TDH.Services.Money
         /// Get item
         /// </summary>
         /// <param name="model">Account type model</param>
-        /// <returns>MoneyAccountTypeModel. Throw exception if not found or get some error</returns>
+        /// <returns>MoneyAccountTypeModel</returns>
         public AccountTypeModel GetItemByID(AccountTypeModel model)
         {
             try
@@ -253,29 +253,17 @@ namespace TDH.Services.Money
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    MN_ACCOUNT_TYPE _md = _context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    if (_md == null)
                     {
-                        try
-                        {
-                            MN_ACCOUNT_TYPE _md = _context.MN_ACCOUNT_TYPE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                            if (_md == null)
-                            {
-                                throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
-                            }
-                            _md.publish = model.Publish;
-                            _md.update_by = model.UpdateBy;
-                            _md.update_date = DateTime.Now;
-                            _context.MN_ACCOUNT_TYPE.Attach(_md);
-                            _context.Entry(_md).State = EntityState.Modified;
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            trans.Rollback();
-                            throw new ServiceException(FILE_NAME, "Publish", model.CreateBy, ex);
-                        }
+                        throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
                     }
+                    _md.publish = model.Publish;
+                    _md.update_by = model.UpdateBy;
+                    _md.update_date = DateTime.Now;
+                    _context.MN_ACCOUNT_TYPE.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
             }
             catch (DataAccessException fieldEx)
@@ -360,5 +348,6 @@ namespace TDH.Services.Money
             }
             return ResponseStatusCodeHelper.OK;
         }
+
     }
 }

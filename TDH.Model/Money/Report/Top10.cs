@@ -26,5 +26,6 @@ namespace TDH.Model.Money.Report
         /// Setting money number
         /// </summary>
         public decimal Setting { get; set; }
+
     }
 }

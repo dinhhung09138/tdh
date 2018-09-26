@@ -29,7 +29,7 @@ namespace TDH.Services.Website
         /// Get list data using jquery datatable
         /// </summary>
         /// <param name="request">Jquery datatable request</param>
-        /// <param name="userID">User identifier</param>
+        /// <param name="userID">The user identifier</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -136,7 +136,7 @@ namespace TDH.Services.Website
         /// Get item
         /// </summary>
         /// <param name="model">Post model</param>
-        /// <returns>PostModel. Throw exception if not found or get some error</returns>
+        /// <returns>PostModel</returns>
         public PostModel GetItemByID(PostModel model)
         {
             try
@@ -212,16 +212,21 @@ namespace TDH.Services.Website
                     _md.is_navigation = model.IsNavigation;
                     if (model.IsNavigation)
                     {
+                        var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == model.NavigationID);
+
                         _md.navigation_id = model.NavigationID;
                         _md.category_id = null;
+                        _md.alias = _nav.alias + "/" + model.MetaTitle.TitleToAlias();
                     }
                     else
                     {
+                        var _cate = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.CategoryID);
+
                         _md.category_id = model.CategoryID;
                         _md.navigation_id = null;
+                        _md.alias = _cate.alias + "/" + model.MetaTitle.TitleToAlias();
                     }
                     _md.title = model.Title;
-                    _md.alias = model.MetaTitle.TitleToAlias();
                     _md.description = model.Description;
                     _md.content = model.Content;
                     _md.image = model.Image;
@@ -345,5 +350,6 @@ namespace TDH.Services.Website
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
+
     }
 }

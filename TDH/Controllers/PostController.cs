@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using TDH.Common;
 using TDH.Common.UserException;
 using TDH.Services;
 
@@ -21,6 +18,7 @@ namespace TDH.Controllers
         #endregion
 
         [Route("{navigationAlias}")]
+        [HttpGet]
         //[OutputCache(Duration = 604800, VaryByParam = "postAlias", Location = System.Web.UI.OutputCacheLocation.ServerAndClient)]
         public ActionResult Navigation(string navigationAlias)
         {
@@ -46,14 +44,18 @@ namespace TDH.Controllers
                 ViewBag.data = PageService.GetListCategoryDataByNavigation(navigationAlias);
                 return View(_navInfo);
             }
-            catch(Exception ex)
+            catch (UserException uEx)
             {
-                Log.WriteLog(FILE_NAME, "Navigation", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message);
+                throw uEx;
+            }
+            catch (Exception ex)
+            {
+                throw new UserException(FILE_NAME, "Navigation", ex);
             }
         }
 
         [Route("{navigationAlias}/{categoryAlias}")]
+        [HttpGet]
         //[OutputCache(Duration = 86400, VaryByParam = "postAlias", Location = System.Web.UI.OutputCacheLocation.Server)]
         public ActionResult Category(string navigationAlias, string categoryAlias)
         {
@@ -62,21 +64,25 @@ namespace TDH.Controllers
                 bool _isCategory = PageService.CheckIsCategoryPage(navigationAlias, categoryAlias);
                 if (_isCategory)
                 {
-                    ViewBag.cateInfo = PageService.GetCategoryInfor(categoryAlias);
+                    ViewBag.cateInfo = PageService.GetCategoryInfor(navigationAlias, categoryAlias);
                     return View(PageService.GetListPostDataByCategory(navigationAlias, categoryAlias));
                 }
                 var _model = PageService.GetPostInfor(navigationAlias, categoryAlias);
                 ViewBag.related = PageService.Top6LastedPostByNavigationID(_model.CategoryID);
                 return View("Post", _model);
             }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Navigation", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message);
+                throw new UserException(FILE_NAME, "Category", ex);
             }
         }
 
         [Route("{navigationAlias}/{categoryAlias}/{postAlias}")]
+        [HttpGet]
         //[OutputCache(Duration = 604800, VaryByParam = "postAlias", Location = System.Web.UI.OutputCacheLocation.ServerAndClient)]
         public ActionResult Post(string navigationAlias, string categoryAlias, string postAlias)
         {
@@ -86,23 +92,30 @@ namespace TDH.Controllers
                 ViewBag.related = PageService.Top6LastedPostByCategoryID(_model.CategoryID);
                 return View(_model);
             }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Post", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message);
+                throw new UserException(FILE_NAME, "Post", ex);
             }
         }
 
+        [HttpGet]
         public ActionResult About()
         {
             try
             {
                 return View(PageService.About());
             }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "About", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message);
+                throw new UserException(FILE_NAME, "About", ex);
             }
         }
 
@@ -113,30 +126,38 @@ namespace TDH.Controllers
         /// </summary>
         /// <returns></returns>
         [ChildActionOnly]
+        [HttpGet]
         public ActionResult LastedPost()
         {
             try
             {
                 return PartialView();
             }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "LastedPost", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message);
+                throw new UserException(FILE_NAME, "LastedPost", ex);
             }
         }
 
         [ChildActionOnly]
+        [HttpGet]
         public ActionResult SameCategory()
         {
             try
             {
                 return PartialView();
             }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "SameCategory", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message);
+                throw new UserException(FILE_NAME, "SameCategory", ex);
             }
         }
 

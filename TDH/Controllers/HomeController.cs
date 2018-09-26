@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
-using TDH.Model.ViewModel.WebSite;
 using TDH.Services;
 
 namespace TDH.Controllers
@@ -24,6 +20,11 @@ namespace TDH.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Home page
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public ActionResult Index()
         {
             try
@@ -39,8 +40,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                Log.WriteLog(FILE_NAME, "Index", Guid.NewGuid(), ex);
-                throw new UserException(ex.Message);
+                throw new UserException(FILE_NAME, "Index", ex);
             }
         }
 

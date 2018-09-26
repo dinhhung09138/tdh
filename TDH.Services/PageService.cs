@@ -277,8 +277,19 @@ namespace TDH.Services
             {
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_NAVIGATION.Where(m => m.alias == navAlias && m.publish && !m.deleted)
-                                             .Select(m => new { m.id, m.alias, m.title, m.image, m.meta_title, m.meta_description, m.meta_keywords, m.meta_og_image, m.meta_twitter_image })
+                    var _item = context.WEB_NAVIGATION.Where(m => m.alias == ("/" + navAlias) && m.publish && !m.deleted)
+                                             .Select(m => new
+                                             {
+                                                 m.id,
+                                                 m.alias,
+                                                 m.title,
+                                                 m.image,
+                                                 m.meta_title,
+                                                 m.meta_description,
+                                                 m.meta_keywords,
+                                                 m.meta_og_image,
+                                                 m.meta_twitter_image
+                                             })
                                              .FirstOrDefault();
                     if (_item == null)
                     {
@@ -311,16 +322,29 @@ namespace TDH.Services
         /// <summary>
         /// Get category infor
         /// </summary>
+        /// <param name="navigationAlias">Navigation alias</param>
         /// <param name="cateAlias">Category alias</param>
         /// <returns>CategoryViewModel</returns>
-        public static CategoryViewModel GetCategoryInfor(string cateAlias)
+        public static CategoryViewModel GetCategoryInfor(string navigationAlias, string cateAlias)
         {
             try
             {
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_CATEGORY.Where(m => m.alias == cateAlias && m.publish && !m.deleted)
-                                             .Select(m => new { m.id, m.navigation_id, m.alias, m.title, m.image, m.meta_title, m.meta_description, m.meta_keywords, m.meta_og_image, m.meta_twitter_image })
+                    var _item = context.WEB_CATEGORY.Where(m => m.alias == ("/" + navigationAlias + "/" + cateAlias) && m.publish && !m.deleted)
+                                             .Select(m => new
+                                             {
+                                                 m.id,
+                                                 m.navigation_id,
+                                                 m.alias,
+                                                 m.title,
+                                                 m.image,
+                                                 m.meta_title,
+                                                 m.meta_description,
+                                                 m.meta_keywords,
+                                                 m.meta_og_image,
+                                                 m.meta_twitter_image
+                                             })
                                              .FirstOrDefault();
                     if (_item == null)
                     {
@@ -352,7 +376,7 @@ namespace TDH.Services
         }
 
         /// <summary>
-        /// Get post infor
+        /// Get post infor which parent is navigation
         /// </summary>
         /// <param name="navAlias">Navigation alias</param>
         /// <param name="postAlias">Post alias</param>
@@ -364,8 +388,22 @@ namespace TDH.Services
                 var _nav = GetNavigationInfor(navAlias);
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_POST.Where(m => m.alias == postAlias && m.publish && !m.deleted)
-                                             .Select(m => new { m.navigation_id, m.alias, m.title, m.description, m.content, m.image, m.is_navigation, m.meta_title, m.meta_description, m.meta_keywords, m.meta_og_image, m.meta_twitter_image })
+                    var _item = context.WEB_POST.Where(m => m.alias == ("/" + navAlias + "/" + postAlias) && m.publish && !m.deleted)
+                                             .Select(m => new
+                                             {
+                                                 m.navigation_id,
+                                                 m.alias,
+                                                 m.title,
+                                                 m.description,
+                                                 m.content,
+                                                 m.image,
+                                                 m.is_navigation,
+                                                 m.meta_title,
+                                                 m.meta_description,
+                                                 m.meta_keywords,
+                                                 m.meta_og_image,
+                                                 m.meta_twitter_image
+                                             })
                                              .FirstOrDefault();
                     if (_item == null || !_item.is_navigation)
                     {
@@ -399,7 +437,7 @@ namespace TDH.Services
         }
 
         /// <summary>
-        /// Get post infor
+        /// Get post infor which parent is category
         /// </summary>
         /// <param name="navAlias">Navigation alias</param>
         /// <param name="cateAlias">Category alias</param>
@@ -410,11 +448,26 @@ namespace TDH.Services
             try
             {
                 var _nav = GetNavigationInfor(navAlias);
-                var _cate = GetCategoryInfor(cateAlias);
+                var _cate = GetCategoryInfor(navAlias, cateAlias);
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_POST.Where(m => m.alias == postAlias && m.publish && !m.deleted)
-                                             .Select(m => new { m.alias, m.title, m.category_id, m.description, m.content, m.create_date, m.image, m.is_navigation, m.meta_title, m.meta_description, m.meta_keywords, m.meta_og_image, m.meta_twitter_image })
+                    var _item = context.WEB_POST.Where(m => m.alias == ("/" + navAlias + "/" + cateAlias + "/" + postAlias) && m.publish && !m.deleted)
+                                             .Select(m => new
+                                             {
+                                                 m.alias,
+                                                 m.title,
+                                                 m.category_id,
+                                                 m.description,
+                                                 m.content,
+                                                 m.create_date,
+                                                 m.image,
+                                                 m.is_navigation,
+                                                 m.meta_title,
+                                                 m.meta_description,
+                                                 m.meta_keywords,
+                                                 m.meta_og_image,
+                                                 m.meta_twitter_image
+                                             })
                                              .FirstOrDefault();
                     if (_item == null || _item.is_navigation)
                     {
@@ -521,7 +574,7 @@ namespace TDH.Services
                 {
                     return (from m in context.WEB_CATEGORY
                             join n in context.WEB_NAVIGATION on m.navigation_id equals n.id
-                            where m.publish && !m.deleted && n.publish && !n.deleted && n.alias == navigationAlias
+                            where m.publish && !m.deleted && n.publish && !n.deleted && n.alias == ("/" + navigationAlias)
                             orderby m.ordering descending
                             select new CategoryViewModel()
                             {
@@ -561,7 +614,8 @@ namespace TDH.Services
                 NavigationViewModel _nav = GetNavigationInfor(navigationAlias);
                 using (var context = new TDHEntities())
                 {
-                    var _post = context.WEB_POST.FirstOrDefault(m => m.alias == categoryAlias && m.publish && !m.deleted);
+                    //Get this is post which parent is navigation
+                    var _post = context.WEB_POST.FirstOrDefault(m => m.alias == ("/" + navigationAlias + "/" + categoryAlias) && m.publish && !m.deleted);
                     if (_post != null)
                     {
                         if (!_post.is_navigation || _nav.ID != _post.navigation_id)
@@ -570,7 +624,8 @@ namespace TDH.Services
                         }
                         return false;
                     }
-                    var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.alias == categoryAlias);
+                    //Check this is category which parent is navigation
+                    var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.alias == ("/" + navigationAlias + "/" + categoryAlias));
                     if (_cate == null || _cate.navigation_id != _nav.ID)
                     {
                         throw new UserException(FILE_NAME, "CheckIsCategoryPage", null);
@@ -591,6 +646,7 @@ namespace TDH.Services
         /// <summary>
         /// Get list post data with has category and navigation
         /// </summary>
+        /// <param name="navigationAlias">Navigation alias</param>
         /// <param name="categoryAlias">Category alias</param>
         /// <returns>List<PostViewModel></returns>
         public static List<PostViewModel> GetListPostDataByCategory(string navigationAlias, string categoryAlias)
@@ -598,7 +654,7 @@ namespace TDH.Services
             try
             {
                 NavigationViewModel _nav = GetNavigationInfor(navigationAlias);
-                CategoryViewModel _cate = GetCategoryInfor(categoryAlias);
+                CategoryViewModel _cate = GetCategoryInfor(navigationAlias, categoryAlias);
                 if (_cate.NavigationID != _nav.ID)
                 {
                     throw new UserException(FILE_NAME, "GetListPostDataByCategory", null);
@@ -628,7 +684,6 @@ namespace TDH.Services
                 throw new UserException(FILE_NAME, "GetListPostDataByCategory", ex);
             }
         }
-
 
         #endregion
 
@@ -694,7 +749,6 @@ namespace TDH.Services
                 throw new UserException(FILE_NAME, "Top6LastedPostByCategoryID", ex);
             }
         }
-
 
         #endregion
 
@@ -763,7 +817,6 @@ namespace TDH.Services
                 throw new UserException(FILE_NAME, "About", ex);
             }
         }
-
 
         #endregion
     }

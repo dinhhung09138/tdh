@@ -216,7 +216,7 @@ namespace TDH.Services.Website
 
                         _md.navigation_id = model.NavigationID;
                         _md.category_id = null;
-                        _md.alias = "/" + _nav.alias + "/" + model.MetaTitle.TitleToAlias();
+                        _md.alias = _nav.alias + "/" + model.MetaTitle.TitleToAlias();
                     }
                     else
                     {
@@ -224,7 +224,7 @@ namespace TDH.Services.Website
 
                         _md.category_id = model.CategoryID;
                         _md.navigation_id = null;
-                        _md.alias = "/" + _cate.alias + "/" + model.MetaTitle.TitleToAlias();
+                        _md.alias = _cate.alias + "/" + model.MetaTitle.TitleToAlias();
                     }
                     _md.title = model.Title;
                     _md.description = model.Description;

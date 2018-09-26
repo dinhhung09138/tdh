@@ -242,7 +242,7 @@ namespace TDH.Services.Website
 
                     _md.navigation_id = model.NavigationID;
                     _md.title = model.Title;
-                    _md.alias = "/" + _nav.alias + "/" + model.MetaTitle.TitleToAlias();
+                    _md.alias = _nav.alias + "/" + model.MetaTitle.TitleToAlias();
                     _md.description = model.Description;
                     _md.show_on_nav = model.ShowOnNav;
                     _md.image = model.Image;

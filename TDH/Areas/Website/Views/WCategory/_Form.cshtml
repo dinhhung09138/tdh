@@ -2,7 +2,6 @@
 @Html.AntiForgeryToken()
 @Html.HiddenFor(m => m.ID)
 @Html.HiddenFor(m => m.Insert)
-@Html.HiddenFor(m => m.ShowOnNav)
 <div class="row form-group">
     <div class="col-md-3 col-sm-4 col-xs-12 text-right">
         Danh mục <span style="color:red; font-weight:bold;">*</span>
@@ -39,6 +38,14 @@
     <div class="col-md-9 col-sm-8 col-xs-12">
         @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = 2, @maxlength = 250, @tabindex = "3" })
         @Html.ValidationMessageFor(m => m.Description)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hiển thị ở navbar <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.CheckBoxFor(m => m.ShowOnNav, new { @class = "form-control", @tabindex = "4" })
     </div>
 </div>
 <div class="row form-group">

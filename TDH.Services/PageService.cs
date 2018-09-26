@@ -62,18 +62,16 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    return (from hn in _context.WEB_HOME_NAVIGATION
-                            join nav in _context.WEB_NAVIGATION on hn.navigation_id equals nav.id
+                    return (from nav in _context.WEB_NAVIGATION
                             where nav.publish && !nav.deleted
-                            orderby hn.ordering descending
+                            orderby nav.ordering descending
                             select new NavigationViewModel()
                             {
                                 Title = nav.title,
                                 Alias = "/" + nav.alias,
-                                Categories = (from hc in _context.WEB_HOME_CATEGORY
-                                              join cate in _context.WEB_CATEGORY on hc.category_id equals cate.id
-                                              where nav.id == cate.navigation_id && cate.publish && !cate.deleted
-                                              orderby hc.ordering descending
+                                Categories = (from cate in _context.WEB_CATEGORY
+                                              where nav.id == cate.navigation_id && cate.publish && !cate.deleted && cate.show_on_nav
+                                              orderby cate.ordering descending
                                               select new CategoryViewModel()
                                               {
                                                   Title = cate.title,
@@ -98,16 +96,16 @@ namespace TDH.Services
             List<NavigationViewModel> _return = new List<NavigationViewModel>();
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.WEB_HOME_NAVIGATION
-                                 join n in context.WEB_NAVIGATION on m.navigation_id equals n.id
+                    var _list = (from m in _context.WEB_HOME_NAVIGATION
+                                 join n in _context.WEB_NAVIGATION on m.navigation_id equals n.id
                                  where n.publish && !n.deleted
                                  select new NavigationViewModel()
                                  {
                                      Title = n.title,
                                      Alias = "/" + n.alias,
-                                     Posts = context.WEB_POST.Where(p => p.navigation_id == n.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
+                                     Posts = _context.WEB_POST.Where(p => p.navigation_id == n.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
                                      {
                                          Title = p.title,
                                          Description = p.description,
@@ -135,17 +133,17 @@ namespace TDH.Services
             List<CategoryViewModel> _return = new List<CategoryViewModel>();
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in context.WEB_HOME_CATEGORY
-                                 join c in context.WEB_CATEGORY on m.category_id equals c.id
-                                 join n in context.WEB_NAVIGATION on c.navigation_id equals n.id
+                    var _list = (from m in _context.WEB_HOME_CATEGORY
+                                 join c in _context.WEB_CATEGORY on m.category_id equals c.id
+                                 join n in _context.WEB_NAVIGATION on c.navigation_id equals n.id
                                  where c.publish && !c.deleted && n.publish && !n.deleted
                                  select new CategoryViewModel()
                                  {
                                      Title = c.title,
                                      Alias = "/" + n.alias + "/" + c.alias,
-                                     Posts = context.WEB_POST.Where(p => p.category_id == c.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
+                                     Posts = _context.WEB_POST.Where(p => p.category_id == c.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
                                      {
                                          Title = p.title,
                                          Description = p.description,
@@ -457,10 +455,10 @@ namespace TDH.Services
             try
             {
                 List<PostViewModel> _return = new List<PostViewModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
                     string _cateAlias = "";
-                    var _list = context.WEB_POST.Where(m => m.publish && !m.deleted)
+                    var _list = _context.WEB_POST.Where(m => m.publish && !m.deleted)
                                              .OrderByDescending(m => m.create_date)
                                              .Select(m => new { m.alias, m.title, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
                                              .Take(4).ToList();
@@ -468,13 +466,13 @@ namespace TDH.Services
                     {
                         if (item.is_navigation)
                         {
-                            var _nav = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == item.navigation_id);
+                            var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == item.navigation_id);
                             _cateAlias = "/" + _nav.alias;
                         }
                         else
                         {
-                            var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.id == item.category_id);
-                            var _nav = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == _cate.navigation_id);
+                            var _cate = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == item.category_id);
+                            var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == _cate.navigation_id);
                             _cateAlias = "/" + _nav.alias + "/" + _cate.alias;
                         }
                         _return.Add(new PostViewModel()
@@ -503,10 +501,10 @@ namespace TDH.Services
             try
             {
                 List<PostViewModel> _return = new List<PostViewModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
                     string _cateAlias = "";
-                    var _list = context.WEB_POST.Where(m => m.publish && !m.deleted)
+                    var _list = _context.WEB_POST.Where(m => m.publish && !m.deleted)
                                              .OrderByDescending(m => m.view)
                                              .Select(m => new { m.alias, m.title, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
                                              .Take(2).ToList();
@@ -514,13 +512,13 @@ namespace TDH.Services
                     {
                         if (item.is_navigation)
                         {
-                            var _nav = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == item.navigation_id);
+                            var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == item.navigation_id);
                             _cateAlias = "/" + _nav.alias;
                         }
                         else
                         {
-                            var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.id == item.category_id);
-                            var _nav = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == _cate.navigation_id);
+                            var _cate = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == item.category_id);
+                            var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == _cate.navigation_id);
                             _cateAlias = "/" + _nav.alias + "/" + _cate.alias;
                         }
                         _return.Add(new PostViewModel()

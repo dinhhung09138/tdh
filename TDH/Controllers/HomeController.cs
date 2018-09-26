@@ -29,8 +29,8 @@ namespace TDH.Controllers
             try
             {
                 var _metaModel = PageService.getHomeMetaContent();
-                ViewBag.category = new List<CategoryViewModel>(); // PageService.GetListCategoryShowOnHomePage();
-                ViewBag.navigation = new List<NavigationViewModel>(); // PageService.GetListNavigationShowOnHomePage();
+                ViewBag.category = PageService.GetListCategoryShowOnHomePage();
+                ViewBag.navigation = PageService.GetListNavigationShowOnHomePage();
                 return View(_metaModel);
             }
             catch (UserException uEx)
@@ -131,6 +131,10 @@ namespace TDH.Controllers
             }
         }
 
+        /// <summary>
+        /// Newsletter partial view
+        /// </summary>
+        /// <returns>PartialView</returns>
         [ChildActionOnly]
         [HttpGet]
         public ActionResult NewsLetter()

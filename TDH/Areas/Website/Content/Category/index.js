@@ -81,6 +81,40 @@ $(document).ready(function () {
                 width: '70px',
             },
             {
+                data: 'ShowOnNav',
+                orderable: false,
+                searchable: false,
+                className: 'ctn-center',
+                width: '90px',
+                render: function (obj, type, data, meta) {
+                    if (allowEdit === 'True') {
+                        if (data.ShowOnNav === true) {
+                            return '<input type="checkbox" class="flat" name="showOnNav" checked  value="' + data.ID + '" />';
+                        } else {
+                            return '<input type="checkbox" class="flat" name="showOnNav" value="' + data.ID + '" />';
+                        }
+                    } else {
+                        if (data.ShowOnNav === true) {
+                            return '<div class="icheckbox_flat-green checked" style="position: relative;">\
+                                        <input type="checkbox" class="flat" name="table_records" checked="" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        <ins class="iCheck-helper" \
+                                                style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        </ins>\
+                                    </div>';
+                        } else {
+                            return '<div class="icheckbox_flat-green" style="position: relative;">\
+                                        <input type="checkbox" class="flat" name="table_records" value="14" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        <ins class="iCheck-helper" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        </ins>\
+                                    </div>';
+                        }
+                    }
+                }
+            },
+            {
                 data: 'Publish',
                 orderable: false,
                 searchable: false,
@@ -148,8 +182,40 @@ $(document).ready(function () {
                 savePublish($(this).val(), false);
             });
         }
+        if ($('#tbList input[name="showOnNav"]')[0]) {
+            $('#tbList input[name="showOnNav"]').iCheck({
+                checkboxClass: 'icheckbox_flat-green',
+                radioClass: 'iradio_flat-green',
+                increaseArea: '20%'
+            });
+            $('#tbList input[name="showOnNav"]').on('ifChecked', function () {
+                saveOnNav($(this).val(), true);
+            });
+            $('#tbList input[name="showOnNav"]').on('ifUnchecked', function () {
+                saveOnNav($(this).val(), false);
+            });
+        }
     });
 });
+
+function saveOnNav(id, show) {
+    $.ajax({
+        url: '/website/wcategory/onnavigation',
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({ ID: id, ShowOnNav: show }),
+        success: function (response) {
+            if (response === 0) {
+                table.ajax.reload();
+            }
+            id = '';
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+}
 
 function savePublish(id, publish) {
     $.ajax({

@@ -48,7 +48,7 @@ namespace TDH.Model.Website
         /// Show on navigation status
         /// </summary>
         [Required(ErrorMessage = "Nội dung không được rỗng")]
-        public bool ShowOnNav { get; set; } = true;
+        public bool ShowOnNav { get; set; }
 
         /// <summary>
         /// Image url

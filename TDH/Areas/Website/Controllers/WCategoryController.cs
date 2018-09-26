@@ -10,6 +10,9 @@ using Utils.JqueryDatatable;
 
 namespace TDH.Areas.Website.Controllers
 {
+    /// <summary>
+    /// Category controller
+    /// </summary>
     public class WCategoryController : BaseController
     {
         #region " [ Properties ] "
@@ -33,6 +36,7 @@ namespace TDH.Areas.Website.Controllers
                 #region " [ Declaration ] "
 
                 NavigationService _nServices = new NavigationService();
+
                 ViewBag.navigation = _nServices.GetAll(UserID);
 
                 #endregion
@@ -57,7 +61,7 @@ namespace TDH.Areas.Website.Controllers
         /// Category form
         /// Post method
         /// </summary>
-        /// <param name="requestData">jquery datatable request</param>
+        /// <param name="requestData">Jquery datatable request</param>
         /// <returns>DataTableResponse<CategoryModel></returns>
         [HttpPost]
         public JsonResult Index(CustomDataTableRequestHelper requestData)
@@ -118,13 +122,14 @@ namespace TDH.Areas.Website.Controllers
 
                 NavigationService _nServices = new NavigationService();
 
-                ViewBag.navigation = _nServices.GetAll(UserID);
                 CategoryModel model = new CategoryModel()
                 {
                     ID = Guid.NewGuid(),
                     CreateBy = UserID,
                     Insert = true
                 };
+
+                ViewBag.navigation = _nServices.GetAll(UserID);
 
                 #endregion
 
@@ -149,10 +154,10 @@ namespace TDH.Areas.Website.Controllers
         /// Post method
         /// </summary>
         /// <param name="model">Category model</param>
-        /// <returns>DataTableResponse<CategoryModel></returns>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CategoryModel model)
+        public JsonResult Create(CategoryModel model)
         {
             try
             {
@@ -236,7 +241,7 @@ namespace TDH.Areas.Website.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CategoryModel model)
+        public JsonResult Edit(CategoryModel model)
         {
             try
             {
@@ -278,7 +283,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Publish(CategoryModel model)
+        public JsonResult Publish(CategoryModel model)
         {
             try
             {
@@ -319,7 +324,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult OnNavigation(CategoryModel model)
+        public JsonResult OnNavigation(CategoryModel model)
         {
             try
             {
@@ -360,7 +365,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(CategoryModel model)
+        public JsonResult Delete(CategoryModel model)
         {
             try
             {
@@ -401,7 +406,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Category model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDelete(CategoryModel model)
+        public JsonResult CheckDelete(CategoryModel model)
         {
             try
             {

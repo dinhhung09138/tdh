@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
@@ -8,6 +7,9 @@ using TDH.Services.Website;
 
 namespace TDH.Areas.Website.Controllers
 {
+    /// <summary>
+    /// About controller
+    /// </summary>
     public class WAboutController : BaseController
     {
         #region " [ Properties ] "
@@ -60,7 +62,7 @@ namespace TDH.Areas.Website.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Index(AboutModel model)
+        public JsonResult Index(AboutModel model)
         {
             try
             {

@@ -10,6 +10,9 @@ using Utils.JqueryDatatable;
 
 namespace TDH.Areas.Website.Controllers
 {
+    /// <summary>
+    /// Setting controller
+    /// </summary>
     public class WSettingController : BaseController
     {
         #region " [ Properties ] "
@@ -53,7 +56,7 @@ namespace TDH.Areas.Website.Controllers
         /// Post method
         /// </summary>
         /// <param name="requestData">Jquery datatable request</param>
-        /// <returns> DataTableResponse<HomeNavigationModel></returns>
+        /// <returns>DataTableResponse<HomeNavigationModel></returns>
         [HttpPost]
         public JsonResult Navigation(CustomDataTableRequestHelper requestData)
         {
@@ -103,7 +106,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Home navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult SaveNavigation(HomeNavigationModel model)
+        public JsonResult SaveNavigation(HomeNavigationModel model)
         {
             try
             {
@@ -172,7 +175,7 @@ namespace TDH.Areas.Website.Controllers
         /// Category form
         /// Post method
         /// </summary>
-        /// <param name="requestData">jquery datatable request</param>
+        /// <param name="requestData">Jquery datatable request</param>
         /// <returns>DataTableResponse<HomeCategoryModel></returns>
         [HttpPost]
         public JsonResult Category(CustomDataTableRequestHelper requestData)
@@ -220,9 +223,9 @@ namespace TDH.Areas.Website.Controllers
         /// Save category
         /// </summary>
         /// <param name="model">Home category model</param>
-        /// <returns>DataTableResponse<CategoryModel></returns>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult SaveCategory(HomeCategoryModel model)
+        public JsonResult SaveCategory(HomeCategoryModel model)
         {
             try
             {
@@ -289,7 +292,6 @@ namespace TDH.Areas.Website.Controllers
 
         /// <summary>
         /// Configuration form
-        /// Post method
         /// Post method
         /// </summary>
         /// <param name="requestData">Jquery datatable request</param>
@@ -381,7 +383,7 @@ namespace TDH.Areas.Website.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult EditConfiguration(ConfigurationModel model)
+        public JsonResult EditConfiguration(ConfigurationModel model)
         {
             try
             {

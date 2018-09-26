@@ -24,7 +24,12 @@ namespace TDH.Areas.Website.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Default View when user click on left sidebar
+        /// </summary>
+        /// <returns>View</returns>
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Home()
         {
             return View();
@@ -122,7 +127,7 @@ namespace TDH.Areas.Website.Controllers
                 };
 
                 #endregion
-                
+
                 return View(model);
             }
             catch (ServiceException serviceEx)
@@ -147,7 +152,7 @@ namespace TDH.Areas.Website.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(NavigationModel model)
+        public JsonResult Create(NavigationModel model)
         {
             try
             {
@@ -197,14 +202,14 @@ namespace TDH.Areas.Website.Controllers
                 #region " [ Declaration ] "
 
                 NavigationService _service = new NavigationService();
-                
+
                 ViewBag.id = id;
 
                 #endregion
 
                 //Call to service
                 NavigationModel model = _service.GetItemByID(new NavigationModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
-                
+
                 return View(model);
             }
             catch (ServiceException serviceEx)
@@ -229,7 +234,7 @@ namespace TDH.Areas.Website.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(NavigationModel model)
+        public JsonResult Edit(NavigationModel model)
         {
             try
             {
@@ -271,7 +276,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Publish(NavigationModel model)
+        public JsonResult Publish(NavigationModel model)
         {
             try
             {
@@ -312,7 +317,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(NavigationModel model)
+        public JsonResult Delete(NavigationModel model)
         {
             try
             {
@@ -353,7 +358,7 @@ namespace TDH.Areas.Website.Controllers
         /// <param name="model">Navigation model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDelete(NavigationModel model)
+        public JsonResult CheckDelete(NavigationModel model)
         {
             try
             {

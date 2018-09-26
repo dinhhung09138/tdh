@@ -293,7 +293,7 @@ namespace TDH.Services
                                              .FirstOrDefault();
                     if (_item == null)
                     {
-                        throw new UserException(FILE_NAME, "GetNavigationInfor", null);
+                        throw new UserException(FILE_NAME, "GetNavigationInfor", 204, string.Format("{0} not found", navAlias), new Exception());
                     }
                     return new NavigationViewModel()
                     {
@@ -315,7 +315,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetNavigationInfor", ex);
+                throw new UserException(FILE_NAME, "GetNavigationInfor", 500, "Service has an error", ex);
             }
         }
 
@@ -348,7 +348,7 @@ namespace TDH.Services
                                              .FirstOrDefault();
                     if (_item == null)
                     {
-                        throw new UserException(FILE_NAME, "GetCategoryInfor", null);
+                        throw new UserException(FILE_NAME, "GetCategoryInfor", 204, string.Format("{0}/{1}: not found", navigationAlias, cateAlias), new Exception());
                     }
                     return new CategoryViewModel()
                     {
@@ -371,7 +371,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetCategoryInfor", ex);
+                throw new UserException(FILE_NAME, "GetCategoryInfor", 500, "Service has an error", ex);
             }
         }
 
@@ -407,7 +407,7 @@ namespace TDH.Services
                                              .FirstOrDefault();
                     if (_item == null || !_item.is_navigation)
                     {
-                        throw new UserException(FILE_NAME, "GetPostInfor", null);
+                        throw new UserException(FILE_NAME, "GetPostInfor", 204, string.Format("{0}/{1} not found", navAlias, postAlias), new Exception());
                     }
                     return new PostViewModel()
                     {
@@ -471,7 +471,7 @@ namespace TDH.Services
                                              .FirstOrDefault();
                     if (_item == null || _item.is_navigation)
                     {
-                        throw new UserException(FILE_NAME, "GetPostInfor", null);
+                        throw new UserException(FILE_NAME, "GetPostInfor", 204, string.Format("{0}/{1}/{2} not found", navAlias, cateAlias, postAlias), new Exception());
                     }
                     return new PostViewModel()
                     {
@@ -620,7 +620,7 @@ namespace TDH.Services
                     {
                         if (!_post.is_navigation || _nav.ID != _post.navigation_id)
                         {
-                            throw new UserException(FILE_NAME, "CheckIsCategoryPage", null);
+                            throw new UserException(FILE_NAME, "CheckIsCategoryPage", 204, string.Format("{0}/{1} not found", navigationAlias, categoryAlias), new Exception());
                         }
                         return false;
                     }
@@ -628,7 +628,7 @@ namespace TDH.Services
                     var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.alias == ("/" + navigationAlias + "/" + categoryAlias));
                     if (_cate == null || _cate.navigation_id != _nav.ID)
                     {
-                        throw new UserException(FILE_NAME, "CheckIsCategoryPage", null);
+                        throw new UserException(FILE_NAME, "CheckIsCategoryPage", 204, string.Format("{0}/{1} not found", navigationAlias, categoryAlias), new Exception());
                     }
                     return true;
                 }
@@ -657,7 +657,7 @@ namespace TDH.Services
                 CategoryViewModel _cate = GetCategoryInfor(navigationAlias, categoryAlias);
                 if (_cate.NavigationID != _nav.ID)
                 {
-                    throw new UserException(FILE_NAME, "GetListPostDataByCategory", null);
+                    throw new UserException(FILE_NAME, "GetListPostDataByCategory", 204, string.Format("{0}/{1} not found", navigationAlias, categoryAlias), new Exception());
                 }
                 List<PostViewModel> _return = new List<PostViewModel>();
                 using (var context = new TDHEntities())
@@ -790,7 +790,7 @@ namespace TDH.Services
                     var _item = _context.WEB_ABOUT.FirstOrDefault();
                     if (_item == null)
                     {
-                        throw new UserException(FILE_NAME, "About", null);
+                        throw new UserException(FILE_NAME, "About", 204, "", new Exception());
                     }
                     return new PostViewModel()
                     {

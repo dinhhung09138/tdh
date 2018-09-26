@@ -31,6 +31,18 @@ namespace TDH.Controllers
             
             if (filterContext.Exception is UserException)
             {
+                UserException ex = filterContext.Exception as UserException;
+                switch (ex.Status)
+                {
+                    case 204: //No content
+                        filterContext.Result = new ViewResult
+                        {
+                            ViewName = "~/Views/Error/PageNotFound.cshtml"
+                        };
+                        return;
+                    case 500:
+                        return;
+                }
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new {
                     controller = "error",
                     action = "index"

@@ -303,20 +303,17 @@ namespace TDH.Services.Website
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    WEB_CATEGORY _md = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    if (_md == null)
                     {
-                        WEB_CATEGORY _md = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                        if (_md == null)
-                        {
-                            throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
-                        }
-                        _md.publish = model.Publish;
-                        _md.update_by = model.UpdateBy;
-                        _md.update_date = DateTime.Now;
-                        _context.WEB_CATEGORY.Attach(_md);
-                        _context.Entry(_md).State = EntityState.Modified;
-                        _context.SaveChanges();
+                        throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
                     }
+                    _md.publish = model.Publish;
+                    _md.update_by = model.UpdateBy;
+                    _md.update_date = DateTime.Now;
+                    _context.WEB_CATEGORY.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
                 }
             }
             catch (DataAccessException fieldEx)

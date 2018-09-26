@@ -93,8 +93,6 @@ function formatMoney(number, decimals, decPoint, thousandsSep) {
 }
 
 function notification(message, type) {
-    console.log(message);
-    console.log(type);
     if (message === 'undefined' | message.length === 0) {
         return;
     }

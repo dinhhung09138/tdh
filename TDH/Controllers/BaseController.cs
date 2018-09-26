@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using TDH.Filters;
+using System.Web.Routing;
+using TDH.Common.UserException;
 
 namespace TDH.Controllers
 {
@@ -27,9 +28,13 @@ namespace TDH.Controllers
         {
             base.OnException(filterContext);
             filterContext.ExceptionHandled = true;
+            
             if (filterContext.Exception is UserException)
             {
-                filterContext.Result = View("../Error/Index");
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new {
+                    controller = "error",
+                    action = "index"
+                }));
                 return;
             }
         }

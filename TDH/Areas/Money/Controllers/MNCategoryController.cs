@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
@@ -262,7 +261,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CategoryModel model)
+        public JsonResult Create(CategoryModel model)
         {
             try
             {
@@ -278,7 +277,7 @@ namespace TDH.Areas.Money.Controllers
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
                 model.UpdateDate = DateTime.Now;
-                
+
                 #endregion
 
                 //Call to service
@@ -346,7 +345,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CategoryModel model)
+        public JsonResult Edit(CategoryModel model)
         {
             try
             {
@@ -388,7 +387,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">CategoryModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Publish(CategoryModel model)
+        public JsonResult Publish(CategoryModel model)
         {
             try
             {
@@ -429,7 +428,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model"></param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(CategoryModel model)
+        public JsonResult Delete(CategoryModel model)
         {
             try
             {
@@ -470,7 +469,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">CategoryModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDelete(CategoryModel model)
+        public JsonResult CheckDelete(CategoryModel model)
         {
             try
             {
@@ -504,8 +503,7 @@ namespace TDH.Areas.Money.Controllers
         }
 
         #region " [ Setting ] "
-
-
+        
         /// <summary>
         /// All setting data by category in a month
         /// </summary>
@@ -513,7 +511,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="yearMonth">Category name</param>
         /// <returns>View</returns>
         [HttpGet]
-        public ActionResult Setting(string id, string year)
+        public JsonResult Setting(string id, string year)
         {
             try
             {
@@ -541,16 +539,20 @@ namespace TDH.Areas.Money.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Save setting infor
+        /// </summary>
+        /// <param name="model">List of setting info model</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult SaveSetting(List<CategorySettingModel> model)
+        public JsonResult SaveSetting(List<CategorySettingModel> model)
         {
             try
             {
                 #region " [ Declaration ] "
 
                 CategorySettingService _service = new CategorySettingService();
-                
+
                 #endregion
 
                 return this.Json(_service.Save(model, UserID), JsonRequestBehavior.AllowGet);
@@ -568,8 +570,7 @@ namespace TDH.Areas.Money.Controllers
                 throw new ControllerException(FILE_NAME, "Setting", UserID, ex);
             }
         }
-
-
+        
         #endregion
     }
 }

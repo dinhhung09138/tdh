@@ -2,7 +2,7 @@
 @model IEnumerable<TDH.Model.Money.Report.Top10>
 <div class="card card-success">
     <div class="card-header with-border no-bg">
-        <h5 class="card-title">Nhóm chi</h5>
+        <h5 class="card-title">Chi tiêu theo danh mục</h5>
         <div class="card-tools">
         </div>
     </div>
@@ -13,7 +13,7 @@
                 {
                     <div class="progress-group">
                         @p.Title
-                        <span class="float-right"><b>@Html.Raw(p.Money > 0 ? p.Money.NumberToString() : "0")</b>/@Html.Raw(p.Setting > 0 ? p.Setting.NumberToString() : "") / @Html.Raw(p.Money == 0 ? 0 : p.Money / p.Setting)</span>
+                        <span class="float-right"><b>@Html.Raw(p.Money > 0 ? p.Money.NumberToString() : "0")</b>/@Html.Raw(p.Setting > 0 ? p.Setting.NumberToString() : "")</span>
                         <div class="progress progress-sm">
                             @{
                                 if (p.Money == 0 || (p.Money / p.Setting) <= (decimal)0.6)

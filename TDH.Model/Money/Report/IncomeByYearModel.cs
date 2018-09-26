@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace TDH.Model.Money.Report
 {
     /// <summary>
@@ -75,5 +70,6 @@ namespace TDH.Model.Money.Report
         /// Dec
         /// </summary>
         public decimal T12 { get; set; } = 0;
+
     }
 }

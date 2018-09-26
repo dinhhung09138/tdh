@@ -70,5 +70,6 @@ namespace TDH.Model.Money.Report
         /// Dec
         /// </summary>
         public decimal T12 { get; set; } = 0;
+
     }
 }

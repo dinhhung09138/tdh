@@ -24,8 +24,12 @@ namespace TDH.Areas.Money.Controllers
 
         #endregion
 
-        // GET: Money/Account
+        /// <summary>
+        /// Default View when user click on left sidebar
+        /// </summary>
+        /// <returns>View</returns>
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Home()
         {
             try
@@ -264,7 +268,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AccountModel model)
+        public JsonResult Create(AccountModel model)
         {
             try
             {
@@ -349,7 +353,7 @@ namespace TDH.Areas.Money.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AccountModel model)
+        public JsonResult Edit(AccountModel model)
         {
             try
             {
@@ -392,7 +396,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">AccountModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Publish(AccountModel model)
+        public JsonResult Publish(AccountModel model)
         {
             try
             {
@@ -433,7 +437,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">AccountModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(AccountModel model)
+        public JsonResult Delete(AccountModel model)
         {
             try
             {
@@ -474,7 +478,7 @@ namespace TDH.Areas.Money.Controllers
         /// <param name="model">AccountModel</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDelete(AccountModel model)
+        public JsonResult CheckDelete(AccountModel model)
         {
             try
             {

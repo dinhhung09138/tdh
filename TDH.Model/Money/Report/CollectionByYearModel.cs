@@ -30,5 +30,6 @@ namespace TDH.Model.Money.Report
         /// Total money
         /// </summary>
         public decimal Total { get; set; }
+
     }
 }

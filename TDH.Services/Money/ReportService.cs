@@ -4,9 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TDH.Model.Money.Report;
 using TDH.DataAccess;
-using TDH.Common;
 using TDH.Common.UserException;
-using Utils;
 
 namespace TDH.Services.Money
 {
@@ -63,7 +61,7 @@ namespace TDH.Services.Money
         /// Get income, payment, total in a year
         /// line chart
         /// </summary>
-        /// <param name="year">year</param>
+        /// <param name="year">Year</param>
         /// <param name="userID">The user identifier</param>
         /// <returns>List<ReportCollectionByYearModel></returns>
         public async Task<List<CollectionByYearModel>> SummaryByYear(int year, Guid userID)
@@ -98,7 +96,7 @@ namespace TDH.Services.Money
         /// Get summary income by month in a year
         /// line chart
         /// </summary>
-        /// <param name="year">year</param>
+        /// <param name="year">Year</param>
         /// <param name="userID">The user identifier</param>
         /// <returns>List<ReportCollectionByYearModel></returns>
         public async Task<List<IncomeByYearModel>> SummaryIncomeByYear(int year, Guid userID)
@@ -148,7 +146,7 @@ namespace TDH.Services.Money
         /// Get summary payment by month in a year
         /// line chart
         /// </summary>
-        /// <param name="year">year</param>
+        /// <param name="year">Year</param>
         /// <param name="userID">The user identifier</param>
         /// <returns>List<PaymentByYearModel></returns>
         public async Task<List<PaymentByYearModel>> SummaryPaymentByYear(int year, Guid userID)
@@ -198,8 +196,8 @@ namespace TDH.Services.Money
         /// <summary>
         /// Borrow accocunt status
         /// </summary>
-        /// <param name="userID"></param>
-        /// <returns></returns>
+        /// <param name="userID">The user identifier</param>
+        /// <returns>List<BorrowAccountStatusModel></returns>
         public List<BorrowAccountStatusModel> BorrowAccountStatus(Guid userID)
         {
             try
@@ -230,9 +228,9 @@ namespace TDH.Services.Money
         /// Get top 10 payment in current month
         /// </summary>
         /// <param name="year">Year</param>
-        /// <param name="month">MOnth</param>
-        /// <param name="userID">user identifier</param>
-        /// <returns></returns>
+        /// <param name="month">Month</param>
+        /// <param name="userID">The user identifier</param>
+        /// <returns>List<Top10></returns>
         public List<Top10> Top10Payment(int year, int month, Guid userID)
         {
             try
@@ -262,8 +260,8 @@ namespace TDH.Services.Money
         /// Get top 10 income in current month
         /// </summary>
         /// <param name="year">Year</param>
-        /// <param name="month">MOnth</param>
-        /// <param name="userID">user identifier</param>
+        /// <param name="month">Month</param>
+        /// <param name="userID">The user identifier</param>
         /// <returns></returns>
         public List<Top10> Top10Income(int year, int month, Guid userID)
         {
@@ -293,10 +291,10 @@ namespace TDH.Services.Money
         /// <summary>
         /// Get percent of payment by group
         /// </summary>
-        /// <param name="year"></param>
-        /// <param name="month"></param>
-        /// <param name="userID"></param>
-        /// <returns></returns>
+        /// <param name="year">Year</param>
+        /// <param name="month">Month</param>
+        /// <param name="userID">The user identifier</param>
+        /// <returns>Task<List<Top10>></returns>
         public async Task<List<Top10>> GroupPercent(int year, int month, Guid userID)
         {
             Task<List<Top10>> _return = Task.Run(() =>
@@ -328,9 +326,9 @@ namespace TDH.Services.Money
         /// Get top 10 payment in current month
         /// </summary>
         /// <param name="year">Year</param>
-        /// <param name="month">MOnth</param>
-        /// <param name="userID">user identifier</param>
-        /// <returns></returns>
+        /// <param name="month">Month</param>
+        /// <param name="userID">The user identifier</param>
+        /// <returns>List<Top10></returns>
         public List<Top10> CategorySettingByMonth(int year, int month, Guid userID)
         {
             try

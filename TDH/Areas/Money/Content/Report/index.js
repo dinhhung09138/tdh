@@ -8,6 +8,42 @@ google.charts.setOnLoadCallback(drawIncomeSummaryByYearChart);
 google.charts.setOnLoadCallback(drawPaymentSummaryByYearChart);
 google.charts.setOnLoadCallback(drawPercentByGRoupChart);
 
+$(function () {
+
+    $("#summaryByYearSelector").datepicker({
+        language: 'vi',
+        format: "yyyy",
+        viewMode: "years",
+        minViewMode: "years"
+    }).on('changeDate', function (ev) {
+        $('#summaryByYearSelector').datepicker('hide');
+        drawSummaryByYearChart();
+        drawIncomeSummaryByYearChart();
+        drawPaymentSummaryByYearChart();
+    });
+
+    $('.table-borrow').DataTable({
+        searching: false,
+        ordering: false,
+        info: false,
+        autoWidth: false,
+        paging: false
+    });
+
+    $('.setHeight').matchHeight({
+        byRow: true,
+        property: 'height',
+        target: null,
+        remove: false
+    });
+    $('.set-height-month').matchHeight({
+        byRow: true,
+        property: 'height',
+        target: null,
+        remove: false
+    });
+});
+
 
 /**
  * Summary dashboard

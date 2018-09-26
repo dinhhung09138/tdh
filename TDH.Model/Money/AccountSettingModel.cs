@@ -64,5 +64,6 @@ namespace TDH.Model.Money
         /// Total money at the end of month
         /// </summary>
         public decimal End { get; set; } = 0;
+
     }
 }

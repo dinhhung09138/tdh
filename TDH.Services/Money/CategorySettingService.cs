@@ -7,7 +7,6 @@ using TDH.Common.UserException;
 using TDH.DataAccess;
 using TDH.Model.Money;
 using Utils;
-using Utils.JqueryDatatable;
 
 namespace TDH.Services.Money
 {
@@ -51,7 +50,7 @@ namespace TDH.Services.Money
                                  }).ToList();
                     if(_list.Count() == 0)
                     {
-                        //Create if current year doesn't setting
+                        //Create if current year doesn't exist in setting table
                         if(Create(categoryID, year, userID) == ResponseStatusCodeHelper.Success)
                         {
                             _list = (from m in _context.MN_CATEGORY_SETTING
@@ -107,6 +106,7 @@ namespace TDH.Services.Money
                         try
                         {
                             year = year * 100;
+                            //Save in 12 months in a year
                             for (int i = 1; i <= 12; i++)
                             {
                                 MN_CATEGORY_SETTING _md = new MN_CATEGORY_SETTING() {
@@ -149,8 +149,8 @@ namespace TDH.Services.Money
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model">setting model</param>
-        /// <param name="userID">user identifier</param>
+        /// <param name="model">List of setting model</param>
+        /// <param name="userID">The user identifier</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(List<CategorySettingModel> model, Guid userID)
         {
@@ -191,5 +191,6 @@ namespace TDH.Services.Money
             Notifier.Notification(userID, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
+
     }
 }

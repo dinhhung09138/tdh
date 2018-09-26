@@ -20,11 +20,11 @@ namespace TDH.Areas.Money.Controllers
         private readonly string FILE_NAME = "Money.Controllers/MNReportController.cs";
 
         #endregion
-
+        
         /// <summary>
         /// Report form
         /// </summary>
-        /// <returns>View</returns>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
         {
@@ -201,7 +201,13 @@ namespace TDH.Areas.Money.Controllers
                 throw new ControllerException(FILE_NAME, "PaymentByYearReport", UserID, ex);
             }
         }
-        
+
+        /// <summary>
+        /// Borrow account status
+        /// Show history dept state of borrow accounts
+        /// </summary>
+        /// <returns></returns>
+        [ChildActionOnly]
         [HttpGet]
         public ActionResult BorrowAccountStatus()
         {
@@ -235,6 +241,11 @@ namespace TDH.Areas.Money.Controllers
             }
         }
 
+        /// <summary>
+        /// List of top 10 max payment
+        /// </summary>
+        /// <returns></returns>
+        [ChildActionOnly]
         [HttpGet]
         public ActionResult Top10Payment()
         {
@@ -270,6 +281,11 @@ namespace TDH.Areas.Money.Controllers
             }
         }
 
+        /// <summary>
+        /// List of top 10 max income
+        /// </summary>
+        /// <returns></returns>
+        [ChildActionOnly]
         [HttpGet]
         public ActionResult Top10Income()
         {
@@ -305,6 +321,11 @@ namespace TDH.Areas.Money.Controllers
             }
         }
 
+        /// <summary>
+        /// Percent payment by group
+        /// </summary>
+        /// <returns></returns>
+        [ChildActionOnly]
         [HttpPost]
         public async Task<ActionResult> PercentByGroup()
         {
@@ -338,6 +359,11 @@ namespace TDH.Areas.Money.Controllers
             }
         }
 
+        /// <summary>
+        /// Real vs Setting of category
+        /// </summary>
+        /// <returns></returns>
+        [ChildActionOnly]
         [HttpGet]
         public ActionResult CateOver()
         {
@@ -368,6 +394,44 @@ namespace TDH.Areas.Money.Controllers
             catch (Exception ex)
             {
                 throw new ControllerException(FILE_NAME, "CateOver", UserID, ex);
+            }
+        }
+        
+        /// <summary>
+        /// Money summary
+        /// </summary>
+        /// <returns></returns>
+        [ChildActionOnly]
+        [HttpGet]
+        public ActionResult MonthSummary()
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                ReportService _service = new ReportService();
+
+                #endregion
+
+                #region " [ Main processing ] "
+
+                var _model = _service.CategorySettingByMonth(DateTime.Now.Year, DateTime.Now.Month, UserID);
+
+                #endregion
+
+                return PartialView("Partials/_MonthSummary", _model);
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "MonthSummary", UserID, ex);
             }
         }
     }

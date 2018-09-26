@@ -370,6 +370,7 @@ namespace TDH.Common
                                 case "top10payment":
                                 case "percentbygroup":
                                 case "cateover":
+                                case "monthsummary":
                                     return "money_report";
                                 default:
                                     return "";
@@ -814,6 +815,7 @@ namespace TDH.Common
                                 case "top10payment":
                                 case "percentbygroup":
                                 case "cateover":
+                                case "monthsummary":
                                     return ActionType.View;
                                 default:
                                     return ActionType.None;

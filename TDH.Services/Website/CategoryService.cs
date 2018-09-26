@@ -237,9 +237,12 @@ namespace TDH.Services.Website
                             throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
                         }
                     }
+
+                    var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == model.NavigationID);
+
                     _md.navigation_id = model.NavigationID;
                     _md.title = model.Title;
-                    _md.alias = model.MetaTitle.TitleToAlias();
+                    _md.alias = "/" + _nav.alias + "/" + model.MetaTitle.TitleToAlias();
                     _md.description = model.Description;
                     _md.show_on_nav = model.ShowOnNav;
                     _md.image = model.Image;

@@ -68,14 +68,14 @@ namespace TDH.Services
                             select new NavigationViewModel()
                             {
                                 Title = nav.title,
-                                Alias = "/" + nav.alias,
+                                Alias = nav.alias,
                                 Categories = (from cate in _context.WEB_CATEGORY
                                               where nav.id == cate.navigation_id && cate.publish && !cate.deleted && cate.show_on_nav
                                               orderby cate.ordering descending
                                               select new CategoryViewModel()
                                               {
                                                   Title = cate.title,
-                                                  Alias = "/" + nav.alias + "/" + cate.alias
+                                                  Alias = cate.alias
                                               }).ToList()
                             }).ToList();
                 }
@@ -104,13 +104,13 @@ namespace TDH.Services
                                  select new NavigationViewModel()
                                  {
                                      Title = n.title,
-                                     Alias = "/" + n.alias,
+                                     Alias = n.alias,
                                      Posts = _context.WEB_POST.Where(p => p.navigation_id == n.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
                                      {
                                          Title = p.title,
                                          Description = p.description,
                                          Image = p.image,
-                                         Alias = "/" + n.alias + "/" + p.alias,
+                                         Alias = p.alias,
                                          CreateDate = p.create_date
                                      }).Take(6).ToList()
                                  }).ToList();
@@ -142,13 +142,13 @@ namespace TDH.Services
                                  select new CategoryViewModel()
                                  {
                                      Title = c.title,
-                                     Alias = "/" + n.alias + "/" + c.alias,
+                                     Alias = c.alias,
                                      Posts = _context.WEB_POST.Where(p => p.category_id == c.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
                                      {
                                          Title = p.title,
                                          Description = p.description,
                                          Image = p.image,
-                                         Alias = "/" + n.alias + "/" + c.alias + "/" + p.alias,
+                                         Alias = p.alias,
                                          CreateDate = p.create_date
                                      }).Take(5).ToList()
                                  }).ToList();
@@ -178,7 +178,7 @@ namespace TDH.Services
                                  select new CategoryViewModel()
                                  {
                                      Title = m.title,
-                                     Alias = "/" + n.alias + "/" + m.alias,
+                                     Alias = m.alias,
                                      Count = _context.WEB_POST.Count(p => p.category_id == m.id)
                                  }).Take(9).ToList();
 
@@ -187,7 +187,7 @@ namespace TDH.Services
                                         select new CategoryViewModel()
                                         {
                                             Title = m.title,
-                                            Alias = "/" + m.alias,
+                                            Alias = m.alias,
                                             Count = _context.WEB_POST.Count(p => p.navigation_id == m.id)
                                         }).Take(9).ToList();
 
@@ -220,16 +220,18 @@ namespace TDH.Services
                     return (from hn in _context.WEB_HOME_NAVIGATION
                             join nav in _context.WEB_NAVIGATION on hn.navigation_id equals nav.id
                             orderby hn.ordering descending
-                            select new NavigationViewModel() {
+                            select new NavigationViewModel()
+                            {
                                 Title = nav.title,
-                                Alias = "/" + nav.alias,
+                                Alias = nav.alias,
                                 Posts = (from p in _context.WEB_POST
                                          where p.navigation_id == nav.id && p.publish && !p.deleted
                                          orderby p.create_date descending
-                                         select new PostViewModel() {
+                                         select new PostViewModel()
+                                         {
                                              Image = p.image,
                                              Title = p.title,
-                                             Alias = "/" + nav.alias + "/" + p.alias,
+                                             Alias = p.alias,
                                              CreateDate = p.create_date
                                          }).Take(3).ToList()
                             }).Take(2).ToList();
@@ -454,37 +456,19 @@ namespace TDH.Services
         {
             try
             {
-                List<PostViewModel> _return = new List<PostViewModel>();
                 using (var _context = new TDHEntities())
                 {
-                    string _cateAlias = "";
-                    var _list = _context.WEB_POST.Where(m => m.publish && !m.deleted)
+                    return _context.WEB_POST.Where(m => m.publish && !m.deleted)
                                              .OrderByDescending(m => m.create_date)
-                                             .Select(m => new { m.alias, m.title, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
+                                             .Select(m => new PostViewModel()
+                                             {
+                                                 Alias = m.alias,
+                                                 Title = m.title,
+                                                 Image = m.image,
+                                                 CreateDate = m.create_date
+                                             })
                                              .Take(4).ToList();
-                    foreach (var item in _list)
-                    {
-                        if (item.is_navigation)
-                        {
-                            var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == item.navigation_id);
-                            _cateAlias = "/" + _nav.alias;
-                        }
-                        else
-                        {
-                            var _cate = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == item.category_id);
-                            var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == _cate.navigation_id);
-                            _cateAlias = "/" + _nav.alias + "/" + _cate.alias;
-                        }
-                        _return.Add(new PostViewModel()
-                        {
-                            Title = item.title,
-                            Alias = _cateAlias + "/" + item.alias,
-                            Image = item.image,
-                            CreateDate = item.create_date
-                        });
-                    }
                 }
-                return _return;
             }
             catch (Exception ex)
             {
@@ -500,37 +484,19 @@ namespace TDH.Services
         {
             try
             {
-                List<PostViewModel> _return = new List<PostViewModel>();
                 using (var _context = new TDHEntities())
                 {
-                    string _cateAlias = "";
-                    var _list = _context.WEB_POST.Where(m => m.publish && !m.deleted)
+                    return _context.WEB_POST.Where(m => m.publish && !m.deleted)
                                              .OrderByDescending(m => m.view)
-                                             .Select(m => new { m.alias, m.title, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
+                                             .Select(m => new PostViewModel()
+                                             {
+                                                 Alias = m.alias,
+                                                 Title = m.title,
+                                                 Image = m.image,
+                                                 CreateDate = m.create_date
+                                             })
                                              .Take(2).ToList();
-                    foreach (var item in _list)
-                    {
-                        if (item.is_navigation)
-                        {
-                            var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == item.navigation_id);
-                            _cateAlias = "/" + _nav.alias;
-                        }
-                        else
-                        {
-                            var _cate = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == item.category_id);
-                            var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == _cate.navigation_id);
-                            _cateAlias = "/" + _nav.alias + "/" + _cate.alias;
-                        }
-                        _return.Add(new PostViewModel()
-                        {
-                            Title = item.title,
-                            Alias = _cateAlias + "/" + item.alias,
-                            Image = item.image,
-                            CreateDate = item.create_date
-                        });
-                    }
                 }
-                return _return;
             }
             catch (Exception ex)
             {
@@ -549,29 +515,27 @@ namespace TDH.Services
         /// <returns>List<CategoryViewModel></returns>
         public static List<CategoryViewModel> GetListCategoryDataByNavigation(string navigationAlias)
         {
-            List<CategoryViewModel> _return = new List<CategoryViewModel>();
             try
             {
                 using (var context = new TDHEntities())
                 {
-                    var _list = (from m in context.WEB_CATEGORY
-                                 join n in context.WEB_NAVIGATION on m.navigation_id equals n.id
-                                 where m.publish && !m.deleted && n.publish && !n.deleted && n.alias == navigationAlias
-                                 orderby m.ordering descending
-                                 select new CategoryViewModel()
-                                 {
-                                     Title = m.title,
-                                     Alias = "/" + n.alias + "/" + m.alias,
-                                     Posts = context.WEB_POST.Where(p => p.category_id == m.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
-                                     {
-                                         Title = p.title,
-                                         Description = p.description,
-                                         Image = p.image,
-                                         Alias = "/" + n.alias + "/" + m.alias + "/" + p.alias,
-                                         CreateDate = p.create_date
-                                     }).Take(12).ToList()
-                                 }).ToList();
-                    return _list;
+                    return (from m in context.WEB_CATEGORY
+                            join n in context.WEB_NAVIGATION on m.navigation_id equals n.id
+                            where m.publish && !m.deleted && n.publish && !n.deleted && n.alias == navigationAlias
+                            orderby m.ordering descending
+                            select new CategoryViewModel()
+                            {
+                                Title = m.title,
+                                Alias = m.alias,
+                                Posts = context.WEB_POST.Where(p => p.category_id == m.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
+                                {
+                                    Title = p.title,
+                                    Description = p.description,
+                                    Image = p.image,
+                                    Alias = p.alias,
+                                    CreateDate = p.create_date
+                                }).Take(12).ToList()
+                            }).ToList();
                 }
             }
             catch (Exception ex)
@@ -642,23 +606,18 @@ namespace TDH.Services
                 List<PostViewModel> _return = new List<PostViewModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _list = context.WEB_POST.Where(p => p.category_id == _cate.ID)
+                    return context.WEB_POST.Where(p => p.category_id == _cate.ID)
                                              .OrderByDescending(m => m.create_date)
-                                             .Select(m => new { m.alias, m.title, m.description, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
+                                             .Select(m => new PostViewModel()
+                                             {
+                                                 Alias = m.alias,
+                                                 Title = m.title,
+                                                 Description = m.description,
+                                                 Image = m.image,
+                                                 CreateDate = m.create_date
+                                             })
                                              .Take(12).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new PostViewModel()
-                        {
-                            Title = item.title,
-                            Description = item.description,
-                            Alias = "/" + _nav.Alias + "/" + _cate.Alias + "/" + item.alias,
-                            Image = item.image,
-                            CreateDate = item.create_date
-                        });
-                    }
                 }
-                return _return;
             }
             catch (UserException uEx)
             {
@@ -684,27 +643,20 @@ namespace TDH.Services
         {
             try
             {
-                List<PostViewModel> _return = new List<PostViewModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _navAlias = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == navID).alias;
-                    var _list = context.WEB_POST.Where(p => p.navigation_id == navID)
+                    return _context.WEB_POST.Where(p => p.navigation_id == navID)
                                              .OrderByDescending(m => m.create_date)
-                                             .Select(m => new { m.alias, m.title, m.description, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
+                                             .Select(m => new PostViewModel()
+                                             {
+                                                 Alias = m.alias,
+                                                 Title = m.title,
+                                                 Description = m.description,
+                                                 Image = m.image,
+                                                 CreateDate = m.create_date
+                                             })
                                              .Take(6).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new PostViewModel()
-                        {
-                            Title = item.title,
-                            Description = item.description,
-                            Alias = "/" + _navAlias + "/" + item.alias,
-                            Image = item.image,
-                            CreateDate = item.create_date
-                        });
-                    }
                 }
-                return _return;
             }
             catch (Exception ex)
             {
@@ -722,27 +674,20 @@ namespace TDH.Services
             try
             {
                 List<PostViewModel> _return = new List<PostViewModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.id == cateID);
-                    var _navAlias = context.WEB_NAVIGATION.FirstOrDefault(m => m.id == _cate.navigation_id).alias;
-                    var _list = context.WEB_POST.Where(p => p.category_id == cateID)
+                    return _context.WEB_POST.Where(p => p.category_id == cateID)
                                              .OrderByDescending(m => m.create_date)
-                                             .Select(m => new { m.alias, m.title, m.description, m.image, m.is_navigation, m.navigation_id, m.category_id, m.create_date })
+                                             .Select(m => new PostViewModel()
+                                             {
+                                                 Alias = m.alias,
+                                                 Title = m.title,
+                                                 Description = m.description,
+                                                 Image = m.image,
+                                                 CreateDate = m.create_date
+                                             })
                                              .Take(6).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new PostViewModel()
-                        {
-                            Title = item.title,
-                            Description = item.description,
-                            Alias = "/" + _navAlias + "/" + _cate.alias + "/" + item.alias,
-                            Image = item.image,
-                            CreateDate = item.create_date
-                        });
-                    }
                 }
-                return _return;
             }
             catch (Exception ex)
             {
@@ -786,9 +731,9 @@ namespace TDH.Services
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _item = context.WEB_ABOUT.FirstOrDefault();
+                    var _item = _context.WEB_ABOUT.FirstOrDefault();
                     if (_item == null)
                     {
                         throw new UserException(FILE_NAME, "About", null);

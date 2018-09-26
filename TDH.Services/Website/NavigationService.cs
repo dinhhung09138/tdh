@@ -269,7 +269,7 @@ namespace TDH.Services.Website
                         }
                     }
                     _md.title = model.Title;
-                    _md.alias = model.MetaTitle.TitleToAlias();
+                    _md.alias = "/" + model.MetaTitle.TitleToAlias();
                     _md.description = model.Description;
                     _md.no_child = model.NoChild;
                     _md.image = model.Image;

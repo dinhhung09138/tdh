@@ -212,16 +212,21 @@ namespace TDH.Services.Website
                     _md.is_navigation = model.IsNavigation;
                     if (model.IsNavigation)
                     {
+                        var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == model.NavigationID);
+
                         _md.navigation_id = model.NavigationID;
                         _md.category_id = null;
+                        _md.alias = "/" + _nav.alias + "/" + model.MetaTitle.TitleToAlias();
                     }
                     else
                     {
+                        var _cate = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.CategoryID);
+
                         _md.category_id = model.CategoryID;
                         _md.navigation_id = null;
+                        _md.alias = "/" + _cate.alias + "/" + model.MetaTitle.TitleToAlias();
                     }
                     _md.title = model.Title;
-                    _md.alias = model.MetaTitle.TitleToAlias();
                     _md.description = model.Description;
                     _md.content = model.Content;
                     _md.image = model.Image;

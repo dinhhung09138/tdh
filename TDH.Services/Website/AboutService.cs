@@ -27,7 +27,7 @@ namespace TDH.Services.Website
         /// Get item
         /// </summary>
         /// <param name="model">About model</param>
-        /// <returns>AboutModel. Throw exception if not found or get some error</returns>
+        /// <returns>AboutModel</returns>
         public AboutModel GetItemByID(AboutModel model)
         {
             try
@@ -161,5 +161,6 @@ namespace TDH.Services.Website
             }
             return ResponseStatusCodeHelper.Success;
         }
+
     }
 }

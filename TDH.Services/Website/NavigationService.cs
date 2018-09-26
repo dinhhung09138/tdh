@@ -29,7 +29,7 @@ namespace TDH.Services.Website
         /// Get list data using jquery datatable
         /// </summary>
         /// <param name="request">Jquery datatable request</param>
-        /// <param name="userID">User identifier</param>
+        /// <param name="userID">The user identifier</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -198,7 +198,7 @@ namespace TDH.Services.Website
         /// Get item
         /// </summary>
         /// <param name="model">Navigation model</param>
-        /// <returns>NavigationModel. Throw exception if not found or get some error</returns>
+        /// <returns>NavigationModel</returns>
         public NavigationModel GetItemByID(NavigationModel model)
         {
             try
@@ -428,5 +428,6 @@ namespace TDH.Services.Website
             }
             return ResponseStatusCodeHelper.OK;
         }
+
     }
 }

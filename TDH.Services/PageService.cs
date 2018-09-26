@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TDH.Common;
 using TDH.Common.Fillters;
 using TDH.DataAccess;
@@ -27,6 +25,10 @@ namespace TDH.Services
 
         #region " [ Home page ] "
 
+        /// <summary>
+        /// Get home page meta content
+        /// </summary>
+        /// <returns>MetaViewModel</returns>
         public static MetaViewModel getHomeMetaContent()
         {
             MetaViewModel _meta = new MetaViewModel();
@@ -54,7 +56,7 @@ namespace TDH.Services
         /// <summary>
         /// List of navigation
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<NavigationViewModel></returns>
         public static List<NavigationViewModel> GetListNavigation()
         {
             List<NavigationViewModel> _return = new List<NavigationViewModel>();
@@ -88,8 +90,9 @@ namespace TDH.Services
 
         /// <summary>
         /// Get list category and post data to show on homepage
+        /// Get top 6 post for each navigation
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<NavigationViewModel></returns>
         public static List<NavigationViewModel> GetListNavigationShowOnHomePage()
         {
             List<NavigationViewModel> _return = new List<NavigationViewModel>();
@@ -125,8 +128,9 @@ namespace TDH.Services
 
         /// <summary>
         /// Get list category and post data to show on homepage
+        /// Get list of top 5 of post for each category
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<CategoryViewModel></returns>
         public static List<CategoryViewModel> GetListCategoryShowOnHomePage()
         {
             List<CategoryViewModel> _return = new List<CategoryViewModel>();
@@ -164,7 +168,7 @@ namespace TDH.Services
         /// <summary>
         /// Get list category and count to show on footer
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<CategoryViewModel></returns>
         public static List<CategoryViewModel> GetListCategoryOnFooter()
         {
             List<CategoryViewModel> _return = new List<CategoryViewModel>();
@@ -205,8 +209,10 @@ namespace TDH.Services
 
         /// <summary>
         /// Get two navigation item to show on footer
+        /// Get top 2 navigation
+        /// Get top 3 posts for each navigation.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<NavigationViewModel></returns>
         public static List<NavigationViewModel> Get2NavigationOnFooter()
         {
             List<NavigationViewModel> _return = new List<NavigationViewModel>();
@@ -243,7 +249,7 @@ namespace TDH.Services
         /// <summary>
         /// Get banner infor
         /// </summary>
-        /// <returns></returns>
+        /// <returns>string</returns>
         public static string GetBannerInfor()
         {
             try
@@ -267,7 +273,7 @@ namespace TDH.Services
         /// Get navigation infor
         /// </summary>
         /// <param name="navAlias">Navigation alias</param>
-        /// <returns></returns>
+        /// <returns>NavigationViewModel</returns>
         public static NavigationViewModel GetNavigationInfor(string navAlias)
         {
             try
@@ -305,8 +311,8 @@ namespace TDH.Services
         /// <summary>
         /// Get category infor
         /// </summary>
-        /// <param name="cateAlias">Category information</param>
-        /// <returns></returns>
+        /// <param name="cateAlias">Category alias</param>
+        /// <returns>CategoryViewModel</returns>
         public static CategoryViewModel GetCategoryInfor(string cateAlias)
         {
             try
@@ -346,8 +352,8 @@ namespace TDH.Services
         /// Get post infor
         /// </summary>
         /// <param name="navAlias">Navigation alias</param>
-        /// <param name="postAlias"></param>
-        /// <returns></returns>
+        /// <param name="postAlias">Post alias</param>
+        /// <returns>PostViewModel</returns>
         public static PostViewModel GetPostInfor(string navAlias, string postAlias)
         {
             try
@@ -391,8 +397,8 @@ namespace TDH.Services
         /// </summary>
         /// <param name="navAlias">Navigation alias</param>
         /// <param name="cateAlias">Category alias</param>
-        /// <param name="postAlias"></param>
-        /// <returns></returns>
+        /// <param name="postAlias">Post alias</param>
+        /// <returns>PostViewModel</returns>
         public static PostViewModel GetPostInfor(string navAlias, string cateAlias, string postAlias)
         {
             try
@@ -436,7 +442,7 @@ namespace TDH.Services
         /// <summary>
         /// Get top 4 lasted news
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<PostViewModel></returns>
         public static List<PostViewModel> GetTop4LastedNews()
         {
             try
@@ -483,7 +489,7 @@ namespace TDH.Services
         /// <summary>
         /// Get 2 news has largest view
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<PostViewModel></returns>
         public static List<PostViewModel> GetTop2Views()
         {
             try
@@ -535,7 +541,7 @@ namespace TDH.Services
         /// Get list category by navigation alias
         /// </summary>
         /// <param name="navigationAlias"></param>
-        /// <returns></returns>
+        /// <returns>List<CategoryViewModel></returns>
         public static List<CategoryViewModel> GetListCategoryDataByNavigation(string navigationAlias)
         {
             List<CategoryViewModel> _return = new List<CategoryViewModel>();
@@ -614,8 +620,8 @@ namespace TDH.Services
         /// <summary>
         /// Get list post data with has category and navigation
         /// </summary>
-        /// <param name="categoryAlias"></param>
-        /// <returns></returns>
+        /// <param name="categoryAlias">Category alias</param>
+        /// <returns>List<PostViewModel></returns>
         public static List<PostViewModel> GetListPostDataByCategory(string navigationAlias, string categoryAlias)
         {
             try
@@ -660,10 +666,10 @@ namespace TDH.Services
         #region " [ Post ] "
 
         /// <summary>
-        /// Get top 6 news by navigation
+        /// Get top 6 news by navigation identifier
         /// </summary>
-        /// <param name="navID"></param>
-        /// <returns></returns>
+        /// <param name="navID">Navigation identifier</param>
+        /// <returns>List<PostViewModel></returns>
         public static List<PostViewModel> Top6LastedPostByNavigationID(Guid navID)
         {
             try
@@ -698,10 +704,10 @@ namespace TDH.Services
         }
 
         /// <summary>
-        /// Get top 6 news by category
+        /// Get top 6 news by category identifier
         /// </summary>
-        /// <param name="cateID"></param>
-        /// <returns></returns>
+        /// <param name="cateID">Category identifier</param>
+        /// <returns>List<PostViewModel></returns>
         public static List<PostViewModel> Top6LastedPostByCategoryID(Guid cateID)
         {
             try
@@ -739,6 +745,10 @@ namespace TDH.Services
 
         #endregion
 
+        /// <summary>
+        /// Get short introduction about me
+        /// </summary>
+        /// <returns>MetaViewModel</returns>
         public static MetaViewModel GetShortIntroAboutMe()
         {
             MetaViewModel _meta = new MetaViewModel();
@@ -764,7 +774,7 @@ namespace TDH.Services
         /// <summary>
         /// About infor
         /// </summary>
-        /// <returns></returns>
+        /// <returns>PostViewModel</returns>
         public static PostViewModel About()
         {
             try

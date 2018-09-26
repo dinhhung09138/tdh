@@ -142,5 +142,6 @@ namespace TDH.Model.Website
         /// Count number of child item. Format as string
         /// </summary>
         public string CountString { get; set; } = "0";
+
     }
 }

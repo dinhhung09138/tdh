@@ -130,5 +130,6 @@ namespace TDH.Model.Website
         /// No child item status. Default false
         /// </summary>
         public bool NoChild { get; set; } = false;
+
     }
 }

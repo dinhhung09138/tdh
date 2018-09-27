@@ -30,23 +30,17 @@ namespace TDH.Services.Personal
         {
             try
             {
-                List<EventTypeModel> _return = new List<EventTypeModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in _context.PN_EVENT_TYPE
-                                 where !m.deleted && m.publish
-                                 orderby m.ordering descending
-                                 select new
-                                 {
-                                     m.code,
-                                     m.name
-                                 }).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new EventTypeModel() { Code = item.code, Name = item.name });
-                    }
+                    return (from m in _context.PN_EVENT_TYPE
+                            where !m.deleted && m.publish
+                            orderby m.ordering descending
+                            select new EventTypeModel()
+                            {
+                                Code = m.code,
+                                Name = m.name
+                            }).ToList();
                 }
-                return _return;
             }
             catch (Exception ex)
             {

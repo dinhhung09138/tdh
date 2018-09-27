@@ -133,36 +133,30 @@ namespace TDH.Services.Personal
         {
             try
             {
-                List<EducationModel> _return = new List<EducationModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in _context.PN_EDUCATION
-                                 where !m.deleted && m.publish && m.created_by == userID
-                                 orderby m.ordering descending
-                                 select new
-                                 {
-                                     m.id,
-                                     m.name,
-                                     m.description
-                                 }).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new EducationModel() { ID = item.id, Name = item.name, Description = item.description });
-                    }
+                    return (from m in _context.PN_EDUCATION
+                            where !m.deleted && m.publish && m.created_by == userID
+                            orderby m.ordering descending
+                            select new EducationModel()
+                            {
+                                ID = m.id,
+                                Name = m.name,
+                                Description = m.description
+                            }).ToList();
                 }
-                return _return;
             }
             catch (Exception ex)
             {
                 throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
             }
         }
-        
+
         /// <summary>
         /// Get item
         /// </summary>
         /// <param name="model">model</param>
-        /// <returns>MoneyEducationModel. Throw exception if not found or get some error</returns>
+        /// <returns>MoneyEducationModel</returns>
         public EducationModel GetItemByID(EducationModel model)
         {
             try

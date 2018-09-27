@@ -23,7 +23,11 @@ namespace TDH.Areas.Personal.Controllers
         private readonly string FILE_NAME = "Personal.Controllers/PNIdeaController.cs";
 
         #endregion
-        
+
+        /// <summary>
+        /// List of idea form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Index()
         {
@@ -45,6 +49,12 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// List of idea function
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<IdeaModel></returns>
         [HttpPost]
         public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
@@ -87,6 +97,10 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Create form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Create()
         {
@@ -119,6 +133,11 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Create function
+        /// </summary>
+        /// <param name="model">IdeaModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -158,6 +177,11 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit form
+        /// </summary>
+        /// <param name="id">The idea identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Edit(string id)
         {
@@ -166,13 +190,14 @@ namespace TDH.Areas.Personal.Controllers
                 #region " [ Declaration ] "
 
                 IdeaService _service = new IdeaService();
-                //
+
                 ViewBag.id = id;
 
                 #endregion
 
                 // Call to service
                 IdeaModel model = _service.GetItemByID(new IdeaModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+
                 return View(model);
             }
             catch (ServiceException serviceEx)
@@ -189,10 +214,15 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit function
+        /// </summary>
+        /// <param name="model">IdeaModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Edit(IdeaModel model)
+        public JsonResult Edit(IdeaModel model)
         {
             try
             {
@@ -228,8 +258,13 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete function
+        /// </summary>
+        /// <param name="model">IdeaModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(IdeaModel model)
+        public JsonResult Delete(IdeaModel model)
         {
             try
             {
@@ -264,8 +299,13 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Check delete function
+        /// </summary>
+        /// <param name="model">IdeaModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDelete(IdeaModel model)
+        public JsonResult CheckDelete(IdeaModel model)
         {
             try
             {

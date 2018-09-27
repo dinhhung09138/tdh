@@ -6662,6 +6662,7 @@
     <Content Include="Areas\Money\Views\MNReport\Partials\_Top10.cshtml" />
     <Content Include="Areas\Money\Views\MNReport\Partials\_OverSetting.cshtml" />
     <Content Include="Areas\Money\Views\MNReport\Partials\_MonthSummary.cshtml" />
+    <Content Include="Areas\Personal\Views\PNSkill\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -6719,7 +6720,6 @@
     <Folder Include="Areas\Common\Views\Shared\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
     <Folder Include="Areas\Money\Models\" />
-    <Folder Include="Areas\Personal\Views\PNSkill\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

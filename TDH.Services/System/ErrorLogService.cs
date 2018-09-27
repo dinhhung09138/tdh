@@ -162,7 +162,8 @@ namespace TDH.Services.System
             {
                 throw new ServiceException(FILE_NAME, "DeleteAll", userID, ex);
             }
-            return ResponseStatusCodeHelper.OK;
+            Notifier.Notification(userID, Message.DeleteSuccess, Notifier.TYPE.Success);
+            return ResponseStatusCodeHelper.Success;
         }
 
     }

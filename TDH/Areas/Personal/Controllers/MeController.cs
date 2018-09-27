@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
-using TDH.Model.Personal;
 using TDH.Services.Personal;
-using Utils;
 
 namespace TDH.Areas.Personal.Controllers
 {
@@ -25,12 +20,17 @@ namespace TDH.Areas.Personal.Controllers
 
         #endregion
 
+        /// <summary>
+        /// My info dashboar form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Index()
         {
             try
             {
                 #region " [ Declaration ] "
+
                 TimelineService _timelineService = new TimelineService();
                 CetificateService _cetificateService = new CetificateService();
 

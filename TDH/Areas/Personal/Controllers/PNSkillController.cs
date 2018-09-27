@@ -26,7 +26,11 @@ namespace TDH.Areas.Personal.Controllers
 
         #endregion
 
-        
+        /// <summary>
+        /// Skill form
+        /// </summary>
+        /// <returns>View</returns>
+        [HttpGet]
         public ActionResult Index()
         {
             try

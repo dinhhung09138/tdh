@@ -25,6 +25,10 @@ namespace TDH.Areas.Personal.Controllers
 
         #endregion
 
+        /// <summary>
+        /// List of cetificate form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Index()
         {
@@ -46,6 +50,12 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// List of cetificate function
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<CetificateModel></returns>
         [HttpPost]
         public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
@@ -87,20 +97,24 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Create form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Create()
         {
             try
             {
                 #region " [ Declaration ] "
-                
+
                 CetificateModel model = new CetificateModel()
                 {
                     ID = Guid.NewGuid(),
                     CreateBy = UserID,
                     Insert = true
                 };
-                
+
                 #endregion
 
                 return View(model);
@@ -119,9 +133,14 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Create function
+        /// </summary>
+        /// <param name="model">CetificateModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CetificateModel model)
+        public JsonResult Create(CetificateModel model)
         {
             try
             {
@@ -158,21 +177,27 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit form
+        /// </summary>
+        /// <param name="id">The cetificate identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Edit(string id)
         {
             try
             {
                 #region " [ Declaration ] "
-                
+
                 CetificateService _service = new CetificateService();
-                //
+
                 ViewBag.id = id;
 
                 #endregion
 
                 // Call to service
                 CetificateModel model = _service.GetItemByID(new CetificateModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+
                 return View(model);
             }
             catch (ServiceException serviceEx)
@@ -189,9 +214,14 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit function
+        /// </summary>
+        /// <param name="model">CetificateModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CetificateModel model)
+        public JsonResult Edit(CetificateModel model)
         {
             try
             {
@@ -228,8 +258,13 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete function
+        /// </summary>
+        /// <param name="model">CetificateModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(CetificateModel model)
+        public JsonResult Delete(CetificateModel model)
         {
             try
             {

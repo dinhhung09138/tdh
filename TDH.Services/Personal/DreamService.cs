@@ -111,21 +111,19 @@ namespace TDH.Services.Personal
         /// <summary>
         /// Get all item without deleted
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<DreamModel></returns>
         public List<DreamModel> GetAll(Guid userID)
         {
             try
             {
-                List<DreamModel> _return = new List<DreamModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _list = context.PN_DREAM.Where(m => !m.deleted && m.created_by == userID).OrderByDescending(m => m.created_date).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new DreamModel() { ID = item.id, Title = item.title });
-                    }
+                    return context.PN_DREAM
+                                .Where(m => !m.deleted && m.created_by == userID)
+                                .OrderByDescending(m => m.created_date)
+                                .Select(m => new DreamModel() { ID = m.id, Title = m.title })
+                                .ToList();
                 }
-                return _return;
             }
             catch (Exception ex)
             {
@@ -136,8 +134,8 @@ namespace TDH.Services.Personal
         /// <summary>
         /// Get item
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns>DreamModel. Throw exception if not found or get some error</returns>
+        /// <param name="model">Dream model</param>
+        /// <returns>DreamModel</returns>
         public DreamModel GetItemByID(DreamModel model)
         {
             try
@@ -173,7 +171,7 @@ namespace TDH.Services.Personal
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Dream model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(DreamModel model)
         {
@@ -270,6 +268,6 @@ namespace TDH.Services.Personal
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
         }
-       
+
     }
 }

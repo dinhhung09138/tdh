@@ -3,9 +3,7 @@
     ViewBag.Title = "Không tìm thấy liên kết";
     Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
 }
-@section header{
-
-}
+@section header{}
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "error" })
 <div class="card card-success">
     <div class="card-header with-border no-bg">
@@ -19,7 +17,5 @@
         <br /><br /><br />
     </div>
 </div>
-@section script {
-
-}
+@section script {}
 

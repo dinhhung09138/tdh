@@ -125,10 +125,9 @@ namespace TDH.Services.System
         /// Get item
         /// </summary>
         /// <param name="model">User Model</param>
-        /// <returns>UserModel. Throw exception if not found or get some error</returns>
+        /// <returns>UserModel</returns>
         public UserModel GetItemByID(UserModel model)
         {
-            UserModel _return = new UserModel() { ID = Guid.NewGuid(), Insert = model.Insert };
             try
             {
                 using (var _context = new TDHEntities())
@@ -149,7 +148,8 @@ namespace TDH.Services.System
                         UserName = _md.user_name,
                         Locked = _md.locked,
                         RoleID = _role.id,
-                        RoleName = _role.name
+                        RoleName = _role.name,
+                        Insert = false
                     };
                 }
             }
@@ -448,9 +448,9 @@ namespace TDH.Services.System
                 using (var _context = new TDHEntities())
                 {
                     var _list = (from m in _context.V_SYS_RENDER_NAVIGATION
-                                         where m.id == userID && m.module_code == moduleCode
-                                         orderby m.module_order descending, m.function_ordering descending
-                                         select new { m.code, m.title, m.url }).ToList();
+                                 where m.id == userID && m.module_code == moduleCode
+                                 orderby m.module_order descending, m.function_ordering descending
+                                 select new { m.code, m.title, m.url }).ToList();
 
                     foreach (var item in _list)
                     {
@@ -469,6 +469,7 @@ namespace TDH.Services.System
             }
             return _return;
         }
+
     }
 }
 

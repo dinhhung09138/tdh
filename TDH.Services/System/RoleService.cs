@@ -133,7 +133,7 @@ namespace TDH.Services.System
         /// Get item
         /// </summary>
         /// <param name="model">Role Model</param>
-        /// <returns>RoleModel. Throw exception if not found or get some error</returns>
+        /// <returns>RoleModel</returns>
         public RoleModel GetItemByID(RoleModel model)
         {
             RoleModel _return = new RoleModel() { ID = Guid.NewGuid(), Insert = model.Insert };
@@ -433,5 +433,6 @@ namespace TDH.Services.System
                 throw new ServiceException(FILE_NAME, "AllowAccess", userID, ex);
             }
         }
+
     }
 }

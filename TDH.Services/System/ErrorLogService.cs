@@ -23,8 +23,7 @@ namespace TDH.Services.System
         private readonly string FILE_NAME = "Services.System/ErrorLogService.cs";
 
         #endregion
-
-
+        
         /// <summary>
         /// Get list data using jquery datatable
         /// </summary>
@@ -139,5 +138,32 @@ namespace TDH.Services.System
             }
             return _return;
         }
+
+        /// <summary>
+        /// Delete all error log
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
+        public ResponseStatusCodeHelper DeleteAll(Guid userID)
+        {
+            try
+            {
+                using (var context = new TDHEntities())
+                {
+                    context.Database.ExecuteSqlCommand("TRUNCATE TABLE [dbo].[WEB_ERROR_LOG]");
+                    context.SaveChanges();
+                }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(FILE_NAME, "DeleteAll", userID, ex);
+            }
+            return ResponseStatusCodeHelper.OK;
+        }
+
     }
 }

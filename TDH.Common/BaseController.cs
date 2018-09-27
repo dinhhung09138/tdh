@@ -120,7 +120,7 @@ namespace TDH.Common
         protected override void OnResultExecuting(ResultExecutingContext filterContext)
         {
             //Notification
-            if(TempData[CommonHelper.EXECUTE_RESULT] != null)
+            if (TempData[CommonHelper.EXECUTE_RESULT] != null)
             {
                 Utils.CommonModel.ExecuteResultModel _result = TempData[CommonHelper.EXECUTE_RESULT] as Utils.CommonModel.ExecuteResultModel;
                 ViewBag.msg = _result.Message;
@@ -138,27 +138,23 @@ namespace TDH.Common
         {
             base.OnException(filterContext);
             filterContext.ExceptionHandled = true;
-            
+
             //Try to collect data was deleted or without permission
             if (filterContext.Exception is DataAccessException)
             {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                filterContext.Result = new ViewResult
                 {
-                    area = "administrator",
-                    controller = "admerror",
-                    action = "dataaccess"
-                }));
+                    ViewName = "~/Areas/Administrator/Views/AdmError/DataAccess.cshtml"
+                };
                 return;
             }
             //controller or service exception
             if (filterContext.Exception is ControllerException || filterContext.Exception is ServiceException)
             {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                filterContext.Result = new ViewResult
                 {
-                    area = "administrator",
-                    controller = "admerror",
-                    action = "error"
-                }));
+                    ViewName = "~/Areas/Administrator/Views/AdmError/Error.cshtml"
+                };
                 return;
             }
             //Member dont have permission try to access
@@ -166,25 +162,20 @@ namespace TDH.Common
             //Return when check permision.
             if (filterContext.Exception is MemberAccessException)
             {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                filterContext.Result = new ViewResult
                 {
-                    area = "administrator",
-                    controller = "admerror",
-                    action = "forbiden"
-                }));
+                    ViewName = "~/Areas/Administrator/Views/AdmError/Forbiden.cshtml"
+                };
                 return;
             }
             //Error accur in business logic code
             //Only use in Common module (get access, get setting)
             if (filterContext.Exception is ApplicationException)
             {
-                string msg = filterContext.Exception.Message;
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                filterContext.Result = new ViewResult
                 {
-                    area = "administrator",
-                    controller = "admerror",
-                    action = "error"
-                }));
+                    ViewName = "~/Areas/Administrator/Views/AdmError/Error.cshtml"
+                };
                 return;
             }
         }
@@ -252,6 +243,7 @@ namespace TDH.Common
                             {
                                 case "index":
                                 case "detail":
+                                case "deleteall":
                                     return "system_error_log";
                                 default:
                                     return "";
@@ -678,6 +670,7 @@ namespace TDH.Common
                             {
                                 case "index":
                                 case "detail":
+                                case "deleteall":
                                     return ActionType.View;
                                 default:
                                     return ActionType.None;

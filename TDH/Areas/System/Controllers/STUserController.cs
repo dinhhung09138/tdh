@@ -39,7 +39,7 @@ namespace TDH.Areas.System.Controllers
 
                 #endregion
 
-                return PartialView();
+                return View();
             }
             catch (ServiceException serviceEx)
             {
@@ -59,7 +59,7 @@ namespace TDH.Areas.System.Controllers
         /// User form
         /// Post method
         /// </summary>
-        /// <param name="requestData">jquery datatable request</param>
+        /// <param name="requestData">Jquery datatable request</param>
         /// <returns>DataTableResponse<UserModel></returns>
         [HttpPost]
         public JsonResult Index(CustomDataTableRequestHelper requestData)
@@ -116,13 +116,14 @@ namespace TDH.Areas.System.Controllers
 
                 RoleService _rService = new RoleService();
 
-                ViewBag.Role = _rService.GetAll(UserID);
                 UserModel model = new UserModel()
                 {
                     ID = Guid.NewGuid(),
                     CreateBy = UserID,
                     Insert = true
                 };
+
+                ViewBag.Role = _rService.GetAll(UserID);
                 ViewBag.currentID = UserID;
 
                 #endregion
@@ -151,7 +152,7 @@ namespace TDH.Areas.System.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UserModel model)
+        public JsonResult Create(UserModel model)
         {
             try
             {
@@ -190,7 +191,7 @@ namespace TDH.Areas.System.Controllers
         /// <summary>
         /// Edit user form
         /// </summary>
-        /// <param name="id">User identifier</param>
+        /// <param name="id">The user identifier</param>
         /// <returns>View</returns>
         [HttpGet]
         public ActionResult Edit(string id)
@@ -231,11 +232,11 @@ namespace TDH.Areas.System.Controllers
         /// Edit user form
         /// Post method
         /// </summary>
-        /// <param name="model">User model</param>
+        /// <param name="model">The user model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(UserModel model)
+        public JsonResult Edit(UserModel model)
         {
             try
             {
@@ -277,7 +278,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="model">User model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Publish(UserModel model)
+        public JsonResult Publish(UserModel model)
         {
             try
             {
@@ -318,7 +319,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="model">User model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(UserModel model)
+        public JsonResult Delete(UserModel model)
         {
             try
             {

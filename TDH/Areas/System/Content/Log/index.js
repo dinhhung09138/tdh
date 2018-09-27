@@ -90,3 +90,24 @@ function detailItem(id) {
         }
     });
 }
+
+function deleteAll() {
+    $.ajax({
+        url: '/system/sterrorlog/deleteall',
+        type: 'POST',
+        contentType: 'application/json',
+        dataType: 'json',
+        data: JSON.stringify({ id: id }),
+        success: function (response) {
+            table.ajax.reload();
+        },
+        error: function (xhr, status, error) {
+            console.log(error);
+        }
+    });
+    $('#deleteModal').modal('hide');
+}
+
+function showConfirm() {
+    $('#deleteModal').modal('show');
+}

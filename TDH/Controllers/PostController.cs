@@ -50,7 +50,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Navigation", ex);
+                throw new UserException(FILE_NAME, "Navigation", 500, "Controller has an error", ex);
             }
         }
 
@@ -77,7 +77,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Category", ex);
+                throw new UserException(FILE_NAME, "Category", 500, "Controller has an error", ex);
             }
         }
 
@@ -98,7 +98,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Post", ex);
+                throw new UserException(FILE_NAME, "Post", 500, "Controller has an error", ex);
             }
         }
 
@@ -115,7 +115,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "About", ex);
+                throw new UserException(FILE_NAME, "About", 500, "Controller has an error", ex);
             }
         }
 
@@ -139,7 +139,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "LastedPost", ex);
+                throw new UserException(FILE_NAME, "LastedPost", 500, "Controller has an error", ex);
             }
         }
 
@@ -157,7 +157,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "SameCategory", ex);
+                throw new UserException(FILE_NAME, "SameCategory", 500, "Controller has an error", ex);
             }
         }
 

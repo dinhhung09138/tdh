@@ -48,7 +48,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "getHomeMetaContent", ex);
+                throw new UserException(FILE_NAME, "getHomeMetaContent", 500, "Service has an error", ex);
             }
         }
 
@@ -82,7 +82,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListNavigation", ex);
+                throw new UserException(FILE_NAME, "GetListNavigation", 500, "Service has an error", ex);
             }
         }
 
@@ -119,7 +119,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListNavigationShowOnHomePage", ex);
+                throw new UserException(FILE_NAME, "GetListNavigationShowOnHomePage", 500, "Service has an error", ex);
             }
         }
 
@@ -157,7 +157,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListCategoryShowOnHomePage", ex);
+                throw new UserException(FILE_NAME, "GetListCategoryShowOnHomePage", 500, "Service has an error", ex);
             }
         }
 
@@ -201,7 +201,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListCategoryOnFooter", ex);
+                throw new UserException(FILE_NAME, "GetListCategoryOnFooter", 500, "Service has an error", ex);
             }
         }
 
@@ -239,7 +239,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Get2NavigationOnFooter", ex);
+                throw new UserException(FILE_NAME, "Get2NavigationOnFooter", 500, "Service has an error", ex);
             }
         }
 
@@ -432,7 +432,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetPostInfor", ex);
+                throw new UserException(FILE_NAME, "GetPostInfor", 500, "Service has an error", ex);
             }
         }
 
@@ -497,7 +497,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetPostInfor", ex);
+                throw new UserException(FILE_NAME, "GetPostInfor", 500, "Service has an error", ex);
             }
         }
 
@@ -525,7 +525,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetTop4LastedNews", ex);
+                throw new UserException(FILE_NAME, "GetTop4LastedNews", 500, "Service has an error", ex);
             }
         }
 
@@ -553,7 +553,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetTop2Views", ex);
+                throw new UserException(FILE_NAME, "GetTop2Views", 500, "Service has an error", ex);
             }
         }
 
@@ -593,7 +593,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListCategoryDataByNavigation", ex);
+                throw new UserException(FILE_NAME, "GetListCategoryDataByNavigation", 500, "Service has an error", ex);
             }
         }
 
@@ -639,7 +639,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "CheckIsCategoryPage", ex);
+                throw new UserException(FILE_NAME, "CheckIsCategoryPage", 500, "Service has an error", ex);
             }
         }
 
@@ -681,7 +681,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListPostDataByCategory", ex);
+                throw new UserException(FILE_NAME, "GetListPostDataByCategory", 500, "Service has an error", ex);
             }
         }
 
@@ -715,7 +715,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Top6LastedPostByNavigationID", ex);
+                throw new UserException(FILE_NAME, "Top6LastedPostByNavigationID", 500, "Service has an error", ex);
             }
         }
 
@@ -746,7 +746,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Top6LastedPostByCategoryID", ex);
+                throw new UserException(FILE_NAME, "Top6LastedPostByCategoryID", 500, "Service has an error", ex);
             }
         }
 
@@ -771,7 +771,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetShortIntroAboutMe", ex);
+                throw new UserException(FILE_NAME, "GetShortIntroAboutMe", 500, "Service has an error", ex);
             }
         }
 
@@ -814,7 +814,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "About", ex);
+                throw new UserException(FILE_NAME, "About", 500, "Service has an error", ex);
             }
         }
 

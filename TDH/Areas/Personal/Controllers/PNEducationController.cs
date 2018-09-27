@@ -23,13 +23,18 @@ namespace TDH.Areas.Personal.Controllers
         private readonly string FILE_NAME = "Personal.Controllers/PNEducationController.cs";
 
         #endregion
-        
+
+        /// <summary>
+        /// List of education form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Index()
         {
             try
             {
                 EducationTypeService _typeService = new EducationTypeService();
+
                 ViewBag.type = _typeService.GetAll(UserID);
 
                 return View();
@@ -48,6 +53,12 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// List of education function
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<EducationModel></returns>
         [HttpPost]
         public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
@@ -61,7 +72,7 @@ namespace TDH.Areas.Personal.Controllers
 
                 #region " [ Main processing ] "
 
-                if(requestData.Parameter1 == null)
+                if (requestData.Parameter1 == null)
                 {
                     requestData.Parameter1 = "";
                 }
@@ -91,6 +102,10 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Create form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Create()
         {
@@ -128,6 +143,11 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Create function
+        /// </summary>
+        /// <param name="model">EducationModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -144,8 +164,8 @@ namespace TDH.Areas.Personal.Controllers
                 #region " [ Main processing ] "
 
                 string[] tmp = model.DateString.Split('/');
-                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
 
+                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
@@ -170,6 +190,11 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit form
+        /// </summary>
+        /// <param name="id">The education identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Edit(string id)
         {
@@ -178,9 +203,8 @@ namespace TDH.Areas.Personal.Controllers
                 #region " [ Declaration ] "
 
                 EducationTypeService _typeService = new EducationTypeService();
-
                 EducationService _service = new EducationService();
-                //
+
                 ViewBag.id = id;
                 ViewBag.type = _typeService.GetAll(UserID);
 
@@ -188,6 +212,7 @@ namespace TDH.Areas.Personal.Controllers
 
                 // Call to service
                 EducationModel model = _service.GetItemByID(new EducationModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+
                 return View(model);
             }
             catch (ServiceException serviceEx)
@@ -204,6 +229,11 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit function
+        /// </summary>
+        /// <param name="model">EducationModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -220,8 +250,8 @@ namespace TDH.Areas.Personal.Controllers
                 #region " [ Main processing ] "
 
                 string[] tmp = model.DateString.Split('/');
-                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
 
+                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
@@ -246,8 +276,13 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete function
+        /// </summary>
+        /// <param name="model">EducationModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(EducationModel model)
+        public JsonResult Delete(EducationModel model)
         {
             try
             {
@@ -280,6 +315,7 @@ namespace TDH.Areas.Personal.Controllers
             {
                 throw new ControllerException(FILE_NAME, "Delete", UserID, ex);
             }
-        }        
+        }
+
     }
 }

@@ -23,13 +23,18 @@ namespace TDH.Areas.Personal.Controllers
         private readonly string FILE_NAME = "Personal.Controllers/PNEventController.cs";
 
         #endregion
-        
+
+        /// <summary>
+        /// List of event form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Index()
         {
             try
             {
                 EventTypeService _typeService = new EventTypeService();
+
                 ViewBag.type = _typeService.GetAll(UserID);
 
                 return View();
@@ -48,6 +53,12 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// List of event function
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<EventModel></returns>
         [HttpPost]
         public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
@@ -92,6 +103,10 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Create form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Create()
         {
@@ -128,6 +143,11 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Create function
+        /// </summary>
+        /// <param name="model">EventModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -144,8 +164,8 @@ namespace TDH.Areas.Personal.Controllers
                 #region " [ Main processing ] "
 
                 string[] tmp = model.DateString.Split('/');
-                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
 
+                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
@@ -170,6 +190,11 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit form
+        /// </summary>
+        /// <param name="id">The event identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Edit(string id)
         {
@@ -179,7 +204,7 @@ namespace TDH.Areas.Personal.Controllers
 
                 EventTypeService _typeService = new EventTypeService();
                 EventService _service = new EventService();
-                //
+                
                 ViewBag.id = id;
                 ViewBag.type = _typeService.GetAll(UserID);
 
@@ -187,6 +212,7 @@ namespace TDH.Areas.Personal.Controllers
 
                 // Call to service
                 EventModel model = _service.GetItemByID(new EventModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+
                 return View(model);
             }
             catch (ServiceException serviceEx)
@@ -203,10 +229,15 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit function
+        /// </summary>
+        /// <param name="model">EventModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Edit(EventModel model)
+        public JsonResult Edit(EventModel model)
         {
             try
             {
@@ -219,8 +250,8 @@ namespace TDH.Areas.Personal.Controllers
                 #region " [ Main processing ] "
 
                 string[] tmp = model.DateString.Split('/');
-                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
 
+                model.Date = new DateTime(int.Parse(tmp[2]), int.Parse(tmp[1]), int.Parse(tmp[0]));
                 model.CreateBy = UserID;
                 model.UpdateBy = UserID;
                 model.CreateDate = DateTime.Now;
@@ -245,8 +276,13 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete function
+        /// </summary>
+        /// <param name="model">EventModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(EventModel model)
+        public JsonResult Delete(EventModel model)
         {
             try
             {
@@ -279,6 +315,7 @@ namespace TDH.Areas.Personal.Controllers
             {
                 throw new ControllerException(FILE_NAME, "Delete", UserID, ex);
             }
-        }        
+        }
+
     }
 }

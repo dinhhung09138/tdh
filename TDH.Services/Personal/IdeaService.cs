@@ -28,8 +28,8 @@ namespace TDH.Services.Personal
         /// <summary>
         /// Get list data using jquery datatable
         /// </summary>
-        /// <param name="request"></param>
-        /// <param name="userID">User id</param>
+        /// <param name="request">Jquery datatable request</param>
+        /// <param name="userID">The user id</param>
         /// <returns><string, object></returns>
         public Dictionary<string, object> List(CustomDataTableRequestHelper request, Guid userID)
         {
@@ -57,7 +57,7 @@ namespace TDH.Services.Personal
                     if (request.search != null && !string.IsNullOrWhiteSpace(request.search.Value))
                     {
                         string searchValue = request.search.Value.ToLower();
-                        _lData = _lData.Where(m => m.title.ToLower().Contains(searchValue) || 
+                        _lData = _lData.Where(m => m.title.ToLower().Contains(searchValue) ||
                                               m.created_date.ToString().Contains(searchValue)).ToList();
                     }
                     int _count = 0;
@@ -113,21 +113,19 @@ namespace TDH.Services.Personal
         /// <summary>
         /// Get all item without deleted
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<IdeaModel></returns>
         public List<IdeaModel> GetAll(Guid userID)
         {
             try
             {
-                List<IdeaModel> _return = new List<IdeaModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _list = context.PN_IDEA.Where(m => !m.deleted && m.created_by == userID).OrderByDescending(m => m.created_date).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new IdeaModel() { ID = item.id, Title = item.title });
-                    }
+                    return context.PN_IDEA
+                                    .Where(m => !m.deleted && m.created_by == userID)
+                                    .OrderByDescending(m => m.created_date)
+                                    .Select(m => new IdeaModel() { ID = m.id, Title = m.title })
+                                    .ToList();
                 }
-                return _return;
             }
             catch (Exception ex)
             {
@@ -138,8 +136,8 @@ namespace TDH.Services.Personal
         /// <summary>
         /// Get item
         /// </summary>
-        /// <param name="model"></param>
-        /// <returns>IdeaModel. Throw exception if not found or get some error</returns>
+        /// <param name="model">Idea model</param>
+        /// <returns>IdeaModel</returns>
         public IdeaModel GetItemByID(IdeaModel model)
         {
             try
@@ -172,7 +170,7 @@ namespace TDH.Services.Personal
         /// <summary>
         /// Save
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Idea model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Save(IdeaModel model)
         {
@@ -234,7 +232,7 @@ namespace TDH.Services.Personal
         /// <summary>
         /// Delete
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Idea model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper Delete(IdeaModel model)
         {
@@ -270,7 +268,7 @@ namespace TDH.Services.Personal
         /// <summary>
         /// Check Delete item
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="model">Idea model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         public ResponseStatusCodeHelper CheckDelete(IdeaModel model)
         {

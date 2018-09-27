@@ -78,9 +78,7 @@ $(document).ready(function () {
             }
         ]
     });
-
-    $(".dataTables_wrapper .toolbar").append(type);
-
+    
 });
 
 function confirmDelete(deletedId) {

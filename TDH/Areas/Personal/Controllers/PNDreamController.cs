@@ -25,6 +25,10 @@ namespace TDH.Areas.Personal.Controllers
 
         #endregion
 
+        /// <summary>
+        ///// List of dream form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Index()
         {
@@ -46,6 +50,12 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// List of dream function
+        /// Post method
+        /// </summary>
+        /// <param name="requestData">Jquery datatable request</param>
+        /// <returns>DataTableResponse<DreamModel></returns>
         [HttpPost]
         public JsonResult Index(CustomDataTableRequestHelper requestData)
         {
@@ -88,6 +98,10 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Create form
+        /// </summary>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Create()
         {
@@ -120,6 +134,11 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Create function
+        /// </summary>
+        /// <param name="model">DreamModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
@@ -164,6 +183,11 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit form
+        /// </summary>
+        /// <param name="id">The dream identifier</param>
+        /// <returns>View</returns>
         [HttpGet]
         public ActionResult Edit(string id)
         {
@@ -179,6 +203,7 @@ namespace TDH.Areas.Personal.Controllers
 
                 // Call to service
                 DreamModel model = _service.GetItemByID(new DreamModel() { ID = new Guid(id), CreateBy = UserID, Insert = false });
+
                 return View(model);
             }
             catch (ServiceException serviceEx)
@@ -195,10 +220,15 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Edit function
+        /// </summary>
+        /// <param name="model">DreamModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Edit(DreamModel model)
+        public JsonResult Edit(DreamModel model)
         {
             try
             {
@@ -239,8 +269,13 @@ namespace TDH.Areas.Personal.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete function
+        /// </summary>
+        /// <param name="model">DreamModel</param>
+        /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(DreamModel model)
+        public JsonResult Delete(DreamModel model)
         {
             try
             {
@@ -274,5 +309,6 @@ namespace TDH.Areas.Personal.Controllers
                 throw new ControllerException(FILE_NAME, "Delete", UserID, ex);
             }
         }
+
     }
 }

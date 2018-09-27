@@ -24,10 +24,30 @@ namespace TDH.Areas.System.Controllers
 
         #endregion
 
+        /// <summary>
+        /// Default View when user click on left sidebar
+        /// </summary>
+        /// <returns>View</returns>
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Home()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "Home", UserID, ex);
+            }
         }
 
         /// <summary>
@@ -39,7 +59,7 @@ namespace TDH.Areas.System.Controllers
         {
             try
             {
-                return PartialView();
+                return View();
             }
             catch (ServiceException serviceEx)
             {
@@ -146,7 +166,7 @@ namespace TDH.Areas.System.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RoleModel model, FormCollection fc)
+        public JsonResult Create(RoleModel model, FormCollection fc)
         {
             try
             {
@@ -217,7 +237,7 @@ namespace TDH.Areas.System.Controllers
         /// <summary>
         /// Edit role form
         /// </summary>
-        /// <param name="id">Role identifier</param>
+        /// <param name="id">The role identifier</param>
         /// <returns>View</returns>
         [HttpGet]
         public ActionResult Edit(string id)
@@ -260,7 +280,7 @@ namespace TDH.Areas.System.Controllers
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(RoleModel model, FormCollection fc)
+        public JsonResult Edit(RoleModel model, FormCollection fc)
         {
             try
             {
@@ -334,7 +354,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="model">Role model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Publish(RoleModel model)
+        public JsonResult Publish(RoleModel model)
         {
             try
             {
@@ -375,7 +395,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="model">Role model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult Delete(RoleModel model)
+        public JsonResult Delete(RoleModel model)
         {
             try
             {
@@ -416,7 +436,7 @@ namespace TDH.Areas.System.Controllers
         /// <param name="model">Role model</param>
         /// <returns>ResponseStatusCodeHelper</returns>
         [HttpPost]
-        public ActionResult CheckDelete(RoleModel model)
+        public JsonResult CheckDelete(RoleModel model)
         {
             try
             {

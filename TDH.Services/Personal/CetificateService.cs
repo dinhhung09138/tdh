@@ -124,25 +124,19 @@ namespace TDH.Services.Personal
         {
             try
             {
-                List<CetificateModel> _return = new List<CetificateModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in _context.PN_CETIFICATE
-                                 where !m.deleted && m.publish && m.created_by == userID
-                                 orderby m.ordering descending
-                                 select new
-                                 {
-                                     m.id,
-                                     m.name,
-                                     m.school,
-                                     m.time
-                                 }).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new CetificateModel() { ID = item.id, Name = item.name, School = item.school, Time = item.time });
-                    }
+                    return (from m in _context.PN_CETIFICATE
+                            where !m.deleted && m.publish && m.created_by == userID
+                            orderby m.ordering descending
+                            select new CetificateModel()
+                            {
+                                ID = m.id,
+                                Name = m.name,
+                                School = m.school,
+                                Time = m.time
+                            }).ToList();
                 }
-                return _return;
             }
             catch (Exception ex)
             {
@@ -154,7 +148,7 @@ namespace TDH.Services.Personal
         /// Get item
         /// </summary>
         /// <param name="model">model</param>
-        /// <returns>MoneyCetificateModel. Throw exception if not found or get some error</returns>
+        /// <returns>MoneyCetificateModel</returns>
         public CetificateModel GetItemByID(CetificateModel model)
         {
             try

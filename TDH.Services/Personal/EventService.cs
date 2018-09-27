@@ -130,24 +130,18 @@ namespace TDH.Services.Personal
         {
             try
             {
-                List<EventModel> _return = new List<EventModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in _context.PN_EVENT
-                                 where !m.deleted && m.publish && m.created_by == userID
-                                 orderby m.ordering descending
-                                 select new
-                                 {
-                                     m.id,
-                                     m.title,
-                                     m.description
-                                 }).ToList();
-                    foreach (var item in _list)
-                    {
-                        _return.Add(new EventModel() { ID = item.id, Title = item.title, Description = item.description });
-                    }
+                    return (from m in _context.PN_EVENT
+                            where !m.deleted && m.publish && m.created_by == userID
+                            orderby m.ordering descending
+                            select new EventModel()
+                            {
+                                ID = m.id,
+                                Title = m.title,
+                                Description = m.description
+                            }).ToList();
                 }
-                return _return;
             }
             catch (Exception ex)
             {
@@ -159,7 +153,7 @@ namespace TDH.Services.Personal
         /// Get item
         /// </summary>
         /// <param name="model">model</param>
-        /// <returns>MoneyEventModel. Throw exception if not found or get some error</returns>
+        /// <returns>MoneyEventModel</returns>
         public EventModel GetItemByID(EventModel model)
         {
             try
@@ -248,7 +242,7 @@ namespace TDH.Services.Personal
                         _md.updated_date = DateTime.Now;
                         _context.PN_EVENT.Attach(_md);
                         _context.Entry(_md).State = EntityState.Modified;
-                        
+
                     }
                     _context.SaveChanges();
                 }

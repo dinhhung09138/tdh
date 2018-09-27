@@ -14,6 +14,11 @@
 <div class="card card-success">
     <div class="card-header with-border no-bg">
         <h3 class="card-title">@Message.Log.LIST</h3>
+        <div class="card-tools pull-right">
+            <a class="btn btn-box-tool" onclick="showConfirm();" title="Xóa">
+                <i class="fa fa-recycle"></i>
+            </a>
+        </div>
     </div>
     <div class="card-body">
         <table id="tbList" class="table table-bordered table-hover">
@@ -103,6 +108,26 @@
             </div>
         </div>
 
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Xác nhận</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h5>Bạn có muốn xóa toàn bộ lỗi hệ thống!</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="deleteAll();">Đồng ý</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
     </div>
 </div>
 @section script {

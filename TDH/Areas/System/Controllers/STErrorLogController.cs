@@ -23,8 +23,7 @@ namespace TDH.Areas.System.Controllers
         private readonly string FILE_NAME = "System.Controllers/STErrorLogController.cs";
 
         #endregion
-
-
+        
         /// <summary>
         /// Error log form
         /// </summary>
@@ -34,7 +33,7 @@ namespace TDH.Areas.System.Controllers
         {
             try
             {
-                return PartialView();
+                return View();
             }
             catch (ServiceException serviceEx)
             {
@@ -99,7 +98,7 @@ namespace TDH.Areas.System.Controllers
         /// <summary>
         /// Detail error log
         /// </summary>
-        /// <param name="id">log identifier</param>
+        /// <param name="id">The log identifier</param>
         /// <returns>View</returns>
         [HttpPost]
         public JsonResult Detail(string id)
@@ -133,5 +132,35 @@ namespace TDH.Areas.System.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete all log method
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult DeleteAll()
+        {
+            try
+            {
+                #region " [ Declaration ] "
+
+                ErrorLogService _service = new ErrorLogService();
+
+                #endregion
+                
+                return this.Json(_service.DeleteAll(UserID), JsonRequestBehavior.AllowGet);
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (DataAccessException accessEx)
+            {
+                throw accessEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ControllerException(FILE_NAME, "DeleteAll", UserID, ex);
+            }
+        }
     }
 }

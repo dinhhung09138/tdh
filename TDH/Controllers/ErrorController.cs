@@ -10,26 +10,25 @@ namespace TDH.Controllers
     [AllowAnonymous]
     public class ErrorController : Controller
     {
+        /// <summary>
+        /// Default view error page
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Page not found
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult PageNotFound()
         {
-            Response.StatusCode = (int)HttpStatusCode.NotFound;
-            ViewBag.URL = RouteData.Values["url"].ToString();
             return View();
         }
-
-        [HttpGet]
-        public ActionResult GeneralError()
-        {
-            Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-            ViewBag.Message = "Error occured!";
-            return View();
-        }
+        
     }
 }

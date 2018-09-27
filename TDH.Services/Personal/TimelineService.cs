@@ -25,7 +25,7 @@ namespace TDH.Services.Personal
         /// <summary>
         /// Get all item
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List<TimelineModel></returns>
         public List<TimelineModel> GetAll(Guid userID)
         {
             try

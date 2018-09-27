@@ -211,6 +211,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\TestController.cs" />
     <Compile Include="App_GlobalResources\Message.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -219,6 +220,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administrator\AdministratorAreaRegistration.cs" />
     <Compile Include="Areas\Administrator\Controllers\AdmErrorController.cs" />
     <Compile Include="Areas\Administrator\Controllers\BaseController.cs" />
@@ -5269,57 +5271,7 @@
     <Content Include="Areas\Administrator\Content\plugins\datatables\jquery.dataTables_themeroller.css" />
     <Content Include="Areas\Administrator\Content\plugins\datepicker\bootstrap-datepicker.js" />
     <Content Include="Areas\Administrator\Content\plugins\datepicker\datepicker3.css" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.ar.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.az.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.bg.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.ca.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.cs.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.cy.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.da.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.de.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.el.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.es.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.et.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.fa.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.fi.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.fr.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.gl.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.he.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.hr.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.hu.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.id.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.is.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.it.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.ja.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.ka.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.kk.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.kr.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.lt.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.lv.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.mk.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.ms.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.nb.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.nl-BE.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.nl.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.no.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.pl.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.pt-BR.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.pt.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.ro.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.rs-latin.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.rs.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.ru.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.sk.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.sl.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.sq.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.sv.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.sw.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.th.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.tr.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.ua.js" />
     <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.vi.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.zh-CN.js" />
-    <Content Include="Areas\Administrator\Content\plugins\datepicker\locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Areas\Administrator\Content\plugins\daterangepicker\daterangepicker-bs3.css" />
     <Content Include="Areas\Administrator\Content\plugins\daterangepicker\daterangepicker.js" />
     <Content Include="Areas\Administrator\Content\plugins\daterangepicker\moment.js" />

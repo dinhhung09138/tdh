@@ -66,6 +66,10 @@ namespace TDH.Common
             }
             base.OnActionExecuting(filterContext);
 
+            //Get browser info user are using
+            this.CollectUserInfo(filterContext.HttpContext.Request);
+            
+
             var _areaName = "";
             if (filterContext.RouteData.DataTokens["area"] != null)
             {
@@ -1099,6 +1103,17 @@ namespace TDH.Common
                 Log.WriteLog(FILE_NAME, "AllowAccess", userID, ex);
                 throw new ApplicationException();
             }
+        }
+
+        private void CollectUserInfo(HttpRequestBase context)
+        {
+
+            var tmp = context.Browser.IsMobileDevice;
+            var t1 = context.Browser.Platform;
+            var t12 = context.Browser.Version;
+            var t31 = context.UserAgent;
+            var t14 = context.UserHostAddress;
+            var t5 = context.UserHostName;
         }
 
         #endregion

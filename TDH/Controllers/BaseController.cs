@@ -41,13 +41,18 @@ namespace TDH.Controllers
                         };
                         return;
                     case 500:
+                        filterContext.Result = new ViewResult
+                        {
+                            ViewName = "~/Views/Error/Index.cshtml"
+                        };
+                        return;
+                    default:
+                        filterContext.Result = new ViewResult
+                        {
+                            ViewName = "~/Views/Error/Index.cshtml"
+                        };
                         return;
                 }
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new {
-                    controller = "error",
-                    action = "index"
-                }));
-                return;
             }
         }
 

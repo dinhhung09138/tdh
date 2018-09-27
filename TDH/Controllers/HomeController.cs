@@ -40,7 +40,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Index", ex);
+                throw new UserException(FILE_NAME, "Index", 500, "Controller has an error", ex);
             }
         }
 
@@ -64,7 +64,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Navigation", ex);
+                throw new UserException(FILE_NAME, "Navigation", 500, "Controller has an error", ex);
             }
         }
 
@@ -87,7 +87,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Banner", ex);
+                throw new UserException(FILE_NAME, "Banner", 500, "Controller has an error", ex);
             }
         }
 
@@ -109,7 +109,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "ConnectedToMe", ex);
+                throw new UserException(FILE_NAME, "ConnectedToMe", 500, "Controller has an error", ex);
             }
         }
 
@@ -127,7 +127,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "SidebarGalary", ex);
+                throw new UserException(FILE_NAME, "SidebarGalary", 500, "Controller has an error", ex);
             }
         }
 
@@ -149,7 +149,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "NewsLetter", ex);
+                throw new UserException(FILE_NAME, "NewsLetter", 500, "Controller has an error", ex);
             }
         }
 
@@ -171,7 +171,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "LastedNews", ex);
+                throw new UserException(FILE_NAME, "LastedNews", 500, "Controller has an error", ex);
             }
         }
 
@@ -193,7 +193,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "TopView", ex);
+                throw new UserException(FILE_NAME, "TopView", 500, "Controller has an error", ex);
             }
         }
 
@@ -215,7 +215,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "FooterPostByNavigation", ex);
+                throw new UserException(FILE_NAME, "FooterPostByNavigation", 500, "Controller has an error", ex);
             }
         }
 
@@ -237,7 +237,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "PopuplarCategory", ex);
+                throw new UserException(FILE_NAME, "PopuplarCategory", 500, "Controller has an error", ex);
             }
         }
 

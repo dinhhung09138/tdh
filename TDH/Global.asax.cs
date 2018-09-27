@@ -26,17 +26,16 @@ namespace TDH
             Response.Clear();
             HttpException httpException = exception as HttpException;
 
-
             if (httpException != null)
             {
                 var _user = Session[CommonHelper.SESSION_LOGIN_NAME] as Utils.CommonModel.UserLoginModel;
-                //
+                
                 Log.WriteLog("Global.asax.cs", "Application_Error", new Guid(), exception);
                 Server.ClearError();
-                //
+
+                //User are logined. redirecto to admin page   
                 if (_user != null && _user.UserID.ToString().Length > 0 && _user.UserName.Length > 0)
                 {
-                    //User are logined. redirecto to admin page   
                     Response.Redirect("/administrator/admerror/notfound");
                 }
                 else

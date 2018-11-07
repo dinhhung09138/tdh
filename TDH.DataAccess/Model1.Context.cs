@@ -176,5 +176,69 @@ namespace TDH.DataAccess
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_HOME_PostByNavigation_Result>("PROC_WEB_VIEW_HOME_PostByNavigation");
         }
+    
+        public virtual ObjectResult<PROC_WEB_CONFIGURATION_GetByKey_Result> PROC_WEB_CONFIGURATION_GetByKey(string key)
+        {
+            var keyParameter = key != null ?
+                new ObjectParameter("key", key) :
+                new ObjectParameter("key", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_CONFIGURATION_GetByKey_Result>("PROC_WEB_CONFIGURATION_GetByKey", keyParameter);
+        }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_HOME_2NavigationOnFooter_Result> PROC_WEB_VIEW_HOME_2NavigationOnFooter()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_HOME_2NavigationOnFooter_Result>("PROC_WEB_VIEW_HOME_2NavigationOnFooter");
+        }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_HOME_ListCategoryOnFooter_Result> PROC_WEB_VIEW_HOME_ListCategoryOnFooter()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_HOME_ListCategoryOnFooter_Result>("PROC_WEB_VIEW_HOME_ListCategoryOnFooter");
+        }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_CATEGORY_Info_Result> PROC_WEB_VIEW_CATEGORY_Info(string alias)
+        {
+            var aliasParameter = alias != null ?
+                new ObjectParameter("alias", alias) :
+                new ObjectParameter("alias", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_CATEGORY_Info_Result>("PROC_WEB_VIEW_CATEGORY_Info", aliasParameter);
+        }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_NAVIGATION_Info_Result> PROC_WEB_VIEW_NAVIGATION_Info(string alias)
+        {
+            var aliasParameter = alias != null ?
+                new ObjectParameter("alias", alias) :
+                new ObjectParameter("alias", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_NAVIGATION_Info_Result>("PROC_WEB_VIEW_NAVIGATION_Info", aliasParameter);
+        }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_POST_Info_Result> PROC_WEB_VIEW_POST_Info(string navigation_alias, string category_alias, string post_alias)
+        {
+            var navigation_aliasParameter = navigation_alias != null ?
+                new ObjectParameter("navigation_alias", navigation_alias) :
+                new ObjectParameter("navigation_alias", typeof(string));
+    
+            var category_aliasParameter = category_alias != null ?
+                new ObjectParameter("category_alias", category_alias) :
+                new ObjectParameter("category_alias", typeof(string));
+    
+            var post_aliasParameter = post_alias != null ?
+                new ObjectParameter("post_alias", post_alias) :
+                new ObjectParameter("post_alias", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_POST_Info_Result>("PROC_WEB_VIEW_POST_Info", navigation_aliasParameter, category_aliasParameter, post_aliasParameter);
+        }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_POST_Top2View_Result> PROC_WEB_VIEW_POST_Top2View()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_POST_Top2View_Result>("PROC_WEB_VIEW_POST_Top2View");
+        }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_POST_Top4Lasted_Result> PROC_WEB_VIEW_POST_Top4Lasted()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_POST_Top4Lasted_Result>("PROC_WEB_VIEW_POST_Top4Lasted");
+        }
     }
 }

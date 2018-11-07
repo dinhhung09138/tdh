@@ -1847,6 +1847,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Parameter Name="user_name" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="PROC_WEB_VIEW_HOME_META" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="TDHModelStoreContainer">
           <EntitySet Name="CM_SKILL" EntityType="Self.CM_SKILL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CM_SKILL_DEFINDED" EntityType="Self.CM_SKILL_DEFINDED" Schema="dbo" store:Type="Tables" />
@@ -2451,6 +2452,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             <Parameter Name="user_name" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="PROC_WEB_VIEW_HOME_META" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_META_Result)" />
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -4335,6 +4337,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Property Type="String" Name="user_name" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="full_name" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_HOME_META_Result">
+          <Property Type="String" Name="title" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="keyword" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="twitter_image" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="google_image" Nullable="true" MaxLength="255" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5597,6 +5607,18 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="user_name" ColumnName="user_name" />
                 <ScalarProperty Name="full_name" ColumnName="full_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_HOME_META" FunctionName="TDHModel.Store.PROC_WEB_VIEW_HOME_META">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_HOME_META_Result">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="keyword" ColumnName="keyword" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="twitter_image" ColumnName="twitter_image" />
+                <ScalarProperty Name="google_image" ColumnName="google_image" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

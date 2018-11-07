@@ -156,5 +156,10 @@ namespace TDH.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_LOGIN_Result>("PROC_SYS_LOGIN", user_nameParameter, passwordParameter);
         }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_HOME_META_Result> PROC_WEB_VIEW_HOME_META()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_HOME_META_Result>("PROC_WEB_VIEW_HOME_META");
+        }
     }
 }

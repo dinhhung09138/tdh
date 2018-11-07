@@ -36,13 +36,16 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _list = _context.WEB_CONFIGURATION.Where(m => m.key.Contains("homepage_")).ToList();
-                    _meta.MetaTitle = _list.FirstOrDefault(m => m.key == "homepage_title").value;
-                    _meta.MetaDescription = _list.FirstOrDefault(m => m.key == "homepage_description").value;
-                    _meta.MetaKeywords = _list.FirstOrDefault(m => m.key == "homepage_keyword").value;
-                    _meta.MetaImage = _list.FirstOrDefault(m => m.key == "homepage_image").value;
-                    _meta.MetaOgImage = _list.FirstOrDefault(m => m.key == "homepage_og_image").value;
-                    _meta.MetaTwitterImage = _list.FirstOrDefault(m => m.key == "homepage_tt_image").value;
+                    var _md = _context.PROC_WEB_VIEW_HOME_META().FirstOrDefault();
+                    if(_md != null)
+                    {
+                        _meta.MetaTitle = _md.title;
+                        _meta.MetaDescription = _md.description;
+                        _meta.MetaKeywords = _md.keyword;
+                        _meta.MetaImage = _md.image;
+                        _meta.MetaOgImage = _md.google_image;
+                        _meta.MetaTwitterImage = _md.twitter_image;
+                    }
                     return _meta;
                 }
             }

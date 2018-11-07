@@ -196,6 +196,9 @@
     <Compile Include="PROC_SYS_LOGIN_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="PROC_WEB_VIEW_HOME_META_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SYS_FUNCTION.cs">
       <DependentUpon>Model1.tt</DependentUpon>

@@ -143,5 +143,18 @@ namespace TDH.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR_Result>("[TDHEntities].[FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR](@I_Year)", i_YearParameter);
         }
+    
+        public virtual ObjectResult<PROC_SYS_LOGIN_Result> PROC_SYS_LOGIN(string user_name, string password)
+        {
+            var user_nameParameter = user_name != null ?
+                new ObjectParameter("user_name", user_name) :
+                new ObjectParameter("user_name", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_LOGIN_Result>("PROC_SYS_LOGIN", user_nameParameter, passwordParameter);
+        }
     }
 }

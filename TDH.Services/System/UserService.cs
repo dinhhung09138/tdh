@@ -368,19 +368,14 @@ namespace TDH.Services.System
                 using (var _context = new TDHEntities())
                 {
                     string _password = Utils.Security.PasswordSecurityHelper.GetHashedPassword(model.Password);
-                    SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.user_name == model.UserName && m.password == _password && !m.deleted && !m.locked);
+                    var _md = _context.PROC_SYS_LOGIN(model.UserName, _password).FirstOrDefault();
                     if (_md == null)
                     {
                         return _return;
                     }
-                    _md.last_login = DateTime.Now;
-                    _context.SYS_USER.Attach(_md);
-                    _context.Entry(_md).State = EntityState.Modified;
-                    _context.SaveChanges();
-                    //
                     return new UserModel()
                     {
-                        ID = _md.id,
+                        ID = (Guid)_md.user_id,
                         UserName = _md.user_name,
                     };
                 }

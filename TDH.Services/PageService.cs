@@ -206,31 +206,13 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in _context.WEB_CATEGORY
-                                 join n in _context.WEB_NAVIGATION on m.navigation_id equals n.id
-                                 where m.publish && !m.deleted && n.publish && !n.deleted
+                    return (from m in _context.PROC_WEB_VIEW_HOME_ListCategoryOnFooter()
                                  select new CategoryViewModel()
                                  {
                                      Title = m.title,
                                      Alias = m.alias,
-                                     Count = _context.WEB_POST.Count(p => p.category_id == m.id)
-                                 }).Take(9).ToList();
-
-                    var _lNavigation = (from m in _context.WEB_NAVIGATION
-                                        where m.publish && !m.deleted
-                                        select new CategoryViewModel()
-                                        {
-                                            Title = m.title,
-                                            Alias = m.alias,
-                                            Count = _context.WEB_POST.Count(p => p.navigation_id == m.id)
-                                        }).Take(9).ToList();
-
-                    foreach (var item in _lNavigation)
-                    {
-                        _list.Add(item);
-                    }
-
-                    return _list.OrderByDescending(m => m.Count).Take(9).ToList();
+                                     Count = (int)m.count
+                                 }).ToList();
                 }
             }
             catch (Exception ex)
@@ -251,24 +233,36 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    return (from hn in _context.WEB_HOME_NAVIGATION
-                            join nav in _context.WEB_NAVIGATION on hn.navigation_id equals nav.id
-                            orderby hn.ordering descending
-                            select new NavigationViewModel()
-                            {
-                                Title = nav.title,
-                                Alias = nav.alias,
-                                Posts = (from p in _context.WEB_POST
-                                         where p.navigation_id == nav.id && p.publish && !p.deleted
-                                         orderby p.create_date descending
-                                         select new PostViewModel()
-                                         {
-                                             Image = p.image,
-                                             Title = p.title,
-                                             Alias = p.alias,
-                                             CreateDate = p.create_date
-                                         }).Take(3).ToList()
-                            }).Take(2).ToList();
+
+                    //Return list
+                    List<NavigationViewModel> _returnList = new List<NavigationViewModel>();
+
+                    //Get data
+                    var _list = _context.PROC_WEB_VIEW_HOME_2NavigationOnFooter();
+
+                    //Get list navigation
+                    var _listNav = _list.Where(m => m.title.Length > 0);
+                    foreach (var item in _listNav)
+                    {
+                        _returnList.Add(new NavigationViewModel()
+                        {
+                            Title = item.title,
+                            Alias = item.alias,
+                            Posts = _list.Where(m => m.id == item.id && m.title.Length == 0)
+                                              .Select(m => new PostViewModel()
+                                              {
+                                                  Title = m.post_title,
+                                                  Alias = m.post_alias,
+                                                  Image = m.post_image,
+                                                  CreateDate = m.post_create_date
+                                              })
+                                              .ToList()
+                        });
+                    }
+
+                    //Return list
+                    return _returnList;
+                    
                 }
             }
             catch (Exception ex)
@@ -287,7 +281,7 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    return _context.WEB_CONFIGURATION.Where(m => m.key.Contains("banner")).FirstOrDefault().value;
+                    return _context.PROC_WEB_CONFIGURATION_GetByKey("banner").FirstOrDefault().value;
                 }
             }
             catch (Exception ex)
@@ -311,20 +305,7 @@ namespace TDH.Services
             {
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_NAVIGATION.Where(m => m.alias == ("/" + navAlias) && m.publish && !m.deleted)
-                                             .Select(m => new
-                                             {
-                                                 m.id,
-                                                 m.alias,
-                                                 m.title,
-                                                 m.image,
-                                                 m.meta_title,
-                                                 m.meta_description,
-                                                 m.meta_keywords,
-                                                 m.meta_og_image,
-                                                 m.meta_twitter_image
-                                             })
-                                             .FirstOrDefault();
+                    var _item = context.PROC_WEB_VIEW_NAVIGATION_Info(navAlias).FirstOrDefault();
                     if (_item == null)
                     {
                         throw new UserException(FILE_NAME, "GetNavigationInfor", 204, string.Format("{0} not found", navAlias), new Exception());
@@ -365,21 +346,7 @@ namespace TDH.Services
             {
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_CATEGORY.Where(m => m.alias == ("/" + navigationAlias + "/" + cateAlias) && m.publish && !m.deleted)
-                                             .Select(m => new
-                                             {
-                                                 m.id,
-                                                 m.navigation_id,
-                                                 m.alias,
-                                                 m.title,
-                                                 m.image,
-                                                 m.meta_title,
-                                                 m.meta_description,
-                                                 m.meta_keywords,
-                                                 m.meta_og_image,
-                                                 m.meta_twitter_image
-                                             })
-                                             .FirstOrDefault();
+                    var _item = context.PROC_WEB_VIEW_CATEGORY_Info(navigationAlias + "/" + cateAlias).FirstOrDefault();
                     if (_item == null)
                     {
                         throw new UserException(FILE_NAME, "GetCategoryInfor", 204, string.Format("{0}/{1}: not found", navigationAlias, cateAlias), new Exception());
@@ -422,30 +389,15 @@ namespace TDH.Services
                 var _nav = GetNavigationInfor(navAlias);
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_POST.Where(m => m.alias == ("/" + navAlias + "/" + postAlias) && m.publish && !m.deleted)
-                                             .Select(m => new
-                                             {
-                                                 m.navigation_id,
-                                                 m.alias,
-                                                 m.title,
-                                                 m.description,
-                                                 m.content,
-                                                 m.image,
-                                                 m.is_navigation,
-                                                 m.meta_title,
-                                                 m.meta_description,
-                                                 m.meta_keywords,
-                                                 m.meta_og_image,
-                                                 m.meta_twitter_image
-                                             })
-                                             .FirstOrDefault();
-                    if (_item == null || !_item.is_navigation)
+                    var _item = context.PROC_WEB_VIEW_POST_Info(navAlias, "", postAlias).FirstOrDefault();
+                    if (_item == null)
                     {
                         throw new UserException(FILE_NAME, "GetPostInfor", 204, string.Format("{0}/{1} not found", navAlias, postAlias), new Exception());
                     }
                     return new PostViewModel()
                     {
-                        CategoryID = _item.navigation_id ?? Guid.NewGuid(),
+
+                        CategoryID = (Guid)_item.category_id,
                         Alias = _item.alias,
                         Title = _item.title,
                         Description = _item.description,
@@ -481,35 +433,16 @@ namespace TDH.Services
         {
             try
             {
-                var _nav = GetNavigationInfor(navAlias);
-                var _cate = GetCategoryInfor(navAlias, cateAlias);
                 using (var context = new TDHEntities())
                 {
-                    var _item = context.WEB_POST.Where(m => m.alias == ("/" + navAlias + "/" + cateAlias + "/" + postAlias) && m.publish && !m.deleted)
-                                             .Select(m => new
-                                             {
-                                                 m.alias,
-                                                 m.title,
-                                                 m.category_id,
-                                                 m.description,
-                                                 m.content,
-                                                 m.create_date,
-                                                 m.image,
-                                                 m.is_navigation,
-                                                 m.meta_title,
-                                                 m.meta_description,
-                                                 m.meta_keywords,
-                                                 m.meta_og_image,
-                                                 m.meta_twitter_image
-                                             })
-                                             .FirstOrDefault();
-                    if (_item == null || _item.is_navigation)
+                    var _item = context.PROC_WEB_VIEW_POST_Info(navAlias, cateAlias, postAlias).FirstOrDefault();
+                    if (_item == null)
                     {
                         throw new UserException(FILE_NAME, "GetPostInfor", 204, string.Format("{0}/{1}/{2} not found", navAlias, cateAlias, postAlias), new Exception());
                     }
                     return new PostViewModel()
                     {
-                        CategoryID = _item.category_id ?? Guid.NewGuid(),
+                        CategoryID = (Guid)_item.category_id,
                         Alias = _item.alias,
                         Title = _item.title,
                         Description = _item.description,
@@ -545,16 +478,14 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    return _context.WEB_POST.Where(m => m.publish && !m.deleted)
-                                             .OrderByDescending(m => m.create_date)
+                    return _context.PROC_WEB_VIEW_POST_Top4Lasted()
                                              .Select(m => new PostViewModel()
                                              {
                                                  Alias = m.alias,
                                                  Title = m.title,
                                                  Image = m.image,
                                                  CreateDate = m.create_date
-                                             })
-                                             .Take(4).ToList();
+                                             }).ToList();
                 }
             }
             catch (Exception ex)
@@ -573,16 +504,14 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    return _context.WEB_POST.Where(m => m.publish && !m.deleted)
-                                             .OrderByDescending(m => m.view)
+                    return _context.PROC_WEB_VIEW_POST_Top2View()
                                              .Select(m => new PostViewModel()
                                              {
                                                  Alias = m.alias,
                                                  Title = m.title,
                                                  Image = m.image,
                                                  CreateDate = m.create_date
-                                             })
-                                             .Take(2).ToList();
+                                             }).ToList();
                 }
             }
             catch (Exception ex)

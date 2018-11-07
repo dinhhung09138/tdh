@@ -46,4 +46,25 @@ namespace TDH.Common
         /// </summary>
         public static readonly string ItemNotFound = "Nội dung không được tìm thấy";
     }
+
+    /// <summary>
+    /// Error message
+    /// 
+    ///status    user      time
+    ///create    hung      07/11/2018
+    /// 
+    /// 
+    /// </summary>
+    public class ErrorMessage
+    {
+        /// <summary>
+        /// Error service
+        /// </summary>
+        public static readonly string ErrorService = "Service has an error";
+
+        /// <summary>
+        /// Error controller
+        /// </summary>
+        public static readonly string ErrorController = "Service has an error";
+    }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
+using TDH.Common;
 using TDH.Common.UserException;
 using TDH.Services;
 
@@ -50,7 +52,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Navigation", 500, "Controller has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorController, ex);
             }
         }
 
@@ -77,7 +79,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Category", 500, "Controller has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorController, ex);
             }
         }
 
@@ -98,7 +100,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Post", 500, "Controller has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorController, ex);
             }
         }
 
@@ -115,7 +117,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "About", 500, "Controller has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorController, ex);
             }
         }
 
@@ -139,7 +141,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "LastedPost", 500, "Controller has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorController, ex);
             }
         }
 
@@ -157,7 +159,7 @@ namespace TDH.Controllers
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "SameCategory", 500, "Controller has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorController, ex);
             }
         }
 

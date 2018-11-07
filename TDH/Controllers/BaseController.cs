@@ -28,6 +28,10 @@ namespace TDH.Controllers
         {
             base.OnException(filterContext);
             filterContext.ExceptionHandled = true;
+
+            //Stop if action is partial or child
+            if (filterContext.IsChildAction)
+                return;
             
             if (filterContext.Exception is UserException)
             {

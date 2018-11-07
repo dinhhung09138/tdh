@@ -45,6 +45,6 @@ namespace TDH.Model.ViewModel.WebSite
         /// <summary>
         /// Create date
         /// </summary>
-        public DateTime CreateDate { get; set; } = new DateTime();
+        public string CreateDate { get; set; } = "";
     }
 }

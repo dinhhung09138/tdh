@@ -37,7 +37,7 @@ namespace TDH.Services
                 using (var _context = new TDHEntities())
                 {
                     var _md = _context.PROC_WEB_VIEW_HOME_META().FirstOrDefault();
-                    if(_md != null)
+                    if (_md != null)
                     {
                         _meta.MetaTitle = _md.title;
                         _meta.MetaDescription = _md.description;
@@ -65,22 +65,28 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    return (from nav in _context.WEB_NAVIGATION
-                            where nav.publish && !nav.deleted
-                            orderby nav.ordering descending
-                            select new NavigationViewModel()
-                            {
-                                Title = nav.title,
-                                Alias = nav.alias,
-                                Categories = (from cate in _context.WEB_CATEGORY
-                                              where nav.id == cate.navigation_id && cate.publish && !cate.deleted && cate.show_on_nav
-                                              orderby cate.ordering descending
-                                              select new CategoryViewModel()
-                                              {
-                                                  Title = cate.title,
-                                                  Alias = cate.alias
-                                              }).ToList()
-                            }).ToList();
+                    //Return list
+                    List<NavigationViewModel> _returnList = new List<NavigationViewModel>();
+
+                    //Get data from database
+                    var _list = _context.PROC_WEB_VIEW_HOME_LISTNAVIGATION().ToList();
+
+                    //Get list navigation
+                    var _listNav = _list.Where(m => m.title.Length > 0);
+                    foreach (var item in _listNav)
+                    {
+                        _returnList.Add(new NavigationViewModel()
+                        {
+                            Title = item.title,
+                            Alias = item.alias,
+                            Categories = _list.Where(m => m.id == item.id && m.title.Length == 0)
+                                              .Select(m => new CategoryViewModel() { Title = m.category_title, Alias = m.category_alias })
+                                              .ToList()
+                        });
+                    }
+
+                    //Return list
+                    return _returnList;
                 }
             }
             catch (Exception ex)
@@ -101,23 +107,36 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in _context.WEB_HOME_NAVIGATION
-                                 join n in _context.WEB_NAVIGATION on m.navigation_id equals n.id
-                                 where n.publish && !n.deleted
-                                 select new NavigationViewModel()
-                                 {
-                                     Title = n.title,
-                                     Alias = n.alias,
-                                     Posts = _context.WEB_POST.Where(p => p.navigation_id == n.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
-                                     {
-                                         Title = p.title,
-                                         Description = p.description,
-                                         Image = p.image,
-                                         Alias = p.alias,
-                                         CreateDate = p.create_date
-                                     }).Take(6).ToList()
-                                 }).ToList();
-                    return _list;
+                    //Return list
+                    List<NavigationViewModel> _returnList = new List<NavigationViewModel>();
+
+                    //Get data
+                    var _list = _context.PROC_WEB_VIEW_HOME_PostByNavigation();
+
+                    //Get list navigation
+                    var _listNav = _list.Where(m => m.title.Length > 0);
+                    foreach (var item in _listNav)
+                    {
+                        _returnList.Add(new NavigationViewModel()
+                        {
+                            Title = item.title,
+                            Alias = item.alias,
+                            Posts = _list.Where(m => m.id == item.id && m.title.Length == 0)
+                                              .Select(m => new PostViewModel()
+                                              {
+                                                  Title = m.post_title,
+                                                  Alias = m.post_alias,
+                                                  Description = m.post_description,
+                                                  Image = m.post_image,
+                                                  CreateDate = m.post_create_date
+                                              })
+                                              .ToList()
+                        });
+                    }
+
+                    //Return list
+                    return _returnList;
+
                 }
             }
             catch (Exception ex)
@@ -138,24 +157,36 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in _context.WEB_HOME_CATEGORY
-                                 join c in _context.WEB_CATEGORY on m.category_id equals c.id
-                                 join n in _context.WEB_NAVIGATION on c.navigation_id equals n.id
-                                 where c.publish && !c.deleted && n.publish && !n.deleted
-                                 select new CategoryViewModel()
-                                 {
-                                     Title = c.title,
-                                     Alias = c.alias,
-                                     Posts = _context.WEB_POST.Where(p => p.category_id == c.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
-                                     {
-                                         Title = p.title,
-                                         Description = p.description,
-                                         Image = p.image,
-                                         Alias = p.alias,
-                                         CreateDate = p.create_date
-                                     }).Take(5).ToList()
-                                 }).ToList();
-                    return _list;
+                    //Return list
+                    List<CategoryViewModel> _returnList = new List<CategoryViewModel>();
+
+                    //Get data
+                    var _list = _context.PROC_WEB_VIEW_HOME_PostByCategory();
+
+                    //Get list category
+                    var _listCate = _list.Where(m => m.title.Length > 0);
+                    foreach (var item in _listCate)
+                    {
+                        _returnList.Add(new CategoryViewModel()
+                        {
+                            Title = item.title,
+                            Alias = item.alias,
+                            Posts = _list.Where(m => m.id == item.id && m.title.Length == 0)
+                                              .Select(m => new PostViewModel()
+                                              {
+                                                  Title = m.post_title,
+                                                  Alias = m.post_alias,
+                                                  Description = m.post_description,
+                                                  Image = m.post_image,
+                                                  CreateDate = m.post_create_date
+                                              })
+                                              .ToList()
+                        });
+                    }
+
+                    //Return list
+                    return _returnList;
+                    
                 }
             }
             catch (Exception ex)

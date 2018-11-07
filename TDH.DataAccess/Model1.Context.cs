@@ -161,5 +161,20 @@ namespace TDH.DataAccess
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_HOME_META_Result>("PROC_WEB_VIEW_HOME_META");
         }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_HOME_LISTNAVIGATION_Result> PROC_WEB_VIEW_HOME_LISTNAVIGATION()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_HOME_LISTNAVIGATION_Result>("PROC_WEB_VIEW_HOME_LISTNAVIGATION");
+        }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_HOME_PostByCategory_Result> PROC_WEB_VIEW_HOME_PostByCategory()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_HOME_PostByCategory_Result>("PROC_WEB_VIEW_HOME_PostByCategory");
+        }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_HOME_PostByNavigation_Result> PROC_WEB_VIEW_HOME_PostByNavigation()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_HOME_PostByNavigation_Result>("PROC_WEB_VIEW_HOME_PostByNavigation");
+        }
     }
 }

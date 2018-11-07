@@ -1847,7 +1847,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Parameter Name="user_name" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="PROC_WEB_VIEW_HOME_LISTNAVIGATION" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PROC_WEB_VIEW_HOME_META" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PROC_WEB_VIEW_HOME_PostByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PROC_WEB_VIEW_HOME_PostByNavigation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="TDHModelStoreContainer">
           <EntitySet Name="CM_SKILL" EntityType="Self.CM_SKILL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CM_SKILL_DEFINDED" EntityType="Self.CM_SKILL_DEFINDED" Schema="dbo" store:Type="Tables" />
@@ -2453,6 +2456,9 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             <Parameter Name="password" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PROC_WEB_VIEW_HOME_META" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_META_Result)" />
+          <FunctionImport Name="PROC_WEB_VIEW_HOME_LISTNAVIGATION" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_LISTNAVIGATION_Result)" />
+          <FunctionImport Name="PROC_WEB_VIEW_HOME_PostByCategory" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_PostByCategory_Result)" />
+          <FunctionImport Name="PROC_WEB_VIEW_HOME_PostByNavigation" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_PostByNavigation_Result)" />
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -4345,6 +4351,33 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Property Type="String" Name="twitter_image" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="google_image" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_HOME_LISTNAVIGATION_Result">
+          <Property Type="Guid" Name="id" Nullable="true" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="category_title" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="category_alias" Nullable="true" MaxLength="700" />
+        </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_HOME_PostByCategory_Result">
+          <Property Type="Guid" Name="id" Nullable="true" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="post_title" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="post_alias" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="post_description" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="post_image" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="post_create_date" Nullable="true" MaxLength="12" />
+        </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_HOME_PostByNavigation_Result">
+          <Property Type="Guid" Name="id" Nullable="true" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="post_title" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="post_alias" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="post_description" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="post_image" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="post_create_date" Nullable="true" MaxLength="12" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5619,6 +5652,45 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="twitter_image" ColumnName="twitter_image" />
                 <ScalarProperty Name="google_image" ColumnName="google_image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_HOME_LISTNAVIGATION" FunctionName="TDHModel.Store.PROC_WEB_VIEW_HOME_LISTNAVIGATION">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_HOME_LISTNAVIGATION_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="category_title" ColumnName="category_title" />
+                <ScalarProperty Name="category_alias" ColumnName="category_alias" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_HOME_PostByCategory" FunctionName="TDHModel.Store.PROC_WEB_VIEW_HOME_PostByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_HOME_PostByCategory_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="post_title" ColumnName="post_title" />
+                <ScalarProperty Name="post_alias" ColumnName="post_alias" />
+                <ScalarProperty Name="post_description" ColumnName="post_description" />
+                <ScalarProperty Name="post_image" ColumnName="post_image" />
+                <ScalarProperty Name="post_create_date" ColumnName="post_create_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_HOME_PostByNavigation" FunctionName="TDHModel.Store.PROC_WEB_VIEW_HOME_PostByNavigation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_HOME_PostByNavigation_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="post_title" ColumnName="post_title" />
+                <ScalarProperty Name="post_alias" ColumnName="post_alias" />
+                <ScalarProperty Name="post_description" ColumnName="post_description" />
+                <ScalarProperty Name="post_image" ColumnName="post_image" />
+                <ScalarProperty Name="post_create_date" ColumnName="post_create_date" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

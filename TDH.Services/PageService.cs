@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using TDH.Common;
 using TDH.Common.UserException;
 using TDH.DataAccess;
@@ -51,7 +52,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "getHomeMetaContent", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -91,7 +92,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListNavigation", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -111,7 +112,7 @@ namespace TDH.Services
                     List<NavigationViewModel> _returnList = new List<NavigationViewModel>();
 
                     //Get data
-                    var _list = _context.PROC_WEB_VIEW_HOME_PostByNavigation();
+                    var _list = _context.PROC_WEB_VIEW_HOME_PostByNavigation().ToList();
 
                     //Get list navigation
                     var _listNav = _list.Where(m => m.title.Length > 0);
@@ -141,7 +142,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListNavigationShowOnHomePage", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -161,7 +162,7 @@ namespace TDH.Services
                     List<CategoryViewModel> _returnList = new List<CategoryViewModel>();
 
                     //Get data
-                    var _list = _context.PROC_WEB_VIEW_HOME_PostByCategory();
+                    var _list = _context.PROC_WEB_VIEW_HOME_PostByCategory().ToList();
 
                     //Get list category
                     var _listCate = _list.Where(m => m.title.Length > 0);
@@ -186,12 +187,12 @@ namespace TDH.Services
 
                     //Return list
                     return _returnList;
-                    
+
                 }
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListCategoryShowOnHomePage", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -207,17 +208,17 @@ namespace TDH.Services
                 using (var _context = new TDHEntities())
                 {
                     return (from m in _context.PROC_WEB_VIEW_HOME_ListCategoryOnFooter()
-                                 select new CategoryViewModel()
-                                 {
-                                     Title = m.title,
-                                     Alias = m.alias,
-                                     Count = (int)m.count
-                                 }).ToList();
+                            select new CategoryViewModel()
+                            {
+                                Title = m.title,
+                                Alias = m.alias,
+                                Count = (int)m.count
+                            }).ToList();
                 }
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListCategoryOnFooter", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -238,7 +239,7 @@ namespace TDH.Services
                     List<NavigationViewModel> _returnList = new List<NavigationViewModel>();
 
                     //Get data
-                    var _list = _context.PROC_WEB_VIEW_HOME_2NavigationOnFooter();
+                    var _list = _context.PROC_WEB_VIEW_HOME_2NavigationOnFooter().ToList();
 
                     //Get list navigation
                     var _listNav = _list.Where(m => m.title.Length > 0);
@@ -262,12 +263,12 @@ namespace TDH.Services
 
                     //Return list
                     return _returnList;
-                    
+
                 }
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Get2NavigationOnFooter", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -286,7 +287,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetBannerInfor", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, ex);
             }
         }
 
@@ -308,7 +309,7 @@ namespace TDH.Services
                     var _item = context.PROC_WEB_VIEW_NAVIGATION_Info(navAlias).FirstOrDefault();
                     if (_item == null)
                     {
-                        throw new UserException(FILE_NAME, "GetNavigationInfor", 204, string.Format("{0} not found", navAlias), new Exception());
+                        throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 204, string.Format("{0} not found", navAlias), new Exception());
                     }
                     return new NavigationViewModel()
                     {
@@ -330,7 +331,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetNavigationInfor", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -349,7 +350,7 @@ namespace TDH.Services
                     var _item = context.PROC_WEB_VIEW_CATEGORY_Info(navigationAlias + "/" + cateAlias).FirstOrDefault();
                     if (_item == null)
                     {
-                        throw new UserException(FILE_NAME, "GetCategoryInfor", 204, string.Format("{0}/{1}: not found", navigationAlias, cateAlias), new Exception());
+                        throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 204, string.Format("{0}/{1}: not found", navigationAlias, cateAlias), new Exception());
                     }
                     return new CategoryViewModel()
                     {
@@ -372,7 +373,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetCategoryInfor", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -392,7 +393,7 @@ namespace TDH.Services
                     var _item = context.PROC_WEB_VIEW_POST_Info(navAlias, "", postAlias).FirstOrDefault();
                     if (_item == null)
                     {
-                        throw new UserException(FILE_NAME, "GetPostInfor", 204, string.Format("{0}/{1} not found", navAlias, postAlias), new Exception());
+                        throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 204, string.Format("{0}/{1} not found", navAlias, postAlias), new Exception());
                     }
                     return new PostViewModel()
                     {
@@ -418,7 +419,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetPostInfor", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -438,7 +439,7 @@ namespace TDH.Services
                     var _item = context.PROC_WEB_VIEW_POST_Info(navAlias, cateAlias, postAlias).FirstOrDefault();
                     if (_item == null)
                     {
-                        throw new UserException(FILE_NAME, "GetPostInfor", 204, string.Format("{0}/{1}/{2} not found", navAlias, cateAlias, postAlias), new Exception());
+                        throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 204, string.Format("{0}/{1}/{2} not found", navAlias, cateAlias, postAlias), new Exception());
                     }
                     return new PostViewModel()
                     {
@@ -464,7 +465,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetPostInfor", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -490,7 +491,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetTop4LastedNews", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -516,7 +517,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetTop2Views", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -535,28 +536,40 @@ namespace TDH.Services
             {
                 using (var context = new TDHEntities())
                 {
-                    return (from m in context.WEB_CATEGORY
-                            join n in context.WEB_NAVIGATION on m.navigation_id equals n.id
-                            where m.publish && !m.deleted && n.publish && !n.deleted && n.alias == ("/" + navigationAlias)
-                            orderby m.ordering descending
-                            select new CategoryViewModel()
-                            {
-                                Title = m.title,
-                                Alias = m.alias,
-                                Posts = context.WEB_POST.Where(p => p.category_id == m.id && p.publish && !p.deleted).OrderByDescending(p => p.create_date).Select(p => new PostViewModel()
-                                {
-                                    Title = p.title,
-                                    Description = p.description,
-                                    Image = p.image,
-                                    Alias = p.alias,
-                                    CreateDate = p.create_date
-                                }).Take(12).ToList()
-                            }).ToList();
+                    //Return list
+                    List<CategoryViewModel> _returnList = new List<CategoryViewModel>();
+
+                    //Get data
+                    var _list = context.PROC_WEB_VIEW_CATEGORY_ByNavigation(navigationAlias).ToList();
+
+                    //Get list navigation
+                    var _listCate = _list.Where(m => m.title.Length > 0);
+
+                    foreach (var item in _listCate)
+                    {
+                        _returnList.Add(new CategoryViewModel()
+                        {
+                            Title = item.title,
+                            Alias = item.alias,
+                            Posts = _list.Where(m => m.id == item.id && m.title.Length == 0)
+                                        .Select(p => new PostViewModel()
+                                        {
+                                            Title = p.post_title,
+                                            Description = p.post_description,
+                                            Image = p.post_image,
+                                            Alias = p.post_alias,
+                                            CreateDate = p.post_create_date
+                                        }).ToList()
+                        });
+                    }
+
+                    //Return list
+                    return _returnList;
                 }
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListCategoryDataByNavigation", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -583,7 +596,7 @@ namespace TDH.Services
                     {
                         if (!_post.is_navigation || _nav.ID != _post.navigation_id)
                         {
-                            throw new UserException(FILE_NAME, "CheckIsCategoryPage", 204, string.Format("{0}/{1} not found", navigationAlias, categoryAlias), new Exception());
+                            throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 204, string.Format("{0}/{1} not found", navigationAlias, categoryAlias), new Exception());
                         }
                         return false;
                     }
@@ -591,7 +604,7 @@ namespace TDH.Services
                     var _cate = context.WEB_CATEGORY.FirstOrDefault(m => m.alias == ("/" + navigationAlias + "/" + categoryAlias));
                     if (_cate == null || _cate.navigation_id != _nav.ID)
                     {
-                        throw new UserException(FILE_NAME, "CheckIsCategoryPage", 204, string.Format("{0}/{1} not found", navigationAlias, categoryAlias), new Exception());
+                        throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 204, string.Format("{0}/{1} not found", navigationAlias, categoryAlias), new Exception());
                     }
                     return true;
                 }
@@ -602,7 +615,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "CheckIsCategoryPage", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -611,22 +624,16 @@ namespace TDH.Services
         /// </summary>
         /// <param name="navigationAlias">Navigation alias</param>
         /// <param name="categoryAlias">Category alias</param>
+        /// <param name="page">Current page</param>
         /// <returns>List<PostViewModel></returns>
-        public static List<PostViewModel> GetListPostDataByCategory(string navigationAlias, string categoryAlias)
+        public static List<PostViewModel> GetListPostDataByCategory(string navigationAlias, string categoryAlias, short page = 1)
         {
             try
             {
-                NavigationViewModel _nav = GetNavigationInfor(navigationAlias);
-                CategoryViewModel _cate = GetCategoryInfor(navigationAlias, categoryAlias);
-                if (_cate.NavigationID != _nav.ID)
-                {
-                    throw new UserException(FILE_NAME, "GetListPostDataByCategory", 204, string.Format("{0}/{1} not found", navigationAlias, categoryAlias), new Exception());
-                }
                 List<PostViewModel> _return = new List<PostViewModel>();
                 using (var context = new TDHEntities())
                 {
-                    return context.WEB_POST.Where(p => p.category_id == _cate.ID)
-                                             .OrderByDescending(m => m.create_date)
+                    return context.PROC_WEB_VIEW_POST_ByCategory(navigationAlias, categoryAlias, page)
                                              .Select(m => new PostViewModel()
                                              {
                                                  Alias = m.alias,
@@ -634,8 +641,7 @@ namespace TDH.Services
                                                  Description = m.description,
                                                  Image = m.image,
                                                  CreateDate = m.create_date
-                                             })
-                                             .Take(12).ToList();
+                                             }).ToList();
                 }
             }
             catch (UserException uEx)
@@ -644,7 +650,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetListPostDataByCategory", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -663,8 +669,7 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    return _context.WEB_POST.Where(p => p.navigation_id == navID)
-                                             .OrderByDescending(m => m.create_date)
+                    return _context.PROC_WEB_VIEW_POST_Top6ByNavigation(navID)
                                              .Select(m => new PostViewModel()
                                              {
                                                  Alias = m.alias,
@@ -672,13 +677,12 @@ namespace TDH.Services
                                                  Description = m.description,
                                                  Image = m.image,
                                                  CreateDate = m.create_date
-                                             })
-                                             .Take(6).ToList();
+                                             }).ToList();
                 }
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Top6LastedPostByNavigationID", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -694,8 +698,7 @@ namespace TDH.Services
                 List<PostViewModel> _return = new List<PostViewModel>();
                 using (var _context = new TDHEntities())
                 {
-                    return _context.WEB_POST.Where(p => p.category_id == cateID)
-                                             .OrderByDescending(m => m.create_date)
+                    return _context.PROC_WEB_VIEW_POST_Top6ByCategory(cateID)
                                              .Select(m => new PostViewModel()
                                              {
                                                  Alias = m.alias,
@@ -703,13 +706,12 @@ namespace TDH.Services
                                                  Description = m.description,
                                                  Image = m.image,
                                                  CreateDate = m.create_date
-                                             })
-                                             .Take(6).ToList();
+                                             }).ToList();
                 }
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "Top6LastedPostByCategoryID", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -726,15 +728,15 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _list = _context.WEB_CONFIGURATION.Where(m => m.key.Contains("intro_")).ToList();
-                    _meta.MetaDescription = _list.FirstOrDefault(m => m.key == "intro_content").value;
-                    _meta.MetaImage = _list.FirstOrDefault(m => m.key == "intro_avatar").value;
+                    var _list = _context.PROC_WEB_VIEW_INTRO_META().FirstOrDefault();
+                    _meta.MetaDescription = _list.description;
+                    _meta.MetaImage = _list.image;
                     return _meta;
                 }
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "GetShortIntroAboutMe", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 
@@ -750,7 +752,7 @@ namespace TDH.Services
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _item = _context.WEB_ABOUT.FirstOrDefault();
+                    var _item = _context.PROC_WEB_VIEW_ABOUT().FirstOrDefault();
                     if (_item == null)
                     {
                         throw new UserException(FILE_NAME, "About", 204, "", new Exception());
@@ -777,7 +779,7 @@ namespace TDH.Services
             }
             catch (Exception ex)
             {
-                throw new UserException(FILE_NAME, "About", 500, "Service has an error", ex);
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
             }
         }
 

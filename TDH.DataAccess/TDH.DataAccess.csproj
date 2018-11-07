@@ -199,6 +199,12 @@
     <Compile Include="PROC_WEB_CONFIGURATION_GetByKey_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="PROC_WEB_VIEW_ABOUT_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_WEB_VIEW_CATEGORY_ByNavigation_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="PROC_WEB_VIEW_CATEGORY_Info_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -220,7 +226,13 @@
     <Compile Include="PROC_WEB_VIEW_HOME_PostByNavigation_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="PROC_WEB_VIEW_INTRO_META_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="PROC_WEB_VIEW_NAVIGATION_Info_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_WEB_VIEW_POST_ByCategory_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="PROC_WEB_VIEW_POST_Info_Result.cs">
@@ -230,6 +242,12 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="PROC_WEB_VIEW_POST_Top4Lasted_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_WEB_VIEW_POST_Top6ByCategory_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_WEB_VIEW_POST_Top6ByNavigation_Result.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

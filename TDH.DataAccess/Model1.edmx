@@ -1850,6 +1850,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
         <Function Name="PROC_WEB_CONFIGURATION_GetByKey" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="key" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="PROC_WEB_VIEW_ABOUT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PROC_WEB_VIEW_CATEGORY_ByNavigation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="alias" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="PROC_WEB_VIEW_CATEGORY_Info" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="alias" Type="varchar" Mode="In" />
         </Function>
@@ -1859,8 +1863,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
         <Function Name="PROC_WEB_VIEW_HOME_META" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PROC_WEB_VIEW_HOME_PostByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PROC_WEB_VIEW_HOME_PostByNavigation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PROC_WEB_VIEW_INTRO_META" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PROC_WEB_VIEW_NAVIGATION_Info" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="alias" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="PROC_WEB_VIEW_POST_ByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="navigation_alias" Type="varchar" Mode="In" />
+          <Parameter Name="category_alias" Type="varchar" Mode="In" />
+          <Parameter Name="page" Type="smallint" Mode="In" />
         </Function>
         <Function Name="PROC_WEB_VIEW_POST_Info" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="navigation_alias" Type="varchar" Mode="In" />
@@ -1869,6 +1879,12 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
         </Function>
         <Function Name="PROC_WEB_VIEW_POST_Top2View" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PROC_WEB_VIEW_POST_Top4Lasted" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="PROC_WEB_VIEW_POST_Top6ByCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="PROC_WEB_VIEW_POST_Top6ByNavigation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <EntityContainer Name="TDHModelStoreContainer">
           <EntitySet Name="CM_SKILL" EntityType="Self.CM_SKILL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CM_SKILL_DEFINDED" EntityType="Self.CM_SKILL_DEFINDED" Schema="dbo" store:Type="Tables" />
@@ -2495,6 +2511,22 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           </FunctionImport>
           <FunctionImport Name="PROC_WEB_VIEW_POST_Top2View" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Top2View_Result)" />
           <FunctionImport Name="PROC_WEB_VIEW_POST_Top4Lasted" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Top4Lasted_Result)" />
+          <FunctionImport Name="PROC_WEB_VIEW_ABOUT" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_ABOUT_Result)" />
+          <FunctionImport Name="PROC_WEB_VIEW_CATEGORY_ByNavigation" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_CATEGORY_ByNavigation_Result)">
+            <Parameter Name="alias" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_WEB_VIEW_INTRO_META" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_INTRO_META_Result)" />
+          <FunctionImport Name="PROC_WEB_VIEW_POST_ByCategory" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_ByCategory_Result)">
+            <Parameter Name="navigation_alias" Mode="In" Type="String" />
+            <Parameter Name="category_alias" Mode="In" Type="String" />
+            <Parameter Name="page" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_WEB_VIEW_POST_Top6ByCategory" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Top6ByCategory_Result)">
+            <Parameter Name="id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_WEB_VIEW_POST_Top6ByNavigation" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Top6ByNavigation_Result)">
+            <Parameter Name="id" Mode="In" Type="Guid" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -4435,6 +4467,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
         </ComplexType>
         <ComplexType Name="PROC_WEB_VIEW_CATEGORY_Info_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
+          <Property Type="Guid" Name="navigation_id" Nullable="false" />
           <Property Type="String" Name="title" Nullable="false" MaxLength="70" />
           <Property Type="String" Name="alias" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
@@ -4478,6 +4511,51 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
         <ComplexType Name="PROC_WEB_VIEW_POST_Top4Lasted_Result">
           <Property Type="String" Name="alias" Nullable="false" MaxLength="150" />
           <Property Type="String" Name="title" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_ABOUT_Result">
+          <Property Type="String" Name="meta_title" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="meta_description" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="content" Nullable="true" />
+          <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="meta_keywords" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="meta_og_image" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="meta_twitter_image" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_CATEGORY_ByNavigation_Result">
+          <Property Type="Guid" Name="id" Nullable="true" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="post_title" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="post_alias" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="post_description" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="post_image" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="post_create_date" Nullable="true" MaxLength="12" />
+        </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_INTRO_META_Result">
+          <Property Type="String" Name="description" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="150" />
+        </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_POST_ByCategory_Result">
+          <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="create_date" Nullable="true" MaxLength="12" />
+        </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_POST_Top6ByCategory_Result">
+          <Property Type="String" Name="title" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="alias" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_POST_Top6ByNavigation_Result">
+          <Property Type="String" Name="title" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="alias" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="description" Nullable="true" MaxLength="250" />
           <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
         </ComplexType>
@@ -5890,6 +5968,75 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
               <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_POST_Top4Lasted_Result">
                 <ScalarProperty Name="alias" ColumnName="alias" />
                 <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_ABOUT" FunctionName="TDHModel.Store.PROC_WEB_VIEW_ABOUT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_ABOUT_Result">
+                <ScalarProperty Name="meta_title" ColumnName="meta_title" />
+                <ScalarProperty Name="meta_description" ColumnName="meta_description" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="meta_keywords" ColumnName="meta_keywords" />
+                <ScalarProperty Name="meta_og_image" ColumnName="meta_og_image" />
+                <ScalarProperty Name="meta_twitter_image" ColumnName="meta_twitter_image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_CATEGORY_ByNavigation" FunctionName="TDHModel.Store.PROC_WEB_VIEW_CATEGORY_ByNavigation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_CATEGORY_ByNavigation_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="post_title" ColumnName="post_title" />
+                <ScalarProperty Name="post_alias" ColumnName="post_alias" />
+                <ScalarProperty Name="post_description" ColumnName="post_description" />
+                <ScalarProperty Name="post_image" ColumnName="post_image" />
+                <ScalarProperty Name="post_create_date" ColumnName="post_create_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_INTRO_META" FunctionName="TDHModel.Store.PROC_WEB_VIEW_INTRO_META">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_INTRO_META_Result">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_POST_ByCategory" FunctionName="TDHModel.Store.PROC_WEB_VIEW_POST_ByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_POST_ByCategory_Result">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_POST_Top6ByCategory" FunctionName="TDHModel.Store.PROC_WEB_VIEW_POST_Top6ByCategory">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_POST_Top6ByCategory_Result">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_POST_Top6ByNavigation" FunctionName="TDHModel.Store.PROC_WEB_VIEW_POST_Top6ByNavigation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_POST_Top6ByNavigation_Result">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="create_date" ColumnName="create_date" />
               </ComplexTypeMapping>

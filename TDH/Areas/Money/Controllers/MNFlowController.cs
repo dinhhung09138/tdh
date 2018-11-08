@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
@@ -64,7 +65,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -118,7 +119,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -163,7 +164,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "SaveIncome", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -208,7 +209,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "SavePayment", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -253,7 +254,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "SaveTransfer", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
         

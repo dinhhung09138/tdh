@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Web.Mvc;
 using TDH.Common.UserException;
 using TDH.Model.System;
@@ -47,7 +48,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -83,7 +84,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
     }

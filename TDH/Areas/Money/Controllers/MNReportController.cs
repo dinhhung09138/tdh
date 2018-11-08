@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using TDH.Common;
@@ -42,7 +43,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -80,7 +81,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "SummaryReport", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -120,7 +121,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "SummaryReportByYear", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -159,7 +160,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "IncomeByYearReport", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -198,7 +199,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "PaymentByYearReport", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -237,7 +238,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "BorrowAccountStatus", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -277,7 +278,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Top10Payment", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -317,7 +318,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Top10Income", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -355,7 +356,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "PercentByGroup", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -393,7 +394,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "CateOver", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
         
@@ -431,7 +432,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "MonthSummary", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
     }

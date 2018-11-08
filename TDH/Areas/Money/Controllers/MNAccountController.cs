@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
@@ -46,7 +47,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Home", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -71,7 +72,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -121,7 +122,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -162,7 +163,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "History", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -219,7 +220,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "History", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -256,7 +257,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Create", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -301,7 +302,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Create", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
         
@@ -341,7 +342,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Edit", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -386,7 +387,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Edit", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -427,7 +428,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Publish", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -468,7 +469,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Delete", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -507,7 +508,7 @@ namespace TDH.Areas.Money.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "CheckDelete", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 

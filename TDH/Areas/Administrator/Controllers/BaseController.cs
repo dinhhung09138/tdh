@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Web.Mvc;
 using TDH.Common.UserException;
 using TDH.Services.System;
@@ -21,6 +22,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// </summary>
         /// <param name="moduleCode">module name</param>
         /// <returns>View</returns>
+        [ChildActionOnly]
         [HttpGet]
         public ActionResult ModuleNavigation(string moduleCode)
         {
@@ -41,10 +43,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "ModuleNavigation", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
+        [ChildActionOnly]
         [HttpGet]
         public ActionResult AdminNavigation()
         {
@@ -62,10 +65,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "AdminNavigation", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
+        [ChildActionOnly]
         [HttpGet]
         public ActionResult AdminSidebar()
         {
@@ -85,10 +89,11 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "AdminSidebar", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
+        [ChildActionOnly]
         [AllowAnonymous]
         [HttpGet]
         public ActionResult AdminFooter()
@@ -107,7 +112,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "AdminFooter", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
         

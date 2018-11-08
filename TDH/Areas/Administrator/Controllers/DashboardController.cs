@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using TDH.Common.UserException;
@@ -23,6 +24,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// Main dashboard form
         /// </summary>
         /// <returns>View</returns>
+        [HttpGet]
         public ActionResult Index()
         {
             try
@@ -39,7 +41,7 @@ namespace TDH.Areas.Administrator.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
     }

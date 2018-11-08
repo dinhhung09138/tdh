@@ -1847,6 +1847,9 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Parameter Name="user_name" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="PROC_SYS_SIDEBAR_ByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <Function Name="PROC_WEB_CONFIGURATION_GetByKey" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="key" Type="varchar" Mode="In" />
         </Function>
@@ -2513,7 +2516,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <FunctionImport Name="PROC_WEB_VIEW_POST_Top4Lasted" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Top4Lasted_Result)" />
           <FunctionImport Name="PROC_WEB_VIEW_ABOUT" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_ABOUT_Result)" />
           <FunctionImport Name="PROC_WEB_VIEW_CATEGORY_ByNavigation" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_CATEGORY_ByNavigation_Result)">
-            <Parameter Name="alias" Mode="In" Type="String" />
+          <Parameter Name="alias" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PROC_WEB_VIEW_INTRO_META" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_INTRO_META_Result)" />
           <FunctionImport Name="PROC_WEB_VIEW_POST_ByCategory" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_ByCategory_Result)">
@@ -2522,10 +2525,13 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             <Parameter Name="page" Mode="In" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="PROC_WEB_VIEW_POST_Top6ByCategory" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Top6ByCategory_Result)">
-            <Parameter Name="id" Mode="In" Type="Guid" />
+          <Parameter Name="id" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="PROC_WEB_VIEW_POST_Top6ByNavigation" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Top6ByNavigation_Result)">
-            <Parameter Name="id" Mode="In" Type="Guid" />
+          <Parameter Name="id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_SIDEBAR_ByUserID" ReturnType="Collection(TDHModel.PROC_SYS_SIDEBAR_ByUserID_Result)">
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
@@ -4559,6 +4565,15 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
         </ComplexType>
+        <ComplexType Name="PROC_SYS_SIDEBAR_ByUserID_Result">
+          <Property Type="String" Name="module_code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="module_title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="default_action" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="icon" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="url" Nullable="true" MaxLength="153" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6039,6 +6054,19 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="create_date" ColumnName="create_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_SIDEBAR_ByUserID" FunctionName="TDHModel.Store.PROC_SYS_SIDEBAR_ByUserID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_SYS_SIDEBAR_ByUserID_Result">
+                <ScalarProperty Name="module_code" ColumnName="module_code" />
+                <ScalarProperty Name="module_title" ColumnName="module_title" />
+                <ScalarProperty Name="default_action" ColumnName="default_action" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="url" ColumnName="url" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

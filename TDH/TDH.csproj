@@ -6669,7 +6669,6 @@
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Views\Shared\" />
     <Folder Include="Areas\Marketing\Views\Shared\" />
-    <Folder Include="Areas\Money\Models\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>

@@ -294,5 +294,14 @@ namespace TDH.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_POST_Top6ByNavigation_Result>("PROC_WEB_VIEW_POST_Top6ByNavigation", idParameter);
         }
+    
+        public virtual ObjectResult<PROC_SYS_SIDEBAR_ByUserID_Result> PROC_SYS_SIDEBAR_ByUserID(Nullable<System.Guid> user_id)
+        {
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_SIDEBAR_ByUserID_Result>("PROC_SYS_SIDEBAR_ByUserID", user_idParameter);
+        }
     }
 }

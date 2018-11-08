@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using TDH.Common;
 using TDH.Common.UserException;
 using TDH.DataAccess;
@@ -116,7 +117,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "List", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
             return _return;
         }
@@ -159,7 +160,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
         }
 
@@ -233,7 +234,7 @@ namespace TDH.Services.System
                         catch (Exception ex)
                         {
                             trans.Rollback();
-                            throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
+                            throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
                         }
                     }
                 }
@@ -248,7 +249,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -275,7 +276,7 @@ namespace TDH.Services.System
                     SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _md.locked = model.Locked;
                     _md.update_by = model.UpdateBy;
@@ -291,7 +292,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Publish", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -334,7 +335,7 @@ namespace TDH.Services.System
                         catch (Exception ex)
                         {
                             trans.Rollback();
-                            throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
+                            throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
                         }
                     }
                 }
@@ -349,7 +350,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -382,7 +383,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Login", new Guid(), ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, new Guid(), ex);
             }
         }
 
@@ -398,10 +399,7 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _listFunction = (from m in _context.V_SYS_RENDER_NAVIGATION
-                                         where m.id == userID
-                                         orderby m.module_order descending, m.function_ordering descending
-                                         select new { m.module_code, m.module_title, m.default_action, m.icon, m.code, m.title, m.url }).ToList();
+                    var _listFunction = _context.PROC_SYS_SIDEBAR_ByUserID(userID).ToList();
 
                     var _listModule = _listFunction.Select(m => m.module_code).Distinct().ToList();
                     foreach (var m in _listModule)
@@ -424,7 +422,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetSidebar", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
             return _return;
         }
@@ -442,9 +440,8 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _list = (from m in _context.V_SYS_RENDER_NAVIGATION
-                                 where m.id == userID && m.module_code == moduleCode
-                                 orderby m.module_order descending, m.function_ordering descending
+                    var _list = (from m in _context.PROC_SYS_SIDEBAR_ByUserID(userID)
+                                 where m.module_code == moduleCode
                                  select new { m.code, m.title, m.url }).ToList();
 
                     foreach (var item in _list)
@@ -460,7 +457,7 @@ namespace TDH.Services.System
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetSidebar", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
             return _return;
         }

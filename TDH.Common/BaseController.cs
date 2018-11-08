@@ -28,6 +28,11 @@ namespace TDH.Common
         public Guid UserID { get; set; }
 
         /// <summary>
+        /// Current session
+        /// </summary>
+        protected string SessionID = "";
+
+        /// <summary>
         /// ResultModel message success model
         /// </summary>
         public Utils.CommonModel.ExecuteResultModel ResultModel = new Utils.CommonModel.ExecuteResultModel()
@@ -1073,11 +1078,7 @@ namespace TDH.Common
             {
                 using (var _context = new TDHEntities())
                 {
-                    var _permision = (from dt in _context.SYS_ROLE_DETAIL
-                                      join r in _context.SYS_ROLE on dt.role_id equals r.id
-                                      join ur in _context.SYS_USER_ROLE on r.id equals ur.role_id
-                                      where ur.user_id == userID && dt.function_code == functionCode && !r.deleted && r.publish
-                                      select dt).FirstOrDefault();
+                    var _permision = _context.PROC_SYS_CheckAccess(UserID, functionCode).FirstOrDefault();
                     if (_permision != null)
                     {
                         return new RoleDetailModel()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Reflection;
 using TDH.Common;
@@ -26,6 +27,13 @@ namespace TDH.Services.System
         /// </summary>
         private readonly string FILE_NAME = "Services.System/UserService.cs";
 
+        private string SessionID = "";
+
+        public UserService(string sessionID)
+        {
+            this.SessionID = sessionID;
+        }
+
         #endregion
 
         /// <summary>
@@ -45,19 +53,7 @@ namespace TDH.Services.System
                 List<UserModel> _list = new List<UserModel>();
                 using (var _context = new TDHEntities())
                 {
-                    var _lData = (from m in _context.SYS_USER
-                                  join ur in _context.SYS_USER_ROLE on m.id equals ur.user_id
-                                  join r in _context.SYS_ROLE on ur.role_id equals r.id
-                                  where !m.deleted
-                                  select new
-                                  {
-                                      m.id,
-                                      m.user_name,
-                                      m.full_name,
-                                      m.last_login,
-                                      m.locked,
-                                      role_name = r.name
-                                  }).ToList();
+                    var _lData = _context.PROC_SYS_USER_List(this.SessionID, userID).ToList();
 
                     _itemResponse.draw = request.draw;
                     _itemResponse.recordsTotal = _lData.Count;
@@ -79,7 +75,7 @@ namespace TDH.Services.System
                             Locked = item.locked,
                             FullName = item.full_name,
                             UserName = item.user_name,
-                            LastLoginString = item.last_login == null ? "" : ((DateTime)item.last_login).DateToString("dd/MM/yyyy hh:mm"),
+                            LastLoginString = item.last_login,
                             RoleName = item.role_name
                         });
                     }
@@ -133,23 +129,19 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
+                    var _md = _context.PROC_SYS_USER_ById(model.ID, this.SessionID, model.CreateBy).FirstOrDefault();
                     if (_md == null)
                     {
                         throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
                     }
-                    var _role = (from m in _context.SYS_ROLE
-                                 join r in _context.SYS_USER_ROLE on m.id equals r.role_id
-                                 where r.user_id == _md.id
-                                 select new { m.id, m.name }).FirstOrDefault();
                     return new UserModel()
                     {
                         ID = _md.id,
                         FullName = _md.full_name,
                         UserName = _md.user_name,
                         Locked = _md.locked,
-                        RoleID = _role.id,
-                        RoleName = _role.name,
+                        RoleID = _md.role_id,
+                        RoleName = _md.role_name,
                         Insert = false
                     };
                 }
@@ -175,67 +167,16 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    string _password = null;
+                    if (model.Password != null && model.Password.Length > 0)
                     {
-                        try
-                        {
-                            SYS_USER _md = new SYS_USER();
-                            if (model.Insert)
-                            {
-                                _md.id = Guid.NewGuid();
-                                _md.user_name = model.UserName;
-                                _md.notes = model.Notes;
-                                _md.password = Utils.Security.PasswordSecurityHelper.GetHashedPassword(model.Password);
-                            }
-                            else
-                            {
-                                _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                                if (_md == null)
-                                {
-                                    throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
-                                }
-                                if (model.Password != null && model.Password.Length > 0)
-                                {
-                                    _md.password = Utils.Security.PasswordSecurityHelper.GetHashedPassword(model.Password);
-                                }
-                            }
-                            _md.full_name = model.FullName;
-                            _md.locked = model.Locked;
-                            if (model.Insert)
-                            {
-                                _md.create_by = model.CreateBy;
-                                _md.create_date = DateTime.Now;
-                                _context.SYS_USER.Add(_md);
-                                _context.Entry(_md).State = EntityState.Added;
-                                //
-                                SYS_USER_ROLE role = new SYS_USER_ROLE()
-                                {
-                                    id = Guid.NewGuid(),
-                                    user_id = _md.id,
-                                    role_id = model.RoleID
-                                };
-                                _context.SYS_USER_ROLE.Add(role);
-                                _context.Entry(role).State = EntityState.Added;
-                            }
-                            else
-                            {
-                                _md.update_by = model.UpdateBy;
-                                _md.update_date = DateTime.Now;
-                                _context.SYS_USER.Attach(_md);
-                                _context.Entry(_md).State = EntityState.Modified;
-                                var role = _context.SYS_USER_ROLE.FirstOrDefault(m => m.user_id == model.ID);
-                                role.role_id = model.RoleID;
-                                _context.SYS_USER_ROLE.Attach(role);
-                                _context.Entry(role).State = EntityState.Modified;
-                            }
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            trans.Rollback();
-                            throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
-                        }
+                        _password = Utils.Security.PasswordSecurityHelper.GetHashedPassword(model.Password);
+                    }
+                    ObjectParameter _status = new ObjectParameter("STATUS", typeof(int));
+                    int _return = _context.PROC_SYS_USER_Save(model.ID, model.FullName, model.UserName, _password, model.Locked, model.Notes, model.RoleID, model.CreateBy, model.UpdateBy, model.Insert, this.SessionID, model.CreateBy, _status);
+                    if(_status.Value.ToString() == "0")
+                    {
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                 }
             }
@@ -273,17 +214,12 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                    if (_md == null)
+                    ObjectParameter _status = new ObjectParameter("STATUS", typeof(int));
+                    int _result = _context.PROC_SYS_USER_Publish(model.ID, model.Locked, model.UpdateBy, this.SessionID, model.CreateBy, _status);
+                    if (_status.Value.ToString() == "0")
                     {
                         throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
-                    _md.locked = model.Locked;
-                    _md.update_by = model.UpdateBy;
-                    _md.update_date = DateTime.Now;
-                    _context.SYS_USER.Attach(_md);
-                    _context.Entry(_md).State = EntityState.Modified;
-                    _context.SaveChanges();
                 }
             }
             catch (DataAccessException fieldEx)
@@ -309,34 +245,11 @@ namespace TDH.Services.System
             {
                 using (var _context = new TDHEntities())
                 {
-                    using (var trans = _context.Database.BeginTransaction())
+                    ObjectParameter _status = new ObjectParameter("STATUS", typeof(int));
+                    int _result = _context.PROC_SYS_USER_Delete(model.ID, model.DeleteBy, this.SessionID, model.CreateBy, _status);
+                    if (_status.Value.ToString() == "0")
                     {
-                        try
-                        {
-                            SYS_USER _md = _context.SYS_USER.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                            if (_md == null)
-                            {
-                                throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
-                            }
-                            _md.deleted = true;
-                            _md.delete_by = model.DeleteBy;
-                            _md.delete_date = DateTime.Now;
-                            _context.SYS_USER.Attach(_md);
-                            _context.Entry(_md).State = EntityState.Modified;
-                            //Role
-                            var _lRole = _context.SYS_USER_ROLE.Where(m => m.user_id == model.ID);
-                            if (_lRole.Count() > 0)
-                            {
-                                _context.SYS_USER_ROLE.RemoveRange(_lRole);
-                            }
-                            _context.SaveChanges();
-                            trans.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            trans.Rollback();
-                            throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
-                        }
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                 }
             }

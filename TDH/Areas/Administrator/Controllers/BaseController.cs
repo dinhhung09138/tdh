@@ -15,6 +15,11 @@ namespace TDH.Areas.Administrator.Controllers
         /// </summary>
         private readonly string FILE_NAME = "Administrator.Controllers/BaseController.cs";
 
+        /// <summary>
+        /// Current session
+        /// </summary>
+        private string SessionID = "";
+
         #endregion
 
         /// <summary>
@@ -28,7 +33,7 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
-                UserService _uService = new UserService();
+                UserService _uService = new UserService(this.SessionID);
                 ViewBag.moduleCode = moduleCode;
                 ViewBag.sidebar = _uService.GetSidebar(UserID, moduleCode);
                 return PartialView();
@@ -75,7 +80,7 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
-                UserService _uService = new UserService();
+                UserService _uService = new UserService(this.SessionID); 
                 ViewBag.sidebar = _uService.GetSidebar(UserID);
                 return PartialView();
             }

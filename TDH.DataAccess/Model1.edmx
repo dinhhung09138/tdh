@@ -1843,12 +1843,55 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="PROC_SYS_CheckAccess" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="function" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="PROC_SYS_LOGIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_name" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varchar" Mode="In" />
         </Function>
         <Function Name="PROC_SYS_SIDEBAR_ByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="PROC_SYS_USER_ById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="PROC_SYS_USER_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="delete_by" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="STATUS" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="PROC_SYS_USER_List" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="PROC_SYS_USER_Publish" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="locked" Type="bit" Mode="In" />
+          <Parameter Name="update_by" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="STATUS" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="PROC_SYS_USER_Save" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="full_name" Type="nvarchar" Mode="In" />
+          <Parameter Name="user_name" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="nvarchar" Mode="In" />
+          <Parameter Name="locked" Type="bit" Mode="In" />
+          <Parameter Name="notes" Type="nvarchar" Mode="In" />
+          <Parameter Name="role_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="create_by" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="update_by" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="is_insert" Type="bit" Mode="In" />
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="STATUS" Type="int" Mode="InOut" />
         </Function>
         <Function Name="PROC_WEB_CONFIGURATION_GetByKey" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="key" Type="varchar" Mode="In" />
@@ -2531,7 +2574,50 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Parameter Name="id" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="PROC_SYS_SIDEBAR_ByUserID" ReturnType="Collection(TDHModel.PROC_SYS_SIDEBAR_ByUserID_Result)">
+          <Parameter Name="user_id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_CheckAccess" ReturnType="Collection(TDHModel.PROC_SYS_CheckAccess_Result)">
             <Parameter Name="user_id" Mode="In" Type="Guid" />
+            <Parameter Name="function" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_USER_ById" ReturnType="Collection(TDHModel.PROC_SYS_USER_ById_Result)">
+            <Parameter Name="id" Mode="In" Type="Guid" />
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_USER_Delete">
+            <Parameter Name="id" Mode="In" Type="Guid" />
+            <Parameter Name="delete_by" Mode="In" Type="Guid" />
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+            <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_USER_List" ReturnType="Collection(TDHModel.PROC_SYS_USER_List_Result)">
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_USER_Publish">
+            <Parameter Name="id" Mode="In" Type="Guid" />
+            <Parameter Name="locked" Mode="In" Type="Boolean" />
+            <Parameter Name="update_by" Mode="In" Type="Guid" />
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+            <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_USER_Save">
+            <Parameter Name="id" Mode="In" Type="Guid" />
+            <Parameter Name="full_name" Mode="In" Type="String" />
+            <Parameter Name="user_name" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="locked" Mode="In" Type="Boolean" />
+            <Parameter Name="notes" Mode="In" Type="String" />
+            <Parameter Name="role_id" Mode="In" Type="Guid" />
+            <Parameter Name="create_by" Mode="In" Type="Guid" />
+            <Parameter Name="update_by" Mode="In" Type="Guid" />
+            <Parameter Name="is_insert" Mode="In" Type="Boolean" />
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+            <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
@@ -4574,6 +4660,28 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Property Type="String" Name="title" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="url" Nullable="true" MaxLength="153" />
         </ComplexType>
+        <ComplexType Name="PROC_SYS_CheckAccess_Result">
+          <Property Type="Boolean" Name="view" Nullable="false" />
+          <Property Type="Boolean" Name="add" Nullable="false" />
+          <Property Type="Boolean" Name="edit" Nullable="false" />
+          <Property Type="Boolean" Name="delete" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="PROC_SYS_USER_List_Result">
+          <Property Type="Guid" Name="id" Nullable="true" />
+          <Property Type="String" Name="user_name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="full_name" Nullable="true" MaxLength="60" />
+          <Property Type="Boolean" Name="locked" Nullable="false" />
+          <Property Type="String" Name="last_login" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="role_name" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="PROC_SYS_USER_ById_Result">
+          <Property Type="Guid" Name="id" Nullable="true" />
+          <Property Type="String" Name="user_name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="full_name" Nullable="true" MaxLength="60" />
+          <Property Type="Boolean" Name="locked" Nullable="false" />
+          <Property Type="Guid" Name="role_id" Nullable="false" />
+          <Property Type="String" Name="role_name" Nullable="true" MaxLength="100" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6070,6 +6178,43 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_CheckAccess" FunctionName="TDHModel.Store.PROC_SYS_CheckAccess">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_SYS_CheckAccess_Result">
+                <ScalarProperty Name="view" ColumnName="view" />
+                <ScalarProperty Name="add" ColumnName="add" />
+                <ScalarProperty Name="edit" ColumnName="edit" />
+                <ScalarProperty Name="delete" ColumnName="delete" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_USER_ById" FunctionName="TDHModel.Store.PROC_SYS_USER_ById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_SYS_USER_ById_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="locked" ColumnName="locked" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_USER_Delete" FunctionName="TDHModel.Store.PROC_SYS_USER_Delete"/>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_USER_List" FunctionName="TDHModel.Store.PROC_SYS_USER_List">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_SYS_USER_List_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="last_login" ColumnName="last_login" />
+                <ScalarProperty Name="locked" ColumnName="locked" />
+                <ScalarProperty Name="role_name" ColumnName="role_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_USER_Publish" FunctionName="TDHModel.Store.PROC_SYS_USER_Publish"/>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_USER_Save" FunctionName="TDHModel.Store.PROC_SYS_USER_Save"/>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

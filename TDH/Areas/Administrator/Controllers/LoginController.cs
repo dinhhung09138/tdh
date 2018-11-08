@@ -58,7 +58,7 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
-                UserService _services = new UserService();
+                UserService _services = new UserService(this.SessionID);
                 UserModel _model = _services.Login(model);
                 if (_model.UserName == null || _model.UserName == "")
                 {

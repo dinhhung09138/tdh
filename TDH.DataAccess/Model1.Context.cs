@@ -303,5 +303,150 @@ namespace TDH.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_SIDEBAR_ByUserID_Result>("PROC_SYS_SIDEBAR_ByUserID", user_idParameter);
         }
+    
+        public virtual ObjectResult<PROC_SYS_CheckAccess_Result> PROC_SYS_CheckAccess(Nullable<System.Guid> user_id, string function)
+        {
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            var functionParameter = function != null ?
+                new ObjectParameter("function", function) :
+                new ObjectParameter("function", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_CheckAccess_Result>("PROC_SYS_CheckAccess", user_idParameter, functionParameter);
+        }
+    
+        public virtual ObjectResult<PROC_SYS_USER_ById_Result>  PROC_SYS_USER_ById(Nullable<System.Guid> id, string session_id, Nullable<System.Guid> user_id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(System.Guid));
+    
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_USER_ById_Result>("PROC_SYS_USER_ById", idParameter, session_idParameter, user_idParameter);
+        }
+    
+        public virtual int PROC_SYS_USER_Delete(Nullable<System.Guid> id, Nullable<System.Guid> delete_by, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(System.Guid));
+    
+            var delete_byParameter = delete_by.HasValue ?
+                new ObjectParameter("delete_by", delete_by) :
+                new ObjectParameter("delete_by", typeof(System.Guid));
+    
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Delete", idParameter, delete_byParameter, session_idParameter, user_idParameter, sTATUS);
+        }
+    
+        public virtual ObjectResult<PROC_SYS_USER_List_Result> PROC_SYS_USER_List(string session_id, Nullable<System.Guid> user_id)
+        {
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_USER_List_Result>("PROC_SYS_USER_List", session_idParameter, user_idParameter);
+        }
+    
+        public virtual int PROC_SYS_USER_Publish(Nullable<System.Guid> id, Nullable<bool> locked, Nullable<System.Guid> update_by, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(System.Guid));
+    
+            var lockedParameter = locked.HasValue ?
+                new ObjectParameter("locked", locked) :
+                new ObjectParameter("locked", typeof(bool));
+    
+            var update_byParameter = update_by.HasValue ?
+                new ObjectParameter("update_by", update_by) :
+                new ObjectParameter("update_by", typeof(System.Guid));
+    
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Publish", idParameter, lockedParameter, update_byParameter, session_idParameter, user_idParameter, sTATUS);
+        }
+    
+        public virtual int PROC_SYS_USER_Save(Nullable<System.Guid> id, string full_name, string user_name, string password, Nullable<bool> locked, string notes, Nullable<System.Guid> role_id, Nullable<System.Guid> create_by, Nullable<System.Guid> update_by, Nullable<bool> is_insert, string session_id, Nullable<System.Guid> user_id, ObjectParameter status)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(System.Guid));
+    
+            var full_nameParameter = full_name != null ?
+                new ObjectParameter("full_name", full_name) :
+                new ObjectParameter("full_name", typeof(string));
+    
+            var user_nameParameter = user_name != null ?
+                new ObjectParameter("user_name", user_name) :
+                new ObjectParameter("user_name", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("password", password) :
+                new ObjectParameter("password", typeof(string));
+    
+            var lockedParameter = locked.HasValue ?
+                new ObjectParameter("locked", locked) :
+                new ObjectParameter("locked", typeof(bool));
+    
+            var notesParameter = notes != null ?
+                new ObjectParameter("notes", notes) :
+                new ObjectParameter("notes", typeof(string));
+    
+            var role_idParameter = role_id.HasValue ?
+                new ObjectParameter("role_id", role_id) :
+                new ObjectParameter("role_id", typeof(System.Guid));
+    
+            var create_byParameter = create_by.HasValue ?
+                new ObjectParameter("create_by", create_by) :
+                new ObjectParameter("create_by", typeof(System.Guid));
+    
+            var update_byParameter = update_by.HasValue ?
+                new ObjectParameter("update_by", update_by) :
+                new ObjectParameter("update_by", typeof(System.Guid));
+    
+            var is_insertParameter = is_insert.HasValue ?
+                new ObjectParameter("is_insert", is_insert) :
+                new ObjectParameter("is_insert", typeof(bool));
+    
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+
+            var statusParameter = new ObjectParameter("STATUS", typeof(System.Int32));
+            
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Save", idParameter, full_nameParameter, user_nameParameter, passwordParameter, lockedParameter, notesParameter, role_idParameter, create_byParameter, update_byParameter, is_insertParameter, session_idParameter, user_idParameter, status);
+        }
     }
 }

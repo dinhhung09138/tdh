@@ -68,7 +68,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                UserService _service = new UserService();
+                UserService _service = new UserService(this.SessionID);
 
                 #endregion
 
@@ -158,7 +158,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                UserService _service = new UserService();
+                UserService _service = new UserService(this.SessionID);
 
                 #endregion
 
@@ -201,7 +201,7 @@ namespace TDH.Areas.System.Controllers
                 #region " [ Declaration ] "
 
                 RoleService _rService = new RoleService();
-                UserService _service = new UserService();
+                UserService _service = new UserService(this.SessionID);
 
                 ViewBag.id = id;
                 ViewBag.Role = _rService.GetAll(UserID);
@@ -242,7 +242,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                UserService _service = new UserService();
+                UserService _service = new UserService(this.SessionID);
 
                 #endregion
 
@@ -284,7 +284,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                UserService _service = new UserService();
+                UserService _service = new UserService(this.SessionID);
 
                 #endregion
 
@@ -325,7 +325,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                UserService _service = new UserService();
+                UserService _service = new UserService(this.SessionID);
 
                 #endregion
 

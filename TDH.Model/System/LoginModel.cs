@@ -51,5 +51,10 @@ namespace TDH.Model.System
         /// Host address
         /// </summary>
         public string HostAddress { get; set; } = "";
+
+        /// <summary>
+        /// Current session id
+        /// </summary>
+        public string SessionID { get; set; } = "";
     }
 }

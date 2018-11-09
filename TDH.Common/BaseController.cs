@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -51,12 +53,16 @@ namespace TDH.Common
         /// <param name="filterContext"></param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            //Get user model from session
             var _user = filterContext.HttpContext.Session[CommonHelper.SESSION_LOGIN_NAME] as Utils.CommonModel.UserLoginModel;
             if (_user != null)
             {
                 UserID = _user.UserID;
+                this.SessionID = _user.SessionID;
                 ViewBag.userID = UserID;
             }
+
+            //Stop if allowAnonymous attribute
             bool skipAuth = filterContext.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), inherit: true)
                  || filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnonymousAttribute), inherit: true)
                  || filterContext.IsChildAction;
@@ -64,17 +70,23 @@ namespace TDH.Common
             {
                 return;
             }
+
+            //Check user login
             if (_user == null || _user.UserID.ToString().Length == 0 || _user.UserName.Length == 0)
+            {
+                //Return to login page
+                throw new UnauthorizedAccessException();
+            }
+
+            //Check token
+            if(this.CheckToken(_user.UserID, _user.Token) < 0)
             {
                 //Return to login page
                 throw new UnauthorizedAccessException();
             }
             base.OnActionExecuting(filterContext);
 
-            //Get browser info user are using
-            this.CollectUserInfo(filterContext.HttpContext.Request);
-            
-
+            //Get controller infor
             var _areaName = "";
             if (filterContext.RouteData.DataTokens["area"] != null)
             {
@@ -83,6 +95,7 @@ namespace TDH.Common
             var _controllerName = filterContext.RouteData.Values["controller"].ToString().ToLower();
             var _actionName = filterContext.RouteData.Values["action"].ToString().ToLower();
 
+            //Check permision. Throw exception if user trying to access without permission
             string _functionCode = GetFunctionCode(_areaName, _controllerName, _actionName);
             var _type = GetFunctionType(_areaName, _controllerName, _actionName);
             var _permision = AllowAccess(_user.UserID, _functionCode);
@@ -107,6 +120,8 @@ namespace TDH.Common
                 default:
                     throw new ApplicationException();
             }
+
+            //Set permission status
             ViewBag.View = _permision.View;
             ViewBag.Add = _permision.Add;
             ViewBag.Edit = _permision.Edit;
@@ -1067,6 +1082,31 @@ namespace TDH.Common
         #region " [ Protected function ] "
 
         /// <summary>
+        /// Check token string is working or expired
+        /// </summary>
+        /// <param name="userID">The user identifier</param>
+        /// <param name="token">Token string</param>
+        /// <returns>-1: expired time, 1: still working</returns>
+        private int CheckToken(Guid userID, string token)
+        {
+            try
+            {
+                using (var _context = new TDHEntities())
+                {
+                    ObjectParameter _output = new ObjectParameter("STATUS", typeof(int));
+                    var _return = _context.PROC_COMMON_CheckToken(token, _output);
+                    return (int)_output.Value;
+                }
+            }
+            catch (Exception ex)
+            {
+                Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
+                Log.WriteLog(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
+                throw new ApplicationException();
+            }
+        }
+
+        /// <summary>
         /// Check access into method
         /// </summary>
         /// <param name="userID">User identifier</param>
@@ -1101,22 +1141,11 @@ namespace TDH.Common
             catch (Exception ex)
             {
                 Notifier.Notification(userID, Message.Error, Notifier.TYPE.Error);
-                Log.WriteLog(FILE_NAME, "AllowAccess", userID, ex);
+                Log.WriteLog(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
                 throw new ApplicationException();
             }
         }
-
-        private void CollectUserInfo(HttpRequestBase context)
-        {
-
-            var tmp = context.Browser.IsMobileDevice;
-            var t1 = context.Browser.Platform;
-            var t12 = context.Browser.Version;
-            var t31 = context.UserAgent;
-            var t14 = context.UserHostAddress;
-            var t5 = context.UserHostName;
-        }
-
+        
         #endregion
     }
 }

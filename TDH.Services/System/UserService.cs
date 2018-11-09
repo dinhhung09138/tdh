@@ -284,7 +284,7 @@ namespace TDH.Services.System
                 {
                     string _password = Utils.Security.PasswordSecurityHelper.GetHashedPassword(model.Password);
                     ObjectParameter _output = new ObjectParameter("STATUS", typeof(int));
-                    var _md = _context.PROC_SYS_LOGIN(model.UserName, _password, model.IsMobile, model.PlatForm, model.Version, model.UserAgent, model.HostName, model.HostAddress, _output).FirstOrDefault();
+                    var _md = _context.PROC_SYS_LOGIN(model.UserName, _password, model.IsMobile, model.PlatForm, model.Version, model.UserAgent, model.HostName, model.HostAddress, model.SessionID, _output).FirstOrDefault();
                     returnValue = (int)_output.Value;
                     if (_md == null)
                     {
@@ -294,6 +294,7 @@ namespace TDH.Services.System
                     {
                         ID = (Guid)_md.user_id,
                         UserName = _md.user_name,
+                        Token = _md.token
                     };
                 }
             }

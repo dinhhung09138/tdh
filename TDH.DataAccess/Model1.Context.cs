@@ -144,7 +144,7 @@ namespace TDH.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR_Result>("[TDHEntities].[FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR](@I_Year)", i_YearParameter);
         }
     
-        public virtual ObjectResult<PROC_SYS_LOGIN_Result> PROC_SYS_LOGIN(string user_name, string password, Nullable<bool> is_mobile, string platform, string version, string agent, string host_name, string host_address, ObjectParameter sTATUS)
+        public virtual ObjectResult<PROC_SYS_LOGIN_Result> PROC_SYS_LOGIN(string user_name, string password, Nullable<bool> is_mobile, string platform, string version, string agent, string host_name, string host_address, string session_id, ObjectParameter sTATUS)
         {
             var user_nameParameter = user_name != null ?
                 new ObjectParameter("user_name", user_name) :
@@ -178,7 +178,11 @@ namespace TDH.DataAccess
                 new ObjectParameter("host_address", host_address) :
                 new ObjectParameter("host_address", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_LOGIN_Result>("PROC_SYS_LOGIN", user_nameParameter, passwordParameter, is_mobileParameter, platformParameter, versionParameter, agentParameter, host_nameParameter, host_addressParameter, sTATUS);
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_LOGIN_Result>("PROC_SYS_LOGIN", user_nameParameter, passwordParameter, is_mobileParameter, platformParameter, versionParameter, agentParameter, host_nameParameter, host_addressParameter, session_idParameter, sTATUS);
         }
     
         public virtual ObjectResult<PROC_WEB_VIEW_HOME_META_Result> PROC_WEB_VIEW_HOME_META()
@@ -468,6 +472,15 @@ namespace TDH.DataAccess
                 new ObjectParameter("user_id", typeof(System.Guid));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Save", idParameter, full_nameParameter, user_nameParameter, passwordParameter, lockedParameter, notesParameter, role_idParameter, create_byParameter, update_byParameter, is_insertParameter, session_idParameter, user_idParameter, sTATUS);
+        }
+    
+        public virtual int PROC_COMMON_CheckToken(string token, ObjectParameter sTATUS)
+        {
+            var tokenParameter = token != null ?
+                new ObjectParameter("token", token) :
+                new ObjectParameter("token", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_COMMON_CheckToken", tokenParameter, sTATUS);
         }
     }
 }

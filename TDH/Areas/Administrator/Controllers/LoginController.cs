@@ -67,6 +67,7 @@ namespace TDH.Areas.Administrator.Controllers
                 model.Version = HttpContext.Request.Browser.Version;
                 model.HostName = HttpContext.Request.UserHostName;
                 model.HostAddress = Utils.RequestHelpers.GetClientIpAddress(HttpContext.Request);
+                model.SessionID = HttpContext.Session.SessionID;
                 
                 UserService _services = new UserService(this.SessionID);
                 UserModel _model = _services.Login(model, out _returnOutput);

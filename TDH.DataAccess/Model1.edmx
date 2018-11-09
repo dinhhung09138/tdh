@@ -1843,6 +1843,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="PROC_COMMON_CheckToken" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="token" Type="varchar" Mode="In" />
+          <Parameter Name="STATUS" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="PROC_SYS_CheckAccess" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="function" Type="varchar" Mode="In" />
@@ -1856,6 +1860,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Parameter Name="agent" Type="varchar" Mode="In" />
           <Parameter Name="host_name" Type="varchar" Mode="In" />
           <Parameter Name="host_address" Type="varchar" Mode="In" />
+          <Parameter Name="session_id" Type="nvarchar" Mode="In" />
           <Parameter Name="STATUS" Type="int" Mode="InOut" />
         </Function>
         <Function Name="PROC_SYS_SIDEBAR_ByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -2547,6 +2552,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             <Parameter Name="agent" Mode="In" Type="String" />
             <Parameter Name="host_name" Mode="In" Type="String" />
             <Parameter Name="host_address" Mode="In" Type="String" />
+            <Parameter Name="session_id" Mode="In" Type="String" />
             <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PROC_WEB_VIEW_HOME_META" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_META_Result)" />
@@ -2631,6 +2637,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             <Parameter Name="is_insert" Mode="In" Type="Boolean" />
             <Parameter Name="session_id" Mode="In" Type="String" />
             <Parameter Name="user_id" Mode="In" Type="Guid" />
+            <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_COMMON_CheckToken">
+            <Parameter Name="token" Mode="In" Type="String" />
             <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
@@ -6231,6 +6241,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="PROC_SYS_USER_Publish" FunctionName="TDHModel.Store.PROC_SYS_USER_Publish"/>
           <FunctionImportMapping FunctionImportName="PROC_SYS_USER_Save" FunctionName="TDHModel.Store.PROC_SYS_USER_Save"/>
+          <FunctionImportMapping FunctionImportName="PROC_COMMON_CheckToken" FunctionName="TDHModel.Store.PROC_COMMON_CheckToken"/>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

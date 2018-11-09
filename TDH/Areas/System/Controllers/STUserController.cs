@@ -114,7 +114,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                RoleService _rService = new RoleService();
+                RoleService _rService = new RoleService(this.SessionID);
 
                 UserModel model = new UserModel()
                 {
@@ -200,7 +200,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                RoleService _rService = new RoleService();
+                RoleService _rService = new RoleService(this.SessionID);
                 UserService _service = new UserService(this.SessionID);
 
                 ViewBag.id = id;

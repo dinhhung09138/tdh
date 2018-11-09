@@ -466,5 +466,99 @@ namespace TDH.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_COMMON_CheckToken", tokenParameter, sTATUS);
         }
+    
+        public virtual ObjectResult<PROC_SYS_FUNCTION_List_Result> PROC_SYS_FUNCTION_List(string session_id, Nullable<System.Guid> user_id)
+        {
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_FUNCTION_List_Result>("PROC_SYS_FUNCTION_List", session_idParameter, user_idParameter);
+        }
+    
+        public virtual ObjectResult<PROC_SYS_ROLE_ById_Result> PROC_SYS_ROLE_ById(Nullable<System.Guid> id, string session_id, Nullable<System.Guid> user_id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(System.Guid));
+    
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_ROLE_ById_Result>("PROC_SYS_ROLE_ById", idParameter, session_idParameter, user_idParameter);
+        }
+    
+        public virtual int PROC_SYS_ROLE_CheckDelete(Nullable<System.Guid> role_id, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
+        {
+            var role_idParameter = role_id.HasValue ?
+                new ObjectParameter("role_id", role_id) :
+                new ObjectParameter("role_id", typeof(System.Guid));
+    
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_ROLE_CheckDelete", role_idParameter, session_idParameter, user_idParameter, sTATUS);
+        }
+    
+        public virtual int PROC_SYS_ROLE_Delete(Nullable<System.Guid> role_id, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
+        {
+            var role_idParameter = role_id.HasValue ?
+                new ObjectParameter("role_id", role_id) :
+                new ObjectParameter("role_id", typeof(System.Guid));
+    
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_ROLE_Delete", role_idParameter, session_idParameter, user_idParameter, sTATUS);
+        }
+    
+        public virtual ObjectResult<PROC_SYS_ROLE_DETAIL_ByRoleId_Result> PROC_SYS_ROLE_DETAIL_ByRoleId(Nullable<System.Guid> role_id, string session_id, Nullable<System.Guid> user_id)
+        {
+            var role_idParameter = role_id.HasValue ?
+                new ObjectParameter("role_id", role_id) :
+                new ObjectParameter("role_id", typeof(System.Guid));
+    
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_ROLE_DETAIL_ByRoleId_Result>("PROC_SYS_ROLE_DETAIL_ByRoleId", role_idParameter, session_idParameter, user_idParameter);
+        }
+    
+        public virtual ObjectResult<PROC_SYS_ROLE_List_Result> PROC_SYS_ROLE_List(string session_id, Nullable<System.Guid> user_id)
+        {
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_ROLE_List_Result>("PROC_SYS_ROLE_List", session_idParameter, user_idParameter);
+        }
     }
 }

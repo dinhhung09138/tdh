@@ -87,7 +87,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                RoleService _service = new RoleService();
+                RoleService _service = new RoleService(this.SessionID);
 
                 #endregion
 
@@ -134,7 +134,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                RoleService _service = new RoleService();
+                RoleService _service = new RoleService(this.SessionID);
 
                 #endregion
 
@@ -172,7 +172,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                RoleService _service = new RoleService();
+                RoleService _service = new RoleService(this.SessionID);
 
                 #endregion
 
@@ -246,7 +246,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                RoleService _service = new RoleService();
+                RoleService _service = new RoleService(this.SessionID);
 
                 ViewBag.id = id;
 
@@ -286,7 +286,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                RoleService _service = new RoleService();
+                RoleService _service = new RoleService(this.SessionID);
 
                 #endregion
 
@@ -360,7 +360,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                RoleService _service = new RoleService();
+                RoleService _service = new RoleService(this.SessionID);
 
                 #endregion
 
@@ -401,7 +401,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                RoleService _service = new RoleService();
+                RoleService _service = new RoleService(this.SessionID);
 
                 #endregion
 
@@ -442,7 +442,7 @@ namespace TDH.Areas.System.Controllers
             {
                 #region " [ Declaration ] "
 
-                RoleService _service = new RoleService();
+                RoleService _service = new RoleService(this.SessionID);
 
                 #endregion
 

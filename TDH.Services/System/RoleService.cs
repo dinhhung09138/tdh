@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -26,7 +27,14 @@ namespace TDH.Services.System
         /// File name
         /// </summary>
         private readonly string FILE_NAME = "Services.System/RoleService.cs";
-        
+
+        private string SessionID = "";
+
+        public RoleService(string sessionID)
+        {
+            this.SessionID = sessionID;
+        }
+
         #endregion
 
         /// <summary>
@@ -46,7 +54,7 @@ namespace TDH.Services.System
                 List<RoleModel> _list = new List<RoleModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _lData = context.SYS_ROLE.Where(m => !m.deleted).Select(m => new { m.id, m.name, m.description, m.publish }).ToList();
+                    var _lData = context.PROC_SYS_ROLE_List(this.SessionID, userID).ToList();
 
                     _itemResponse.draw = request.draw;
                     _itemResponse.recordsTotal = _lData.Count;
@@ -57,18 +65,17 @@ namespace TDH.Services.System
                         _lData = _lData.Where(m => m.description.ToLower().Contains(searchValue) ||
                                          m.name.ToLower().Contains(searchValue)).ToList();
                     }
-                    int _count = 0;
+
                     foreach (var item in _lData)
                     {
-                        _count = context.SYS_USER_ROLE.Count(m => m.role_id == item.id);
                         _list.Add(new RoleModel()
                         {
                             ID = item.id,
                             Name = item.name,
                             Description = item.description,
                             Publish = item.publish,
-                            Count = _count,
-                            CountString = _count.NumberToString()
+                            Count = item.count,
+                            CountString = item.count.NumberToString()
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -116,7 +123,7 @@ namespace TDH.Services.System
                 List<RoleModel> _return = new List<RoleModel>();
                 using (var context = new TDHEntities())
                 {
-                    var _list = context.SYS_ROLE.Where(m => !m.deleted).ToList();
+                    var _list = context.PROC_SYS_ROLE_List(this.SessionID, userID).ToList();
                     foreach (var item in _list)
                     {
                         _return.Add(new RoleModel() { ID = item.id, Name = item.name });
@@ -142,21 +149,21 @@ namespace TDH.Services.System
             {
                 using (var context = new TDHEntities())
                 {
-                    List<SYS_FUNCTION> _lFunc = context.SYS_FUNCTION.OrderBy(m => m.module_code).OrderByDescending(m => m.ordering).ToList();
+                    var _lFunc = context.PROC_SYS_FUNCTION_List(this.SessionID, model.CreateBy).ToList();
                     foreach (var item in _lFunc)
                     {
                         _return.Detail.Add(new RoleDetailModel()
                         {
                             FunctionCode = item.code,
                             FunctionName = item.name,
-                            View = false,
-                            Add = false,
-                            Edit = false,
-                            Delete = false
+                            View = item.view,
+                            Add = item.add,
+                            Edit = item.edit,
+                            Delete = item.delete
                         });
                     }
 
-                    SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID);
+                    var _md = context.PROC_SYS_ROLE_ById(model.ID, this.SessionID, model.CreateBy).FirstOrDefault();
                     if (_md != null)
                     {
                         _return.ID = _md.id;
@@ -164,7 +171,7 @@ namespace TDH.Services.System
                         _return.Description = _md.description;
                         _return.Publish = _md.publish;
                         //
-                        var _lPers = context.SYS_ROLE_DETAIL.Where(m => m.role_id == _md.id).ToList();
+                        var _lPers = context.PROC_SYS_ROLE_DETAIL_ByRoleId(_md.id, this.SessionID, model.CreateBy).ToList();
                         foreach (var item in _lPers)
                         {
                             var _tmp = _return.Detail.FirstOrDefault(m => m.FunctionCode == item.function_code);
@@ -333,17 +340,12 @@ namespace TDH.Services.System
             {
                 using (var context = new TDHEntities())
                 {
-                    SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                    if (_md == null)
+                    ObjectParameter _status = new ObjectParameter("STATUS", typeof(int));
+                    var _return = context.PROC_SYS_ROLE_Delete(model.ID, this.SessionID, model.DeleteBy, _status);
+                    if (_status.Value.ToString() == "0")
                     {
                         throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
-                    _md.deleted = true;
-                    _md.deleted_by = model.DeleteBy;
-                    _md.deleted_date = DateTime.Now;
-                    context.SYS_ROLE.Attach(_md);
-                    context.Entry(_md).State = EntityState.Modified;
-                    context.SaveChanges();
                 }
             }
             catch (DataAccessException fieldEx)
@@ -369,13 +371,13 @@ namespace TDH.Services.System
             {
                 using (var context = new TDHEntities())
                 {
-                    SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                    if (_md == null)
+                    ObjectParameter _status = new ObjectParameter("STATUS", typeof(int));
+                    var _return = context.PROC_SYS_ROLE_CheckDelete(model.ID, this.SessionID, model.DeleteBy, _status);
+                    if (_status.Value.ToString() == "0")
                     {
                         throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
-                    var _user = context.SYS_USER_ROLE.FirstOrDefault(m => m.role_id == _md.id);
-                    if (_user != null)
+                    if (_status.Value.ToString() == "-1")
                     {
                         Notifier.Notification(model.CreateBy, Message.CheckExists, Notifier.TYPE.Warning);
                         return ResponseStatusCodeHelper.NG;
@@ -392,48 +394,6 @@ namespace TDH.Services.System
             }
             return ResponseStatusCodeHelper.OK;
         }
-
-        /// <summary>
-        /// Check access into method
-        /// </summary>
-        /// <param name="userID">User identifier</param>
-        /// <param name="functionCode">Function code</param>
-        /// <returns>RoleDetailModel</returns>
-        public RoleDetailModel AllowAccess(Guid userID, string functionCode)
-        {
-            try
-            {
-                using (var context = new TDHEntities())
-                {
-                    var _permision = (from dt in context.SYS_ROLE_DETAIL
-                                      join r in context.SYS_ROLE on dt.role_id equals r.id
-                                      join ur in context.SYS_USER_ROLE on r.id equals ur.role_id
-                                      where ur.user_id == userID && dt.function_code == functionCode && !r.deleted && r.publish
-                                      select dt).FirstOrDefault();
-                    if (_permision != null)
-                    {
-                        return new RoleDetailModel()
-                        {
-                            View = _permision.view,
-                            Add = _permision.add,
-                            Edit = _permision.edit,
-                            Delete = _permision.delete
-                        };
-                    }
-                    return new RoleDetailModel()
-                    {
-                        View = false,
-                        Add = false,
-                        Edit = false,
-                        Delete = false
-                    };
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
-            }
-        }
-
+        
     }
 }

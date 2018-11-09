@@ -1851,6 +1851,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="function" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="PROC_SYS_FUNCTION_List" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+        </Function>
         <Function Name="PROC_SYS_LOGIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_name" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varchar" Mode="In" />
@@ -1862,6 +1866,32 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Parameter Name="host_address" Type="varchar" Mode="In" />
           <Parameter Name="session_id" Type="nvarchar" Mode="In" />
           <Parameter Name="STATUS" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="PROC_SYS_ROLE_ById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="PROC_SYS_ROLE_CheckDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="role_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="STATUS" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="PROC_SYS_ROLE_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="role_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="STATUS" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="PROC_SYS_ROLE_DETAIL_ByRoleId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="role_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="PROC_SYS_ROLE_List" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
         </Function>
         <Function Name="PROC_SYS_SIDEBAR_ByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
@@ -2634,6 +2664,36 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <FunctionImport Name="PROC_COMMON_CheckToken">
             <Parameter Name="token" Mode="In" Type="String" />
             <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_FUNCTION_List" ReturnType="Collection(TDHModel.PROC_SYS_FUNCTION_List_Result)">
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_ROLE_ById" ReturnType="Collection(TDHModel.PROC_SYS_ROLE_ById_Result)">
+            <Parameter Name="id" Mode="In" Type="Guid" />
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_ROLE_CheckDelete">
+            <Parameter Name="role_id" Mode="In" Type="Guid" />
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+            <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_ROLE_Delete">
+            <Parameter Name="role_id" Mode="In" Type="Guid" />
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+            <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_ROLE_DETAIL_ByRoleId" ReturnType="Collection(TDHModel.PROC_SYS_ROLE_DETAIL_ByRoleId_Result)">
+            <Parameter Name="role_id" Mode="In" Type="Guid" />
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_ROLE_List" ReturnType="Collection(TDHModel.PROC_SYS_ROLE_List_Result)">
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
@@ -4699,6 +4759,48 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Property Type="Guid" Name="role_id" Nullable="false" />
           <Property Type="String" Name="role_name" Nullable="true" MaxLength="100" />
         </ComplexType>
+        <ComplexType Name="PROC_SYS_FUNCTION_List_Result">
+          <Property Type="String" Name="code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="view" Nullable="false" />
+          <Property Type="Boolean" Name="add" Nullable="false" />
+          <Property Type="Boolean" Name="edit" Nullable="false" />
+          <Property Type="Boolean" Name="delete" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="PROC_SYS_ROLE_ById_Result">
+          <Property Type="Guid" Name="id" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="300" />
+          <Property Type="Boolean" Name="publish" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="PROC_SYS_ROLE_CheckDelete_Result">
+          <Property Type="String" Name="error_procedure" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="error_state" Nullable="true" />
+          <Property Type="Int32" Name="error_severity" Nullable="true" />
+          <Property Type="Int32" Name="error_number" Nullable="true" />
+          <Property Type="String" Name="error_message" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="PROC_SYS_ROLE_Delete_Result">
+          <Property Type="String" Name="error_procedure" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="error_state" Nullable="true" />
+          <Property Type="Int32" Name="error_severity" Nullable="true" />
+          <Property Type="Int32" Name="error_number" Nullable="true" />
+          <Property Type="String" Name="error_message" Nullable="true" MaxLength="4000" />
+        </ComplexType>
+        <ComplexType Name="PROC_SYS_ROLE_DETAIL_ByRoleId_Result">
+          <Property Type="String" Name="function_code" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="view" Nullable="false" />
+          <Property Type="Boolean" Name="add" Nullable="false" />
+          <Property Type="Boolean" Name="edit" Nullable="false" />
+          <Property Type="Boolean" Name="delete" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="PROC_SYS_ROLE_List_Result">
+          <Property Type="Guid" Name="id" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="300" />
+          <Property Type="Boolean" Name="publish" Nullable="false" />
+          <Property Type="Int32" Name="count" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6234,6 +6336,52 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <FunctionImportMapping FunctionImportName="PROC_SYS_USER_Publish" FunctionName="TDHModel.Store.PROC_SYS_USER_Publish"/>
           <FunctionImportMapping FunctionImportName="PROC_SYS_USER_Save" FunctionName="TDHModel.Store.PROC_SYS_USER_Save"/>
           <FunctionImportMapping FunctionImportName="PROC_COMMON_CheckToken" FunctionName="TDHModel.Store.PROC_COMMON_CheckToken"/>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_FUNCTION_List" FunctionName="TDHModel.Store.PROC_SYS_FUNCTION_List">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_SYS_FUNCTION_List_Result">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="view" ColumnName="view" />
+                <ScalarProperty Name="add" ColumnName="add" />
+                <ScalarProperty Name="edit" ColumnName="edit" />
+                <ScalarProperty Name="delete" ColumnName="delete" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_ROLE_ById" FunctionName="TDHModel.Store.PROC_SYS_ROLE_ById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_SYS_ROLE_ById_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_ROLE_CheckDelete" FunctionName="TDHModel.Store.PROC_SYS_ROLE_CheckDelete"/>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_ROLE_Delete" FunctionName="TDHModel.Store.PROC_SYS_ROLE_Delete"/>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_ROLE_DETAIL_ByRoleId" FunctionName="TDHModel.Store.PROC_SYS_ROLE_DETAIL_ByRoleId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_SYS_ROLE_DETAIL_ByRoleId_Result">
+                <ScalarProperty Name="function_code" ColumnName="function_code" />
+                <ScalarProperty Name="view" ColumnName="view" />
+                <ScalarProperty Name="add" ColumnName="add" />
+                <ScalarProperty Name="edit" ColumnName="edit" />
+                <ScalarProperty Name="delete" ColumnName="delete" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SYS_ROLE_List" FunctionName="TDHModel.Store.PROC_SYS_ROLE_List">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_SYS_ROLE_List_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="count" ColumnName="count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

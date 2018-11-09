@@ -60,5 +60,7 @@ namespace TDH.Model.System
         /// </summary>
         public string RoleName { get; set; } = "";
 
+        public string Token { get; set; } = "";
+
     }
 }

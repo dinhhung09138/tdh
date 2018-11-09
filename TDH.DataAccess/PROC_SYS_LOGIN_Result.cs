@@ -16,5 +16,6 @@ namespace TDH.DataAccess
         public Nullable<System.Guid> user_id { get; set; }
         public string user_name { get; set; }
         public string full_name { get; set; }
+        public string token { get; set; }
     }
 }

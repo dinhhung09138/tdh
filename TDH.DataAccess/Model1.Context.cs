@@ -144,7 +144,7 @@ namespace TDH.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR_Result>("[TDHEntities].[FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR](@I_Year)", i_YearParameter);
         }
     
-        public virtual ObjectResult<PROC_SYS_LOGIN_Result> PROC_SYS_LOGIN(string user_name, string password)
+        public virtual ObjectResult<PROC_SYS_LOGIN_Result> PROC_SYS_LOGIN(string user_name, string password, Nullable<bool> is_mobile, string platform, string version, string agent, string host_name, string host_address, ObjectParameter sTATUS)
         {
             var user_nameParameter = user_name != null ?
                 new ObjectParameter("user_name", user_name) :
@@ -154,7 +154,31 @@ namespace TDH.DataAccess
                 new ObjectParameter("password", password) :
                 new ObjectParameter("password", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_LOGIN_Result>("PROC_SYS_LOGIN", user_nameParameter, passwordParameter);
+            var is_mobileParameter = is_mobile.HasValue ?
+                new ObjectParameter("is_mobile", is_mobile) :
+                new ObjectParameter("is_mobile", typeof(bool));
+    
+            var platformParameter = platform != null ?
+                new ObjectParameter("platform", platform) :
+                new ObjectParameter("platform", typeof(string));
+    
+            var versionParameter = version != null ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(string));
+    
+            var agentParameter = agent != null ?
+                new ObjectParameter("agent", agent) :
+                new ObjectParameter("agent", typeof(string));
+    
+            var host_nameParameter = host_name != null ?
+                new ObjectParameter("host_name", host_name) :
+                new ObjectParameter("host_name", typeof(string));
+    
+            var host_addressParameter = host_address != null ?
+                new ObjectParameter("host_address", host_address) :
+                new ObjectParameter("host_address", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_LOGIN_Result>("PROC_SYS_LOGIN", user_nameParameter, passwordParameter, is_mobileParameter, platformParameter, versionParameter, agentParameter, host_nameParameter, host_addressParameter, sTATUS);
         }
     
         public virtual ObjectResult<PROC_WEB_VIEW_HOME_META_Result> PROC_WEB_VIEW_HOME_META()
@@ -317,7 +341,7 @@ namespace TDH.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_CheckAccess_Result>("PROC_SYS_CheckAccess", user_idParameter, functionParameter);
         }
     
-        public virtual ObjectResult<PROC_SYS_USER_ById_Result>  PROC_SYS_USER_ById(Nullable<System.Guid> id, string session_id, Nullable<System.Guid> user_id)
+        public virtual ObjectResult<PROC_SYS_USER_ById_Result> PROC_SYS_USER_ById(Nullable<System.Guid> id, string session_id, Nullable<System.Guid> user_id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -393,7 +417,7 @@ namespace TDH.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Publish", idParameter, lockedParameter, update_byParameter, session_idParameter, user_idParameter, sTATUS);
         }
     
-        public virtual int PROC_SYS_USER_Save(Nullable<System.Guid> id, string full_name, string user_name, string password, Nullable<bool> locked, string notes, Nullable<System.Guid> role_id, Nullable<System.Guid> create_by, Nullable<System.Guid> update_by, Nullable<bool> is_insert, string session_id, Nullable<System.Guid> user_id, ObjectParameter status)
+        public virtual int PROC_SYS_USER_Save(Nullable<System.Guid> id, string full_name, string user_name, string password, Nullable<bool> locked, string notes, Nullable<System.Guid> role_id, Nullable<System.Guid> create_by, Nullable<System.Guid> update_by, Nullable<bool> is_insert, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -438,15 +462,12 @@ namespace TDH.DataAccess
             var session_idParameter = session_id != null ?
                 new ObjectParameter("session_id", session_id) :
                 new ObjectParameter("session_id", typeof(string));
-
+    
             var user_idParameter = user_id.HasValue ?
                 new ObjectParameter("user_id", user_id) :
                 new ObjectParameter("user_id", typeof(System.Guid));
-
-            var statusParameter = new ObjectParameter("STATUS", typeof(System.Int32));
-            
-
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Save", idParameter, full_nameParameter, user_nameParameter, passwordParameter, lockedParameter, notesParameter, role_idParameter, create_byParameter, update_byParameter, is_insertParameter, session_idParameter, user_idParameter, status);
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Save", idParameter, full_nameParameter, user_nameParameter, passwordParameter, lockedParameter, notesParameter, role_idParameter, create_byParameter, update_byParameter, is_insertParameter, session_idParameter, user_idParameter, sTATUS);
         }
     }
 }

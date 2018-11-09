@@ -1850,6 +1850,13 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
         <Function Name="PROC_SYS_LOGIN" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_name" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="is_mobile" Type="bit" Mode="In" />
+          <Parameter Name="platform" Type="varchar" Mode="In" />
+          <Parameter Name="version" Type="varchar" Mode="In" />
+          <Parameter Name="agent" Type="varchar" Mode="In" />
+          <Parameter Name="host_name" Type="varchar" Mode="In" />
+          <Parameter Name="host_address" Type="varchar" Mode="In" />
+          <Parameter Name="STATUS" Type="int" Mode="InOut" />
         </Function>
         <Function Name="PROC_SYS_SIDEBAR_ByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
@@ -2534,6 +2541,13 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <FunctionImport Name="PROC_SYS_LOGIN" ReturnType="Collection(TDHModel.PROC_SYS_LOGIN_Result)">
             <Parameter Name="user_name" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="is_mobile" Mode="In" Type="Boolean" />
+            <Parameter Name="platform" Mode="In" Type="String" />
+            <Parameter Name="version" Mode="In" Type="String" />
+            <Parameter Name="agent" Mode="In" Type="String" />
+            <Parameter Name="host_name" Mode="In" Type="String" />
+            <Parameter Name="host_address" Mode="In" Type="String" />
+            <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PROC_WEB_VIEW_HOME_META" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_META_Result)" />
           <FunctionImport Name="PROC_WEB_VIEW_HOME_LISTNAVIGATION" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_LISTNAVIGATION_Result)" />
@@ -4502,6 +4516,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Property Type="Guid" Name="user_id" Nullable="true" />
           <Property Type="String" Name="user_name" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="full_name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="token" Nullable="true" MaxLength="255" />
         </ComplexType>
         <ComplexType Name="PROC_WEB_VIEW_HOME_META_Result">
           <Property Type="String" Name="title" Nullable="true" MaxLength="255" />
@@ -5944,6 +5959,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
                 <ScalarProperty Name="user_name" ColumnName="user_name" />
                 <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="token" ColumnName="token" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

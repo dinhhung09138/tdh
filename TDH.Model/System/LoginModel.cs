@@ -21,5 +21,35 @@ namespace TDH.Model.System
         /// Remember me option
         /// </summary>
         public bool RememberMe { get; set; } = false;
+
+        /// <summary>
+        /// Browser from mobile or computer
+        /// </summary>
+        public bool IsMobile { get; set; } = false;
+
+        /// <summary>
+        /// Browser platform
+        /// </summary>
+        public string PlatForm { get; set; } = "";
+
+        /// <summary>
+        /// Browser version
+        /// </summary>
+        public string Version { get; set; } = "";
+
+        /// <summary>
+        /// User agent
+        /// </summary>
+        public string UserAgent { get; set; } = "";
+
+        /// <summary>
+        /// Host name
+        /// </summary>
+        public string HostName { get; set; } = "";
+
+        /// <summary>
+        /// Host address
+        /// </summary>
+        public string HostAddress { get; set; } = "";
     }
 }

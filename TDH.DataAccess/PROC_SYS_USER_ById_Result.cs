@@ -13,11 +13,11 @@ namespace TDH.DataAccess
     
     public partial class PROC_SYS_USER_ById_Result
     {
-        public Guid id { get; set; }
+        public Nullable<System.Guid> id { get; set; }
         public string user_name { get; set; }
         public string full_name { get; set; }
-        public Boolean  locked { get; set; }
-        public Guid role_id { get; set; }
+        public bool locked { get; set; }
+        public System.Guid role_id { get; set; }
         public string role_name { get; set; }
     }
 }

@@ -71,7 +71,7 @@ namespace TDH.Services.System
                     {
                         _list.Add(new UserModel()
                         {
-                            ID = item.id,
+                            ID = (Guid)item.id,
                             Locked = item.locked,
                             FullName = item.full_name,
                             UserName = item.user_name,
@@ -136,7 +136,7 @@ namespace TDH.Services.System
                     }
                     return new UserModel()
                     {
-                        ID = _md.id,
+                        ID = (Guid)_md.id,
                         FullName = _md.full_name,
                         UserName = _md.user_name,
                         Locked = _md.locked,
@@ -273,8 +273,9 @@ namespace TDH.Services.System
         /// Login function
         /// </summary>
         /// <param name="model">Login model</param>
+        /// <param name="returnValue">Return value from data 0: Account not found, 1: Success, -1: Account is login, -2, Exception</param>
         /// <returns>UserModel</returns>
-        public UserModel Login(LoginModel model)
+        public UserModel Login(LoginModel model, out int returnValue)
         {
             UserModel _return = new UserModel() { };
             try
@@ -282,7 +283,9 @@ namespace TDH.Services.System
                 using (var _context = new TDHEntities())
                 {
                     string _password = Utils.Security.PasswordSecurityHelper.GetHashedPassword(model.Password);
-                    var _md = _context.PROC_SYS_LOGIN(model.UserName, _password).FirstOrDefault();
+                    ObjectParameter _output = new ObjectParameter("STATUS", typeof(int));
+                    var _md = _context.PROC_SYS_LOGIN(model.UserName, _password, model.IsMobile, model.PlatForm, model.Version, model.UserAgent, model.HostName, model.HostAddress, _output).FirstOrDefault();
+                    returnValue = (int)_output.Value;
                     if (_md == null)
                     {
                         return _return;

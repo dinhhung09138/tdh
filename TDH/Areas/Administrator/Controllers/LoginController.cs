@@ -58,9 +58,25 @@ namespace TDH.Areas.Administrator.Controllers
         {
             try
             {
+                //0: Account not found, 1: Success, -1: Account is login, -2, Exception
+                int _returnOutput = 0;
+                //
+                model.IsMobile = HttpContext.Request.Browser.IsMobileDevice;
+                model.PlatForm = HttpContext.Request.Browser.Platform;
+                model.UserAgent = HttpContext.Request.UserAgent;
+                model.Version = HttpContext.Request.Browser.Version;
+                model.HostName = HttpContext.Request.UserHostName;
+                model.HostAddress = Utils.RequestHelpers.GetClientIpAddress(HttpContext.Request);
+                
                 UserService _services = new UserService(this.SessionID);
-                UserModel _model = _services.Login(model);
-                if (_model.UserName == null || _model.UserName == "")
+                UserModel _model = _services.Login(model, out _returnOutput);
+                if (_returnOutput == -1)
+                {
+                    TempData["model"] = new LoginModel() { UserName = model.UserName, RememberMe = model.RememberMe };
+                    TempData["msg"] = "Tài khoản đang đăng nhập ở nơi khác";
+                    return RedirectToAction("Index");
+                }
+                if (_model.UserName == null || _model.UserName == "" || _returnOutput == -2 || _returnOutput == 0)
                 {
                     TempData["model"] = new LoginModel() { UserName = model.UserName, RememberMe = model.RememberMe };
                     TempData["msg"] = "Tên đăng nhập hoặc mật khẩu không hợp lệ";
@@ -69,7 +85,10 @@ namespace TDH.Areas.Administrator.Controllers
                 Utils.CommonModel.UserLoginModel userModel = new Utils.CommonModel.UserLoginModel()
                 {
                     UserID = _model.ID,
-                    UserName = _model.UserName
+                    UserName = _model.UserName,
+                    SessionID = HttpContext.Session.SessionID,
+                    ExpireTime = DateTime.Now.AddMinutes(HttpContext.Session.Timeout),
+                    Token = _model.Token
                 };
                 Session[Utils.CommonHelper.SESSION_LOGIN_NAME] = userModel;
                 return RedirectToAction("index", "dashboard", new { area = "administrator" });

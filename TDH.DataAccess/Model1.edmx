@@ -1873,7 +1873,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
         </Function>
         <Function Name="PROC_SYS_USER_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="delete_by" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="session_id" Type="varchar" Mode="In" />
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="STATUS" Type="int" Mode="InOut" />
@@ -1885,7 +1884,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
         <Function Name="PROC_SYS_USER_Publish" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="locked" Type="bit" Mode="In" />
-          <Parameter Name="update_by" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="session_id" Type="varchar" Mode="In" />
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="STATUS" Type="int" Mode="InOut" />
@@ -1898,8 +1896,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Parameter Name="locked" Type="bit" Mode="In" />
           <Parameter Name="notes" Type="nvarchar" Mode="In" />
           <Parameter Name="role_id" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="create_by" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="update_by" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="is_insert" Type="bit" Mode="In" />
           <Parameter Name="session_id" Type="varchar" Mode="In" />
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
@@ -2607,7 +2603,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           </FunctionImport>
           <FunctionImport Name="PROC_SYS_USER_Delete">
             <Parameter Name="id" Mode="In" Type="Guid" />
-            <Parameter Name="delete_by" Mode="In" Type="Guid" />
             <Parameter Name="session_id" Mode="In" Type="String" />
             <Parameter Name="user_id" Mode="In" Type="Guid" />
             <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
@@ -2619,7 +2614,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <FunctionImport Name="PROC_SYS_USER_Publish">
             <Parameter Name="id" Mode="In" Type="Guid" />
             <Parameter Name="locked" Mode="In" Type="Boolean" />
-            <Parameter Name="update_by" Mode="In" Type="Guid" />
             <Parameter Name="session_id" Mode="In" Type="String" />
             <Parameter Name="user_id" Mode="In" Type="Guid" />
             <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
@@ -2632,8 +2626,6 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             <Parameter Name="locked" Mode="In" Type="Boolean" />
             <Parameter Name="notes" Mode="In" Type="String" />
             <Parameter Name="role_id" Mode="In" Type="Guid" />
-            <Parameter Name="create_by" Mode="In" Type="Guid" />
-            <Parameter Name="update_by" Mode="In" Type="Guid" />
             <Parameter Name="is_insert" Mode="In" Type="Boolean" />
             <Parameter Name="session_id" Mode="In" Type="String" />
             <Parameter Name="user_id" Mode="In" Type="Guid" />

@@ -173,7 +173,7 @@ namespace TDH.Services.System
                         _password = Utils.Security.PasswordSecurityHelper.GetHashedPassword(model.Password);
                     }
                     ObjectParameter _status = new ObjectParameter("STATUS", typeof(int));
-                    int _return = _context.PROC_SYS_USER_Save(model.ID, model.FullName, model.UserName, _password, model.Locked, model.Notes, model.RoleID, model.CreateBy, model.UpdateBy, model.Insert, this.SessionID, model.CreateBy, _status);
+                    int _return = _context.PROC_SYS_USER_Save(model.ID, model.FullName, model.UserName, _password, model.Locked, model.Notes, model.RoleID, model.Insert, this.SessionID, model.CreateBy, _status);
                     if(_status.Value.ToString() == "0")
                     {
                         throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
@@ -215,7 +215,7 @@ namespace TDH.Services.System
                 using (var _context = new TDHEntities())
                 {
                     ObjectParameter _status = new ObjectParameter("STATUS", typeof(int));
-                    int _result = _context.PROC_SYS_USER_Publish(model.ID, model.Locked, model.UpdateBy, this.SessionID, model.CreateBy, _status);
+                    int _result = _context.PROC_SYS_USER_Publish(model.ID, model.Locked, this.SessionID, model.UpdateBy, _status);
                     if (_status.Value.ToString() == "0")
                     {
                         throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
@@ -246,7 +246,7 @@ namespace TDH.Services.System
                 using (var _context = new TDHEntities())
                 {
                     ObjectParameter _status = new ObjectParameter("STATUS", typeof(int));
-                    int _result = _context.PROC_SYS_USER_Delete(model.ID, model.DeleteBy, this.SessionID, model.CreateBy, _status);
+                    int _result = _context.PROC_SYS_USER_Delete(model.ID, this.SessionID, model.DeleteBy, _status);
                     if (_status.Value.ToString() == "0")
                     {
                         throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);

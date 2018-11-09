@@ -362,15 +362,11 @@ namespace TDH.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_USER_ById_Result>("PROC_SYS_USER_ById", idParameter, session_idParameter, user_idParameter);
         }
     
-        public virtual int PROC_SYS_USER_Delete(Nullable<System.Guid> id, Nullable<System.Guid> delete_by, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
+        public virtual int PROC_SYS_USER_Delete(Nullable<System.Guid> id, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(System.Guid));
-    
-            var delete_byParameter = delete_by.HasValue ?
-                new ObjectParameter("delete_by", delete_by) :
-                new ObjectParameter("delete_by", typeof(System.Guid));
     
             var session_idParameter = session_id != null ?
                 new ObjectParameter("session_id", session_id) :
@@ -380,7 +376,7 @@ namespace TDH.DataAccess
                 new ObjectParameter("user_id", user_id) :
                 new ObjectParameter("user_id", typeof(System.Guid));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Delete", idParameter, delete_byParameter, session_idParameter, user_idParameter, sTATUS);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Delete", idParameter, session_idParameter, user_idParameter, sTATUS);
         }
     
         public virtual ObjectResult<PROC_SYS_USER_List_Result> PROC_SYS_USER_List(string session_id, Nullable<System.Guid> user_id)
@@ -396,7 +392,7 @@ namespace TDH.DataAccess
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_USER_List_Result>("PROC_SYS_USER_List", session_idParameter, user_idParameter);
         }
     
-        public virtual int PROC_SYS_USER_Publish(Nullable<System.Guid> id, Nullable<bool> locked, Nullable<System.Guid> update_by, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
+        public virtual int PROC_SYS_USER_Publish(Nullable<System.Guid> id, Nullable<bool> locked, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -406,10 +402,6 @@ namespace TDH.DataAccess
                 new ObjectParameter("locked", locked) :
                 new ObjectParameter("locked", typeof(bool));
     
-            var update_byParameter = update_by.HasValue ?
-                new ObjectParameter("update_by", update_by) :
-                new ObjectParameter("update_by", typeof(System.Guid));
-    
             var session_idParameter = session_id != null ?
                 new ObjectParameter("session_id", session_id) :
                 new ObjectParameter("session_id", typeof(string));
@@ -418,10 +410,10 @@ namespace TDH.DataAccess
                 new ObjectParameter("user_id", user_id) :
                 new ObjectParameter("user_id", typeof(System.Guid));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Publish", idParameter, lockedParameter, update_byParameter, session_idParameter, user_idParameter, sTATUS);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Publish", idParameter, lockedParameter, session_idParameter, user_idParameter, sTATUS);
         }
     
-        public virtual int PROC_SYS_USER_Save(Nullable<System.Guid> id, string full_name, string user_name, string password, Nullable<bool> locked, string notes, Nullable<System.Guid> role_id, Nullable<System.Guid> create_by, Nullable<System.Guid> update_by, Nullable<bool> is_insert, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
+        public virtual int PROC_SYS_USER_Save(Nullable<System.Guid> id, string full_name, string user_name, string password, Nullable<bool> locked, string notes, Nullable<System.Guid> role_id, Nullable<bool> is_insert, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -451,14 +443,6 @@ namespace TDH.DataAccess
                 new ObjectParameter("role_id", role_id) :
                 new ObjectParameter("role_id", typeof(System.Guid));
     
-            var create_byParameter = create_by.HasValue ?
-                new ObjectParameter("create_by", create_by) :
-                new ObjectParameter("create_by", typeof(System.Guid));
-    
-            var update_byParameter = update_by.HasValue ?
-                new ObjectParameter("update_by", update_by) :
-                new ObjectParameter("update_by", typeof(System.Guid));
-    
             var is_insertParameter = is_insert.HasValue ?
                 new ObjectParameter("is_insert", is_insert) :
                 new ObjectParameter("is_insert", typeof(bool));
@@ -471,7 +455,7 @@ namespace TDH.DataAccess
                 new ObjectParameter("user_id", user_id) :
                 new ObjectParameter("user_id", typeof(System.Guid));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Save", idParameter, full_nameParameter, user_nameParameter, passwordParameter, lockedParameter, notesParameter, role_idParameter, create_byParameter, update_byParameter, is_insertParameter, session_idParameter, user_idParameter, sTATUS);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_USER_Save", idParameter, full_nameParameter, user_nameParameter, passwordParameter, lockedParameter, notesParameter, role_idParameter, is_insertParameter, session_idParameter, user_idParameter, sTATUS);
         }
     
         public virtual int PROC_COMMON_CheckToken(string token, ObjectParameter sTATUS)

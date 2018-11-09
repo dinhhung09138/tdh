@@ -1893,6 +1893,13 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Parameter Name="session_id" Type="varchar" Mode="In" />
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
         </Function>
+        <Function Name="PROC_SYS_ROLE_Publish" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="role_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="publish" Type="bit" Mode="In" />
+          <Parameter Name="session_id" Type="varchar" Mode="In" />
+          <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="STATUS" Type="int" Mode="InOut" />
+        </Function>
         <Function Name="PROC_SYS_SIDEBAR_ByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="user_id" Type="uniqueidentifier" Mode="In" />
         </Function>
@@ -2694,6 +2701,13 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <FunctionImport Name="PROC_SYS_ROLE_List" ReturnType="Collection(TDHModel.PROC_SYS_ROLE_List_Result)">
             <Parameter Name="session_id" Mode="In" Type="String" />
             <Parameter Name="user_id" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SYS_ROLE_Publish">
+            <Parameter Name="role_id" Mode="In" Type="Guid" />
+            <Parameter Name="publish" Mode="In" Type="Boolean" />
+            <Parameter Name="session_id" Mode="In" Type="String" />
+            <Parameter Name="user_id" Mode="In" Type="Guid" />
+            <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">

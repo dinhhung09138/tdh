@@ -560,5 +560,26 @@ namespace TDH.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SYS_ROLE_List_Result>("PROC_SYS_ROLE_List", session_idParameter, user_idParameter);
         }
+    
+        public virtual int PROC_SYS_ROLE_Publish(Nullable<System.Guid> role_id, Nullable<bool> publish, string session_id, Nullable<System.Guid> user_id, ObjectParameter sTATUS)
+        {
+            var role_idParameter = role_id.HasValue ?
+                new ObjectParameter("role_id", role_id) :
+                new ObjectParameter("role_id", typeof(System.Guid));
+    
+            var publishParameter = publish.HasValue ?
+                new ObjectParameter("publish", publish) :
+                new ObjectParameter("publish", typeof(bool));
+    
+            var session_idParameter = session_id != null ?
+                new ObjectParameter("session_id", session_id) :
+                new ObjectParameter("session_id", typeof(string));
+    
+            var user_idParameter = user_id.HasValue ?
+                new ObjectParameter("user_id", user_id) :
+                new ObjectParameter("user_id", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_ROLE_Publish", role_idParameter, publishParameter, session_idParameter, user_idParameter, sTATUS);
+        }
     }
 }

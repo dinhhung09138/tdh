@@ -13,7 +13,7 @@ namespace TDH.DataAccess
     
     public partial class PROC_SYS_ROLE_ById_Result
     {
-        public Guid id { get; set; }
+        public Nullable<System.Guid> id { get; set; }
         public string name { get; set; }
         public string description { get; set; }
         public bool publish { get; set; }

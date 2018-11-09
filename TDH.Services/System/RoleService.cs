@@ -52,9 +52,9 @@ namespace TDH.Services.System
                 DataTableResponse<RoleModel> _itemResponse = new DataTableResponse<RoleModel>();
                 //List of data
                 List<RoleModel> _list = new List<RoleModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lData = context.PROC_SYS_ROLE_List(this.SessionID, userID).ToList();
+                    var _lData = _context.PROC_SYS_ROLE_List(this.SessionID, userID).ToList();
 
                     _itemResponse.draw = request.draw;
                     _itemResponse.recordsTotal = _lData.Count;
@@ -70,7 +70,7 @@ namespace TDH.Services.System
                     {
                         _list.Add(new RoleModel()
                         {
-                            ID = item.id,
+                            ID = (Guid)item.id,
                             Name = item.name,
                             Description = item.description,
                             Publish = item.publish,
@@ -121,12 +121,12 @@ namespace TDH.Services.System
             try
             {
                 List<RoleModel> _return = new List<RoleModel>();
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _list = context.PROC_SYS_ROLE_List(this.SessionID, userID).ToList();
+                    var _list = _context.PROC_SYS_ROLE_List(this.SessionID, userID).ToList();
                     foreach (var item in _list)
                     {
-                        _return.Add(new RoleModel() { ID = item.id, Name = item.name });
+                        _return.Add(new RoleModel() { ID = (Guid)item.id, Name = item.name });
                     }
                 }
                 return _return;
@@ -147,9 +147,9 @@ namespace TDH.Services.System
             RoleModel _return = new RoleModel() { ID = Guid.NewGuid(), Insert = model.Insert };
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    var _lFunc = context.PROC_SYS_FUNCTION_List(this.SessionID, model.CreateBy).ToList();
+                    var _lFunc = _context.PROC_SYS_FUNCTION_List(this.SessionID, model.CreateBy).ToList();
                     foreach (var item in _lFunc)
                     {
                         _return.Detail.Add(new RoleDetailModel()
@@ -163,15 +163,15 @@ namespace TDH.Services.System
                         });
                     }
 
-                    var _md = context.PROC_SYS_ROLE_ById(model.ID, this.SessionID, model.CreateBy).FirstOrDefault();
+                    var _md = _context.PROC_SYS_ROLE_ById(model.ID, this.SessionID, model.CreateBy).FirstOrDefault();
                     if (_md != null)
                     {
-                        _return.ID = _md.id;
+                        _return.ID = (Guid)_md.id;
                         _return.Name = _md.name;
                         _return.Description = _md.description;
                         _return.Publish = _md.publish;
                         //
-                        var _lPers = context.PROC_SYS_ROLE_DETAIL_ByRoleId(_md.id, this.SessionID, model.CreateBy).ToList();
+                        var _lPers = _context.PROC_SYS_ROLE_DETAIL_ByRoleId(_md.id, this.SessionID, model.CreateBy).ToList();
                         foreach (var item in _lPers)
                         {
                             var _tmp = _return.Detail.FirstOrDefault(m => m.FunctionCode == item.function_code);
@@ -302,19 +302,14 @@ namespace TDH.Services.System
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
-                    SYS_ROLE _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
-                    if (_md == null)
+                    ObjectParameter _status = new ObjectParameter("STATUS", typeof(int));
+                    int _result = _context.PROC_SYS_ROLE_Publish(model.ID, model.Publish, this.SessionID, model.UpdateBy, _status);
+                    if (_status.Value.ToString() == "0")
                     {
                         throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
-                    _md.publish = model.Publish;
-                    _md.updated_by = model.UpdateBy;
-                    _md.updated_date = DateTime.Now;
-                    context.SYS_ROLE.Attach(_md);
-                    context.Entry(_md).State = EntityState.Modified;
-                    context.SaveChanges();
                 }
             }
             catch (DataAccessException fieldEx)
@@ -338,10 +333,10 @@ namespace TDH.Services.System
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
                     ObjectParameter _status = new ObjectParameter("STATUS", typeof(int));
-                    var _return = context.PROC_SYS_ROLE_Delete(model.ID, this.SessionID, model.DeleteBy, _status);
+                    var _return = _context.PROC_SYS_ROLE_Delete(model.ID, this.SessionID, model.DeleteBy, _status);
                     if (_status.Value.ToString() == "0")
                     {
                         throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
@@ -369,10 +364,10 @@ namespace TDH.Services.System
         {
             try
             {
-                using (var context = new TDHEntities())
+                using (var _context = new TDHEntities())
                 {
                     ObjectParameter _status = new ObjectParameter("STATUS", typeof(int));
-                    var _return = context.PROC_SYS_ROLE_CheckDelete(model.ID, this.SessionID, model.DeleteBy, _status);
+                    var _return = _context.PROC_SYS_ROLE_CheckDelete(model.ID, this.SessionID, model.DeleteBy, _status);
                     if (_status.Value.ToString() == "0")
                     {
                         throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);

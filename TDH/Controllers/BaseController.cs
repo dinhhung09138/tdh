@@ -44,7 +44,7 @@ namespace TDH.Controllers
                             ViewName = "~/Views/Error/PageNotFound.cshtml"
                         };
                         return;
-                    case 500:
+                    case 500: //Error in controller or services
                         filterContext.Result = new ViewResult
                         {
                             ViewName = "~/Views/Error/Index.cshtml"

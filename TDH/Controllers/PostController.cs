@@ -27,10 +27,27 @@ namespace TDH.Controllers
             try
             {
                 navigationAlias = navigationAlias.ToLower();
+
+                #region " [ Programming Page ] "
+
+                if (navigationAlias == "programming")
+                {
+                    return View("Programming");
+                }
+
+                #endregion
+
+                #region " [ Intro page ] "
+
                 if (navigationAlias == "gioi-thieu")
                 {
                     return View("About", PageService.About());
                 }
+
+                #endregion
+
+                #region " [ Post Page ] "
+
                 var _navInfo = PageService.GetNavigationInfor(navigationAlias);
                 ViewBag.navInfor = _navInfo;
                 //
@@ -45,6 +62,9 @@ namespace TDH.Controllers
                 ViewBag.post = 0;
                 ViewBag.data = PageService.GetListCategoryDataByNavigation(navigationAlias);
                 return View(_navInfo);
+
+                #endregion
+
             }
             catch (UserException uEx)
             {
@@ -63,6 +83,19 @@ namespace TDH.Controllers
         {
             try
             {
+                navigationAlias = navigationAlias.ToLower();
+
+                #region " [ Programming Page ] "
+
+                if (navigationAlias == "programming")
+                {
+                    return View("ProgrammingCategory");
+                }
+
+                #endregion
+
+                #region " [ Post ] "
+
                 bool _isCategory = PageService.CheckIsCategoryPage(navigationAlias, categoryAlias);
                 if (_isCategory)
                 {
@@ -72,6 +105,9 @@ namespace TDH.Controllers
                 var _model = PageService.GetPostInfor(navigationAlias, categoryAlias);
                 ViewBag.related = PageService.Top6LastedPostByNavigationID(_model.CategoryID);
                 return View("Post", _model);
+                
+                #endregion
+
             }
             catch (UserException uEx)
             {
@@ -90,9 +126,25 @@ namespace TDH.Controllers
         {
             try
             {
+                navigationAlias = navigationAlias.ToLower();
+
+                #region " [ Programming Page ] "
+
+                if (navigationAlias == "programming")
+                {
+                    return View("ProgrammingPost");
+                }
+
+                #endregion
+
+                #region " [ Post ] "
+
                 var _model = PageService.GetPostInfor(navigationAlias, categoryAlias, postAlias);
                 ViewBag.related = PageService.Top6LastedPostByCategoryID(_model.CategoryID);
                 return View(_model);
+
+                #endregion
+
             }
             catch (UserException uEx)
             {
@@ -162,7 +214,64 @@ namespace TDH.Controllers
                 throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorController, ex);
             }
         }
+        
+        #endregion
 
+        #region " [ Programming Partial View ] "
+
+        [ChildActionOnly]
+        [HttpGet]
+        public ActionResult ProgrammingCategoryPartialView()
+        {
+            try
+            {
+                return PartialView();
+            }
+            catch(UserException uEx)
+            {
+                throw uEx;
+            }
+            catch(Exception ex)
+            {
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorController, ex);
+            }
+        }
+
+        [ChildActionOnly]
+        [HttpGet]
+        public ActionResult ProgrammingRelatedView()
+        {
+            try
+            {
+                return PartialView();
+            }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
+            catch (Exception ex)
+            {
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorController, ex);
+            }
+        }
+
+        [ChildActionOnly]
+        [HttpGet]
+        public ActionResult ProgrammingPopularView()
+        {
+            try
+            {
+                return PartialView();
+            }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
+            catch (Exception ex)
+            {
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorController, ex);
+            }
+        }
 
         #endregion
 

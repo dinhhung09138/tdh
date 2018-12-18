@@ -6660,6 +6660,12 @@
     <Content Include="Views\Post\About.cshtml" />
     <Content Include="tsconfig.json" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Post\Programming.cshtml" />
+    <Content Include="Views\Post\ProgrammingCategoryPartialView.cshtml" />
+    <Content Include="Views\Post\ProgrammingPopularView.cshtml" />
+    <Content Include="Views\Post\ProgrammingRelatedView.cshtml" />
+    <Content Include="Views\Post\ProgrammingCategory.cshtml" />
+    <Content Include="Views\Post\ProgrammingPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,6 +17,11 @@ namespace TDH.Controllers
         /// </summary>
         private readonly string FILE_NAME = "Controllers/PostController.cs";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly string PROGRAMMING = "lap-trinh";
+
         #endregion
 
         [Route("{navigationAlias}")]
@@ -28,11 +33,17 @@ namespace TDH.Controllers
             {
                 navigationAlias = navigationAlias.ToLower();
 
+                var _navInfo = PageService.GetNavigationInfor(navigationAlias);
+                ViewBag.navInfor = _navInfo;
+                //
+
                 #region " [ Programming Page ] "
 
-                if (navigationAlias == "programming")
+                if (navigationAlias == PROGRAMMING)
                 {
-                    return View("Programming");
+                    ViewBag.post = PageService.ProgrammingGetTop20(navigationAlias);
+
+                    return View("Programming", _navInfo);
                 }
 
                 #endregion
@@ -48,9 +59,6 @@ namespace TDH.Controllers
 
                 #region " [ Post Page ] "
 
-                var _navInfo = PageService.GetNavigationInfor(navigationAlias);
-                ViewBag.navInfor = _navInfo;
-                //
                 var _lPost = PageService.Top6LastedPostByNavigationID(_navInfo.ID);
                 if (_lPost.Count() > 0)
                 {
@@ -87,9 +95,14 @@ namespace TDH.Controllers
 
                 #region " [ Programming Page ] "
 
-                if (navigationAlias == "programming")
+                if (navigationAlias == PROGRAMMING)
                 {
-                    return View("ProgrammingCategory");
+                    var _navInfo = PageService.GetNavigationInfor(navigationAlias);
+                    ViewBag.navInfor = _navInfo;
+                    //
+                    ViewBag.cateInfo = PageService.GetCategoryInfor(navigationAlias, categoryAlias);
+
+                    return View("ProgrammingCategory", PageService.GetListPostDataByCategory(navigationAlias, categoryAlias));
                 }
 
                 #endregion
@@ -128,19 +141,23 @@ namespace TDH.Controllers
             {
                 navigationAlias = navigationAlias.ToLower();
 
+                var _navInfo = PageService.GetNavigationInfor(navigationAlias);
+                ViewBag.navInfor = _navInfo;
+                //
+                var _model = PageService.GetPostInfor(navigationAlias, categoryAlias, postAlias);
+                ViewBag.related = PageService.Top6LastedPostByCategoryID(_model.CategoryID);
+
                 #region " [ Programming Page ] "
 
-                if (navigationAlias == "programming")
+                if (navigationAlias == PROGRAMMING)
                 {
-                    return View("ProgrammingPost");
+                    return View("ProgrammingPost", _model);
                 }
 
                 #endregion
 
                 #region " [ Post ] "
 
-                var _model = PageService.GetPostInfor(navigationAlias, categoryAlias, postAlias);
-                ViewBag.related = PageService.Top6LastedPostByCategoryID(_model.CategoryID);
                 return View(_model);
 
                 #endregion
@@ -221,10 +238,11 @@ namespace TDH.Controllers
 
         [ChildActionOnly]
         [HttpGet]
-        public ActionResult ProgrammingCategoryPartialView()
+        public ActionResult ProgrammingCategoryPartialView(string navAlias)
         {
             try
             {
+                ViewBag.cate = PageService.ProgrammingCategory(navAlias);
                 return PartialView();
             }
             catch(UserException uEx)
@@ -257,10 +275,11 @@ namespace TDH.Controllers
 
         [ChildActionOnly]
         [HttpGet]
-        public ActionResult ProgrammingPopularView()
+        public ActionResult ProgrammingPopularView(string navAlias)
         {
             try
             {
+                ViewBag.post = PageService.ProgrammingGetTop6View(navAlias);
                 return PartialView();
             }
             catch (UserException uEx)

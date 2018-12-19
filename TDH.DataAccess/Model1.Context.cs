@@ -581,5 +581,36 @@ namespace TDH.DataAccess
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PROC_SYS_ROLE_Publish", role_idParameter, publishParameter, session_idParameter, user_idParameter, sTATUS);
         }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_PROGRAMMING_category_Result> PROC_WEB_VIEW_PROGRAMMING_category(string navigation_alias)
+        {
+            var navigation_aliasParameter = navigation_alias != null ?
+                new ObjectParameter("navigation_alias", navigation_alias) :
+                new ObjectParameter("navigation_alias", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_PROGRAMMING_category_Result>("PROC_WEB_VIEW_PROGRAMMING_category", navigation_aliasParameter);
+        }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_PROGRAMMING_Top20_Result> PROC_WEB_VIEW_PROGRAMMING_Top20(string navigation_alias, Nullable<short> page)
+        {
+            var navigation_aliasParameter = navigation_alias != null ?
+                new ObjectParameter("navigation_alias", navigation_alias) :
+                new ObjectParameter("navigation_alias", typeof(string));
+    
+            var pageParameter = page.HasValue ?
+                new ObjectParameter("page", page) :
+                new ObjectParameter("page", typeof(short));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_PROGRAMMING_Top20_Result>("PROC_WEB_VIEW_PROGRAMMING_Top20", navigation_aliasParameter, pageParameter);
+        }
+    
+        public virtual ObjectResult<PROC_WEB_VIEW_PROGRAMMING_topview_Result> PROC_WEB_VIEW_PROGRAMMING_topview(string navigation_alias)
+        {
+            var navigation_aliasParameter = navigation_alias != null ?
+                new ObjectParameter("navigation_alias", navigation_alias) :
+                new ObjectParameter("navigation_alias", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_WEB_VIEW_PROGRAMMING_topview_Result>("PROC_WEB_VIEW_PROGRAMMING_topview", navigation_aliasParameter);
+        }
     }
 }

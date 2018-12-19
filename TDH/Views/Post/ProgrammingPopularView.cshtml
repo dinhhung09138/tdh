@@ -1,11 +1,19 @@
-﻿@using Utils;
+﻿@using TDH.Model.ViewModel.WebSite;
+@{
+    var listPost = ViewBag.post as List<PostViewModel>;
+}
 <div class="top-news">
     <h4 class="side">Xem nhiều</h4>
     <div class="top-inner">
-        <div class="top-text">
-            <a href="item.Alias"><img src="item.Image" class="img-responsive" alt="item.Title" /></a>
-            <h5 class="top"><a href="item.Alias">item.Title</a></h5>
-            <div class="td-post-date two"><i class="glyphicon glyphicon-time"></i>item.CreateDate <a href="#"><i class="glyphicon glyphicon-comment"></i>0 </a></div>
-        </div>
+        @{
+            foreach (var item in listPost)
+            {
+                <div class="top-text">
+                    <a href="@item.Alias"><img src="@item.Image" class="img-responsive" alt="@item.Title" /></a>
+                    <h5 class="top"><a href="item.Alias">@item.Title</a></h5>
+                    <div class="td-post-date two"><i class="glyphicon glyphicon-time"></i>@item.CreateDate <a href="#"><i class="glyphicon glyphicon-comment"></i>0 </a></div>
+                </div>
+            }
+        }
     </div>
 </div>

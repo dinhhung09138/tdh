@@ -1976,6 +1976,16 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
         <Function Name="PROC_WEB_VIEW_POST_Top6ByNavigation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
         </Function>
+        <Function Name="PROC_WEB_VIEW_PROGRAMMING_category" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="navigation_alias" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="PROC_WEB_VIEW_PROGRAMMING_Top20" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="navigation_alias" Type="varchar" Mode="In" />
+          <Parameter Name="page" Type="smallint" Mode="In" />
+        </Function>
+        <Function Name="PROC_WEB_VIEW_PROGRAMMING_topview" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="navigation_alias" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="TDHModelStoreContainer">
           <EntitySet Name="CM_SKILL" EntityType="Self.CM_SKILL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CM_SKILL_DEFINDED" EntityType="Self.CM_SKILL_DEFINDED" Schema="dbo" store:Type="Tables" />
@@ -2708,6 +2718,16 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             <Parameter Name="session_id" Mode="In" Type="String" />
             <Parameter Name="user_id" Mode="In" Type="Guid" />
             <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_WEB_VIEW_PROGRAMMING_category" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_PROGRAMMING_category_Result)">
+          <Parameter Name="navigation_alias" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_WEB_VIEW_PROGRAMMING_Top20" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_PROGRAMMING_Top20_Result)">
+            <Parameter Name="navigation_alias" Mode="In" Type="String" />
+            <Parameter Name="page" Mode="In" Type="Int16" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_WEB_VIEW_PROGRAMMING_topview" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_PROGRAMMING_topview_Result)">
+            <Parameter Name="navigation_alias" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
@@ -4815,6 +4835,24 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Property Type="Boolean" Name="publish" Nullable="false" />
           <Property Type="Int32" Name="count" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_PROGRAMMING_category_Result">
+          <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="count" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_PROGRAMMING_Top20_Result">
+          <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="cate_title" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="cate_alias" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="PROC_WEB_VIEW_PROGRAMMING_topview_Result">
+          <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+          <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="image" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6393,6 +6431,36 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="publish" ColumnName="publish" />
                 <ScalarProperty Name="count" ColumnName="count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_PROGRAMMING_category" FunctionName="TDHModel.Store.PROC_WEB_VIEW_PROGRAMMING_category">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_PROGRAMMING_category_Result">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="count" ColumnName="count" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_PROGRAMMING_Top20" FunctionName="TDHModel.Store.PROC_WEB_VIEW_PROGRAMMING_Top20">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_PROGRAMMING_Top20_Result">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="cate_title" ColumnName="cate_title" />
+                <ScalarProperty Name="cate_alias" ColumnName="cate_alias" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_WEB_VIEW_PROGRAMMING_topview" FunctionName="TDHModel.Store.PROC_WEB_VIEW_PROGRAMMING_topview">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TDHModel.PROC_WEB_VIEW_PROGRAMMING_topview_Result">
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="alias" ColumnName="alias" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

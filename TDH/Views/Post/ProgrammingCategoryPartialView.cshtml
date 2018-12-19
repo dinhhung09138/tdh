@@ -1,11 +1,15 @@
-﻿<div class="">
+﻿@using TDH.Model.ViewModel.WebSite;
+@{ 
+    var listCate = ViewBag.cate as List<CategoryViewModel>;
+}
+<div class="">
     <h4 class="side">Danh mục</h4>
     <div class="list-group-alternate">
-        <a href="#" class="list-group-item"><span class="badge">201</span> <i class="ti ti-email"></i> Inbox </a>
-        <a href="#" class="list-group-item"><span class="badge">5021</span> <i class="ti ti-eye"></i> Profile visits </a>
-        <a href="#" class="list-group-item"><span class="badge">14</span> <i class="ti ti-headphone-alt"></i> Call </a>
-        <a href="#" class="list-group-item"><span class="badge">20</span> <i class="ti ti-comments"></i> Messages </a>
-        <a href="#" class="list-group-item"><span class="badge">14</span> <i class="ti ti-bookmark"></i> Bookmarks </a>
-        <a href="#" class="list-group-item"><span class="badge">30</span> <i class="ti ti-bell"></i> Notifications </a>
+        @{
+            foreach (var item in listCate)
+            {
+                <a href="@item.Alias" class="list-group-item"><span class="badge">@item.Count</span> @item.Title </a>
+            }
+        }
     </div>
 </div>

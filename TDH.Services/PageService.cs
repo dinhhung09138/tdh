@@ -717,6 +717,114 @@ namespace TDH.Services
 
         #endregion
 
+        #region " [ Programming ]
+
+        /// <summary>
+        /// Get list of 20 items 
+        /// </summary>
+        /// <param name="navAlias">Navigation alias</param>
+        /// <param name="page">currrent page, default: 1</param>
+        /// <returns>List<PostViewModel></returns>
+        public static List<PostViewModel> ProgrammingGetTop20(string navAlias, short page = 1)
+        {
+            try
+            {
+                List<PostViewModel> _return = new List<PostViewModel>();
+                using (var context = new TDHEntities())
+                {
+                    var _list = context.PROC_WEB_VIEW_PROGRAMMING_Top20(navAlias, page).ToList();
+
+                    foreach (var item in _list)
+                    {
+                        _return.Add(new PostViewModel()
+                        {
+                            Title = item.title,
+                            Alias = item.alias,
+                            CategoryAlias = item.cate_alias,
+                            CategoryTitle = item.cate_title,
+                            Image = item.image
+                        });
+                    }
+
+                    return _return;
+                }
+            }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
+            catch (Exception ex)
+            {
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
+            }
+        }
+
+        /// <summary>
+        /// Get list of category in programming page
+        /// </summary>
+        /// <param name="navAlias">Navigation alias</param>
+        /// <returns>List<CategoryViewModel></returns>
+        public static List<CategoryViewModel> ProgrammingCategory(string navAlias)
+        {
+            try
+            {
+                List<CategoryViewModel> _return = new List<CategoryViewModel>();
+                using (var context = new TDHEntities())
+                {
+                    var _list = context.PROC_WEB_VIEW_PROGRAMMING_category(navAlias).ToList();
+
+                    foreach (var item in _list)
+                    {
+                        _return.Add(new CategoryViewModel()
+                        {
+                            Title = item.title,
+                            Alias = item.alias,
+                            Count = (int)item.count
+                        });
+                    }
+
+                    return _return;
+                }
+            }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
+            catch (Exception ex)
+            {
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
+            }
+        }
+
+        /// <summary>
+        /// Get top 6 post which has highest viwe
+        /// </summary>
+        /// <param name="navAlias"></param>
+        /// <returns></returns>
+        public static List<PostViewModel> ProgrammingGetTop6View(string navAlias)
+        {
+            try
+            {
+                using (var _context = new TDHEntities())
+                {
+                    return _context.PROC_WEB_VIEW_PROGRAMMING_topview(navAlias)
+                                             .Select(m => new PostViewModel()
+                                             {
+                                                 Alias = m.alias,
+                                                 Title = m.title,
+                                                 Image = m.image,
+                                                 CreateDate = m.create_date
+                                             }).ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Get short introduction about me
         /// </summary>

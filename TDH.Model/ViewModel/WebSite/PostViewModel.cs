@@ -18,6 +18,16 @@ namespace TDH.Model.ViewModel.WebSite
         public Guid CategoryID { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public string CategoryTitle { get; set; } = "";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string CategoryAlias { get; set; } = "";
+
+        /// <summary>
         /// Title
         /// </summary>
         public string Title { get; set; } = "";

@@ -22,6 +22,11 @@ namespace TDH.Controllers
         /// </summary>
         private readonly string PROGRAMMING = "lap-trinh";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private readonly string PORTFOLIO = "portfolio";
+
         #endregion
 
         [Route("{navigationAlias}")]
@@ -32,6 +37,15 @@ namespace TDH.Controllers
             try
             {
                 navigationAlias = navigationAlias.ToLower();
+
+                #region " [ Portfolio Page ] "
+
+                if (navigationAlias == PORTFOLIO)
+                {
+                    return View("Portfolio");
+                }
+
+                #endregion
 
                 var _navInfo = PageService.GetNavigationInfor(navigationAlias);
                 ViewBag.navInfor = _navInfo;

@@ -2,6 +2,7 @@
 var type = '';
 var groupOrder;
 var skillOrder;
+var skillId;
 
 $(document).ready(function () {
     var allowEdit = $('#edit').val();
@@ -27,14 +28,15 @@ $(document).on('click', 'li.group_item > a', function (e) {
     $('li.group_item > a').removeClass('active');
     $(this).addClass('active');
     $('#selectedGroupID').val($(this).attr('data-id'));
-    UpdateSkillDisplay($(this).attr('data-id'));
+    skillId = $(this).attr('data-id');
+    UpdateSkillDisplay(skillId);
 });
 
 function addGroup() {
     $('#hdGroupID').val('');
-    $('#txtGroupName').val();
+    $('#txtGroupName').val('');
     groupOrder.set(1);
-    $('#txtGroupNotes').val();
+    $('#txtGroupNotes').val('');
     $('#groupModel').modal('show');
 }
 
@@ -110,6 +112,7 @@ function UpdateGroupDisplay() {
                 if (idx === 0) {
                     a.attr('class', 'nav-link active');
                     $('#selectedGroupID').val(item.ID);
+                    skillId = item.ID;
                     UpdateSkillDisplay(item.ID);
                 }
                 a.append('<i class="fa fa-file-text-o"></i> ' + item.Name);
@@ -151,11 +154,11 @@ function confirmDeleteGroup(id) {
 }
 
 function addSkill() {
-    $('#lblSkillGroupName').html($('li.group_item > a.active').attr('data-name'));
     $('#hdSkillID').val('');
-    $('#txtSkillName').val();
+    $('#lblSkillGroupName').html($('li.group_item > a.active').attr('data-name'));
+    $('#txtSkillName').val('');
     skillOrder.set(1);
-    $('#txtSkillNotes').val();
+    $('#txtSkillNotes').val('');
     $('#skillModel').modal('show');
 }
 
@@ -201,7 +204,8 @@ function saveSkill() {
                 Notes: $('#txtSkillNotes').val()
             }),
             success: function (response) {
-                UpdateSkillDisplay($('#selectedGroupID').val());
+                skillId = $('#selectedGroupID').val();
+                UpdateSkillDisplay(skillId);
                 loading($('#btnSaveSkill'), 'hide');
                 $('#skillModel').modal('hide');
             },
@@ -349,7 +353,7 @@ function saveDefined() {
                 Description: $('#txtDefinedDescription').val()
             }),
             success: function (response) {
-                UpdateGroupDisplay();
+                UpdateSkillDisplay(skillId);
                 loading($('#btnSaveSkillDefined'), 'hide');
                 $('#skillDefinedModel').modal('hide');
             },
@@ -397,7 +401,8 @@ function deleteItem() {
                     UpdateGroupDisplay();
                 }
                 if (type === 'skill') {
-                    UpdateSkillDisplay($('#selectedGroupID').val());
+                    skillId = $('#selectedGroupID').val();
+                    UpdateSkillDisplay(skillId);
                 }
                 if (type === 'defined') {
                     UpdateGroupDisplay();

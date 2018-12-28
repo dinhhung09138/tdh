@@ -6053,6 +6053,7 @@
     <Content Include="Areas\Personal\Content\Event\index.js" />
     <Content Include="Areas\Personal\Content\Idea\action.js" />
     <Content Include="Areas\Personal\Content\Idea\index.js" />
+    <Content Include="Areas\Personal\Content\skill\index.js" />
     <Content Include="Areas\System\Content\Log\index.js" />
     <Content Include="Areas\System\Content\Role\action.js" />
     <Content Include="Areas\System\Content\Role\index.js" />

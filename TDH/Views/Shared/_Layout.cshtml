@@ -1,6 +1,9 @@
 ﻿<!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="vi" xml:lang="vi">
 <head>
+    @{ 
+        var domain = "http://trandinhhung.com";
+    }
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -8,15 +11,15 @@
     <meta name="description" content="@ViewBag.Description" />
     <meta name="keywords" content="@ViewBag.Keywords" />
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="publisher_handle">
+    <meta name="twitter:site" content="&#64;dinhhung09138">
     <meta name="twitter:title" content="@ViewBag.Title">
     <meta name="twitter:description" content="@ViewBag.Description">
     <meta name="twitter:creator" content="author_handle">
-    <meta name="twitter:image" content="@ViewBag.TwImage">
+    <meta name="twitter:image" content="@domain@ViewBag.TwImage">
     <meta property="og:title" content="@ViewBag.Title" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="@ViewBag.Url" />
-    <meta property="og:image" content="@ViewBag.OgImage" />
+    <meta property="og:image" content="@domain@ViewBag.OgImage" />
     <meta property="og:description" content="@ViewBag.Description" />
     <link href="/trandinhhung.ico" rel="shortcut icon" type="image/x-icon" />
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -43,6 +46,16 @@
         <p>&copy;2018 <a href="/"> Trần Đình Hưng</a>. All Rights Reserved | Design by <a href="http://w3layouts.com/" rel="nofollow" target="_blank" style="opacity: .4;">W3layouts</a> </p>
     </div>
     <script src="/Content/js/jquery.min.js"> </script>
+    <script>
+        $(document).ready(function () {
+            var img = $('#contentData').find('img');
+            if (img.length > 0) {
+                img.each(function(){
+                    $(this).attr('style', 'width: 100%; height: auto;');
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 

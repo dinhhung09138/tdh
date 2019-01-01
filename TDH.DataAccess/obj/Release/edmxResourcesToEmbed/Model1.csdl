@@ -1,0 +1,2528 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TDHModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TDHEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result)">
+      <Parameter Name="I_GroupID" Mode="In" Type="Guid" />
+      <Parameter Name="I_Year" Mode="In" Type="Int32" />
+      <Parameter Name="I_UserID" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <EntitySet Name="MN_ACCOUNT" EntityType="TDHModel.MN_ACCOUNT" />
+    <EntitySet Name="MN_ACCOUNT_SETTING" EntityType="TDHModel.MN_ACCOUNT_SETTING" />
+    <EntitySet Name="MN_ACCOUNT_TYPE" EntityType="TDHModel.MN_ACCOUNT_TYPE" />
+    <EntitySet Name="MN_CATEGORY" EntityType="TDHModel.MN_CATEGORY" />
+    <EntitySet Name="MN_CATEGORY_SETTING" EntityType="TDHModel.MN_CATEGORY_SETTING" />
+    <EntitySet Name="MN_GROUP" EntityType="TDHModel.MN_GROUP" />
+    <EntitySet Name="MN_GROUP_SETTING" EntityType="TDHModel.MN_GROUP_SETTING" />
+    <EntitySet Name="MN_INCOME" EntityType="TDHModel.MN_INCOME" />
+    <EntitySet Name="MN_PAYMENT" EntityType="TDHModel.MN_PAYMENT" />
+    <EntitySet Name="MN_TRANSFER" EntityType="TDHModel.MN_TRANSFER" />
+    <EntitySet Name="WK_CHECKLIST_GROUP" EntityType="TDHModel.WK_CHECKLIST_GROUP" />
+    <EntitySet Name="WK_CHECKLIST_ITEM" EntityType="TDHModel.WK_CHECKLIST_ITEM" />
+    <EntitySet Name="WK_CHECKLIST_ITEM_DETAIL" EntityType="TDHModel.WK_CHECKLIST_ITEM_DETAIL" />
+    <AssociationSet Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" Association="TDHModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
+      <End Role="MN_ACCOUNT_TYPE" EntitySet="MN_ACCOUNT_TYPE" />
+      <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" Association="TDHModel.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT">
+      <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+      <End Role="MN_ACCOUNT_SETTING" EntitySet="MN_ACCOUNT_SETTING" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MN_INCOME_MN_ACCOUNT" Association="TDHModel.FK_MN_INCOME_MN_ACCOUNT">
+      <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+      <End Role="MN_INCOME" EntitySet="MN_INCOME" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MN_PAYMENT_MN_ACCOUNT" Association="TDHModel.FK_MN_PAYMENT_MN_ACCOUNT">
+      <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+      <End Role="MN_PAYMENT" EntitySet="MN_PAYMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MN_TRANSFER_MN_ACCOUNT_FROM" Association="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_FROM">
+      <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+      <End Role="MN_TRANSFER" EntitySet="MN_TRANSFER" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MN_TRANSFER_MN_ACCOUNT_TO" Association="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_TO">
+      <End Role="MN_ACCOUNT" EntitySet="MN_ACCOUNT" />
+      <End Role="MN_TRANSFER" EntitySet="MN_TRANSFER" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MN_CATEGORY_MN_GROUP" Association="TDHModel.FK_MN_CATEGORY_MN_GROUP">
+      <End Role="MN_GROUP" EntitySet="MN_GROUP" />
+      <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MN_CATEGORY_SETTING_MN_CATEGORY" Association="TDHModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY">
+      <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+      <End Role="MN_CATEGORY_SETTING" EntitySet="MN_CATEGORY_SETTING" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MN_INCOME_MN_CATEGORY" Association="TDHModel.FK_MN_INCOME_MN_CATEGORY">
+      <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+      <End Role="MN_INCOME" EntitySet="MN_INCOME" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MN_PAYMENT_MN_CATEGORY" Association="TDHModel.FK_MN_PAYMENT_MN_CATEGORY">
+      <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+      <End Role="MN_PAYMENT" EntitySet="MN_PAYMENT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MN_GROUP_SETTING_MN_GROUP" Association="TDHModel.FK_MN_GROUP_SETTING_MN_GROUP">
+      <End Role="MN_GROUP" EntitySet="MN_GROUP" />
+      <End Role="MN_GROUP_SETTING" EntitySet="MN_GROUP_SETTING" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WK_CHECKLIST_ITEM_group_id" Association="TDHModel.FK_WK_CHECKLIST_ITEM_group_id">
+      <End Role="WK_CHECKLIST_GROUP" EntitySet="WK_CHECKLIST_GROUP" />
+      <End Role="WK_CHECKLIST_ITEM" EntitySet="WK_CHECKLIST_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WK_CHECKLIST_ITEM_DETAIL_check_id" Association="TDHModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id">
+      <End Role="WK_CHECKLIST_ITEM" EntitySet="WK_CHECKLIST_ITEM" />
+      <End Role="WK_CHECKLIST_ITEM_DETAIL" EntitySet="WK_CHECKLIST_ITEM_DETAIL" />
+    </AssociationSet>
+    <EntitySet Name="PN_IDEA" EntityType="TDHModel.PN_IDEA" />
+    <EntitySet Name="PN_REPORT" EntityType="TDHModel.PN_REPORT" />
+    <EntitySet Name="PN_REPORT_KIND" EntityType="TDHModel.PN_REPORT_KIND" />
+    <EntitySet Name="PN_TARGET" EntityType="TDHModel.PN_TARGET" />
+    <EntitySet Name="PN_TARGET_PLANNING" EntityType="TDHModel.PN_TARGET_PLANNING" />
+    <EntitySet Name="PN_TARGET_PLANNING_REPORT" EntityType="TDHModel.PN_TARGET_PLANNING_REPORT" />
+    <EntitySet Name="PN_TARGET_PLANNING_SPRINT" EntityType="TDHModel.PN_TARGET_PLANNING_SPRINT" />
+    <EntitySet Name="PN_TARGET_PRIORITY" EntityType="TDHModel.PN_TARGET_PRIORITY" />
+    <EntitySet Name="PN_TARGET_QUESTION" EntityType="TDHModel.PN_TARGET_QUESTION" />
+    <EntitySet Name="PN_TARGET_TYPE" EntityType="TDHModel.PN_TARGET_TYPE" />
+    <EntitySet Name="PN_TASK" EntityType="TDHModel.PN_TASK" />
+    <EntitySet Name="PN_TASK_STATUS" EntityType="TDHModel.PN_TASK_STATUS" />
+    <EntitySet Name="PN_TASK_TYPE" EntityType="TDHModel.PN_TASK_TYPE" />
+    <EntitySet Name="SYS_FUNCTION" EntityType="TDHModel.SYS_FUNCTION" />
+    <EntitySet Name="SYS_ROLE" EntityType="TDHModel.SYS_ROLE" />
+    <EntitySet Name="SYS_ROLE_DETAIL" EntityType="TDHModel.SYS_ROLE_DETAIL" />
+    <EntitySet Name="SYS_USER" EntityType="TDHModel.SYS_USER" />
+    <EntitySet Name="SYS_USER_ROLE" EntityType="TDHModel.SYS_USER_ROLE" />
+    <EntitySet Name="WEB_ABOUT" EntityType="TDHModel.WEB_ABOUT" />
+    <EntitySet Name="WEB_CATEGORY" EntityType="TDHModel.WEB_CATEGORY" />
+    <EntitySet Name="WEB_CONFIGURATION" EntityType="TDHModel.WEB_CONFIGURATION" />
+    <EntitySet Name="WEB_ERROR_LOG" EntityType="TDHModel.WEB_ERROR_LOG" />
+    <EntitySet Name="WEB_HOME_CATEGORY" EntityType="TDHModel.WEB_HOME_CATEGORY" />
+    <EntitySet Name="WEB_HOME_NAVIGATION" EntityType="TDHModel.WEB_HOME_NAVIGATION" />
+    <EntitySet Name="WEB_NAVIGATION" EntityType="TDHModel.WEB_NAVIGATION" />
+    <EntitySet Name="WEB_POST" EntityType="TDHModel.WEB_POST" />
+    <AssociationSet Name="FK_PN_TARGET_PN_IDEA" Association="TDHModel.FK_PN_TARGET_PN_IDEA">
+      <End Role="PN_IDEA" EntitySet="PN_IDEA" />
+      <End Role="PN_TARGET" EntitySet="PN_TARGET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_REPORT_PN_REPORT_KIND" Association="TDHModel.FK_PN_REPORT_PN_REPORT_KIND">
+      <End Role="PN_REPORT_KIND" EntitySet="PN_REPORT_KIND" />
+      <End Role="PN_REPORT" EntitySet="PN_REPORT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_TARGET_PLANNING_PN_TARGET" Association="TDHModel.FK_PN_TARGET_PLANNING_PN_TARGET">
+      <End Role="PN_TARGET" EntitySet="PN_TARGET" />
+      <End Role="PN_TARGET_PLANNING" EntitySet="PN_TARGET_PLANNING" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_TARGET_PN_TARGET_PRIORITY" Association="TDHModel.FK_PN_TARGET_PN_TARGET_PRIORITY">
+      <End Role="PN_TARGET_PRIORITY" EntitySet="PN_TARGET_PRIORITY" />
+      <End Role="PN_TARGET" EntitySet="PN_TARGET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_TARGET_PN_TARGET_TYPE" Association="TDHModel.FK_PN_TARGET_PN_TARGET_TYPE">
+      <End Role="PN_TARGET_TYPE" EntitySet="PN_TARGET_TYPE" />
+      <End Role="PN_TARGET" EntitySet="PN_TARGET" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_TARGET_QUESTION_PN_TARGET" Association="TDHModel.FK_PN_TARGET_QUESTION_PN_TARGET">
+      <End Role="PN_TARGET" EntitySet="PN_TARGET" />
+      <End Role="PN_TARGET_QUESTION" EntitySet="PN_TARGET_QUESTION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_TARGET_PLANING_SPRINT_PN_TARGET_PLANNING" Association="TDHModel.FK_PN_TARGET_PLANING_SPRINT_PN_TARGET_PLANNING">
+      <End Role="PN_TARGET_PLANNING" EntitySet="PN_TARGET_PLANNING" />
+      <End Role="PN_TARGET_PLANNING_SPRINT" EntitySet="PN_TARGET_PLANNING_SPRINT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_TARGET_PLANNING_REPORT_PN_TARGET_PLANNING" Association="TDHModel.FK_PN_TARGET_PLANNING_REPORT_PN_TARGET_PLANNING">
+      <End Role="PN_TARGET_PLANNING" EntitySet="PN_TARGET_PLANNING" />
+      <End Role="PN_TARGET_PLANNING_REPORT" EntitySet="PN_TARGET_PLANNING_REPORT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_TASK_PN_TARGET_PLANNING_SPRINT" Association="TDHModel.FK_PN_TASK_PN_TARGET_PLANNING_SPRINT">
+      <End Role="PN_TARGET_PLANNING_SPRINT" EntitySet="PN_TARGET_PLANNING_SPRINT" />
+      <End Role="PN_TASK" EntitySet="PN_TASK" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_TASK_PN_TASK" Association="TDHModel.FK_PN_TASK_PN_TASK">
+      <End Role="PN_TASK" EntitySet="PN_TASK" />
+      <End Role="PN_TASK1" EntitySet="PN_TASK" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_TASK_PN_TASK_STATUS" Association="TDHModel.FK_PN_TASK_PN_TASK_STATUS">
+      <End Role="PN_TASK_STATUS" EntitySet="PN_TASK_STATUS" />
+      <End Role="PN_TASK" EntitySet="PN_TASK" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_TASK_PN_TASK_TYPE" Association="TDHModel.FK_PN_TASK_PN_TASK_TYPE">
+      <End Role="PN_TASK_TYPE" EntitySet="PN_TASK_TYPE" />
+      <End Role="PN_TASK" EntitySet="PN_TASK" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SYS_ROLE_DETAIL_function" Association="TDHModel.FK_SYS_ROLE_DETAIL_function">
+      <End Role="SYS_FUNCTION" EntitySet="SYS_FUNCTION" />
+      <End Role="SYS_ROLE_DETAIL" EntitySet="SYS_ROLE_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SYS_ROLE_DETAIL_role" Association="TDHModel.FK_SYS_ROLE_DETAIL_role">
+      <End Role="SYS_ROLE" EntitySet="SYS_ROLE" />
+      <End Role="SYS_ROLE_DETAIL" EntitySet="SYS_ROLE_DETAIL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SYS_USER_ROLE_role_id" Association="TDHModel.FK_SYS_USER_ROLE_role_id">
+      <End Role="SYS_ROLE" EntitySet="SYS_ROLE" />
+      <End Role="SYS_USER_ROLE" EntitySet="SYS_USER_ROLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SYS_USER_ROLE_user_id" Association="TDHModel.FK_SYS_USER_ROLE_user_id">
+      <End Role="SYS_USER" EntitySet="SYS_USER" />
+      <End Role="SYS_USER_ROLE" EntitySet="SYS_USER_ROLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WEB_CATEGORY_WEB_NAVIGATION" Association="TDHModel.FK_WEB_CATEGORY_WEB_NAVIGATION">
+      <End Role="WEB_NAVIGATION" EntitySet="WEB_NAVIGATION" />
+      <End Role="WEB_CATEGORY" EntitySet="WEB_CATEGORY" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WEB_HOME_CATEGORY_category_id" Association="TDHModel.FK_WEB_HOME_CATEGORY_category_id">
+      <End Role="WEB_CATEGORY" EntitySet="WEB_CATEGORY" />
+      <End Role="WEB_HOME_CATEGORY" EntitySet="WEB_HOME_CATEGORY" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WEB_POST_WEB_CATEGORY" Association="TDHModel.FK_WEB_POST_WEB_CATEGORY">
+      <End Role="WEB_CATEGORY" EntitySet="WEB_CATEGORY" />
+      <End Role="WEB_POST" EntitySet="WEB_POST" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WEB_HOME_NAVIGATION_navigation_id" Association="TDHModel.FK_WEB_HOME_NAVIGATION_navigation_id">
+      <End Role="WEB_NAVIGATION" EntitySet="WEB_NAVIGATION" />
+      <End Role="WEB_HOME_NAVIGATION" EntitySet="WEB_HOME_NAVIGATION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WEB_POST_WEB_NAVIGATION" Association="TDHModel.FK_WEB_POST_WEB_NAVIGATION">
+      <End Role="WEB_NAVIGATION" EntitySet="WEB_NAVIGATION" />
+      <End Role="WEB_POST" EntitySet="WEB_POST" />
+    </AssociationSet>
+    <EntitySet Name="SYS_MODULE" EntityType="TDHModel.SYS_MODULE" />
+    <AssociationSet Name="FK_SYS_FUNCTION_SYS_MODULE" Association="TDHModel.FK_SYS_FUNCTION_SYS_MODULE">
+      <End Role="SYS_MODULE" EntitySet="SYS_MODULE" />
+      <End Role="SYS_FUNCTION" EntitySet="SYS_FUNCTION" />
+    </AssociationSet>
+    <EntitySet Name="PN_DREAM" EntityType="TDHModel.PN_DREAM" />
+    <EntitySet Name="CM_SKILL" EntityType="TDHModel.CM_SKILL" />
+    <EntitySet Name="CM_SKILL_DEFINDED" EntityType="TDHModel.CM_SKILL_DEFINDED" />
+    <EntitySet Name="CM_SKILL_GROUP" EntityType="TDHModel.CM_SKILL_GROUP" />
+    <EntitySet Name="PN_EDUCATION" EntityType="TDHModel.PN_EDUCATION" />
+    <EntitySet Name="PN_EDUCATION_TYPE" EntityType="TDHModel.PN_EDUCATION_TYPE" />
+    <EntitySet Name="PN_EVENT" EntityType="TDHModel.PN_EVENT" />
+    <EntitySet Name="PN_EVENT_TYPE" EntityType="TDHModel.PN_EVENT_TYPE" />
+    <EntitySet Name="PN_SKILL" EntityType="TDHModel.PN_SKILL" />
+    <AssociationSet Name="FK_CM_SKILL_CM_SKILL_GROUP" Association="TDHModel.FK_CM_SKILL_CM_SKILL_GROUP">
+      <End Role="CM_SKILL_GROUP" EntitySet="CM_SKILL_GROUP" />
+      <End Role="CM_SKILL" EntitySet="CM_SKILL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CM_SKILL_DEFINDED_CM_SKILL" Association="TDHModel.FK_CM_SKILL_DEFINDED_CM_SKILL">
+      <End Role="CM_SKILL" EntitySet="CM_SKILL" />
+      <End Role="CM_SKILL_DEFINDED" EntitySet="CM_SKILL_DEFINDED" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_SKILL_CM_SKILL" Association="TDHModel.FK_PN_SKILL_CM_SKILL">
+      <End Role="CM_SKILL" EntitySet="CM_SKILL" />
+      <End Role="PN_SKILL" EntitySet="PN_SKILL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_EDUCATION_PN_EDUCATION_TYPE" Association="TDHModel.FK_PN_EDUCATION_PN_EDUCATION_TYPE">
+      <End Role="PN_EDUCATION_TYPE" EntitySet="PN_EDUCATION_TYPE" />
+      <End Role="PN_EDUCATION" EntitySet="PN_EDUCATION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PN_EVENT_PN_EVENT_TYPE" Association="TDHModel.FK_PN_EVENT_PN_EVENT_TYPE">
+      <End Role="PN_EVENT_TYPE" EntitySet="PN_EVENT_TYPE" />
+      <End Role="PN_EVENT" EntitySet="PN_EVENT" />
+    </AssociationSet>
+    <EntitySet Name="PN_CETIFICATE" EntityType="TDHModel.PN_CETIFICATE" />
+    <EntitySet Name="PN_SKILL_DEFINDED" EntityType="TDHModel.PN_SKILL_DEFINDED" />
+    <AssociationSet Name="FK_PN_SKILL_DEFINDED_PN_SKILL" Association="TDHModel.FK_PN_SKILL_DEFINDED_PN_SKILL">
+      <End Role="PN_SKILL" EntitySet="PN_SKILL" />
+      <End Role="PN_SKILL_DEFINDED" EntitySet="PN_SKILL_DEFINDED" />
+    </AssociationSet>
+    <EntitySet Name="FB_FANPAGE" EntityType="TDHModel.FB_FANPAGE" />
+    <EntitySet Name="FB_GROUP" EntityType="TDHModel.FB_GROUP" />
+    <EntitySet Name="FB_POST_TYPE" EntityType="TDHModel.FB_POST_TYPE" />
+    <EntitySet Name="FB_USER" EntityType="TDHModel.FB_USER" />
+    <AssociationSet Name="FK_FB_FANPAGE_SYS_USER" Association="TDHModel.FK_FB_FANPAGE_SYS_USER">
+      <End Role="SYS_USER" EntitySet="SYS_USER" />
+      <End Role="FB_FANPAGE" EntitySet="FB_FANPAGE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FB_GROUP_SYS_USER" Association="TDHModel.FK_FB_GROUP_SYS_USER">
+      <End Role="SYS_USER" EntitySet="SYS_USER" />
+      <End Role="FB_GROUP" EntitySet="FB_GROUP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FB_USER_SYS_USER" Association="TDHModel.FK_FB_USER_SYS_USER">
+      <End Role="SYS_USER" EntitySet="SYS_USER" />
+      <End Role="FB_USER" EntitySet="FB_USER" />
+    </AssociationSet>
+    <EntitySet Name="V_MN_CATEGORY_HISTORY" EntityType="TDHModel.V_MN_CATEGORY_HISTORY" />
+    <EntitySet Name="V_MN_CATEGORY" EntityType="TDHModel.V_MN_CATEGORY" />
+    <EntitySet Name="V_MN_ACCOUNT_HISTORY" EntityType="TDHModel.V_MN_ACCOUNT_HISTORY" />
+    <EntitySet Name="V_MN_MONEY_FLOW" EntityType="TDHModel.V_MN_MONEY_FLOW" />
+    <FunctionImport Name="FNC_MN_REPORT_SUMMARY" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_REPORT_SUMMARY_Result)" />
+    <FunctionImport Name="FNC_MN_REPORT_SUMMARY_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_REPORT_SUMMARY_BY_YEAR_Result)">
+      <Parameter Name="I_Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result)">
+      <Parameter Name="I_Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <AssociationSet Name="FK_MN_TRANSFER_category_id" Association="TDHModel.FK_MN_TRANSFER_category_id">
+      <End Role="MN_CATEGORY" EntitySet="MN_CATEGORY" />
+      <End Role="MN_TRANSFER" EntitySet="MN_TRANSFER" />
+    </AssociationSet>
+    <EntitySet Name="V_PN_TIMELINE" EntityType="TDHModel.V_PN_TIMELINE" />
+    <EntitySet Name="V_SYS_RENDER_NAVIGATION" EntityType="TDHModel.V_SYS_RENDER_NAVIGATION" />
+    <FunctionImport Name="FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR" IsComposable="true" ReturnType="Collection(TDHModel.FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR_Result)">
+      <Parameter Name="I_Year" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="V_MN_REPORT_BORROW_ACCOUNT_STATUS" EntityType="TDHModel.V_MN_REPORT_BORROW_ACCOUNT_STATUS" />
+    <FunctionImport Name="PROC_SYS_LOGIN" ReturnType="Collection(TDHModel.PROC_SYS_LOGIN_Result)">
+      <Parameter Name="user_name" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+      <Parameter Name="is_mobile" Mode="In" Type="Boolean" />
+      <Parameter Name="platform" Mode="In" Type="String" />
+      <Parameter Name="version" Mode="In" Type="String" />
+      <Parameter Name="agent" Mode="In" Type="String" />
+      <Parameter Name="host_name" Mode="In" Type="String" />
+      <Parameter Name="host_address" Mode="In" Type="String" />
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_WEB_VIEW_HOME_META" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_META_Result)" />
+    <FunctionImport Name="PROC_WEB_VIEW_HOME_LISTNAVIGATION" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_LISTNAVIGATION_Result)" />
+    <FunctionImport Name="PROC_WEB_VIEW_HOME_PostByCategory" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_PostByCategory_Result)" />
+    <FunctionImport Name="PROC_WEB_VIEW_HOME_PostByNavigation" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_PostByNavigation_Result)" />
+    <FunctionImport Name="PROC_WEB_CONFIGURATION_GetByKey" ReturnType="Collection(TDHModel.PROC_WEB_CONFIGURATION_GetByKey_Result)">
+      <Parameter Name="key" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_WEB_VIEW_HOME_2NavigationOnFooter" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_2NavigationOnFooter_Result)" />
+    <FunctionImport Name="PROC_WEB_VIEW_HOME_ListCategoryOnFooter" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_HOME_ListCategoryOnFooter_Result)" />
+    <FunctionImport Name="PROC_WEB_VIEW_CATEGORY_Info" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_CATEGORY_Info_Result)">
+      <Parameter Name="alias" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_WEB_VIEW_NAVIGATION_Info" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_NAVIGATION_Info_Result)">
+      <Parameter Name="alias" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_WEB_VIEW_POST_Info" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Info_Result)">
+      <Parameter Name="navigation_alias" Mode="In" Type="String" />
+      <Parameter Name="category_alias" Mode="In" Type="String" />
+      <Parameter Name="post_alias" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_WEB_VIEW_POST_Top2View" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Top2View_Result)" />
+    <FunctionImport Name="PROC_WEB_VIEW_POST_Top4Lasted" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Top4Lasted_Result)" />
+    <FunctionImport Name="PROC_WEB_VIEW_ABOUT" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_ABOUT_Result)" />
+    <FunctionImport Name="PROC_WEB_VIEW_CATEGORY_ByNavigation" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_CATEGORY_ByNavigation_Result)">
+      <Parameter Name="alias" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_WEB_VIEW_INTRO_META" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_INTRO_META_Result)" />
+    <FunctionImport Name="PROC_WEB_VIEW_POST_ByCategory" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_ByCategory_Result)">
+      <Parameter Name="navigation_alias" Mode="In" Type="String" />
+      <Parameter Name="category_alias" Mode="In" Type="String" />
+      <Parameter Name="page" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_WEB_VIEW_POST_Top6ByCategory" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Top6ByCategory_Result)">
+      <Parameter Name="id" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_WEB_VIEW_POST_Top6ByNavigation" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_POST_Top6ByNavigation_Result)">
+      <Parameter Name="id" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_SIDEBAR_ByUserID" ReturnType="Collection(TDHModel.PROC_SYS_SIDEBAR_ByUserID_Result)">
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_CheckAccess" ReturnType="Collection(TDHModel.PROC_SYS_CheckAccess_Result)">
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+      <Parameter Name="function" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_USER_ById" ReturnType="Collection(TDHModel.PROC_SYS_USER_ById_Result)">
+      <Parameter Name="id" Mode="In" Type="Guid" />
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_USER_Delete">
+      <Parameter Name="id" Mode="In" Type="Guid" />
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+      <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_USER_List" ReturnType="Collection(TDHModel.PROC_SYS_USER_List_Result)">
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_USER_Publish">
+      <Parameter Name="id" Mode="In" Type="Guid" />
+      <Parameter Name="locked" Mode="In" Type="Boolean" />
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+      <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_USER_Save">
+      <Parameter Name="id" Mode="In" Type="Guid" />
+      <Parameter Name="full_name" Mode="In" Type="String" />
+      <Parameter Name="user_name" Mode="In" Type="String" />
+      <Parameter Name="password" Mode="In" Type="String" />
+      <Parameter Name="locked" Mode="In" Type="Boolean" />
+      <Parameter Name="notes" Mode="In" Type="String" />
+      <Parameter Name="role_id" Mode="In" Type="Guid" />
+      <Parameter Name="is_insert" Mode="In" Type="Boolean" />
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+      <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_COMMON_CheckToken">
+      <Parameter Name="token" Mode="In" Type="String" />
+      <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_FUNCTION_List" ReturnType="Collection(TDHModel.PROC_SYS_FUNCTION_List_Result)">
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_ROLE_ById" ReturnType="Collection(TDHModel.PROC_SYS_ROLE_ById_Result)">
+      <Parameter Name="id" Mode="In" Type="Guid" />
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_ROLE_CheckDelete">
+      <Parameter Name="role_id" Mode="In" Type="Guid" />
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+      <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_ROLE_Delete">
+      <Parameter Name="role_id" Mode="In" Type="Guid" />
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+      <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_ROLE_DETAIL_ByRoleId" ReturnType="Collection(TDHModel.PROC_SYS_ROLE_DETAIL_ByRoleId_Result)">
+      <Parameter Name="role_id" Mode="In" Type="Guid" />
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_ROLE_List" ReturnType="Collection(TDHModel.PROC_SYS_ROLE_List_Result)">
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_SYS_ROLE_Publish">
+      <Parameter Name="role_id" Mode="In" Type="Guid" />
+      <Parameter Name="publish" Mode="In" Type="Boolean" />
+      <Parameter Name="session_id" Mode="In" Type="String" />
+      <Parameter Name="user_id" Mode="In" Type="Guid" />
+      <Parameter Name="STATUS" Mode="InOut" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_WEB_VIEW_PROGRAMMING_category" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_PROGRAMMING_category_Result)">
+      <Parameter Name="navigation_alias" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_WEB_VIEW_PROGRAMMING_Top20" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_PROGRAMMING_Top20_Result)">
+      <Parameter Name="navigation_alias" Mode="In" Type="String" />
+      <Parameter Name="page" Mode="In" Type="Int16" />
+    </FunctionImport>
+    <FunctionImport Name="PROC_WEB_VIEW_PROGRAMMING_topview" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_PROGRAMMING_topview_Result)">
+      <Parameter Name="navigation_alias" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
+    <Property Type="Guid" Name="id" Nullable="false" />
+    <Property Type="Guid" Name="group_id" Nullable="false" />
+    <Property Type="Decimal" Name="year_month" Nullable="false" Precision="6" Scale="0" />
+    <Property Type="Decimal" Name="percent_setting" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="percent_current" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="money_setting" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="money_current" Nullable="false" Precision="38" Scale="1" />
+  </ComplexType>
+  <EntityType Name="MN_ACCOUNT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="account_type_id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="start" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="input" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="output" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="end" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="ordering" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="MN_ACCOUNT_TYPE" Relationship="TDHModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" FromRole="MN_ACCOUNT" ToRole="MN_ACCOUNT_TYPE" />
+    <NavigationProperty Name="MN_ACCOUNT_SETTING" Relationship="TDHModel.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" FromRole="MN_ACCOUNT" ToRole="MN_ACCOUNT_SETTING" />
+    <NavigationProperty Name="MN_INCOME" Relationship="TDHModel.FK_MN_INCOME_MN_ACCOUNT" FromRole="MN_ACCOUNT" ToRole="MN_INCOME" />
+    <NavigationProperty Name="MN_PAYMENT" Relationship="TDHModel.FK_MN_PAYMENT_MN_ACCOUNT" FromRole="MN_ACCOUNT" ToRole="MN_PAYMENT" />
+    <NavigationProperty Name="MN_TRANSFER" Relationship="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_FROM" FromRole="MN_ACCOUNT" ToRole="MN_TRANSFER" />
+    <NavigationProperty Name="MN_TRANSFER1" Relationship="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_TO" FromRole="MN_ACCOUNT" ToRole="MN_TRANSFER" />
+    <Property Name="max_payment" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="MN_ACCOUNT_SETTING">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="yearmonth" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+    <Property Name="account_id" Type="Guid" Nullable="false" />
+    <Property Name="start" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="input" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="output" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="end" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="MN_ACCOUNT" Relationship="TDHModel.FK_MN_ACCOUNT_SETTING_MN_ACCOUNT" FromRole="MN_ACCOUNT_SETTING" ToRole="MN_ACCOUNT" />
+  </EntityType>
+  <EntityType Name="MN_ACCOUNT_TYPE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="MN_ACCOUNT" Relationship="TDHModel.FK_MN_ACCOUNT_MN_ACCOUNT_TYPE" FromRole="MN_ACCOUNT_TYPE" ToRole="MN_ACCOUNT" />
+    <Property Name="type" Type="Int16" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MN_CATEGORY">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="group_id" Type="Guid" Nullable="false" />
+    <Property Name="percent_setting" Type="Byte" Nullable="false" />
+    <Property Name="percent_current" Type="Byte" Nullable="false" />
+    <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="MN_GROUP" Relationship="TDHModel.FK_MN_CATEGORY_MN_GROUP" FromRole="MN_CATEGORY" ToRole="MN_GROUP" />
+    <NavigationProperty Name="MN_CATEGORY_SETTING" Relationship="TDHModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MN_CATEGORY_SETTING" />
+    <NavigationProperty Name="MN_INCOME" Relationship="TDHModel.FK_MN_INCOME_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MN_INCOME" />
+    <NavigationProperty Name="MN_PAYMENT" Relationship="TDHModel.FK_MN_PAYMENT_MN_CATEGORY" FromRole="MN_CATEGORY" ToRole="MN_PAYMENT" />
+    <NavigationProperty Name="MN_TRANSFER" Relationship="TDHModel.FK_MN_TRANSFER_category_id" FromRole="MN_CATEGORY" ToRole="MN_TRANSFER" />
+  </EntityType>
+  <EntityType Name="MN_CATEGORY_SETTING">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="category_id" Type="Guid" Nullable="false" />
+    <Property Name="year_month" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+    <Property Name="percent_setting" Type="Byte" Nullable="false" />
+    <Property Name="percent_current" Type="Byte" Nullable="false" />
+    <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="MN_CATEGORY" Relationship="TDHModel.FK_MN_CATEGORY_SETTING_MN_CATEGORY" FromRole="MN_CATEGORY_SETTING" ToRole="MN_CATEGORY" />
+  </EntityType>
+  <EntityType Name="MN_GROUP">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="is_input" Type="Boolean" Nullable="false" />
+    <Property Name="percent_setting" Type="Byte" Nullable="false" />
+    <Property Name="percent_current" Type="Byte" Nullable="false" />
+    <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="MN_CATEGORY" Relationship="TDHModel.FK_MN_CATEGORY_MN_GROUP" FromRole="MN_GROUP" ToRole="MN_CATEGORY" />
+    <NavigationProperty Name="MN_GROUP_SETTING" Relationship="TDHModel.FK_MN_GROUP_SETTING_MN_GROUP" FromRole="MN_GROUP" ToRole="MN_GROUP_SETTING" />
+  </EntityType>
+  <EntityType Name="MN_GROUP_SETTING">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="group_id" Type="Guid" Nullable="false" />
+    <Property Name="year_month" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+    <Property Name="percent_setting" Type="Byte" Nullable="false" />
+    <Property Name="percent_current" Type="Byte" Nullable="false" />
+    <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="MN_GROUP" Relationship="TDHModel.FK_MN_GROUP_SETTING_MN_GROUP" FromRole="MN_GROUP_SETTING" ToRole="MN_GROUP" />
+  </EntityType>
+  <EntityType Name="MN_INCOME">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="account_id" Type="Guid" Nullable="false" />
+    <Property Name="category_id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="MN_ACCOUNT" Relationship="TDHModel.FK_MN_INCOME_MN_ACCOUNT" FromRole="MN_INCOME" ToRole="MN_ACCOUNT" />
+    <NavigationProperty Name="MN_CATEGORY" Relationship="TDHModel.FK_MN_INCOME_MN_CATEGORY" FromRole="MN_INCOME" ToRole="MN_CATEGORY" />
+  </EntityType>
+  <EntityType Name="MN_PAYMENT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="account_id" Type="Guid" Nullable="false" />
+    <Property Name="category_id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="MN_ACCOUNT" Relationship="TDHModel.FK_MN_PAYMENT_MN_ACCOUNT" FromRole="MN_PAYMENT" ToRole="MN_ACCOUNT" />
+    <NavigationProperty Name="MN_CATEGORY" Relationship="TDHModel.FK_MN_PAYMENT_MN_CATEGORY" FromRole="MN_PAYMENT" ToRole="MN_CATEGORY" />
+  </EntityType>
+  <EntityType Name="MN_TRANSFER">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="account_from" Type="Guid" Nullable="false" />
+    <Property Name="account_to" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="purpose" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="fee" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="MN_ACCOUNT" Relationship="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_FROM" FromRole="MN_TRANSFER" ToRole="MN_ACCOUNT" />
+    <NavigationProperty Name="MN_ACCOUNT1" Relationship="TDHModel.FK_MN_TRANSFER_MN_ACCOUNT_TO" FromRole="MN_TRANSFER" ToRole="MN_ACCOUNT" />
+    <Property Name="category_id" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="MN_CATEGORY" Relationship="TDHModel.FK_MN_TRANSFER_category_id" FromRole="MN_TRANSFER" ToRole="MN_CATEGORY" />
+  </EntityType>
+  <EntityType Name="WK_CHECKLIST_GROUP">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="WK_CHECKLIST_ITEM" Relationship="TDHModel.FK_WK_CHECKLIST_ITEM_group_id" FromRole="WK_CHECKLIST_GROUP" ToRole="WK_CHECKLIST_ITEM" />
+  </EntityType>
+  <EntityType Name="WK_CHECKLIST_ITEM">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="group_id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="WK_CHECKLIST_GROUP" Relationship="TDHModel.FK_WK_CHECKLIST_ITEM_group_id" FromRole="WK_CHECKLIST_ITEM" ToRole="WK_CHECKLIST_GROUP" />
+    <NavigationProperty Name="WK_CHECKLIST_ITEM_DETAIL" Relationship="TDHModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" FromRole="WK_CHECKLIST_ITEM" ToRole="WK_CHECKLIST_ITEM_DETAIL" />
+  </EntityType>
+  <EntityType Name="WK_CHECKLIST_ITEM_DETAIL">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="check_id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="WK_CHECKLIST_ITEM" Relationship="TDHModel.FK_WK_CHECKLIST_ITEM_DETAIL_check_id" FromRole="WK_CHECKLIST_ITEM_DETAIL" ToRole="WK_CHECKLIST_ITEM" />
+  </EntityType>
+  <Association Name="FK_MN_ACCOUNT_MN_ACCOUNT_TYPE">
+    <End Type="TDHModel.MN_ACCOUNT_TYPE" Role="MN_ACCOUNT_TYPE" Multiplicity="1" />
+    <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_ACCOUNT_TYPE">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_ACCOUNT">
+        <PropertyRef Name="account_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MN_ACCOUNT_SETTING_MN_ACCOUNT">
+    <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.MN_ACCOUNT_SETTING" Role="MN_ACCOUNT_SETTING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_ACCOUNT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_ACCOUNT_SETTING">
+        <PropertyRef Name="account_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MN_INCOME_MN_ACCOUNT">
+    <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="1" />
+    <End Type="TDHModel.MN_INCOME" Role="MN_INCOME" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_ACCOUNT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_INCOME">
+        <PropertyRef Name="account_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MN_PAYMENT_MN_ACCOUNT">
+    <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="1" />
+    <End Type="TDHModel.MN_PAYMENT" Role="MN_PAYMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_ACCOUNT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_PAYMENT">
+        <PropertyRef Name="account_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MN_TRANSFER_MN_ACCOUNT_FROM">
+    <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="1" />
+    <End Type="TDHModel.MN_TRANSFER" Role="MN_TRANSFER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_ACCOUNT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_TRANSFER">
+        <PropertyRef Name="account_from" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MN_TRANSFER_MN_ACCOUNT_TO">
+    <End Type="TDHModel.MN_ACCOUNT" Role="MN_ACCOUNT" Multiplicity="1" />
+    <End Type="TDHModel.MN_TRANSFER" Role="MN_TRANSFER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_ACCOUNT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_TRANSFER">
+        <PropertyRef Name="account_to" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MN_CATEGORY_MN_GROUP">
+    <End Type="TDHModel.MN_GROUP" Role="MN_GROUP" Multiplicity="1" />
+    <End Type="TDHModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_GROUP">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_CATEGORY">
+        <PropertyRef Name="group_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MN_CATEGORY_SETTING_MN_CATEGORY">
+    <End Type="TDHModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.MN_CATEGORY_SETTING" Role="MN_CATEGORY_SETTING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_CATEGORY">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_CATEGORY_SETTING">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MN_INCOME_MN_CATEGORY">
+    <End Type="TDHModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="1" />
+    <End Type="TDHModel.MN_INCOME" Role="MN_INCOME" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_CATEGORY">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_INCOME">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MN_PAYMENT_MN_CATEGORY">
+    <End Type="TDHModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="1" />
+    <End Type="TDHModel.MN_PAYMENT" Role="MN_PAYMENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_CATEGORY">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_PAYMENT">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MN_GROUP_SETTING_MN_GROUP">
+    <End Type="TDHModel.MN_GROUP" Role="MN_GROUP" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.MN_GROUP_SETTING" Role="MN_GROUP_SETTING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_GROUP">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_GROUP_SETTING">
+        <PropertyRef Name="group_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WK_CHECKLIST_ITEM_group_id">
+    <End Type="TDHModel.WK_CHECKLIST_GROUP" Role="WK_CHECKLIST_GROUP" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.WK_CHECKLIST_ITEM" Role="WK_CHECKLIST_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WK_CHECKLIST_GROUP">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="WK_CHECKLIST_ITEM">
+        <PropertyRef Name="group_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WK_CHECKLIST_ITEM_DETAIL_check_id">
+    <End Type="TDHModel.WK_CHECKLIST_ITEM" Role="WK_CHECKLIST_ITEM" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.WK_CHECKLIST_ITEM_DETAIL" Role="WK_CHECKLIST_ITEM_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WK_CHECKLIST_ITEM">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="WK_CHECKLIST_ITEM_DETAIL">
+        <PropertyRef Name="check_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PN_IDEA">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_TARGET" Relationship="TDHModel.FK_PN_TARGET_PN_IDEA" FromRole="PN_IDEA" ToRole="PN_TARGET" />
+  </EntityType>
+  <EntityType Name="PN_REPORT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="kind_id" Type="Guid" Nullable="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_REPORT_KIND" Relationship="TDHModel.FK_PN_REPORT_PN_REPORT_KIND" FromRole="PN_REPORT" ToRole="PN_REPORT_KIND" />
+  </EntityType>
+  <EntityType Name="PN_REPORT_KIND">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_REPORT" Relationship="TDHModel.FK_PN_REPORT_PN_REPORT_KIND" FromRole="PN_REPORT_KIND" ToRole="PN_REPORT" />
+  </EntityType>
+  <EntityType Name="PN_TARGET">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="content" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="target_type_id" Type="Guid" Nullable="false" />
+    <Property Name="idea_id" Type="Guid" Nullable="false" />
+    <Property Name="priority_id" Type="Guid" Nullable="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_IDEA" Relationship="TDHModel.FK_PN_TARGET_PN_IDEA" FromRole="PN_TARGET" ToRole="PN_IDEA" />
+    <NavigationProperty Name="PN_TARGET_PLANNING" Relationship="TDHModel.FK_PN_TARGET_PLANNING_PN_TARGET" FromRole="PN_TARGET" ToRole="PN_TARGET_PLANNING" />
+    <NavigationProperty Name="PN_TARGET_PRIORITY" Relationship="TDHModel.FK_PN_TARGET_PN_TARGET_PRIORITY" FromRole="PN_TARGET" ToRole="PN_TARGET_PRIORITY" />
+    <NavigationProperty Name="PN_TARGET_TYPE" Relationship="TDHModel.FK_PN_TARGET_PN_TARGET_TYPE" FromRole="PN_TARGET" ToRole="PN_TARGET_TYPE" />
+    <NavigationProperty Name="PN_TARGET_QUESTION" Relationship="TDHModel.FK_PN_TARGET_QUESTION_PN_TARGET" FromRole="PN_TARGET" ToRole="PN_TARGET_QUESTION" />
+    <Property Name="finish_date" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="PN_TARGET_PLANNING">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="start_date" Type="DateTime" Precision="3" />
+    <Property Name="end_date" Type="DateTime" Precision="3" />
+    <Property Name="target_id" Type="Guid" Nullable="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_TARGET" Relationship="TDHModel.FK_PN_TARGET_PLANNING_PN_TARGET" FromRole="PN_TARGET_PLANNING" ToRole="PN_TARGET" />
+    <NavigationProperty Name="PN_TARGET_PLANNING_SPRINT" Relationship="TDHModel.FK_PN_TARGET_PLANING_SPRINT_PN_TARGET_PLANNING" FromRole="PN_TARGET_PLANNING" ToRole="PN_TARGET_PLANNING_SPRINT" />
+    <NavigationProperty Name="PN_TARGET_PLANNING_REPORT" Relationship="TDHModel.FK_PN_TARGET_PLANNING_REPORT_PN_TARGET_PLANNING" FromRole="PN_TARGET_PLANNING" ToRole="PN_TARGET_PLANNING_REPORT" />
+  </EntityType>
+  <EntityType Name="PN_TARGET_PLANNING_REPORT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="planning_id" Type="Guid" Nullable="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_TARGET_PLANNING" Relationship="TDHModel.FK_PN_TARGET_PLANNING_REPORT_PN_TARGET_PLANNING" FromRole="PN_TARGET_PLANNING_REPORT" ToRole="PN_TARGET_PLANNING" />
+  </EntityType>
+  <EntityType Name="PN_TARGET_PLANNING_SPRINT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="start_date" Type="DateTime" Precision="3" />
+    <Property Name="end_date" Type="DateTime" Precision="3" />
+    <Property Name="status_done" Type="Int16" />
+    <Property Name="planning_id" Type="Guid" Nullable="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_TARGET_PLANNING" Relationship="TDHModel.FK_PN_TARGET_PLANING_SPRINT_PN_TARGET_PLANNING" FromRole="PN_TARGET_PLANNING_SPRINT" ToRole="PN_TARGET_PLANNING" />
+    <NavigationProperty Name="PN_TASK" Relationship="TDHModel.FK_PN_TASK_PN_TARGET_PLANNING_SPRINT" FromRole="PN_TARGET_PLANNING_SPRINT" ToRole="PN_TASK" />
+  </EntityType>
+  <EntityType Name="PN_TARGET_PRIORITY">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_TARGET" Relationship="TDHModel.FK_PN_TARGET_PN_TARGET_PRIORITY" FromRole="PN_TARGET_PRIORITY" ToRole="PN_TARGET" />
+  </EntityType>
+  <EntityType Name="PN_TARGET_QUESTION">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="target_id" Type="Guid" Nullable="false" />
+    <Property Name="question" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="answer" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_TARGET" Relationship="TDHModel.FK_PN_TARGET_QUESTION_PN_TARGET" FromRole="PN_TARGET_QUESTION" ToRole="PN_TARGET" />
+  </EntityType>
+  <EntityType Name="PN_TARGET_TYPE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_TARGET" Relationship="TDHModel.FK_PN_TARGET_PN_TARGET_TYPE" FromRole="PN_TARGET_TYPE" ToRole="PN_TARGET" />
+  </EntityType>
+  <EntityType Name="PN_TASK">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="sprint_id" Type="Guid" Nullable="false" />
+    <Property Name="task_status_id" Type="Guid" Nullable="false" />
+    <Property Name="task_type_id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="start_date" Type="DateTime" Precision="3" />
+    <Property Name="end_date" Type="DateTime" Precision="3" />
+    <Property Name="parent_id" Type="Guid" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_TARGET_PLANNING_SPRINT" Relationship="TDHModel.FK_PN_TASK_PN_TARGET_PLANNING_SPRINT" FromRole="PN_TASK" ToRole="PN_TARGET_PLANNING_SPRINT" />
+    <NavigationProperty Name="PN_TASK1" Relationship="TDHModel.FK_PN_TASK_PN_TASK" FromRole="PN_TASK" ToRole="PN_TASK1" />
+    <NavigationProperty Name="PN_TASK2" Relationship="TDHModel.FK_PN_TASK_PN_TASK" FromRole="PN_TASK1" ToRole="PN_TASK" />
+    <NavigationProperty Name="PN_TASK_STATUS" Relationship="TDHModel.FK_PN_TASK_PN_TASK_STATUS" FromRole="PN_TASK" ToRole="PN_TASK_STATUS" />
+    <NavigationProperty Name="PN_TASK_TYPE" Relationship="TDHModel.FK_PN_TASK_PN_TASK_TYPE" FromRole="PN_TASK" ToRole="PN_TASK_TYPE" />
+  </EntityType>
+  <EntityType Name="PN_TASK_STATUS">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_TASK" Relationship="TDHModel.FK_PN_TASK_PN_TASK_STATUS" FromRole="PN_TASK_STATUS" ToRole="PN_TASK" />
+  </EntityType>
+  <EntityType Name="PN_TASK_TYPE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_TASK" Relationship="TDHModel.FK_PN_TASK_PN_TASK_TYPE" FromRole="PN_TASK_TYPE" ToRole="PN_TASK" />
+  </EntityType>
+  <EntityType Name="SYS_FUNCTION">
+    <Key>
+      <PropertyRef Name="code" />
+    </Key>
+    <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="area" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="controller" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="SYS_ROLE_DETAIL" Relationship="TDHModel.FK_SYS_ROLE_DETAIL_function" FromRole="SYS_FUNCTION" ToRole="SYS_ROLE_DETAIL" />
+    <Property Name="module_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="SYS_MODULE" Relationship="TDHModel.FK_SYS_FUNCTION_SYS_MODULE" FromRole="SYS_FUNCTION" ToRole="SYS_MODULE" />
+  </EntityType>
+  <EntityType Name="SYS_ROLE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SYS_ROLE_DETAIL" Relationship="TDHModel.FK_SYS_ROLE_DETAIL_role" FromRole="SYS_ROLE" ToRole="SYS_ROLE_DETAIL" />
+    <NavigationProperty Name="SYS_USER_ROLE" Relationship="TDHModel.FK_SYS_USER_ROLE_role_id" FromRole="SYS_ROLE" ToRole="SYS_USER_ROLE" />
+  </EntityType>
+  <EntityType Name="SYS_ROLE_DETAIL">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="role_id" Type="Guid" Nullable="false" />
+    <Property Name="function_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="view" Type="Boolean" Nullable="false" />
+    <Property Name="add" Type="Boolean" Nullable="false" />
+    <Property Name="edit" Type="Boolean" Nullable="false" />
+    <Property Name="delete" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="SYS_FUNCTION" Relationship="TDHModel.FK_SYS_ROLE_DETAIL_function" FromRole="SYS_ROLE_DETAIL" ToRole="SYS_FUNCTION" />
+    <NavigationProperty Name="SYS_ROLE" Relationship="TDHModel.FK_SYS_ROLE_DETAIL_role" FromRole="SYS_ROLE_DETAIL" ToRole="SYS_ROLE" />
+  </EntityType>
+  <EntityType Name="SYS_USER">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="full_name" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="locked" Type="Boolean" Nullable="false" />
+    <Property Name="notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+    <Property Name="last_login" Type="DateTime" Precision="3" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SYS_USER_ROLE" Relationship="TDHModel.FK_SYS_USER_ROLE_user_id" FromRole="SYS_USER" ToRole="SYS_USER_ROLE" />
+    <Property Name="user_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="FB_FANPAGE" Relationship="TDHModel.FK_FB_FANPAGE_SYS_USER" FromRole="SYS_USER" ToRole="FB_FANPAGE" />
+    <NavigationProperty Name="FB_GROUP" Relationship="TDHModel.FK_FB_GROUP_SYS_USER" FromRole="SYS_USER" ToRole="FB_GROUP" />
+    <NavigationProperty Name="FB_USER" Relationship="TDHModel.FK_FB_USER_SYS_USER" FromRole="SYS_USER" ToRole="FB_USER" />
+  </EntityType>
+  <EntityType Name="SYS_USER_ROLE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="user_id" Type="Guid" Nullable="false" />
+    <Property Name="role_id" Type="Guid" Nullable="false" />
+    <NavigationProperty Name="SYS_ROLE" Relationship="TDHModel.FK_SYS_USER_ROLE_role_id" FromRole="SYS_USER_ROLE" ToRole="SYS_ROLE" />
+    <NavigationProperty Name="SYS_USER" Relationship="TDHModel.FK_SYS_USER_ROLE_user_id" FromRole="SYS_USER_ROLE" ToRole="SYS_USER" />
+  </EntityType>
+  <EntityType Name="WEB_ABOUT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="link" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_title" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+    <Property Name="meta_description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_keywords" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="meta_next" Type="String" MaxLength="170" FixedLength="false" Unicode="true" />
+    <Property Name="meta_og_site_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="meta_og_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_twitter_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_tag" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_section" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_publish" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="WEB_CATEGORY">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="navigation_id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+    <Property Name="alias" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="show_on_nav" Type="Boolean" Nullable="false" />
+    <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="meta_title" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+    <Property Name="meta_description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_keywords" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="meta_next" Type="String" MaxLength="170" FixedLength="false" Unicode="true" />
+    <Property Name="meta_og_site_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="meta_og_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_twitter_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_tag" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_section" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_publish" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="WEB_NAVIGATION" Relationship="TDHModel.FK_WEB_CATEGORY_WEB_NAVIGATION" FromRole="WEB_CATEGORY" ToRole="WEB_NAVIGATION" />
+    <NavigationProperty Name="WEB_HOME_CATEGORY" Relationship="TDHModel.FK_WEB_HOME_CATEGORY_category_id" FromRole="WEB_CATEGORY" ToRole="WEB_HOME_CATEGORY" />
+    <NavigationProperty Name="WEB_POST" Relationship="TDHModel.FK_WEB_POST_WEB_CATEGORY" FromRole="WEB_CATEGORY" ToRole="WEB_POST" />
+  </EntityType>
+  <EntityType Name="WEB_CONFIGURATION">
+    <Key>
+      <PropertyRef Name="key" />
+    </Key>
+    <Property Name="key" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="value" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="WEB_ERROR_LOG">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="file_name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="method_name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="source" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="stack_trace" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="inner_exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="create_by" Type="Guid" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="WEB_HOME_CATEGORY">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="category_id" Type="Guid" Nullable="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="WEB_CATEGORY" Relationship="TDHModel.FK_WEB_HOME_CATEGORY_category_id" FromRole="WEB_HOME_CATEGORY" ToRole="WEB_CATEGORY" />
+  </EntityType>
+  <EntityType Name="WEB_HOME_NAVIGATION">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="navigation_id" Type="Guid" Nullable="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="WEB_NAVIGATION" Relationship="TDHModel.FK_WEB_HOME_NAVIGATION_navigation_id" FromRole="WEB_HOME_NAVIGATION" ToRole="WEB_NAVIGATION" />
+  </EntityType>
+  <EntityType Name="WEB_NAVIGATION">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="true" />
+    <Property Name="alias" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="meta_title" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+    <Property Name="meta_description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_keywords" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="meta_next" Type="String" MaxLength="170" FixedLength="false" Unicode="true" />
+    <Property Name="meta_og_site_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="meta_og_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_twitter_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_tag" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_section" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_publish" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <Property Name="no_child" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="WEB_CATEGORY" Relationship="TDHModel.FK_WEB_CATEGORY_WEB_NAVIGATION" FromRole="WEB_NAVIGATION" ToRole="WEB_CATEGORY" />
+    <NavigationProperty Name="WEB_HOME_NAVIGATION" Relationship="TDHModel.FK_WEB_HOME_NAVIGATION_navigation_id" FromRole="WEB_NAVIGATION" ToRole="WEB_HOME_NAVIGATION" />
+    <NavigationProperty Name="WEB_POST" Relationship="TDHModel.FK_WEB_POST_WEB_NAVIGATION" FromRole="WEB_NAVIGATION" ToRole="WEB_POST" />
+  </EntityType>
+  <EntityType Name="WEB_POST">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="category_id" Type="Guid" />
+    <Property Name="navigation_id" Type="Guid" />
+    <Property Name="is_navigation" Type="Boolean" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="alias" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="meta_title" Type="String" Nullable="false" MaxLength="120" FixedLength="false" Unicode="true" />
+    <Property Name="meta_description" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_keywords" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="meta_next" Type="String" MaxLength="170" FixedLength="false" Unicode="true" />
+    <Property Name="meta_og_site_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="meta_og_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_twitter_image" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_tag" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_section" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="meta_article_publish" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="update_by" Type="Guid" />
+    <Property Name="update_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="delete_by" Type="Guid" />
+    <Property Name="delete_date" Type="DateTime" Precision="3" />
+    <Property Name="view" Type="Int32" Nullable="false" />
+    <Property Name="comment" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="WEB_CATEGORY" Relationship="TDHModel.FK_WEB_POST_WEB_CATEGORY" FromRole="WEB_POST" ToRole="WEB_CATEGORY" />
+    <NavigationProperty Name="WEB_NAVIGATION" Relationship="TDHModel.FK_WEB_POST_WEB_NAVIGATION" FromRole="WEB_POST" ToRole="WEB_NAVIGATION" />
+  </EntityType>
+  <Association Name="FK_PN_TARGET_PN_IDEA">
+    <End Type="TDHModel.PN_IDEA" Role="PN_IDEA" Multiplicity="1" />
+    <End Type="TDHModel.PN_TARGET" Role="PN_TARGET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_IDEA">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_TARGET">
+        <PropertyRef Name="idea_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_REPORT_PN_REPORT_KIND">
+    <End Type="TDHModel.PN_REPORT_KIND" Role="PN_REPORT_KIND" Multiplicity="1" />
+    <End Type="TDHModel.PN_REPORT" Role="PN_REPORT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_REPORT_KIND">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_REPORT">
+        <PropertyRef Name="kind_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_TARGET_PLANNING_PN_TARGET">
+    <End Type="TDHModel.PN_TARGET" Role="PN_TARGET" Multiplicity="1" />
+    <End Type="TDHModel.PN_TARGET_PLANNING" Role="PN_TARGET_PLANNING" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_TARGET">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_TARGET_PLANNING">
+        <PropertyRef Name="target_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_TARGET_PN_TARGET_PRIORITY">
+    <End Type="TDHModel.PN_TARGET_PRIORITY" Role="PN_TARGET_PRIORITY" Multiplicity="1" />
+    <End Type="TDHModel.PN_TARGET" Role="PN_TARGET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_TARGET_PRIORITY">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_TARGET">
+        <PropertyRef Name="priority_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_TARGET_PN_TARGET_TYPE">
+    <End Type="TDHModel.PN_TARGET_TYPE" Role="PN_TARGET_TYPE" Multiplicity="1" />
+    <End Type="TDHModel.PN_TARGET" Role="PN_TARGET" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_TARGET_TYPE">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_TARGET">
+        <PropertyRef Name="target_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_TARGET_QUESTION_PN_TARGET">
+    <End Type="TDHModel.PN_TARGET" Role="PN_TARGET" Multiplicity="1" />
+    <End Type="TDHModel.PN_TARGET_QUESTION" Role="PN_TARGET_QUESTION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_TARGET">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_TARGET_QUESTION">
+        <PropertyRef Name="target_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_TARGET_PLANING_SPRINT_PN_TARGET_PLANNING">
+    <End Type="TDHModel.PN_TARGET_PLANNING" Role="PN_TARGET_PLANNING" Multiplicity="1" />
+    <End Type="TDHModel.PN_TARGET_PLANNING_SPRINT" Role="PN_TARGET_PLANNING_SPRINT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_TARGET_PLANNING">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_TARGET_PLANNING_SPRINT">
+        <PropertyRef Name="planning_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_TARGET_PLANNING_REPORT_PN_TARGET_PLANNING">
+    <End Type="TDHModel.PN_TARGET_PLANNING" Role="PN_TARGET_PLANNING" Multiplicity="1" />
+    <End Type="TDHModel.PN_TARGET_PLANNING_REPORT" Role="PN_TARGET_PLANNING_REPORT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_TARGET_PLANNING">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_TARGET_PLANNING_REPORT">
+        <PropertyRef Name="planning_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_TASK_PN_TARGET_PLANNING_SPRINT">
+    <End Type="TDHModel.PN_TARGET_PLANNING_SPRINT" Role="PN_TARGET_PLANNING_SPRINT" Multiplicity="1" />
+    <End Type="TDHModel.PN_TASK" Role="PN_TASK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_TARGET_PLANNING_SPRINT">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_TASK">
+        <PropertyRef Name="sprint_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_TASK_PN_TASK">
+    <End Type="TDHModel.PN_TASK" Role="PN_TASK" Multiplicity="0..1" />
+    <End Type="TDHModel.PN_TASK" Role="PN_TASK1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_TASK">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_TASK1">
+        <PropertyRef Name="parent_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_TASK_PN_TASK_STATUS">
+    <End Type="TDHModel.PN_TASK_STATUS" Role="PN_TASK_STATUS" Multiplicity="1" />
+    <End Type="TDHModel.PN_TASK" Role="PN_TASK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_TASK_STATUS">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_TASK">
+        <PropertyRef Name="task_status_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_TASK_PN_TASK_TYPE">
+    <End Type="TDHModel.PN_TASK_TYPE" Role="PN_TASK_TYPE" Multiplicity="1" />
+    <End Type="TDHModel.PN_TASK" Role="PN_TASK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_TASK_TYPE">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_TASK">
+        <PropertyRef Name="task_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SYS_ROLE_DETAIL_function">
+    <End Type="TDHModel.SYS_FUNCTION" Role="SYS_FUNCTION" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.SYS_ROLE_DETAIL" Role="SYS_ROLE_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SYS_FUNCTION">
+        <PropertyRef Name="code" />
+      </Principal>
+      <Dependent Role="SYS_ROLE_DETAIL">
+        <PropertyRef Name="function_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SYS_ROLE_DETAIL_role">
+    <End Type="TDHModel.SYS_ROLE" Role="SYS_ROLE" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.SYS_ROLE_DETAIL" Role="SYS_ROLE_DETAIL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SYS_ROLE">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SYS_ROLE_DETAIL">
+        <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SYS_USER_ROLE_role_id">
+    <End Type="TDHModel.SYS_ROLE" Role="SYS_ROLE" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.SYS_USER_ROLE" Role="SYS_USER_ROLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SYS_ROLE">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SYS_USER_ROLE">
+        <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SYS_USER_ROLE_user_id">
+    <End Type="TDHModel.SYS_USER" Role="SYS_USER" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.SYS_USER_ROLE" Role="SYS_USER_ROLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SYS_USER">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="SYS_USER_ROLE">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WEB_CATEGORY_WEB_NAVIGATION">
+    <End Type="TDHModel.WEB_NAVIGATION" Role="WEB_NAVIGATION" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.WEB_CATEGORY" Role="WEB_CATEGORY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WEB_NAVIGATION">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="WEB_CATEGORY">
+        <PropertyRef Name="navigation_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WEB_HOME_CATEGORY_category_id">
+    <End Type="TDHModel.WEB_CATEGORY" Role="WEB_CATEGORY" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.WEB_HOME_CATEGORY" Role="WEB_HOME_CATEGORY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WEB_CATEGORY">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="WEB_HOME_CATEGORY">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WEB_POST_WEB_CATEGORY">
+    <End Type="TDHModel.WEB_CATEGORY" Role="WEB_CATEGORY" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.WEB_POST" Role="WEB_POST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WEB_CATEGORY">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="WEB_POST">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WEB_HOME_NAVIGATION_navigation_id">
+    <End Type="TDHModel.WEB_NAVIGATION" Role="WEB_NAVIGATION" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.WEB_HOME_NAVIGATION" Role="WEB_HOME_NAVIGATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WEB_NAVIGATION">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="WEB_HOME_NAVIGATION">
+        <PropertyRef Name="navigation_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WEB_POST_WEB_NAVIGATION">
+    <End Type="TDHModel.WEB_NAVIGATION" Role="WEB_NAVIGATION" Multiplicity="0..1" />
+    <End Type="TDHModel.WEB_POST" Role="WEB_POST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WEB_NAVIGATION">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="WEB_POST">
+        <PropertyRef Name="navigation_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SYS_MODULE">
+    <Key>
+      <PropertyRef Name="code" />
+    </Key>
+    <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="default_action" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="icon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="SYS_FUNCTION" Relationship="TDHModel.FK_SYS_FUNCTION_SYS_MODULE" FromRole="SYS_MODULE" ToRole="SYS_FUNCTION" />
+  </EntityType>
+  <Association Name="FK_SYS_FUNCTION_SYS_MODULE">
+    <End Type="TDHModel.SYS_MODULE" Role="SYS_MODULE" Multiplicity="1" />
+    <End Type="TDHModel.SYS_FUNCTION" Role="SYS_FUNCTION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SYS_MODULE">
+        <PropertyRef Name="code" />
+      </Principal>
+      <Dependent Role="SYS_FUNCTION">
+        <PropertyRef Name="module_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PN_DREAM">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="finish" Type="Boolean" Nullable="false" />
+    <Property Name="finish_time" Type="DateTime" Precision="3" />
+    <Property Name="notes" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="CM_SKILL">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="group_id" Type="Guid" Nullable="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CM_SKILL_GROUP" Relationship="TDHModel.FK_CM_SKILL_CM_SKILL_GROUP" FromRole="CM_SKILL" ToRole="CM_SKILL_GROUP" />
+    <NavigationProperty Name="CM_SKILL_DEFINDED" Relationship="TDHModel.FK_CM_SKILL_DEFINDED_CM_SKILL" FromRole="CM_SKILL" ToRole="CM_SKILL_DEFINDED" />
+    <NavigationProperty Name="PN_SKILL" Relationship="TDHModel.FK_PN_SKILL_CM_SKILL" FromRole="CM_SKILL" ToRole="PN_SKILL" />
+  </EntityType>
+  <EntityType Name="CM_SKILL_DEFINDED">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="skill_id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+    <Property Name="point" Type="Int16" Nullable="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CM_SKILL" Relationship="TDHModel.FK_CM_SKILL_DEFINDED_CM_SKILL" FromRole="CM_SKILL_DEFINDED" ToRole="CM_SKILL" />
+  </EntityType>
+  <EntityType Name="CM_SKILL_GROUP">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CM_SKILL" Relationship="TDHModel.FK_CM_SKILL_CM_SKILL_GROUP" FromRole="CM_SKILL_GROUP" ToRole="CM_SKILL" />
+  </EntityType>
+  <EntityType Name="PN_EDUCATION">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="school" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="duration" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="is_plan" Type="Boolean" Nullable="false" />
+    <Property Name="is_finish" Type="Boolean" Nullable="false" />
+    <Property Name="is_cancel" Type="Boolean" Nullable="false" />
+    <Property Name="education_type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_EDUCATION_TYPE" Relationship="TDHModel.FK_PN_EDUCATION_PN_EDUCATION_TYPE" FromRole="PN_EDUCATION" ToRole="PN_EDUCATION_TYPE" />
+  </EntityType>
+  <EntityType Name="PN_EDUCATION_TYPE">
+    <Key>
+      <PropertyRef Name="code" />
+    </Key>
+    <Property Name="code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_EDUCATION" Relationship="TDHModel.FK_PN_EDUCATION_PN_EDUCATION_TYPE" FromRole="PN_EDUCATION_TYPE" ToRole="PN_EDUCATION" />
+  </EntityType>
+  <EntityType Name="PN_EVENT">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="duration" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="is_plan" Type="Boolean" Nullable="false" />
+    <Property Name="is_finish" Type="Boolean" Nullable="false" />
+    <Property Name="is_cancel" Type="Boolean" Nullable="false" />
+    <Property Name="event_type" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_EVENT_TYPE" Relationship="TDHModel.FK_PN_EVENT_PN_EVENT_TYPE" FromRole="PN_EVENT" ToRole="PN_EVENT_TYPE" />
+  </EntityType>
+  <EntityType Name="PN_EVENT_TYPE">
+    <Key>
+      <PropertyRef Name="code" />
+    </Key>
+    <Property Name="code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="PN_EVENT" Relationship="TDHModel.FK_PN_EVENT_PN_EVENT_TYPE" FromRole="PN_EVENT_TYPE" ToRole="PN_EVENT" />
+  </EntityType>
+  <EntityType Name="PN_SKILL">
+    <Key>
+      <PropertyRef Name="skill_id" />
+    </Key>
+    <Property Name="skill_id" Type="Guid" Nullable="false" />
+    <Property Name="level" Type="Int16" Nullable="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="CM_SKILL" Relationship="TDHModel.FK_PN_SKILL_CM_SKILL" FromRole="PN_SKILL" ToRole="CM_SKILL" />
+    <NavigationProperty Name="PN_SKILL_DEFINDED" Relationship="TDHModel.FK_PN_SKILL_DEFINDED_PN_SKILL" FromRole="PN_SKILL" ToRole="PN_SKILL_DEFINDED" />
+  </EntityType>
+  <Association Name="FK_CM_SKILL_CM_SKILL_GROUP">
+    <End Type="TDHModel.CM_SKILL_GROUP" Role="CM_SKILL_GROUP" Multiplicity="1" />
+    <End Type="TDHModel.CM_SKILL" Role="CM_SKILL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CM_SKILL_GROUP">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="CM_SKILL">
+        <PropertyRef Name="group_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CM_SKILL_DEFINDED_CM_SKILL">
+    <End Type="TDHModel.CM_SKILL" Role="CM_SKILL" Multiplicity="1" />
+    <End Type="TDHModel.CM_SKILL_DEFINDED" Role="CM_SKILL_DEFINDED" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CM_SKILL">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="CM_SKILL_DEFINDED">
+        <PropertyRef Name="skill_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_SKILL_CM_SKILL">
+    <End Type="TDHModel.CM_SKILL" Role="CM_SKILL" Multiplicity="1" />
+    <End Type="TDHModel.PN_SKILL" Role="PN_SKILL" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="CM_SKILL">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="PN_SKILL">
+        <PropertyRef Name="skill_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_EDUCATION_PN_EDUCATION_TYPE">
+    <End Type="TDHModel.PN_EDUCATION_TYPE" Role="PN_EDUCATION_TYPE" Multiplicity="1" />
+    <End Type="TDHModel.PN_EDUCATION" Role="PN_EDUCATION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_EDUCATION_TYPE">
+        <PropertyRef Name="code" />
+      </Principal>
+      <Dependent Role="PN_EDUCATION">
+        <PropertyRef Name="education_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PN_EVENT_PN_EVENT_TYPE">
+    <End Type="TDHModel.PN_EVENT_TYPE" Role="PN_EVENT_TYPE" Multiplicity="1" />
+    <End Type="TDHModel.PN_EVENT" Role="PN_EVENT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_EVENT_TYPE">
+        <PropertyRef Name="code" />
+      </Principal>
+      <Dependent Role="PN_EVENT">
+        <PropertyRef Name="event_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PN_CETIFICATE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="school" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="time" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="PN_SKILL_DEFINDED">
+    <Key>
+      <PropertyRef Name="defined_id" />
+    </Key>
+    <Property Name="defined_id" Type="Guid" Nullable="false" />
+    <Property Name="skill_id" Type="Guid" Nullable="false" />
+    <Property Name="point" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="PN_SKILL" Relationship="TDHModel.FK_PN_SKILL_DEFINDED_PN_SKILL" FromRole="PN_SKILL_DEFINDED" ToRole="PN_SKILL" />
+  </EntityType>
+  <Association Name="FK_PN_SKILL_DEFINDED_PN_SKILL">
+    <End Type="TDHModel.PN_SKILL" Role="PN_SKILL" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="TDHModel.PN_SKILL_DEFINDED" Role="PN_SKILL_DEFINDED" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PN_SKILL">
+        <PropertyRef Name="skill_id" />
+      </Principal>
+      <Dependent Role="PN_SKILL_DEFINDED">
+        <PropertyRef Name="skill_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="FB_FANPAGE">
+    <Key>
+      <PropertyRef Name="uid" />
+    </Key>
+    <Property Name="uid" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="link" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="user_name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="display_name" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="auth_token" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="start_on" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="last_execute" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="expires_on" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SYS_USER" Relationship="TDHModel.FK_FB_FANPAGE_SYS_USER" FromRole="FB_FANPAGE" ToRole="SYS_USER" />
+  </EntityType>
+  <EntityType Name="FB_GROUP">
+    <Key>
+      <PropertyRef Name="uid" />
+    </Key>
+    <Property Name="uid" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="link" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SYS_USER" Relationship="TDHModel.FK_FB_GROUP_SYS_USER" FromRole="FB_GROUP" ToRole="SYS_USER" />
+  </EntityType>
+  <EntityType Name="FB_POST_TYPE">
+    <Key>
+      <PropertyRef Name="code" />
+    </Key>
+    <Property Name="code" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="on_profile" Type="Boolean" Nullable="false" />
+    <Property Name="on_fanpage" Type="Boolean" Nullable="false" />
+    <Property Name="on_group" Type="Boolean" Nullable="false" />
+    <Property Name="notes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="FB_USER">
+    <Key>
+      <PropertyRef Name="uid" />
+    </Key>
+    <Property Name="uid" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="mobile" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="auth_token" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="start_on" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="last_execute" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="expires_on" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+    <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="updated_by" Type="Guid" />
+    <Property Name="updated_date" Type="DateTime" Precision="3" />
+    <Property Name="deleted" Type="Boolean" Nullable="false" />
+    <Property Name="deleted_by" Type="Guid" />
+    <Property Name="deleted_date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="SYS_USER" Relationship="TDHModel.FK_FB_USER_SYS_USER" FromRole="FB_USER" ToRole="SYS_USER" />
+  </EntityType>
+  <Association Name="FK_FB_FANPAGE_SYS_USER">
+    <End Type="TDHModel.SYS_USER" Role="SYS_USER" Multiplicity="1" />
+    <End Type="TDHModel.FB_FANPAGE" Role="FB_FANPAGE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SYS_USER">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="FB_FANPAGE">
+        <PropertyRef Name="created_by" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FB_GROUP_SYS_USER">
+    <End Type="TDHModel.SYS_USER" Role="SYS_USER" Multiplicity="1" />
+    <End Type="TDHModel.FB_GROUP" Role="FB_GROUP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SYS_USER">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="FB_GROUP">
+        <PropertyRef Name="created_by" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FB_USER_SYS_USER">
+    <End Type="TDHModel.SYS_USER" Role="SYS_USER" Multiplicity="1" />
+    <End Type="TDHModel.FB_USER" Role="FB_USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SYS_USER">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="FB_USER">
+        <PropertyRef Name="created_by" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="V_MN_CATEGORY_HISTORY">
+    <Key>
+      <PropertyRef Name="category_id" />
+      <PropertyRef Name="title" />
+      <PropertyRef Name="money" />
+      <PropertyRef Name="type" />
+      <PropertyRef Name="create_by" />
+    </Key>
+    <Property Name="category_id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="date" Type="DateTime" Precision="3" />
+    <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="type" Type="Int32" Nullable="false" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="V_MN_CATEGORY">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="notes" />
+      <PropertyRef Name="group_id" />
+      <PropertyRef Name="group_name" />
+      <PropertyRef Name="is_input" />
+      <PropertyRef Name="year_month" />
+      <PropertyRef Name="percent_setting" />
+      <PropertyRef Name="percent_current" />
+      <PropertyRef Name="money_setting" />
+      <PropertyRef Name="money_current" />
+      <PropertyRef Name="current_income" />
+      <PropertyRef Name="current_payment" />
+      <PropertyRef Name="ordering" />
+      <PropertyRef Name="publish" />
+      <PropertyRef Name="create_by" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="notes" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="group_id" Type="Guid" Nullable="false" />
+    <Property Name="group_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="is_input" Type="Boolean" Nullable="false" />
+    <Property Name="setting_id" Type="Guid" />
+    <Property Name="year_month" Type="Decimal" Nullable="false" Precision="6" Scale="0" />
+    <Property Name="year" Type="Int32" />
+    <Property Name="month" Type="Int32" />
+    <Property Name="percent_setting" Type="Byte" Nullable="false" />
+    <Property Name="percent_current" Type="Byte" Nullable="false" />
+    <Property Name="money_setting" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="money_current" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="current_income" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="current_payment" Type="Decimal" Nullable="false" Precision="38" Scale="1" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="publish" Type="Boolean" Nullable="false" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="V_MN_ACCOUNT_HISTORY">
+    <Key>
+      <PropertyRef Name="account_id" />
+      <PropertyRef Name="title" />
+      <PropertyRef Name="type" />
+      <PropertyRef Name="create_by" />
+    </Key>
+    <Property Name="account_id" Type="Guid" Nullable="false" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="date" Type="DateTime" Precision="3" />
+    <Property Name="money" Type="Decimal" Precision="19" Scale="1" />
+    <Property Name="type" Type="Int32" Nullable="false" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="V_MN_MONEY_FLOW">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="from_id" />
+      <PropertyRef Name="from_name" />
+      <PropertyRef Name="category_name" />
+      <PropertyRef Name="title" />
+      <PropertyRef Name="money" />
+      <PropertyRef Name="fee" />
+      <PropertyRef Name="type" />
+      <PropertyRef Name="create_by" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="from_id" Type="Guid" Nullable="false" />
+    <Property Name="from_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="to_id" Type="Guid" />
+    <Property Name="to_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="category_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="date" Type="DateTime" Precision="3" />
+    <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="fee" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="type" Type="Int32" Nullable="false" />
+    <Property Name="create_by" Type="Guid" Nullable="false" />
+  </EntityType>
+  <ComplexType Name="FNC_MN_REPORT_SUMMARY_Result">
+    <Property Type="Int32" Name="year" Nullable="false" />
+    <Property Type="Decimal" Name="input" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="output" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="final" Nullable="false" Precision="38" Scale="1" />
+  </ComplexType>
+  <ComplexType Name="FNC_MN_REPORT_SUMMARY_BY_YEAR_Result">
+    <Property Type="Int32" Name="year" Nullable="false" />
+    <Property Type="Int32" Name="month" Nullable="false" />
+    <Property Type="Decimal" Name="input" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="output" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="final" Nullable="false" Precision="38" Scale="1" />
+  </ComplexType>
+  <ComplexType Name="FNC_MN_REPORT_INCOME_BY_CATEGORY_BY_YEAR_Result">
+    <Property Type="String" Name="cate_name" Nullable="false" MaxLength="150" />
+    <Property Type="Decimal" Name="t1" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t2" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t3" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t4" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t5" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t6" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t7" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t8" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t9" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t10" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t11" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t12" Nullable="false" Precision="38" Scale="1" />
+  </ComplexType>
+  <Association Name="FK_MN_TRANSFER_category_id">
+    <End Type="TDHModel.MN_CATEGORY" Role="MN_CATEGORY" Multiplicity="1" />
+    <End Type="TDHModel.MN_TRANSFER" Role="MN_TRANSFER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MN_CATEGORY">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="MN_TRANSFER">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="V_PN_TIMELINE">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="school" />
+      <PropertyRef Name="duration" />
+      <PropertyRef Name="description" />
+      <PropertyRef Name="date" />
+      <PropertyRef Name="is_plan" />
+      <PropertyRef Name="is_finish" />
+      <PropertyRef Name="is_cancel" />
+      <PropertyRef Name="type_code" />
+      <PropertyRef Name="type_name" />
+      <PropertyRef Name="created_by" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="school" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="duration" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="is_plan" Type="Boolean" Nullable="false" />
+    <Property Name="is_finish" Type="Boolean" Nullable="false" />
+    <Property Name="is_cancel" Type="Boolean" Nullable="false" />
+    <Property Name="type_code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="type_name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="created_by" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="V_SYS_RENDER_NAVIGATION">
+    <Key>
+      <PropertyRef Name="module_code" />
+      <PropertyRef Name="module_title" />
+      <PropertyRef Name="module_order" />
+      <PropertyRef Name="code" />
+      <PropertyRef Name="ordering" />
+      <PropertyRef Name="function_ordering" />
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="module_code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="module_title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="default_action" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="icon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="module_order" Type="Int16" Nullable="false" />
+    <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="url" Type="String" MaxLength="153" FixedLength="false" Unicode="false" />
+    <Property Name="ordering" Type="Int16" Nullable="false" />
+    <Property Name="title" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="function_ordering" Type="Int16" Nullable="false" />
+    <Property Name="id" Type="Guid" Nullable="false" />
+  </EntityType>
+  <ComplexType Name="FNC_MN_REPORT_PAYMENT_BY_GROUP_BY_YEAR_Result">
+    <Property Type="String" Name="name" Nullable="false" MaxLength="150" />
+    <Property Type="Decimal" Name="t1" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t2" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t3" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t4" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t5" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t6" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t7" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t8" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t9" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t10" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t11" Nullable="false" Precision="38" Scale="1" />
+    <Property Type="Decimal" Name="t12" Nullable="false" Precision="38" Scale="1" />
+  </ComplexType>
+  <EntityType Name="V_MN_REPORT_BORROW_ACCOUNT_STATUS">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="max_payment" />
+      <PropertyRef Name="title" />
+      <PropertyRef Name="money" />
+      <PropertyRef Name="date" />
+    </Key>
+    <Property Name="id" Type="Guid" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="max_payment" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+    <Property Name="remain" Type="Decimal" Precision="20" Scale="1" />
+    <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="money" Type="Decimal" Nullable="false" Precision="18" Scale="1" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <ComplexType Name="PROC_SYS_LOGIN_Result">
+    <Property Type="Guid" Name="user_id" Nullable="true" />
+    <Property Type="String" Name="user_name" Nullable="true" MaxLength="60" />
+    <Property Type="String" Name="full_name" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="token" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_HOME_META_Result">
+    <Property Type="String" Name="title" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="description" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="keyword" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="twitter_image" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="google_image" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_HOME_LISTNAVIGATION_Result">
+    <Property Type="Guid" Name="id" Nullable="true" />
+    <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="category_title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="category_alias" Nullable="true" MaxLength="700" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_HOME_PostByCategory_Result">
+    <Property Type="Guid" Name="id" Nullable="true" />
+    <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="post_title" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="post_alias" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="post_description" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="post_image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="post_create_date" Nullable="true" MaxLength="12" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_HOME_PostByNavigation_Result">
+    <Property Type="Guid" Name="id" Nullable="true" />
+    <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="post_title" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="post_alias" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="post_description" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="post_image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="post_create_date" Nullable="true" MaxLength="12" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_CONFIGURATION_GetByKey_Result">
+    <Property Type="String" Name="key" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="description" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="value" Nullable="false" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_HOME_2NavigationOnFooter_Result">
+    <Property Type="Guid" Name="id" Nullable="true" />
+    <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="post_title" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="post_alias" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="post_image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="post_create_date" Nullable="true" MaxLength="12" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_HOME_ListCategoryOnFooter_Result">
+    <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="count" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_CATEGORY_Info_Result">
+    <Property Type="Guid" Name="id" Nullable="false" />
+    <Property Type="Guid" Name="navigation_id" Nullable="false" />
+    <Property Type="String" Name="title" Nullable="false" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="meta_title" Nullable="false" MaxLength="120" />
+    <Property Type="String" Name="meta_description" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="meta_keywords" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="meta_og_image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="meta_twitter_image" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_NAVIGATION_Info_Result">
+    <Property Type="Guid" Name="id" Nullable="false" />
+    <Property Type="String" Name="title" Nullable="false" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="meta_title" Nullable="false" MaxLength="120" />
+    <Property Type="String" Name="meta_description" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="meta_keywords" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="meta_og_image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="meta_twitter_image" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_POST_Info_Result">
+    <Property Type="Guid" Name="category_id" Nullable="true" />
+    <Property Type="String" Name="alias" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="title" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="description" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="content" Nullable="true" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="meta_title" Nullable="true" MaxLength="120" />
+    <Property Type="String" Name="meta_description" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="meta_keywords" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="meta_og_image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="meta_twitter_image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_POST_Top2View_Result">
+    <Property Type="String" Name="alias" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="title" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_POST_Top4Lasted_Result">
+    <Property Type="String" Name="alias" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="title" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_ABOUT_Result">
+    <Property Type="String" Name="meta_title" Nullable="false" MaxLength="120" />
+    <Property Type="String" Name="meta_description" Nullable="false" MaxLength="200" />
+    <Property Type="String" Name="content" Nullable="true" />
+    <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="meta_keywords" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="meta_og_image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="meta_twitter_image" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_CATEGORY_ByNavigation_Result">
+    <Property Type="Guid" Name="id" Nullable="true" />
+    <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="post_title" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="post_alias" Nullable="true" MaxLength="150" />
+    <Property Type="String" Name="post_description" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="post_image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="post_create_date" Nullable="true" MaxLength="12" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_INTRO_META_Result">
+    <Property Type="String" Name="description" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="150" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_POST_ByCategory_Result">
+    <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="description" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="create_date" Nullable="true" MaxLength="12" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_POST_Top6ByCategory_Result">
+    <Property Type="String" Name="title" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="alias" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="description" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_POST_Top6ByNavigation_Result">
+    <Property Type="String" Name="title" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="alias" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="description" Nullable="true" MaxLength="250" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+    <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+  </ComplexType>
+  <ComplexType Name="PROC_SYS_SIDEBAR_ByUserID_Result">
+    <Property Type="String" Name="module_code" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="module_title" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="default_action" Nullable="true" MaxLength="60" />
+    <Property Type="String" Name="icon" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="code" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="title" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="url" Nullable="true" MaxLength="153" />
+  </ComplexType>
+  <ComplexType Name="PROC_SYS_CheckAccess_Result">
+    <Property Type="Boolean" Name="view" Nullable="false" />
+    <Property Type="Boolean" Name="add" Nullable="false" />
+    <Property Type="Boolean" Name="edit" Nullable="false" />
+    <Property Type="Boolean" Name="delete" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="PROC_SYS_USER_List_Result">
+    <Property Type="Guid" Name="id" Nullable="true" />
+    <Property Type="String" Name="user_name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="full_name" Nullable="true" MaxLength="60" />
+    <Property Type="Boolean" Name="locked" Nullable="false" />
+    <Property Type="String" Name="last_login" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="role_name" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="PROC_SYS_USER_ById_Result">
+    <Property Type="Guid" Name="id" Nullable="true" />
+    <Property Type="String" Name="user_name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="full_name" Nullable="true" MaxLength="60" />
+    <Property Type="Boolean" Name="locked" Nullable="false" />
+    <Property Type="Guid" Name="role_id" Nullable="false" />
+    <Property Type="String" Name="role_name" Nullable="true" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="PROC_SYS_FUNCTION_List_Result">
+    <Property Type="String" Name="code" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="view" Nullable="false" />
+    <Property Type="Boolean" Name="add" Nullable="false" />
+    <Property Type="Boolean" Name="edit" Nullable="false" />
+    <Property Type="Boolean" Name="delete" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="PROC_SYS_ROLE_ById_Result">
+    <Property Type="Guid" Name="id" Nullable="true" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="description" Nullable="false" MaxLength="300" />
+    <Property Type="Boolean" Name="publish" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="PROC_SYS_ROLE_CheckDelete_Result">
+    <Property Type="String" Name="error_procedure" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="error_state" Nullable="true" />
+    <Property Type="Int32" Name="error_severity" Nullable="true" />
+    <Property Type="Int32" Name="error_number" Nullable="true" />
+    <Property Type="String" Name="error_message" Nullable="true" MaxLength="4000" />
+  </ComplexType>
+  <ComplexType Name="PROC_SYS_ROLE_Delete_Result">
+    <Property Type="String" Name="error_procedure" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="error_state" Nullable="true" />
+    <Property Type="Int32" Name="error_severity" Nullable="true" />
+    <Property Type="Int32" Name="error_number" Nullable="true" />
+    <Property Type="String" Name="error_message" Nullable="true" MaxLength="4000" />
+  </ComplexType>
+  <ComplexType Name="PROC_SYS_ROLE_DETAIL_ByRoleId_Result">
+    <Property Type="String" Name="function_code" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="view" Nullable="false" />
+    <Property Type="Boolean" Name="add" Nullable="false" />
+    <Property Type="Boolean" Name="edit" Nullable="false" />
+    <Property Type="Boolean" Name="delete" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="PROC_SYS_ROLE_List_Result">
+    <Property Type="Guid" Name="id" Nullable="true" />
+    <Property Type="String" Name="name" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="description" Nullable="false" MaxLength="300" />
+    <Property Type="Boolean" Name="publish" Nullable="false" />
+    <Property Type="Int32" Name="count" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_PROGRAMMING_category_Result">
+    <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+    <Property Type="Int32" Name="count" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_PROGRAMMING_Top20_Result">
+    <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="cate_title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="cate_alias" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
+  </ComplexType>
+  <ComplexType Name="PROC_WEB_VIEW_PROGRAMMING_topview_Result">
+    <Property Type="String" Name="title" Nullable="true" MaxLength="70" />
+    <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="image" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+  </ComplexType>
+</Schema>

@@ -1,0 +1,1967 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Utils</name>
+    </assembly>
+    <members>
+        <member name="T:Utils.CommonHelper">
+            <summary>
+            Init common value
+            </summary>
+        </member>
+        <member name="F:Utils.CommonHelper.SESSION_LOGIN_NAME">
+            <summary>
+            Session name for user data after login
+            </summary>
+        </member>
+        <member name="F:Utils.CommonHelper.EXECUTE_RESULT">
+            <summary>
+            This name declared for set a parameter to give a model response to transfer between actions
+            </summary>
+        </member>
+        <member name="T:Utils.CommonHelper.ExceptionType">
+            <summary>
+            Type of exception
+            </summary>
+        </member>
+        <member name="F:Utils.CommonHelper.ExceptionType.Forbiden">
+            <summary>
+            Forbiden
+            </summary>
+        </member>
+        <member name="F:Utils.CommonHelper.ExceptionType.Error">
+            <summary>
+            /Error
+            </summary>
+        </member>
+        <member name="F:Utils.CommonHelper.ExceptionType.NotFound">
+            <summary>
+            Not found
+            </summary>
+        </member>
+        <member name="T:Utils.CommonModel.ErrorModel">
+            <summary>
+            Error model
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.ErrorModel.ErrorCode">
+            <summary>
+            Error code
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.ErrorModel.ErrorMessage">
+            <summary>
+            Error message
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.ErrorModel.DetailedError">
+            <summary>
+            Detail error
+            </summary>
+        </member>
+        <member name="T:Utils.CommonModel.ExecuteResultModel">
+            <summary>
+            Execute result model
+            Give temporary date to transfer between two action
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.ExecuteResultModel.Status">
+            <summary>
+            Status code
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.ExecuteResultModel.Message">
+            <summary>
+            Message
+            </summary>
+        </member>
+        <member name="T:Utils.CommonModel.HandleErrorInfoViewModel">
+            <summary>
+            Handle error infor model
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.HandleErrorInfoViewModel.ErrorInfo">
+            <summary>
+            Error infor
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.HandleErrorInfoViewModel.ReturnUrl">
+            <summary>
+            Return url
+            </summary>
+        </member>
+        <member name="T:Utils.CommonModel.UserLoginModel">
+            <summary>
+            User login model
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.UserLoginModel.UserID">
+            <summary>
+            User id
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.UserLoginModel.UserName">
+            <summary>
+            User name
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.UserLoginModel.Email">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.UserLoginModel.Avatar">
+            <summary>
+            Avatar
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.UserLoginModel.SessionID">
+            <summary>
+            Session id
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.UserLoginModel.Token">
+            <summary>
+            Token string
+            </summary>
+        </member>
+        <member name="P:Utils.CommonModel.UserLoginModel.ExpireTime">
+            <summary>
+            Second
+            </summary>
+        </member>
+        <member name="T:Utils.Constant.FormatValue">
+            <summary>
+            Constant Data format value
+            </summary>
+        </member>
+        <member name="F:Utils.Constant.FormatValue.FULL_DATE_FORMAT">
+            <summary>
+            Date and time format
+            dd/MM/yyyy HH:mm:ss
+            </summary>
+        </member>
+        <member name="F:Utils.Constant.FormatValue.DATE_FORMAT">
+            <summary>
+            Date format
+            dd/MM/yyyy
+            </summary>
+        </member>
+        <member name="F:Utils.Constant.FormatValue.NUMBER_FORMAT">
+            <summary>
+             Number format
+             #,##0
+            </summary>
+        </member>
+        <member name="F:Utils.Constant.FormatValue.PRICE_FORMAT">
+            <summary>
+            Price format
+            #,##0.##
+            </summary>
+        </member>
+        <member name="T:Utils.Database.ADOExecuteHelper">
+            <summary>
+            SQL Execute using ado.net
+            </summary>
+        </member>
+        <member name="F:Utils.Database.ADOExecuteHelper.SqlConnectionStr">
+            <summary>
+            Connection string
+            </summary>
+        </member>
+        <member name="M:Utils.Database.ADOExecuteHelper.SetConnectionString(System.String)">
+            <summary>
+            Set connect string
+            </summary>
+            <param name="connectionStr">connect string</param>
+        </member>
+        <member name="M:Utils.Database.ADOExecuteHelper.GetConnectionString">
+            <summary>
+            Open sql connection
+            </summary>
+            <returns>SqlConnection</returns>
+        </member>
+        <member name="M:Utils.Database.ADOExecuteHelper.ExecuteScalar(System.String)">
+            <summary>
+            Execute query return only a value.
+            Query must be return one value
+            If query not return any, please return a default value
+            Return null when get error
+            </summary>
+            <param name="strQuery"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.Database.ADOExecuteHelper.ReturnDataset(System.String,System.String)">
+            <summary>
+            ReturnDataset function
+            </summary>
+            <param name="strQuery"></param>
+            <param name="strTable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.Database.ADOExecuteHelper.ReturnDataTable(System.String)">
+            <summary>
+            Execute store to return a datable.
+            Return null if not found or error
+            </summary>
+            <param name="strStore">Store procedure name</param>
+            <returns>Datatable</returns>
+        </member>
+        <member name="M:Utils.Database.ADOExecuteHelper.ReturnDataTable(System.String,System.String,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.Data.SqlClient.SqlParameter}})">
+            <summary>
+            ReturnDataTable
+            </summary>
+            <param name="strStore"></param>
+            <param name="tableName"></param>
+            <param name="columnSelected"></param>
+            <param name="whereCondition"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.Database.ADOExecuteHelper.ReturnDataTable(System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Get data from database using store. Return a datatable
+            </summary>
+            <param name="strStore">Store name</param>
+            <param name="prams">List of Sql parameters</param>
+            <returns>Datatable</returns>
+        </member>
+        <member name="M:Utils.Database.ADOExecuteHelper.CreateCommand(System.String,System.Data.SqlClient.SqlConnection,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            Create command
+            </summary>
+            <param name="strStore">store name</param>
+            <param name="myconn">SQL connect</param>
+            <param name="param">List of sql parameters</param>
+            <returns>SqlCommand</returns>
+        </member>
+        <member name="M:Utils.Database.ADOExecuteHelper.AddParameter(System.String,System.Data.SqlDbType,System.Int32,System.Data.ParameterDirection,System.Object)">
+            <summary>
+            Create a Sql Parameter
+            </summary>
+            <param name="ParamName">Parameter's name</param>
+            <param name="SqlDbType">Type</param>
+            <param name="Size">Size of value</param>
+            <param name="direction">Direction, input or output</param>
+            <param name="value">Value of parameter</param>
+            <returns>SqlParamter</returns>
+        </member>
+        <member name="M:Utils.Database.ADOExecuteHelper.ExecuteNonquery(System.String)">
+            <summary>
+            Execute a query string
+            </summary>
+            <param name="queryString"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Utils.Database.BaseModel">
+            <summary>
+            BaseModel
+            </summary>
+        </member>
+        <member name="P:Utils.Database.BaseModel.CreateBy">
+            <summary>
+            CreateBy
+            </summary>
+        </member>
+        <member name="P:Utils.Database.BaseModel.CreateDate">
+            <summary>
+            CreateDate
+            </summary>
+        </member>
+        <member name="P:Utils.Database.BaseModel.UpdateBy">
+            <summary>
+            UpdateBy
+            </summary>
+        </member>
+        <member name="P:Utils.Database.BaseModel.UpdateDate">
+            <summary>
+            UpdateDate
+            </summary>
+        </member>
+        <member name="P:Utils.Database.BaseModel.Deleted">
+            <summary>
+            Deleted
+            </summary>
+        </member>
+        <member name="P:Utils.Database.BaseModel.DeleteBy">
+            <summary>
+            DeleteBy
+            </summary>
+        </member>
+        <member name="P:Utils.Database.BaseModel.DeleteDate">
+            <summary>
+            DeleteDate
+            </summary>
+        </member>
+        <member name="P:Utils.Database.BaseModel.Insert">
+            <summary>
+            True: Insert, false: Update
+            </summary>
+        </member>
+        <member name="P:Utils.Database.BaseModel.Publish">
+            <summary>
+            Publish
+            </summary>
+        </member>
+        <member name="T:Utils.Database.DatabaseConstant">
+            <summary>
+            Init constant value
+            </summary>
+        </member>
+        <member name="T:Utils.Database.DatabaseConstant.Erorr">
+            <summary>
+            Error constant
+            </summary>
+        </member>
+        <member name="F:Utils.Database.DatabaseConstant.Erorr.SCALA_ERROR">
+            <summary>
+            Scala eror
+            </summary>
+        </member>
+        <member name="T:Utils.Database.IModelExecute`1">
+            <summary>
+            IModelExecute Interface
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Utils.Database.IModelExecute`1.List(Utils.JqueryDatatable.CustomDataTableRequestHelper)">
+            <summary>
+            Get list of data using jquery datatable
+            </summary>
+            <param name="request">CustomDataTableRequest</param>
+            <returns>Dictionary</returns>
+        </member>
+        <member name="M:Utils.Database.IModelExecute`1.GetALL">
+            <summary>
+            Get all item
+            </summary>
+            <returns>IEnumerable</returns>
+        </member>
+        <member name="M:Utils.Database.IModelExecute`1.GetItemByID(`0)">
+            <summary>
+            Get item by id
+            </summary>
+            <param name="model">T</param>
+            <returns>T</returns>
+        </member>
+        <member name="M:Utils.Database.IModelExecute`1.Save(`0)">
+            <summary>
+            Save item
+            </summary>
+            <param name="model">T</param>
+            <returns>Success/Error</returns>
+        </member>
+        <member name="M:Utils.Database.IModelExecute`1.Publish(`0)">
+            <summary>
+            Publish item
+            </summary>
+            <param name="model">T</param>
+            <returns>Success/Error</returns>
+        </member>
+        <member name="M:Utils.Database.IModelExecute`1.Delete(`0)">
+            <summary>
+            Delete item
+            </summary>
+            <param name="model">T</param>
+            <returns>Success/Error</returns>
+        </member>
+        <member name="M:Utils.Database.IModelExecute`1.CheckDeleteItem(`0)">
+            <summary>
+            Check before execute delete item
+            </summary>
+            <param name="model">T</param>
+            <returns>OK/NG</returns>
+        </member>
+        <member name="T:Utils.ErrorLogger.DatabaseLoggerHelper">
+            <summary>
+            Write log to database class
+            </summary>
+        </member>
+        <member name="M:Utils.ErrorLogger.DatabaseLoggerHelper.OutputLog(System.String,System.String,System.String,System.String,System.Exception,System.String)">
+             <summary>
+             Table name
+             Use for write log
+             </summary>
+            private static readonly string TABLE_NAME = "SYS_ERROR_LOGGING";
+            <summary>
+            Write log to Database
+            </summary>
+            <param name="controller"></param>
+            <param name="action"></param>
+            <param name="fileName"></param>
+            <param name="methodName"></param>
+            <param name="objException"></param>
+            <param name="userId"></param>
+        </member>
+        <member name="T:Utils.ErrorLogger.TextLoggerHelper">
+            <summary>
+            For log error and information in file and in database.
+            </summary>
+        </member>
+        <member name="F:Utils.ErrorLogger.TextLoggerHelper.strLogFilePath">
+            <summary>
+            The string log file path.
+            </summary>
+        </member>
+        <member name="F:Utils.ErrorLogger.TextLoggerHelper.sw">
+            <summary>
+            The sw
+            </summary>
+        </member>
+        <member name="P:Utils.ErrorLogger.TextLoggerHelper.LogFilePath">
+            <summary>
+            Setting LogFile path. If the logfile path is null then it will update error info into LogFile.txt under
+            application directory.
+            </summary>
+            <value>
+            The log file path.
+            </value>
+        </member>
+        <member name="M:Utils.ErrorLogger.TextLoggerHelper.GetLogFilePath(System.Boolean)">
+            <summary>
+            Check the log file in applcation directory. If it is not available, creae it
+            </summary>
+            <returns>
+            Log file path
+            </returns>
+        </member>
+        <member name="M:Utils.ErrorLogger.TextLoggerHelper.CheckDirectory(System.String)">
+            <summary>
+            Create a directory if not exists
+            </summary>
+            <param name="strLogPath">The string log path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.ErrorLogger.TextLoggerHelper.WriteErrorLog(System.String,System.Exception,System.String,System.Boolean)">
+            <summary>
+            Writes the error log.
+            </summary>
+            <param name="strPathName">Name of the string path.</param>
+            <param name="objException">The object exception.</param>
+            <param name="additionalinfo">The additionalinfo.</param>
+            <param name="isException">Exception or not.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.ErrorLogger.TextLoggerHelper.OutputLog(System.String)">
+            <summary>
+            This Is created in order to maintain Additional infomation in the seperate file path and for clear visibility
+            </summary>
+            <param name="logDescription">The log description.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.ErrorLogger.TextLoggerHelper.OutputLog(System.String,System.Exception)">
+            <summary>
+            This Is created in order to maintain Additional infomation in the seperate file path and for clear visibility
+            </summary>
+            <param name="AdditionInforDescription">The log description. [User define]</param>
+            <param name="objException"> Exception object </param>
+            <returns></returns>
+        </member>
+        <member name="T:Utils.ErrorLogger.WindowsLoggerHelper">
+            <summary>
+            Window logger
+            </summary>
+        </member>
+        <member name="M:Utils.ErrorLogger.WindowsLoggerHelper.OutputLog(System.Exception)">
+            <summary>
+            Adds the log to window event.
+            Write error log entry for window event if the bLogType is true. Otherwise, write the log entry to
+            customized text-based text file
+            </summary>
+            <param name="objException">The object exception.</param>
+            <returns>
+            false if the problem persists
+            </returns>
+        </member>
+        <member name="M:Utils.ErrorLogger.WindowsLoggerHelper.OutputLog(System.Exception,System.String,System.Diagnostics.EventLogEntryType)">
+            <summary>
+            Adds the log to window event.
+            </summary>
+            <param name="objException">The object exception.</param>
+            <param name="eventLogName">Name of the event log.</param>
+            <param name="entryType">Type of the entry.</param>
+        </member>
+        <member name="T:Utils.ExportExcel.ExcelBorderDetailModel">
+            <summary>
+            Range border formating
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelBorderDetailModel.FromColumn">
+            <summary>
+            Column of begin cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelBorderDetailModel.FromRow">
+            <summary>
+            Row of begin cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelBorderDetailModel.ToColumn">
+            <summary>
+            Column of end cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelBorderDetailModel.ToRow">
+            <summary>
+            Row of end cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelBorderDetailModel.Border">
+            <summary>
+            Border value. Default thin
+            </summary>
+        </member>
+        <member name="T:Utils.ExportExcel.ExcelContentModel">
+            <summary>
+            Excel content model
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelContentModel.SheetName">
+            <summary>
+            Sheet name
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelContentModel.ShowGridLines">
+            <summary>
+            Show gridline. Default is false
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelContentModel.IsProtected">
+            <summary>
+            Is protection sheet
+            Default is false
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelContentModel.AllowSelectLockedCells">
+            <summary>
+            Allow select locked cells
+            Default false
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelContentModel.Data">
+            <summary>
+            List of data content in sheet
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelContentModel.Horizontals">
+            <summary>
+            Horizontal formating
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelContentModel.Verticals">
+            <summary>
+            Vertical formating
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelContentModel.Merges">
+            <summary>
+            Merge cells list
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelContentModel.Borders">
+            <summary>
+            Border cells list
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelContentModel.Formatings">
+            <summary>
+            Format data content
+            </summary>
+        </member>
+        <member name="T:Utils.ExportExcel.ExcelDataDetailModel">
+            <summary>
+            Value data model
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelDataDetailModel.Row">
+            <summary>
+            Row of cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelDataDetailModel.Col">
+            <summary>
+            Column of cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelDataDetailModel.Value">
+            <summary>
+            Value in a cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelDataDetailModel.Bold">
+            <summary>
+            Bold
+            </summary>
+        </member>
+        <member name="T:Utils.ExportExcel.ExcelFromatingDetailModel">
+            <summary>
+            Data formating
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelFromatingDetailModel.FromColumn">
+            <summary>
+            Column of begin cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelFromatingDetailModel.FromRow">
+            <summary>
+            Row of begin cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelFromatingDetailModel.ToColumn">
+            <summary>
+            Column of end cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelFromatingDetailModel.ToRow">
+            <summary>
+            Row of end cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelFromatingDetailModel.Format">
+            <summary>
+            Format string. Default @
+            </summary>
+        </member>
+        <member name="T:Utils.ExportExcel.ExcelHelper">
+            <summary>
+            Excel helper
+            </summary>
+        </member>
+        <member name="M:Utils.ExportExcel.ExcelHelper.CreateExcelFile(System.String,System.Collections.Generic.List{Utils.ExportExcel.ExcelContentModel})">
+            <summary>
+            Create excel file
+            </summary>
+            <param name="filePath">file path</param>
+            <param name="model">list of data excel content model</param>
+            <returns>true: success, false: error</returns>
+        </member>
+        <member name="M:Utils.ExportExcel.ExcelHelper.CreateSheet(OfficeOpenXml.ExcelPackage,Utils.ExportExcel.ExcelContentModel)">
+            <summary>
+            Create sheet
+            </summary>
+            <param name="excelPackage">excel package library</param>
+            <param name="excelModel">data sheet model</param>
+            <returns>ExcelWorksheet</returns>
+        </member>
+        <member name="T:Utils.ExportExcel.ExcelHorizontalDetailModel">
+            <summary>
+            Range horizontal formating
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelHorizontalDetailModel.FromColumn">
+            <summary>
+            Column of begin cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelHorizontalDetailModel.FromRow">
+            <summary>
+            Row of begin cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelHorizontalDetailModel.ToColumn">
+            <summary>
+            Column of end cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelHorizontalDetailModel.ToRow">
+            <summary>
+            Row of end cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelHorizontalDetailModel.Horizontal">
+            <summary>
+            Horizontal alignment. Default is left
+            </summary>
+        </member>
+        <member name="T:Utils.ExportExcel.ExcelMergeDetailModel">
+            <summary>
+            merge formating
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelMergeDetailModel.FromColumn">
+            <summary>
+            Column of begin cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelMergeDetailModel.FromRow">
+            <summary>
+            Row of begin cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelMergeDetailModel.ToColumn">
+            <summary>
+            Column of end cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelMergeDetailModel.ToRow">
+            <summary>
+            Row of end cell
+            </summary>
+        </member>
+        <member name="T:Utils.ExportExcel.ExcelVerticalDetailModel">
+            <summary>
+            Range vertical formating
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelVerticalDetailModel.FromColumn">
+            <summary>
+            Column of begin cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelVerticalDetailModel.FromRow">
+            <summary>
+            Row of begin cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelVerticalDetailModel.ToColumn">
+            <summary>
+            Column of end cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelVerticalDetailModel.ToRow">
+            <summary>
+            Row of end cell
+            </summary>
+        </member>
+        <member name="P:Utils.ExportExcel.ExcelVerticalDetailModel.Vertical">
+            <summary>
+            Vertical alignment. Default center
+            </summary>
+        </member>
+        <member name="T:Utils.ExtensionHelper">
+            <summary>
+            Extension class
+            </summary>
+        </member>
+        <member name="F:Utils.ExtensionHelper.NUMBER_FORMAT">
+            <summary>
+            Default number format #,###
+            </summary>
+        </member>
+        <member name="F:Utils.ExtensionHelper.DATE_FORMAT">
+            <summary>
+            Default date format dd/MM/yyyy
+            </summary>
+        </member>
+        <member name="F:Utils.ExtensionHelper.TIME_FORMAT">
+            <summary>
+            Default time format HH:mm:ss
+            </summary>
+        </member>
+        <member name="F:Utils.ExtensionHelper.FULLTIME_FORMAT">
+            <summary>
+            Default full time format dd/MM/yyyy HH:mm:ss
+            </summary>
+        </member>
+        <member name="F:Utils.ExtensionHelper.VietNamChar">
+            <summary>
+            Viet nam characters
+            </summary>
+        </member>
+        <member name="M:Utils.ExtensionHelper.DateToString(System.DateTime)">
+            <summary>
+            Convert date to string using default format
+            </summary>
+            <param name="date"></param>
+            <returns>return string value based on default date format dd/MM/yyyy</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.DateToString(System.DateTime,System.String)">
+            <summary>
+            Convert date to string based on format value input
+            </summary>
+            <param name="date">date input</param>
+            <param name="format">format input</param>
+            <returns>Return string value based on format inputed</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.TimeAgo(System.DateTime,System.String)">
+            <summary>
+            Get distanct between time happen the action to now.
+            </summary>
+            <param name="dt">Time happenned (fulltime)</param>
+            <param name="actionName">Action name</param>
+            <returns>String</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.FullTimeString(System.DateTime)">
+            <summary>
+            Return full time format
+            </summary>
+            <param name="date"></param>
+            <returns>dd/MM/yyyy HH:mm:ss</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.TimeString(System.DateTime)">
+            <summary>
+            Return full time format
+            </summary>
+            <param name="date"></param>
+            <returns>HH:mm:ss</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.NumberToString(System.Double)">
+            <summary>
+            Convert double value to string using default format
+            </summary>
+            <param name="value">Input number value</param>
+            <returns>Return string value based on number format default #,###</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.NumberToString(System.Double,System.String)">
+            <summary>
+            Convert double value to string
+            </summary>
+            <param name="value">Input number value</param>
+            <param name="format">format string</param>
+            <returns>Return string value based on format inputed</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.NumberToString(System.Int32)">
+            <summary>
+            Convert integer value to string using default format
+            </summary>
+            <param name="value">Input number value</param>
+            <returns>Return string value based on number format default #,###</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.NumberToString(System.Int32,System.String)">
+            <summary>
+            Convert integer value to string
+            </summary>
+            <param name="value">Input number value</param>
+            <param name="format">format string</param>
+            <returns>Return string value based on format inputed</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.NumberToString(System.Single)">
+            <summary>
+            Convert float value to string using default format
+            </summary>
+            <param name="value">Input number value</param>
+            <returns>Return string value based on number format default #,###</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.NumberToString(System.Single,System.String)">
+            <summary>
+            Convert float value to string
+            </summary>
+            <param name="value">Input number value</param>
+            <param name="format">format string</param>
+            <returns>Return string value based on format inputed</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.NumberToString(System.Decimal)">
+            <summary>
+            Convert decimal value to string using default format
+            </summary>
+            <param name="value">Input number value</param>
+            <returns>Return string value based on number format default #,###</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.NumberToString(System.Decimal,System.String)">
+            <summary>
+            Convert decimal value to string
+            </summary>
+            <param name="value">Input number value</param>
+            <param name="format">format string</param>
+            <returns>Return string value based on format inputed</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.TitleToAlias(System.String)">
+            <summary>
+            Convert title string with special character to latin character.
+            Only use in case url website, title string convert to alias.
+            </summary>
+            <param name="str">Title</param>
+            <returns>Remove all special and unicode characters</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.ReplaceUnicode(System.String)">
+            <summary>
+            Replace unicode in string content
+            </summary>
+            <param name="strInput">Input string</param>
+            <returns>Replace all unicode characters</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.RemoveSpecialChars(System.String)">
+            <summary>
+            Remove all special characters in string content
+            </summary>
+            <param name="str">Input string</param>
+            <returns>Remove all specia characters</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.CapitalizeFirstWords(System.String)">
+            <summary>
+            Upper the first character in each word in string content
+            </summary>
+            <param name="str">Input string</param>
+            <returns>String</returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.CapitalizeFirstLetter(System.String)">
+            <summary>
+            Capitalizer first letter
+            </summary>
+            <param name="str">String content</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.ExtensionHelper.StringToDate(System.String)">
+            <summary>
+            Convert string to date
+            Use default format dd/MM/yyyy
+            </summary>
+            <param name="dateString">date string value</param>
+            <returns></returns>
+        </member>
+        <member name="T:Utils.Email.EmailHelper">
+            <summary>
+            Email
+            </summary>
+        </member>
+        <member name="T:Utils.Email.EmailHelper.Error">
+            <summary>
+            INit error message
+            </summary>
+        </member>
+        <member name="F:Utils.Email.EmailHelper.Error.E01">
+            <summary>
+            Error message for SendMail function 01
+            </summary>
+        </member>
+        <member name="F:Utils.Email.EmailHelper.Error.E02">
+            <summary>
+            Error message for SendMail function 02
+            </summary>
+        </member>
+        <member name="F:Utils.Email.EmailHelper.HOST">
+            <summary>
+            Host name
+            Default: smtp.gmail.com
+            </summary>
+        </member>
+        <member name="F:Utils.Email.EmailHelper.PORT">
+            <summary>
+            Email port
+            Default: 578
+            </summary>
+        </member>
+        <member name="F:Utils.Email.EmailHelper.ENABLE_SSL">
+            <summary>
+            Enable ssl 
+            Defaule: false
+            </summary>
+        </member>
+        <member name="F:Utils.Email.EmailHelper.USE_DEFAULT_CREDENTIALS">
+            <summary>
+            Use default credentials
+            Default: false
+            </summary>
+        </member>
+        <member name="M:Utils.Email.EmailHelper.Sendemail(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Send an email
+            Use default config.
+            You can custom default value
+            </summary>
+            <param name="email">Send from email</param>
+            <param name="password">Password of send from email</param>
+            <param name="emailTo">Sent to</param>
+            <param name="mailsubject">subject</param>
+            <param name="mailBody">body</param>
+            <returns>return 1/0</returns>
+        </member>
+        <member name="M:Utils.Email.EmailHelper.Sendemail(System.String,System.Int32,System.Boolean,System.Boolean,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Send an email
+            </summary>
+            <param name="host">Host name, Ex: smtp.gmail.com</param>
+            <param name="port">Port, Ex: 587</param>
+            <param name="enableSSL">true/false</param>
+            <param name="useDefaultCredentials">True/False</param>
+            <param name="email">Send from email</param>
+            <param name="password">Password of send from email</param>
+            <param name="emailTo">Sent to</param>
+            <param name="mailsubject">subject</param>
+            <param name="mailBody">body</param>
+            <returns>1/0</returns>
+        </member>
+        <member name="T:Utils.FileHelper">
+            <summary>
+            File helper class
+            </summary>
+        </member>
+        <member name="M:Utils.FileHelper.ReadTextFile(System.String)">
+            <summary>
+            Read content from file path
+            </summary>
+            <param name="filePath">File path</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.FileHelper.SaveFile(System.String,System.Byte[])">
+            <summary>
+            Save text file
+            </summary>
+            <param name="filePath">file path</param>
+            <param name="content">content (byte)</param>
+        </member>
+        <member name="T:Utils.JqueryDatatable.ColumnHelper">
+            <summary>
+            List of column of datatable
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.ColumnHelper.Data">
+            <summary>
+            Name of column map with column's name in data object
+            IF not, that is the order of the column in table on design
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.ColumnHelper.Name">
+            <summary>
+            Name
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.ColumnHelper.Searchable">
+            <summary>
+            Allow for Search
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.ColumnHelper.Orderable">
+            <summary>
+            Allow for order
+            </summary>
+        </member>
+        <member name="M:Utils.JqueryDatatable.ColumnHelper.#ctor">
+            <summary>
+            Column data in jquery datatable
+            </summary>
+        </member>
+        <member name="T:Utils.JqueryDatatable.DatatableCommonSetting">
+            <summary>
+            Common setting config in jquery datatable
+            </summary>
+        </member>
+        <member name="T:Utils.JqueryDatatable.DatatableCommonSetting.Response">
+            <summary>
+            Name of response object model
+            </summary>
+        </member>
+        <member name="F:Utils.JqueryDatatable.DatatableCommonSetting.Response.DATA">
+            <summary>
+            Data
+            </summary>
+        </member>
+        <member name="F:Utils.JqueryDatatable.DatatableCommonSetting.Response.MESSAGE">
+            <summary>
+            Message
+            </summary>
+        </member>
+        <member name="F:Utils.JqueryDatatable.DatatableCommonSetting.Response.STATUS">
+            <summary>
+            Status
+            </summary>
+        </member>
+        <member name="T:Utils.JqueryDatatable.CustomDataTableRequestHelper">
+            <summary>
+            Use for some cases user want to have some variable included into parameter of jquery datatable
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.CustomDataTableRequestHelper.TableName">
+            <summary>
+            Custom table parameter string
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.CustomDataTableRequestHelper.Filter">
+            <summary>
+            custom filter parameter string
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.CustomDataTableRequestHelper.Parameter1">
+            <summary>
+            Custom parameter 1
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.CustomDataTableRequestHelper.Parameter2">
+            <summary>
+            Custom parameter 2
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.CustomDataTableRequestHelper.Parameter3">
+            <summary>
+            Custom parameter 3
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.CustomDataTableRequestHelper.Parameter4">
+            <summary>
+            Custom parameter 4
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.CustomDataTableRequestHelper.Parameter5">
+            <summary>
+            Custom parameter 5
+            </summary>
+        </member>
+        <member name="T:Utils.JqueryDatatable.DataTableCollectionHelper">
+            <summary>
+            Datatable collection helper
+            </summary>
+        </member>
+        <member name="M:Utils.JqueryDatatable.DataTableCollectionHelper.Sort``2(System.Collections.Generic.IEnumerable{``0},Utils.JqueryDatatable.SortingDirectionHelper,System.Func{``0,``1})">
+            <summary>
+            Order list
+            </summary>
+            <typeparam name="TSource"></typeparam>
+            <typeparam name="TKey"></typeparam>
+            <param name="items"></param>
+            <param name="dir"></param>
+            <param name="keySelector"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.JqueryDatatable.DataTableCollectionHelper.SetOrderingColumnName(Utils.JqueryDatatable.DataTableRequestHelper)">
+            <summary>
+            Based on order on query string. Check and set name for columns are ordering
+            Use for check sorting.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.JqueryDatatable.DataTableCollectionHelper.SetOrderingColumnName(Utils.JqueryDatatable.CustomDataTableRequestHelper)">
+            <summary>
+            Based on order on query string. Check and set name for columns are ordering
+            Use for check sorting.
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Utils.JqueryDatatable.DataTableRequestHelper">
+            <summary>
+            Jquery datatable Request from client
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.DataTableRequestHelper.draw">
+            <summary>
+            draw
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.DataTableRequestHelper.start">
+            <summary>
+            start
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.DataTableRequestHelper.length">
+            <summary>
+            length
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.DataTableRequestHelper.order">
+            <summary>
+            order
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.DataTableRequestHelper.search">
+            <summary>
+            search
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.DataTableRequestHelper.columns">
+            <summary>
+            columns
+            </summary>
+        </member>
+        <member name="T:Utils.JqueryDatatable.DataTableResponse`1">
+            <summary>
+            JqueryData response to client
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Utils.JqueryDatatable.DataTableResponse`1.draw">
+            <summary>
+            Draw counter. 
+            This is used by DataTables to ensure that the Ajax returns from server-side processing 
+            requests are drawn in sequence by DataTables (Ajax requests are asynchronous and thus can return out of sequence). 
+            This is used as part of the draw return parameter.
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.DataTableResponse`1.recordsTotal">
+            <summary>
+            Sets the Total records, before filtering (i.e. the total number of records in the database)
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.DataTableResponse`1.recordsFiltered">
+            <summary>
+            Sets the Total records, after filtering 
+            (i.e. the total number of records after filtering has been applied - 
+            not just the number of records being returned in this result set)
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.DataTableResponse`1.data">
+            <summary>
+            Data return
+            </summary>
+        </member>
+        <member name="T:Utils.JqueryDatatable.OrderingHelper">
+            <summary>
+            Ordering data columns
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.OrderingHelper.Column">
+            <summary>
+            order column on table
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.OrderingHelper.ColumnName">
+            <summary>
+            Custom property
+            Set column name for the current ordering column
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.OrderingHelper.Dir">
+            <summary>
+            Direction
+            </summary>
+        </member>
+        <member name="T:Utils.JqueryDatatable.SearchHelper">
+            <summary>
+            Search content
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.SearchHelper.Value">
+            <summary>
+            String value
+            </summary>
+        </member>
+        <member name="P:Utils.JqueryDatatable.SearchHelper.Regex">
+            <summary>
+            Regex
+            </summary>
+        </member>
+        <member name="T:Utils.JqueryDatatable.SortingDirectionHelper">
+            <summary>
+            Sort direction
+            </summary>
+        </member>
+        <member name="F:Utils.JqueryDatatable.SortingDirectionHelper.Asc">
+            <summary>
+            Ascessding
+            </summary>
+        </member>
+        <member name="F:Utils.JqueryDatatable.SortingDirectionHelper.Desc">
+            <summary>
+            Deacessding
+            </summary>
+        </member>
+        <member name="T:Utils.LanguageHelper">
+            <summary>
+            Language default value
+            </summary>
+        </member>
+        <member name="F:Utils.LanguageHelper.vn">
+            <summary>
+            Vietnamese
+            </summary>
+        </member>
+        <member name="F:Utils.LanguageHelper.en">
+            <summary>
+            English
+            </summary>
+        </member>
+        <member name="T:Utils.PageActionHelper">
+            <summary>
+            Action name on page
+            </summary>
+        </member>
+        <member name="F:Utils.PageActionHelper.View">
+            <summary>
+            View action
+            </summary>
+        </member>
+        <member name="F:Utils.PageActionHelper.Create">
+            <summary>
+            Create action
+            </summary>
+        </member>
+        <member name="F:Utils.PageActionHelper.Edit">
+            <summary>
+            Edit action
+            </summary>
+        </member>
+        <member name="F:Utils.PageActionHelper.Delete">
+            <summary>
+            Delete action
+            </summary>
+        </member>
+        <member name="F:Utils.PageActionHelper.Publish">
+            <summary>
+            Publish action
+            </summary>
+        </member>
+        <member name="F:Utils.PageActionHelper.Copy">
+            <summary>
+            Copy action
+            </summary>
+        </member>
+        <member name="F:Utils.PageActionHelper.Clone">
+            <summary>
+            Clone action
+            </summary>
+        </member>
+        <member name="F:Utils.PageActionHelper.Lock">
+            <summary>
+            Lock action
+            </summary>
+        </member>
+        <member name="T:Utils.Pagination.PagingHelper">
+            <summary>
+            Pagination
+            </summary>
+        </member>
+        <member name="F:Utils.Pagination.PagingHelper.ROW_PER_PAGE">
+            <summary>
+            Row per page / default 5
+            </summary>
+        </member>
+        <member name="F:Utils.Pagination.PagingHelper.PAGINATION_PER_PAGE">
+            <summary>
+            Pagination per page / default: 5
+            </summary>
+        </member>
+        <member name="M:Utils.Pagination.PagingHelper.Pagination(System.Int32,System.Int32,System.String,Utils.LanguageHelper)">
+            <summary>
+            Paging function
+            </summary>
+            <param name="currenPage">number of current page</param>
+            <param name="totalRow">Total data row count</param>
+            <param name="url">url to move other page</param>
+            <param name="lg">language</param>
+            <returns>html string of pagination</returns>
+        </member>
+        <member name="M:Utils.Pagination.PagingHelper.Pagination(System.Int32,System.Int32,System.String,Utils.LanguageHelper,System.Int32)">
+            <summary>
+            Paging
+            </summary>
+            <param name="currenPage">number of current page</param>
+            <param name="totalRow">Total data row count</param>
+            <param name="url">url to move other page</param>
+            <param name="lg">language</param>
+            <param name="maxRow">Max row in page</param>
+            <returns>html string of pagination</returns>
+        </member>
+        <member name="T:Utils.Pagination.PagingHelper.PageResource">
+            <summary>
+            Language setting
+            </summary>
+        </member>
+        <member name="F:Utils.Pagination.PagingHelper.PageResource.VN">
+            <summary>
+            Vietnamese
+            </summary>
+        </member>
+        <member name="F:Utils.Pagination.PagingHelper.PageResource.EN">
+            <summary>
+            English
+            </summary>
+        </member>
+        <member name="T:Utils.RequestHelpers">
+            <summary>
+            Request helper
+            </summary>
+        </member>
+        <member name="M:Utils.RequestHelpers.GetClientIpAddress(System.Web.HttpRequestBase)">
+            <summary>
+            Get client ip address
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.RequestHelpers.IsPrivateIpAddress(System.String)">
+            <summary>
+            Check is private ip address
+            </summary>
+            <param name="ipAddress"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Utils.ResponseStatusCodeHelper">
+            <summary>
+            Response status code
+            </summary>
+        </member>
+        <member name="F:Utils.ResponseStatusCodeHelper.Success">
+            <summary>
+            Return success when execute action is success
+            </summary>
+        </member>
+        <member name="F:Utils.ResponseStatusCodeHelper.Error">
+            <summary>
+            Return error when execute action is error
+            </summary>
+        </member>
+        <member name="F:Utils.ResponseStatusCodeHelper.Warning">
+            <summary>
+            Whan to tell user know have some notification or something
+            </summary>
+        </member>
+        <member name="F:Utils.ResponseStatusCodeHelper.OK">
+            <summary>
+            Status is allow
+            </summary>
+        </member>
+        <member name="F:Utils.ResponseStatusCodeHelper.NG">
+            <summary>
+            Status is disallow
+            </summary>
+        </member>
+        <member name="T:Utils.Security.Md5Helper">
+            <summary>
+            MD5 helper functions
+            </summary>
+        </member>
+        <member name="M:Utils.Security.Md5Helper.EncryptData(System.String)">
+            <summary>
+            Encrypts the data.
+            </summary>
+            <param name="data">The message.</param>
+            <returns>
+            encrypted data
+            </returns>
+        </member>
+        <member name="M:Utils.Security.Md5Helper.EncryptData(System.String,System.String)">
+            <summary>
+            Encrypts the data.
+            </summary>
+            <param name="data">The message.</param>
+            <param name="lockKey">The lock Key.</param>
+            <returns>
+            encrypted data
+            </returns>
+        </member>
+        <member name="M:Utils.Security.Md5Helper.CommonMethodForEncryptData(System.String,System.String)">
+            <summary>
+            Common Method For Encrypts the data.
+            </summary>
+            <param name="data">The message.</param>
+            <param name="lockKey">The lock Key.</param>
+            <returns>
+            encrypted data
+            </returns>
+        </member>
+        <member name="M:Utils.Security.Md5Helper.DecryptData(System.String)">
+            <summary>
+            Decrypts the data.
+            </summary>
+            <param name="data">The message.</param>
+            <returns>
+            decrypted data
+            </returns>
+        </member>
+        <member name="M:Utils.Security.Md5Helper.DecryptData(System.String,System.String)">
+            <summary>
+            Decrypts the data.
+            </summary>
+            <param name="data">The message.</param>
+            <param name="lockKey">The lock Key.</param>
+            <returns>
+            decrypted data
+            </returns>
+        </member>
+        <member name="M:Utils.Security.Md5Helper.CommonMethodForDecryptData(System.String,System.String)">
+            <summary>
+            Decrypts the data.
+            </summary>
+            <param name="data">The message.</param>
+            <param name="lockKey">The lock Key.</param>
+            <returns>
+            decrypted data
+            </returns>
+        </member>
+        <member name="T:Utils.Security.PasswordSecurityHelper">
+            <summary>
+            Class PasswordSecurity.
+            </summary>
+        </member>
+        <member name="F:Utils.Security.PasswordSecurityHelper.Alg">
+            <summary>
+            The alg
+            </summary>
+        </member>
+        <member name="F:Utils.Security.PasswordSecurityHelper.Salt">
+            <summary>
+            The salt
+            </summary>
+        </member>
+        <member name="M:Utils.Security.PasswordSecurityHelper.GetHashedPassword(System.String)">
+            <summary>
+            Returns a hashed password + salt, to be used in generating a token.
+            </summary>
+            <param name="password">string - user's password</param>
+            <returns>
+            string - hashed password
+            </returns>
+        </member>
+        <member name="T:Utils.Security.TokenSecurityHelper">
+            <summary>
+            Token-based authentication for ASP .NET MVC REST web services.
+            </summary>
+        </member>
+        <member name="F:Utils.Security.TokenSecurityHelper.Alg">
+            <summary>
+            The alg
+            </summary>
+        </member>
+        <member name="F:Utils.Security.TokenSecurityHelper.ExpirationMinutes">
+            <summary>
+            The expiration minutes. Default 10 minutes
+            </summary>
+        </member>
+        <member name="M:Utils.Security.TokenSecurityHelper.GenerateToken(System.String,System.String,System.String,System.String,System.Int64)">
+            <summary>
+            Generates a token to be used in API calls.
+            The token is generated by hashing a message with a key, using HMAC SHA256.
+            The message is: username:ip:userAgent:timeStamp
+            The key is: password:ip:salt
+            The resulting token is then concatenated with username:timeStamp and the result base64 encoded.
+            API calls may then be validated by:
+            1. Base64 decode the string, obtaining the token, username, and timeStamp.
+            2. Ensure the timestamp is not expired.
+            2. Lookup the user's password from the db (cached).
+            3. Hash the username:ip:userAgent:timeStamp with the key of password:salt to compute a token.
+            4. Compare the computed token with the one supplied and ensure they match.
+            </summary>
+            <param name="username">The username.</param>
+            <param name="password">The password.</param>
+            <param name="ip">The ip.</param>
+            <param name="userAgent">The user agent.</param>
+            <param name="ticks">The ticks.</param>
+            <returns>
+            System.String.
+            </returns>
+        </member>
+        <member name="T:Utils.SignalRNotification.Notifier">
+            <summary>
+            Notifier class
+            </summary>
+        </member>
+        <member name="T:Utils.SignalRNotification.Notifier.Error">
+            <summary>
+            Init error message
+            </summary>
+        </member>
+        <member name="F:Utils.SignalRNotification.Notifier.Error.E01">
+            <summary>
+            Error message for Send function 01
+            </summary>
+        </member>
+        <member name="F:Utils.SignalRNotification.Notifier.Error.E02">
+            <summary>
+            Error message for Send function 02
+            </summary>
+        </member>
+        <member name="F:Utils.SignalRNotification.Notifier.Error.E03">
+            <summary>
+            Error message for Send function 03
+            </summary>
+        </member>
+        <member name="F:Utils.SignalRNotification.Notifier.Error.E04">
+            <summary>
+            Error message for Send function 04
+            </summary>
+        </member>
+        <member name="F:Utils.SignalRNotification.Notifier.Error.E05">
+            <summary>
+            Error message for Send function 05
+            </summary>
+        </member>
+        <member name="F:Utils.SignalRNotification.Notifier.Error.E06">
+            <summary>
+            Error message for Send function 06
+            </summary>
+        </member>
+        <member name="F:Utils.SignalRNotification.Notifier.Error.E07">
+            <summary>
+            Error message for Send function 07
+            </summary>
+        </member>
+        <member name="F:Utils.SignalRNotification.Notifier.Error.E08">
+            <summary>
+            Error message for Send function 08
+            </summary>
+        </member>
+        <member name="F:Utils.SignalRNotification.Notifier.SITE_BASE_URL">
+            <summary>
+            Site url to connect to hub
+            </summary>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.SetBaseUrl(System.String)">
+            <summary>
+            Set default api url
+            </summary>
+            <param name="url">api url</param>
+        </member>
+        <member name="F:Utils.SignalRNotification.Notifier.HUB_NAME">
+            <summary>
+            Hub name.. 
+            This is config in website
+            Default is SignalrHub
+            </summary>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.SetHubName(System.String)">
+            <summary>
+            Set default hub name
+            </summary>
+            <param name="hubName">Hub name</param>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.Send(System.String)">
+            <summary>
+            Call function to send notification
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.Send(System.String,System.Object)">
+            <summary>
+            Call function to send notification
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.Send(System.String,System.Object,System.Object)">
+            <summary>
+            Call function to send notification
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.Send(System.String,System.Object,System.Object,System.Object)">
+            <summary>
+            Call function to send notification
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <param name="value_3">Value 03</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.Send(System.String,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Call function to send notification
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <param name="value_3">Value 03</param>
+            <param name="value_4">Value 04</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.Send(System.String,System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Call function to send notification
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <param name="value_3">Value 03</param>
+            <param name="value_4">Value 04</param>
+            <param name="value_5">Value 05</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.Send(System.String,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Call function to send notification
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <param name="value_3">Value 03</param>
+            <param name="value_4">Value 04</param>
+            <param name="value_5">Value 05</param>
+            <param name="value_6">Value 06</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.Send(System.String,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Call function to send notification
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <param name="value_3">Value 03</param>
+            <param name="value_4">Value 04</param>
+            <param name="value_5">Value 05</param>
+            <param name="value_6">Value 06</param>
+            <param name="value_7">Value 06</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.SendToMobile(System.String)">
+            <summary>
+            Call function to send notification to mobile
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.SendToMobile(System.String,System.Object)">
+            <summary>
+            Call function to send notification to mobile
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.SendToMobile(System.String,System.Object,System.Object)">
+            <summary>
+            Call function to send notification to mobile
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.SendToMobile(System.String,System.Object,System.Object,System.Object)">
+            <summary>
+            Call function to send notification to mobile
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <param name="value_3">Value 03</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.SendToMobile(System.String,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Call function to send notification to mobile
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <param name="value_3">Value 03</param>
+            <param name="value_4">Value 04</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.SendToMobile(System.String,System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Call function to send notification to mobile
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <param name="value_3">Value 03</param>
+            <param name="value_4">Value 04</param>
+            <param name="value_5">Value 05</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.SendToMobile(System.String,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Call function to send notification to mobile
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <param name="value_3">Value 03</param>
+            <param name="value_4">Value 04</param>
+            <param name="value_5">Value 05</param>
+            <param name="value_6">Value 06</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.SignalRNotification.Notifier.SendToMobile(System.String,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object,System.Object)">
+            <summary>
+            Call function to send notification to mobile
+            </summary>
+            <param name="functionName">Function name, This function is writed on Hub class in site base website </param>
+            <param name="value_1">Value 01</param>
+            <param name="value_2">Value 02</param>
+            <param name="value_3">Value 03</param>
+            <param name="value_4">Value 04</param>
+            <param name="value_5">Value 05</param>
+            <param name="value_6">Value 06</param>
+            <param name="value_7">Value 06</param>
+            <returns></returns>
+        </member>
+        <member name="T:Utils.Validation.RegularValidationHelper">
+            <summary>
+            Regular validation function class
+            </summary>
+        </member>
+        <member name="F:Utils.Validation.RegularValidationHelper.invalid">
+            <summary>
+            Invalid state
+            </summary>
+        </member>
+        <member name="M:Utils.Validation.RegularValidationHelper.IsValidEmail(System.String)">
+            <summary>
+            Check isvalid email
+            </summary>
+            <param name="strIn">Email string input</param>
+            <returns>true/false</returns>
+        </member>
+        <member name="M:Utils.Validation.RegularValidationHelper.DomainMapper(System.Text.RegularExpressions.Match)">
+            <summary>
+            Check domain
+            Not use Now
+            </summary>
+            <param name="match"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Utils.Xml.XMLContentModel">
+            <summary>
+            Xml content model
+            </summary>
+        </member>
+        <member name="P:Utils.Xml.XMLContentModel.RootName">
+            <summary>
+            Root name
+            </summary>
+        </member>
+        <member name="P:Utils.Xml.XMLContentModel.Comment">
+            <summary>
+            Comment
+            </summary>
+        </member>
+        <member name="P:Utils.Xml.XMLContentModel.Nodes">
+            <summary>
+            List of node
+            </summary>
+        </member>
+        <member name="T:Utils.Xml.XmlExtensionHelper">
+            <summary>
+            Xml extension class
+            </summary>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.ConvertToXml(System.Object)">
+            <summary>
+            Convert to xml string from object model
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.ConvertToObject(System.String,System.Type)">
+            <summary>
+            Convert to object model from xml string
+            </summary>
+            <param name="xmlContent">Xml content</param>
+            <param name="objectType">Object type</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.FormatXmlContent(System.String)">
+            <summary>
+            Format text to xml 
+            Input value must be xml content
+            </summary>
+            <param name="xmlContent">Xml content</param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.GetValueInSingleNodeFromFile(System.String,System.String)">
+            <summary>
+            Get value in single node
+            </summary>
+            <param name="filePath">Xml file path</param>
+            <param name="nodePath">Node path. Ex:root/node/</param>
+            <returns>String value, empty if node is not found or error</returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.GetValueInSingleNodeFromXmlContent(System.String,System.String)">
+            <summary>
+            Get value in single node
+            </summary>
+            <param name="xmlContent">Xml string</param>
+            <param name="nodePath">Node path. Ex:root/node/</param>
+            <returns>String value, empty if node is not found or error</returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.GetSingleNodeContentFromFile(System.String,System.String)">
+            <summary>
+            Get XML content inside a single node
+            </summary>
+            <param name="filePath">Xml file path</param>
+            <param name="nodePath">ode path. Ex:root/node/</param>
+            <returns>Xml string content, empty if node is not found or error</returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.GetSingleNodeContentFromXmlContent(System.String,System.String)">
+            <summary>
+            Get XML content inside a single node
+            </summary>
+            <param name="xmlContent">Xml content</param>
+            <param name="nodePath">ode path. Ex:root/node/</param>
+            <returns>Xml string content, empty if node is not found or error</returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.GetAttributeValueInSingleNodeFromFile(System.String,System.String)">
+            <summary>
+            Get attribute value in single node
+            </summary>
+            <param name="filePath">Xml file path</param>
+            <param name="nodePath">Node path. Ex:root/node/@attribute</param>
+            <returns>String value, empty if node is not found or error</returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.GetAttributeValueInSingleNodeFromXmlContent(System.String,System.String)">
+            <summary>
+            Get attribute value in single node
+            </summary>
+            <param name="xmlContent">Xml content</param>
+            <param name="nodePath">Node path. Ex:root/node/@attribute</param>
+            <returns>String value, empty if node is not found or error</returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.RemoveNodeFromFile(System.String,System.String)">
+            <summary>
+            Remove node from xml file
+            </summary>
+            <param name="filePath">Xml file path</param>
+            <param name="nodePath">Node path</param>
+            <returns>true/false</returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.RemoveNodeFromXmlContent(System.String,System.String)">
+            <summary>
+            Remove node from xml content
+            </summary>
+            <param name="xmlContent">Xml content</param>
+            <param name="nodePath">Node path</param>
+            <returns>xml content</returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.CreateFile(System.String,Utils.Xml.XMLContentModel)">
+            <summary>
+            Write xml file
+            </summary>
+            <param name="filePath">file path</param>
+            <param name="node">Xml node</param>
+            <returns>true/false</returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.WriteNode(System.Xml.XmlWriter,System.Collections.Generic.List{Utils.Xml.XMLNodeModel})">
+            <summary>
+            Wirte xml node
+            </summary>
+            <param name="writer">writer</param>
+            <param name="nodes">list of xml node</param>
+            <returns>true/false</returns>
+        </member>
+        <member name="M:Utils.Xml.XmlExtensionHelper.WriteAttribute(System.Xml.XmlWriter,System.Collections.Generic.List{Utils.Xml.XmlNodeDataModel})">
+            <summary>
+            Write attirbute into xml node
+            </summary>
+            <param name="writer">Xml writer</param>
+            <param name="properties">List of properties</param>
+            <returns>true/false</returns>
+        </member>
+        <member name="T:Utils.Xml.XmlNodeDataModel">
+            <summary>
+            Data of 
+            </summary>
+        </member>
+        <member name="P:Utils.Xml.XmlNodeDataModel.Name">
+            <summary>
+            Node name
+            </summary>
+        </member>
+        <member name="P:Utils.Xml.XmlNodeDataModel.Value">
+            <summary>
+            Node value. If has value, Node can not write child node inside
+            </summary>
+        </member>
+        <member name="T:Utils.Xml.XMLNodeModel">
+            <summary>
+            Xml node data model
+            </summary>
+        </member>
+        <member name="P:Utils.Xml.XMLNodeModel.Data">
+            <summary>
+            Data of node
+            </summary>
+        </member>
+        <member name="P:Utils.Xml.XMLNodeModel.Comment">
+            <summary>
+            Comment
+            </summary>
+        </member>
+        <member name="P:Utils.Xml.XMLNodeModel.Childs">
+            <summary>
+            Child nodes
+            </summary>
+        </member>
+        <member name="P:Utils.Xml.XMLNodeModel.Properties">
+            <summary>
+            Properties of node
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -28,14 +28,28 @@
         padding-top: unset;
         border: none;
     }
+    h1.tittle {
+        background-color: #ee5656;
+        color: #fff;
+        text-transform: uppercase;
+        margin-bottom: 1em;
+        text-align: left;
+        font-size: 22px;
+        padding: 10px 0;
+    }
+    h1.tittle a {
+        padding-left: 10px;
+        color: #fff;
+        text-decoration: none;
+    }
 </style>
 <div class="mag-inner">
     <div class="col-md-8 mag-innert-left">
         <div class="row">
-            <h3 class="tittle"><a href="">@Model.Title</a></h3>
+            <h1 class="tittle"><a href="@ViewBag.Url">@Model.Title</a></h1>
         </div>
         <div class="row">
-            <div class="col-md-12 single-left-grid">
+            <div class="col-md-12 single-left-grid" style="text-align: justify" id="contentData">
                 @Html.Raw(Model.Content)
             </div>
         </div>
@@ -102,5 +116,4 @@
     </div>
     <div class="clearfix"></div>
 </div>
-
 

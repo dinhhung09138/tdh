@@ -491,7 +491,8 @@ namespace TDH.Services
                                                  Alias = m.alias,
                                                  Title = m.title,
                                                  Image = m.image,
-                                                 CreateDate = m.create_date
+                                                 CreateDate = m.create_date,
+                                                 View  = m.view
                                              }).ToList();
                 }
             }
@@ -517,7 +518,8 @@ namespace TDH.Services
                                                  Alias = m.alias,
                                                  Title = m.title,
                                                  Image = m.image,
-                                                 CreateDate = m.create_date
+                                                 CreateDate = m.create_date,
+                                                 View = m.view
                                              }).ToList();
                 }
             }
@@ -819,7 +821,8 @@ namespace TDH.Services
                                                  Alias = m.alias,
                                                  Title = m.title,
                                                  Image = m.image,
-                                                 CreateDate = m.create_date
+                                                 CreateDate = m.create_date,
+                                                 View = m.view
                                              }).ToList();
                 }
             }

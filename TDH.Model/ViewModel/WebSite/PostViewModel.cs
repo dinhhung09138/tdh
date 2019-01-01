@@ -56,5 +56,10 @@ namespace TDH.Model.ViewModel.WebSite
         /// Create date
         /// </summary>
         public string CreateDate { get; set; } = "";
+
+        /// <summary>
+        /// View count
+        /// </summary>
+        public int View { get; set; } = 0;
     }
 }

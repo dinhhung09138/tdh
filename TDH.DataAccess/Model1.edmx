@@ -4710,12 +4710,14 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Property Type="String" Name="title" Nullable="false" MaxLength="150" />
           <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="view" Nullable="false" />
         </ComplexType>
         <ComplexType Name="PROC_WEB_VIEW_POST_Top4Lasted_Result">
           <Property Type="String" Name="alias" Nullable="false" MaxLength="150" />
           <Property Type="String" Name="title" Nullable="false" MaxLength="150" />
           <Property Type="String" Name="image" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="view" Nullable="false" />
         </ComplexType>
         <ComplexType Name="PROC_WEB_VIEW_ABOUT_Result">
           <Property Type="String" Name="meta_title" Nullable="false" MaxLength="120" />
@@ -4852,6 +4854,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Property Type="String" Name="alias" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="image" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="view" Nullable="false" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -6255,6 +6258,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="view" ColumnName="view" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -6265,6 +6269,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="view" ColumnName="view" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -6461,6 +6466,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
                 <ScalarProperty Name="alias" ColumnName="alias" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="view" ColumnName="view" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

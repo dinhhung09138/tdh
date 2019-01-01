@@ -17,5 +17,6 @@ namespace TDH.DataAccess
         public string title { get; set; }
         public string image { get; set; }
         public string create_date { get; set; }
+        public int view { get; set; }
     }
 }

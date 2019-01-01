@@ -15,6 +15,7 @@
 <style>
     a.title {
         color: #555;
+        font-weight: bold;
     }
     .pd-5 {
         padding: 5px;
@@ -38,13 +39,14 @@
             @{
                 foreach (var item in Model)
                 {
-                    <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="row">
-                            <div class="col-md-3 col-sm-4 col-xs-4 pd-5">
+                            <div class="col-md-2 col-sm-3 col-xs-12 pd-5">
                                 <img src="@item.Image" />
                             </div>
-                            <div class="col-md-9 col-sm-8 col-xs-8">
+                            <div class="col-md-10 col-sm-9 col-xs-12">
                                 <a href="@item.Alias" class="title">@item.Title</a>
+                                <p>@item.Description</p>
                             </div>
                         </div>
                     </div>

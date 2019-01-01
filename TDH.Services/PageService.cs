@@ -73,14 +73,20 @@ namespace TDH.Services
                     var _list = _context.PROC_WEB_VIEW_HOME_LISTNAVIGATION().ToList();
 
                     //Get list navigation
-                    var _listNav = _list.Where(m => m.title.Length > 0);
+                    var _listNav = _list.Where(m => m.title.Length > 0).Select(m => m.id).Distinct().ToList();
                     foreach (var item in _listNav)
                     {
+                        var _nav = _list.FirstOrDefault(m => m.id == item);
+                        if(_nav.title.Length == 0)
+                        {
+                            continue;
+                        }
+                        _list.Remove(_nav);
                         _returnList.Add(new NavigationViewModel()
                         {
-                            Title = item.title,
-                            Alias = item.alias,
-                            Categories = _list.Where(m => m.id == item.id && m.title.Length == 0)
+                            Title = _nav.title,
+                            Alias = _nav.alias,
+                            Categories = _list.Where(m => m.title == _nav.title && m.title.Length > 0)
                                               .Select(m => new CategoryViewModel() { Title = m.category_title, Alias = m.category_alias })
                                               .ToList()
                         });

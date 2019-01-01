@@ -1,0 +1,62 @@
+﻿@using TDH.Model.ViewModel.WebSite;
+@model IEnumerable<PostViewModel>
+@{
+    CategoryViewModel _cate = ViewBag.cateInfo as CategoryViewModel;
+    ViewBag.Title = _cate.MetaTitle;
+    ViewBag.Description = _cate.MetaDescription;
+    ViewBag.Keywords = _cate.MetaKeywords;
+    ViewBag.Url = ViewBag.Url;
+    ViewBag.OgImage = _cate.MetaOgImage;
+    ViewBag.TwImage = _cate.MetaTwitterImage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var _nav = ViewBag.navInfor as NavigationViewModel;
+}
+<style>
+    a.title {
+        color: #555;
+    }
+    .pd-5 {
+        padding: 5px;
+    }
+    .pd-5 img {
+        width: 100%;
+        height: auto;
+    }
+    .mag-innert-left {
+        background-color: #fff;
+        padding-top: unset;
+        border: none;
+    }
+</style>
+<div class="mag-inner">
+    <div class="col-md-8 mag-innert-left">
+        <div class="row">
+            <h3 class="tittle"><a href="@_cate.Alias">@_cate.Title</a></h3>
+        </div>
+        <div class="row">
+            @{
+                foreach (var item in Model)
+                {
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-4 col-xs-4 pd-5">
+                                <img src="@item.Image" />
+                            </div>
+                            <div class="col-md-9 col-sm-8 col-xs-8">
+                                <a href="@item.Alias" class="title">@item.Title</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="col-md-4 mag-inner-right">
+        @Html.Action("ProgrammingCategoryPartialView", "Post", new { @navAlias = _nav.Alias })
+        @Html.Action("ProgrammingPopularView", "Post", new { @navAlias = _nav.Alias })
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+

@@ -1,0 +1,72 @@
+﻿@using TDH.Model;
+@{
+    var _listSidebar = ViewBag.sidebar as List<SideBarViewModel>;
+    if (_listSidebar.Count() == 0)
+    {
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link"></a>
+            </li>
+        </ul>
+    }
+    if (ViewBag.moduleCode == "money" ||
+    ViewBag.moduleCode == "system" ||
+    ViewBag.moduleCode == "user_info" ||
+    ViewBag.moduleCode == "common")
+    {
+        if (_listSidebar.Count > 0)
+        {
+
+            <ul class="nav">
+                @foreach (var item in _listSidebar)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@item.Action">@item.Title</a>
+                    </li>
+                }
+            </ul>
+        }
+    }
+    if (ViewBag.moduleCode == "website")
+    {
+        if (_listSidebar.Count > 0)
+        {
+            <ul class="nav">
+                @{
+                    var _setting = _listSidebar.Where(m => m.Code.Contains("setting")).ToList();
+                    if (_setting.Count() > 0)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Thiết lập</a>
+                            <div class="dropdown-menu">
+                                @{
+                                    foreach (var item in _setting)
+                                    {
+                                        <a class="dropdown-item" href="@item.Action">@item.Title</a>
+                                        <div class="dropdown-divider"></div>
+                                    }
+                                }
+                            </div>
+                        </li>
+                    }
+                    var _post = _listSidebar.Where(m => m.Code.Contains("post")).ToList();
+                    if (_post.Count() > 0)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Bài đăng</a>
+                            <div class="dropdown-menu">
+                                @{
+                                    foreach (var item in _post)
+                                    {
+                                        <a class="dropdown-item" href="@item.Action">@item.Title</a>
+                                        <div class="dropdown-divider"></div>
+                                    }
+                                }
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        }
+    }
+}

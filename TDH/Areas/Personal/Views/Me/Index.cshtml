@@ -1,0 +1,177 @@
+﻿@using TDH.Model.Personal;
+@using TDH.Common;
+@{
+    ViewBag.Title = Configuration.SettingValue("name");
+Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+    <style>
+        .card-primary.card-outline {
+            border-top: 3px solid #28a745;
+        }
+    </style>
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "user_info" })
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">@Configuration.SettingValue("name")</h3>
+        <div class="card-tools pull-right">
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src="@Configuration.SettingValue("portfolio_image")"
+                                 alt="@Configuration.SettingValue("name")">
+                        </div>
+                        <h3 class="profile-username text-center">@Configuration.SettingValue("name")</h3>
+                        <p class="text-muted text-center">@Configuration.SettingValue("portfolio_job")</p>
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b><a href="@Configuration.SettingValue("social_youtube")" target="_blank">Youtube</a> </b> <a class="float-right">1,322</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b><a href="@Configuration.SettingValue("social_linkedin")" target="_blank">LinkedIn</a> </b> <a class="float-right">1,322</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b><a href="@Configuration.SettingValue("social_twitter")" target="_blank">Twitter</a> </b> <a class="float-right">1,322</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b><a href="@Configuration.SettingValue("social_facebook")" target="_blank">Facebook</a> </b> <a class="float-right">1,322</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">About Me</h3>
+                    </div>
+                    <div class="card-body">
+                        <strong><i class="fa fa-book mr-1"></i> Education</strong>
+                        @{
+                            List<CetificateModel> _lCetificate = ViewBag.cetificate as List<CetificateModel>;
+                            foreach (var item in _lCetificate)
+                            {
+                                <p class="text-muted">
+                                    @item.Name  @Html.Raw(" - ") <span style="font-weight:bold;">@item.School</span>
+                                </p>
+                            }
+                        }
+                        <hr>
+                        <strong><i class="fa fa-map-marker mr-1"></i> Location</strong>
+                        <p class="text-muted">@Configuration.SettingValue("portfolio_address")</p>
+                        <hr>
+                        <strong><i class="fa fa-pencil mr-1"></i> Skills</strong>
+                        <p class="text-muted">
+                            <span class="tag tag-danger">UI Design</span>
+                            <span class="tag tag-success">Coding</span>
+                            <span class="tag tag-info">Javascript</span>
+                            <span class="tag tag-warning">PHP</span>
+                            <span class="tag tag-primary">Node.js</span>
+                        </p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#timeline" data-toggle="tab">Timeline</a></li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="timeline">
+                                @{
+                                    List<TimelineModel> _lTimeline = ViewBag.timeline as List<TimelineModel>;
+                                    var _lGroupMonth = _lTimeline.Select(m => m.MonthYear).Distinct();
+
+                                }
+                                <ul class="timeline timeline-inverse">
+                                    @{
+                                        foreach (var item in _lGroupMonth)
+                                        {
+                                            var _lItem = _lTimeline.Where(m => m.MonthYear == item).ToList();
+                                            <li class="time-label">
+                                                <span class="bg-danger">
+                                                    @_lItem[0].Date.ToString("MM/yyyy")
+                                                </span>
+                                            </li>
+                                            foreach (var tl in _lItem)
+                                            {
+                                                if (tl.TypeCode.Contains("EDU_"))
+                                                {
+                                                    <li>
+                                                        <i class="fa fa-graduation-cap bg-warning"></i>
+                                                        <div class="timeline-item">
+                                                            <span class="time"><i class="fa fa-clock-o"></i> @tl.Duration</span>
+                                                            <h3 class="timeline-header"><a href="javascript:;">@tl.Name</a> tại: @tl.School</h3>
+                                                            <div class="timeline-body">
+                                                                <p style="font-weight: bold; color: red;"><span>Hình thức đào tạo: </span>@tl.TypeName</p>
+                                                                <p style="font-weight: bold;">Nội dung</p>
+                                                                @tl.Description
+                                                            </div>
+                                                            <div class="timeline-footer">
+                                                                <a href="javascript:;" class="btn btn-warning btn-flat btn-sm">Nội dung khóa học</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    continue;
+                                                }
+                                                else
+                                                {
+                                                    <li>
+
+                                                        @{
+                                                            switch (tl.TypeCode)
+                                                            {
+                                                                case "EVENT_TVL":
+                                                                    <i class="fa fa-motorcycle bg-info"></i>
+                                                                    break;
+                                                                case "EVENT_BTH":
+                                                                    <i class="fa fa-birthday-cake bg-info" style="background-color: #673597;"></i>
+                                                                    break;
+                                                                case "EVENT_ANY":
+                                                                    <i class="fa fa-heart bg-info" style="background-color: #d20c97;"></i>
+                                                                    break;
+                                                                default:
+                                                                    <i class="fa fa-bell bg-info"></i>
+                                                                    break;
+                                                            }
+                                                        }
+                                                        <div class="timeline-item">
+                                                            <span class="time"><i class="fa fa-clock-o"></i> @tl.Duration</span>
+                                                            <h3 class="timeline-header"><a href="javascript:;">@tl.Name</a></h3>
+                                                            <div class="timeline-body">
+                                                                @tl.Description
+                                                            </div>
+                                                            <div class="timeline-footer">
+                                                                <a href="javascript:;" class="btn btn-warning btn-flat btn-sm">Chi tiết hành trình</a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                    }
+                                    <li>
+                                        <i class="fa fa-clock-o bg-gray"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section script {
+
+}

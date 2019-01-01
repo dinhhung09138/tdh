@@ -1,0 +1,15 @@
+﻿@using TDH.Model.ViewModel.WebSite;
+@{ 
+    var listCate = ViewBag.cate as List<CategoryViewModel>;
+}
+<div class="">
+    <h4 class="side">Danh mục</h4>
+    <div class="list-group-alternate">
+        @{
+            foreach (var item in listCate)
+            {
+                <a href="@item.Alias" class="list-group-item"><span class="badge">@item.Count</span> @item.Title </a>
+            }
+        }
+    </div>
+</div>

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using TDH.Filters;
+using System.Web.Routing;
+using TDH.Common.UserException;
 
 namespace TDH.Controllers
 {
@@ -27,10 +28,35 @@ namespace TDH.Controllers
         {
             base.OnException(filterContext);
             filterContext.ExceptionHandled = true;
+
+            //Stop if action is partial or child
+            if (filterContext.IsChildAction)
+                return;
+            
             if (filterContext.Exception is UserException)
             {
-                filterContext.Result = View("../Error/Index");
-                return;
+                UserException ex = filterContext.Exception as UserException;
+                switch (ex.Status)
+                {
+                    case 204: //No content
+                        filterContext.Result = new ViewResult
+                        {
+                            ViewName = "~/Views/Error/PageNotFound.cshtml"
+                        };
+                        return;
+                    case 500: //Error in controller or services
+                        filterContext.Result = new ViewResult
+                        {
+                            ViewName = "~/Views/Error/Index.cshtml"
+                        };
+                        return;
+                    default:
+                        filterContext.Result = new ViewResult
+                        {
+                            ViewName = "~/Views/Error/Index.cshtml"
+                        };
+                        return;
+                }
             }
         }
 

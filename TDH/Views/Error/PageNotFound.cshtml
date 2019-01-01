@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Không tìm thấy trang";
+    ViewBag.Description = "Có vẻ trang của bạn không được tìm thấy, vuil lòng quay lại trang chủ học click vào một danh mục khác";
+    ViewBag.Keywords = "Không tìm thấy trang";
+    ViewBag.Url = ViewBag.Url;
+    ViewBag.OgImage = "/Content/images/khong-tim-thay-trang.png";
+    ViewBag.TwImage = "/Content/images/khong-tim-thay-trang.png";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="mag-inner">
+    <div class="col-md-8 mag-innert-left">
+        <img src="~/Content/images/khong-tim-thay-trang.png" alt="Không tìm thấy trang" />
+    </div>
+    <div class="col-md-4 mag-inner-right">
+        @Html.Action("ConnectedToMe", "Home")
+        @Html.Action("NewsLetter", "Home")
+        @Html.Action("LastedNews", "Home")
+        @Html.Action("TopView", "Home")
+    </div>
+    <div class="clearfix"></div>
+</div>
+

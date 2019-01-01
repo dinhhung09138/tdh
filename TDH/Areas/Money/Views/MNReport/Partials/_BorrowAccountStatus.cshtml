@@ -1,0 +1,56 @@
+﻿@using Utils;
+@model IEnumerable<TDH.Model.Money.Report.BorrowAccountStatusModel>
+@{
+    if (Model.Count() > 0)
+    {
+        var _accList = Model.Select(m => m.ID).Distinct();
+        foreach (var item in _accList)
+        {
+            var _listPayment = Model.Where(m => m.ID == item).ToList();
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h5 class="card-title">@_listPayment[0].Name</h5>
+                        <div class="card-tools">
+                            <span class="badge badge-info">Tổng nợ: </span>
+                            <span class="badge badge-danger">@_listPayment[0].Max.NumberToString()</span>
+                            <span class="badge badge-info">Còn lại: </span>
+                            <span class="badge badge-warning">@_listPayment[0].Remain.NumberToString()</span>
+                        </div>
+                    </div>
+                    <div class="card-body" style="display: block;">
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12 setHeight">
+                                <table class="table table-bordered table-hover table-borrow">
+                                    <thead>
+                                        <tr>
+                                            <th>Ngày</th>
+                                            <th>Nội dung</th>
+                                            <th>Số tiền</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var p in _listPayment)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @p.Date.DateToString()
+                                                </td>
+                                                <td>
+                                                    @p.Title
+                                                </td>
+                                                <td class="text-right">
+                                                    @p.Money.NumberToString()
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}

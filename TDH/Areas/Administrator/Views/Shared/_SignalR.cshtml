@@ -1,17 +1,21 @@
-﻿@*<script>
+﻿<script>
     $(function () {
-        // Reference the auto-generated proxy for the hub.
-        var chat = $.connection.signalrHub;
-        // Create a function that the hub can call back to display messages.
-        chat.client.client.signalRTestNotification = function (userID) {
-            if (userID == '@ViewBag.userID') {
-                alert(userID);
-            }
+        var notifyChat = $.connection.notificationHub;
+        if ($.connection.hub && $.connection.hub.state === $.signalR.connectionState.disconnected) {
+            $.connection.hub.start().done(function () { console.log('Signalr Hub Now connected, connection ID=' + $.connection.hub.id); }).fail(function () { console.log('Signalr Hub Could not Connect!'); });
+
+            $.connection.hub.disconnected(function () {
+                setTimeout(function () {
+                    $.connection.hub.start().done(function () { console.log('Signalr Hub Now Re Connected, connection ID=' + $.connection.hub.id); }).fail(function () { console.log('Signalr Hub Could not Connect!'); });
+                }, 500); // Restart connection after 0.5 seconds.
+            });
         }
+
+        // Create a function that the hub can call back to display messages.
+        notifyChat.client.notificationToUser = function (userID, message, type) {
+            if ('@ViewBag.userID' === userID) {
+                notification(message, type);
+            }  
+        };
     });
-    // This optional function html-encodes messages for display in the page.
-    function htmlEncode(value) {
-        var encodedValue = $('<div />').text(value).html();
-        return encodedValue;
-    }
-</script>*@
+</script>

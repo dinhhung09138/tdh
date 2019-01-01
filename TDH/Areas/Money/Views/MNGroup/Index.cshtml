@@ -1,0 +1,118 @@
+﻿@using TDH.Areas.Money.Utils;
+@{
+    ViewBag.Title = Message.Group.LIST;
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+    <link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+    <link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
+<input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
+<input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
+<div id="toolbarSearch" class="row">
+    <div class="col-md-6">
+        <select id="ddlSelect" class="form-control form-control-sm">
+            <option value="" selected>Tất cả</option>
+            <option value="1">Thu nhập</option>
+            <option value="0">Chi tiêu</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+        <input type="hidden" id="monthSelectValue" value="@DateTime.Now.ToString("yyyyMM")" />
+        <input type="text" id="monthSelect" class="form-control form-control-sm" value="@DateTime.Now.ToString("yyyy/MM")" readonly />
+    </div>
+</div>
+
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">@Message.Group.LIST</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.Add == true)
+                {
+                    <a class="btn btn-box-tool" title="@Message.Group.CREATE" href="/money/mngroup/create">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                }
+                if (ViewBag.Edit == true)
+                {
+                    <a title="@Message.Group.SETTING" class="btn btn-box-tool" onclick="spendSetting()">
+                        <i class="fa fa-cogs"></i>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="tbList" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Loại</th>
+                    <th>Tên</th>
+                    <th>Ghi chú</th>
+                    <th>Thiết lập</th>
+                    <th>Đã chi ($)</th>
+                    <th>Danh mục</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="settingModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h3 class="card-title">Thiết lập quy tắc chi tiêu</h3>
+                        <div class="card-tools pull-right">
+                            <input type="text" id="monthSettingSelect" readonly />
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="tbListFullGroupSetting" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên</th>
+                                    <th>% thiết lập</th>
+                                    <th>% thực tế</th>
+                                    <th>Số tiền thiết lập</th>
+                                    <th>Số tiền thực tế</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bodytbListFullGroupSetting"></tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span style="color: red;">Lưu ý: Tổng số thiết lập trong tháng là 100%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveSpendSetting();">Lưu</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="~/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/autoNumeric/autoNumeric.min.js"></script>
+    <script src="/Areas/Money/Content/Group/index.js"></script>
+}
+

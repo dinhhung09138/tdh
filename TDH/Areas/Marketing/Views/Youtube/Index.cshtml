@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+
+}
+<p>
+<p>YouTube Data API Quickstart</p>
+<p>Sample <a href="https://developers.google.com/youtube/analytics/reference/reports/query">here</a></p>
+
+<button onclick="authenticate().then(loadClient)">authorize and load</button>
+<br />
+<button onclick="basicVideoStats()">basicVideoStats</button>
+<br />
+<button onclick="MostWatchVideo()">MostWatchVideo</button>
+<br />
+<button onclick="DailyVideoCount()">DailyVideoCount</button>
+<br />
+<button onclick="MonthlyVideoCount()">MonthlyVideoCount</button>
+<br />
+<button onclick="NumberOfViews()">NumberOfViews</button>
+<br />
+<button onclick="DailyViewCount()">DailyViewCount</button>
+<br />
+<button onclick="10SearchTerm()">10SearchTerm - Is error</button>
+<br />
+<button onclick="CountrySpecificViewCount()">CountrySpecificViewCount</button>
+<br />
+<button onclick="CountrySpecificViewCount()">CountrySpecificViewCount</button>
+<br />
+<button onclick="CountrySpecificViewCount()">CountrySpecificViewCount</button>
+<br />
+<button onclick="CountrySpecificViewCount()">CountrySpecificViewCount</button>
+<br />
+<button onclick="CountrySpecificViewCount()">CountrySpecificViewCount</button>
+<br />
+<button onclick="CountrySpecificViewCount()">CountrySpecificViewCount</button>
+<br />
+<button onclick="CountrySpecificViewCount()">CountrySpecificViewCount</button>
+<br />
+@section script {
+    <script src="https://apis.google.com/js/api.js" type="text/javascript"></script>
+    <script src="/Areas/Marketing/Content/Youtube/init.js"></script>
+
+}
+
+

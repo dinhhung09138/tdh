@@ -1,0 +1,40 @@
+﻿@using Utils;
+@model IEnumerable<TDH.Model.Money.Report.Top10>
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h5 class="card-title">@ViewBag.title</h5>
+        <div class="card-tools">
+        </div>
+    </div>
+    <div class="card-body" style="display: block;">
+        <div class="row">
+            <div class="col-md-12 col-xs-12 set-height-month">
+                <table class="table table-bordered table-hover table-borrow">
+                    <thead>
+                        <tr>
+                            <th>Ngày</th>
+                            <th>Nội dung</th>
+                            <th>Số tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @p.Date.DateToString()
+                                </td>
+                                <td>
+                                    @p.Title
+                                </td>
+                                <td class="text-right">
+                                    @p.Money.NumberToString()
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

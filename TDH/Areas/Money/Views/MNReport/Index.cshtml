@@ -1,0 +1,102 @@
+﻿@using TDH.Areas.Money.Utils;
+@{
+    ViewBag.Title = Message.Report.INDEX;
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+    <link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+    <link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-success">
+            <div class="card-header with-border no-bg">
+                <h5 class="card-title">Tổng quan thu chi</h5>
+                <div class="card-tools">
+                </div>
+            </div>
+            <div class="card-body" style="display: block;">
+                <div class="row">
+                    <div id="divSummary" class="col-md-12" style="height: 300px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-success">
+            <div class="card-header with-border no-bg">
+                <h5 class="card-title">Báo cáo tình hình thu chi</h5>
+                <div class="card-tools">
+                    <input type="text" id="summaryByYearSelector" class="form-control form-control-sm" value="@DateTime.Now.ToString("yyyy")" readonly />
+                </div>
+            </div>
+            <div class="card-body" style="display: block;">
+                <div class="row">
+                    <div id="divSummaryByYear" class="col-md-12" style="height: 300px;"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <div class="row">
+                            <div id="divIncomeSummaryByCategory" class="col-md-12" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <div class="row">
+                            <div id="divPaymentSummaryByCategory" class="col-md-12" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card card-success">
+            <div class="card-header with-border no-bg">
+                <h3 class="card-title">Lịch sử khoản vay</h3>
+                <div class="card-tools pull-right"></div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    @Html.Action("borrowaccountstatus", "mnreport", new { area = "money" })
+                </div>
+            </div>
+        </div>
+        <div class="card card-success">
+            <div class="card-header with-border no-bg">
+                <h5 class="card-title">Tình hình trong tháng</h5>
+                <div class="card-tools">
+                </div>
+            </div>
+            <div class="card-body" style="display: block;">
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        @Html.Action("top10payment", "mnreport", new { area = "money" })
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        @Html.Action("top10income", "mnreport", new { area = "money" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-12">
+                        @Html.Action("cateover", "mnreport", new { area = "money" })
+                    </div>
+                    <div id="reportByMonthByGroup" class="col-md-4 col-xs-12" style="height: 300px;"></div>
+                    <div class="col-md-4 col-xs-12">
+                        @*@Html.Action("monthsummary", "mnreport", new { area = "money" })*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/autoNumeric/autoNumeric.min.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/matchHeight/jquery.matchHeight-min.js"></script>
+    <script src="/Areas/Money/Content/Report/index.js"></script>
+}
+

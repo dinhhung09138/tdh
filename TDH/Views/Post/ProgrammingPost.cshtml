@@ -1,0 +1,106 @@
+﻿@using Utils;
+@using TDH.Model.ViewModel.WebSite;
+@model PostViewModel
+@{
+    ViewBag.Title = Model.MetaTitle;
+    ViewBag.Description = Model.MetaDescription;
+    ViewBag.Keywords = Model.MetaKeywords;
+    ViewBag.Url = ViewBag.Url;
+    ViewBag.OgImage = Model.MetaOgImage;
+    ViewBag.TwImage = Model.MetaTwitterImage;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var _nav = ViewBag.navInfor as NavigationViewModel;
+    List<PostViewModel> _lSameCatePost = ViewBag.related as List<PostViewModel>;
+}
+<style>
+    a.title {
+        color: #555;
+    }
+    .pd-5 {
+        padding: 5px;
+    }
+    .pd-5 img {
+        width: 100%;
+        height: auto;
+    }
+    .mag-innert-left {
+        background-color: #fff;
+        padding-top: unset;
+        border: none;
+    }
+</style>
+<div class="mag-inner">
+    <div class="col-md-8 mag-innert-left">
+        <div class="row">
+            <h3 class="tittle"><a href="">@Model.Title</a></h3>
+        </div>
+        <div class="row">
+            <div class="col-md-12 single-left-grid">
+                @Html.Raw(Model.Content)
+            </div>
+        </div>
+        @*<div class="row">
+            <h3 class="tittle"><a href="">_cate.Title</a></h3>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4 col-xs-4 pd-5">
+                        <img src="~/Content/images/mg2.jpg" />
+                    </div>
+                    <div class="col-md-9 col-sm-8 col-xs-8">
+                        <a href="#" class="title">This is the title line of item.. Please select item</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4 col-xs-4 pd-5">
+                        <img src="~/Content/images/mg2.jpg" />
+                    </div>
+                    <div class="col-md-9 col-sm-8 col-xs-8">
+                        <a href="#" class="title">This is the title line of item.. Please select item</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4 col-xs-4 pd-5">
+                        <img src="~/Content/images/mg2.jpg" />
+                    </div>
+                    <div class="col-md-9 col-sm-8 col-xs-8">
+                        <a href="#" class="title">This is the title line of item.. Please select item</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4 col-xs-4 pd-5">
+                        <img src="~/Content/images/mg2.jpg" />
+                    </div>
+                    <div class="col-md-9 col-sm-8 col-xs-8">
+                        <a href="#" class="title">This is the title line of item.. Please select item</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4 col-xs-4 pd-5">
+                        <img src="~/Content/images/mg2.jpg" />
+                    </div>
+                    <div class="col-md-9 col-sm-8 col-xs-8">
+                        <a href="#" class="title">This is the title line of item.. Please select item</a>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    </div>
+    <div class="col-md-4 mag-inner-right">
+        @Html.Action("ProgrammingCategoryPartialView", "Post", new { @navAlias = _nav.Alias })
+        @*@Html.Action("ProgrammingRelatedView", "Post")*@
+        @Html.Action("ProgrammingPopularView", "Post", new { @navAlias = _nav.Alias })
+    </div>
+    <div class="clearfix"></div>
+</div>
+
+

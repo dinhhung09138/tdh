@@ -1,0 +1,61 @@
+﻿@model TDH.Model.Money.AccountModel
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.Insert)
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Loại tài khoản <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.DropDownListFor(m => m.AccountTypeID, new SelectList(ViewBag.type, "ID", "Name"), "Chọn nhóm tài khoản", new { @class = "form-control", @required = true, @focus = true, @tabindex = "1" })
+        @Html.ValidationMessageFor(m => m.AccountTypeID)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Tên TK <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @maxlength = 50, @required = true, @focus = true, @tabindex = "2" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hạn mức <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div>
+        @Html.TextBoxFor(m => m.MaxPaymentString, new { @class = "form-control", @maxlength = 20, @required = true, @tabindex = "3" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Số tiền còn lại
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (Model.Total >= 0)
+            {
+                <span class="label label-success pd-5">@Model.Total.ToString("#,##0.##")</span>
+            }
+            else
+            {
+                <span class="label label-danger pd-5">@Model.Total.ToString("#,##0.##")</span>
+            }
+        }
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (ViewBag.Add == true || ViewBag.Edit == true)
+            {
+                <a href="/money/mnaccount/index" class="btn btn-default" tabindex="4">Quay lại</a>
+                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="5">Lưu</button>
+            }
+        }
+    </div>
+</div>
+

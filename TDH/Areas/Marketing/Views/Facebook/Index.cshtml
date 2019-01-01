@@ -1,0 +1,393 @@
+﻿@using TDH.Model.Marketing.Facebook;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+    List<UserModel> _user = ViewBag.user as List<UserModel>;
+    List<FanpageModel> _fanpage = ViewBag.fanpage as List<FanpageModel>;
+    List<GroupModel> _group = ViewBag.group as List<GroupModel>;
+}
+@section header{
+    <style>
+        .fbLoginMessage {
+            margin-bottom: 20px;
+        }
+        .fb-user-icon-login {
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "user_info" })
+@section facebook{
+    @*<script>
+
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '828442780587442',
+                    cookie: true,
+                    xfbml: true,
+                    version: '3.1'
+                });
+
+                FB.AppEvents.logPageView();
+
+            };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) { return; }
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+
+            var clientID = '1982143715396700';
+            var clientSecrect = '5540cd3053d10b13bc4e482840db5836';
+
+        </script>*@
+}
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Name</h3>
+        <div class="card-tools pull-right" id="toolboxbar">
+            <a class="btn btn-box-tool" id="btnLogin" href="javascript:;">
+                <i class="fa fa-facebook-official"></i> Đăng nhập
+            </a>
+            <img src="/Areas/Administrator/Content/dist/img/user1-128x128.jpg" class="fb-user-icon-login" />
+            <a class="btn btn-box-tool" id="btnLogout" href="javascript:;">
+                <i class="fa fa-facebook-official"></i> Đăng xuất
+            </a>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4 col-xs-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách tài khoản</h3>
+                        <div class="card-tools">
+                            <span id="user-count" class="badge badge-danger">@_user.Count() tài khoản</span>
+                            <button type="button" class="btn btn-tool">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul id="user-list" class="users-list clearfix">
+                            @{
+                                foreach (var item in _user)
+                                {
+                                    <li>
+                                        <img src="/Areas/Administrator/Content/dist/img/user1-128x128.jpg" alt="@item.Name">
+                                        <a class="users-list-name" href="#" target="_blank">@item.Name</a>
+                                        <span class="users-list-date">UID: @item.UID</span>
+                                        <span class="users-list-date" onclick="confirmDelete('@item.UID');"><i class="fa fa-times" aria-hidden="true"></i><i class="fa fa-refresh" aria-hidden="true"></i></span>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Trang quản lý</h3>
+                        <div class="card-tools">
+                            <span id="fanpage-count" class="badge badge-danger">@_fanpage.Count() trang</span>
+                            <button type="button" class="btn btn-tool">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul id="fanpage-list" class="products-list product-list-in-card pl-2 pr-2">
+                            @{
+                                foreach (var item in _fanpage)
+                                {
+                                    <li class="item">
+                                        <div class="product-img">
+                                            <img src="/Areas/Administrator/Content/dist/img/default-150x150.png" alt="@item.DisplayName" class="img-size-50">
+                                        </div>
+                                        <div class="product-info">
+                                            <a href="@item.Link" class="product-title" target="_blank">
+                                                &#64;@item.UserName
+                                            </a>
+                                            <a href="javascript:;" class="badge badge-danger float-right p-1 m-1" onclick="confirmDelete('@item.UID');"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                            <a href="javascript:;" title="" class="badge badge-warning float-right p-1 m-1" onclick="confirmDelete('@item.UID');"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+                                            <span class="product-description">
+                                                @item.DisplayName
+                                            </span>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Nhóm quản lý</h3>
+                        <div class="card-tools">
+                            <span id="group-count" class="badge badge-danger">@_group.Count() nhóm</span>
+                            <button type="button" class="btn btn-tool">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul id="group-list" class="products-list product-list-in-card pl-2 pr-2">
+                            @{
+                                foreach (var item in _group)
+                                {
+                                    <li class="item">
+                                        <div class="product-img">
+                                            <img src="/Areas/Administrator/Content/dist/img/default-150x150.png" alt="@item.Name" class="img-size-50">
+                                        </div>
+                                        <div class="product-info">
+                                            <a href="@item.Link" class="product-title" target="_blank">
+                                                &#64;@item.Name
+                                            </a>
+                                            <a href="javascript:;" class="badge badge-danger float-right p-1 m-1" onclick="confirmDelete('@item.UID');"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                            <a href="javascript:;" title="" class="badge badge-warning float-right p-1 m-1" onclick="confirmDelete('@item.UID');"><i class="fa fa-refresh" aria-hidden="true"></i></a>
+                                            <span class="product-description">
+                                            </span>
+                                        </div>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Areas/Administrator/Views/Shared/_DeleteModal.cshtml")
+<div class="modal fade" id="fbLogin" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Đăng nhập facebook</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12 text-center fbLoginMessage">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12 text-center">
+                        <button class="btn btn-primary" onclick="Login();">Đăng nhập</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="fanpageModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Chọn trang</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="maxFanSelected" value="2" />
+                <div class="row">
+                    <div class="col-md-12 errorMessageContent">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        <ul class="list-group" id="listFanpage">
+                            <li class="list-group-item">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input">
+                                    <label class="form-check-label">Check me out</label>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12" id="fanpageContent">
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="saveFanpage" class="btn btn-primary">Lưu</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section script {
+    <script src="/Areas/Marketing/Content/Facebook/init.js"></script>
+    <script src="/Areas/Marketing/Content/Facebook/index.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            //$('.fbLoginMessage').html('Vui lòng đăng nhập để tiếp tục');
+            //$('#fbLogin').modal('show');
+        });
+
+
+
+
+    </script>
+
+    <script>
+        //-----------
+        // Show list of fanpage modal
+        //-----------
+        $('#selectFanpage1').click(function (e) {
+            if (fbID === '') {
+                $('#fbLogin').modal('show');
+            }
+            else {
+                getFanpageData(fbID, fbToken);
+                $('#fanpageModel').modal('show');
+            }
+        });
+        //-----------
+        // Get list of fanpage selected, save to database
+        //-----------
+        $('#saveFanpage').click(function (e) {
+            $.each($('input.selectFanpage:checked'), function (idx, item) {
+                $.ajax({
+                    url: '/fb/Fanpage/SetFacebookUserInfor',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: { fbUserID: fbUserID, fbUsername: fbUsername, token: token, expiredTime: expiredTime },
+                    success: function (result) {
+                        fbID = fbUserID;
+                        $('#fbLogin').modal('hide');
+                        return 1;
+                    },
+                    error: function (eror) {
+                        $('.fbLoginMessage').empty();
+                        $('.fbLoginMessage').html('<div class="alert alert-danger" role="alert">Đăng nhập không thành công</div>');
+                        return -1;
+                    }
+                });
+            });
+            //fanpagInfo($('#fanID').val());
+            return;
+
+        });
+
+        $(document).on('click', '.selectFanpage', function (e) {
+            if ($('input.selectFanpage:checked').length > parseInt($('#maxFanSelected').val())) {
+                showAlertWaring('errorMessageContent', 'Bạn chỉ được chọn tối đa ' + $('#maxFanSelected').val() + ' fanpage', 'warning');
+                e.preventDefault();
+            }
+        });
+
+        function setFacebookUserInfo(fbUserID, fbUsername, token, expiredTime) {
+            $.ajax({
+                url: '/fb/Fanpage/SetFacebookUserInfor',
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: { fbUserID: fbUserID, fbUsername: fbUsername, token: token, expiredTime: expiredTime },
+                success: function (result) {
+                    fbID = fbUserID;
+                    $('#fbLogin').modal('hide');
+                    return 1;
+                },
+                error: function (eror) {
+                    $('.fbLoginMessage').empty();
+                    $('.fbLoginMessage').html('<div class="alert alert-danger" role="alert">Đăng nhập không thành công</div>');
+                    return -1;
+                }
+            });
+        }
+
+
+
+
+
+        //-----------
+        // Show list of fanpage modal
+        //-----------
+        $('#selectFanpage').click(function (e) {
+            if (fbID === '') {
+                $('#fbLogin').modal('show');
+            }
+            else {
+                getFanpageData(fbID, fbToken, displayListOfFanpage);
+            }
+        });
+
+        //-----------
+        // Display list of fanpage into modal after get from graph api
+        //-----------
+        function displayListOfFanpage(response) {
+            console.log(response);
+            var pages = response.accounts.data;
+            var dRow = '';
+            $.each(pages, function (idx, item) {
+                dRow += '<li class="list-group-item">';
+                dRow += '	<div class="form-check">';
+                dRow += '		<input type="checkbox" class="form-check-input selectFanpage" data-id="' + item.id + '" data-name="' + item.name + '" data-token="' + item.access_token + '">';
+                dRow += '		<label class="form-check-label">' + item.name + '</label>';
+                dRow += '	</div>';
+                dRow += '</li>';
+            });
+            $('#listFanpage').empty();
+            $('#listFanpage').append(dRow);
+            $('#fanpageModel').modal('show');
+        }
+
+        //-----------
+        // save fanpage
+        //-----------
+        function saveFanpage(id, name, token, expireTime) {
+            loading();
+            var model = {
+                FanpageId: id,
+                DisplayName: name,
+                Token: token,
+                ExpiredTime: expireTime,
+                ManagerID: fbID,
+                Insert: True
+            };
+            $.ajax({
+                url: '/fb/Fanpage/savefanpage',
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: JSON.stringify(model),
+                success: function (result) {
+                    showAlertWaring('msgErrorLog', 'Đã lưu fanpage: ' + name, 'success');
+                    removeLoading();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    if (xhr.status == 401 || xhr.status == 530) {
+                        window.location.href = '/forbiden';
+                    }
+                    showAlertWaring('msgErrorLog', 'lỗi khi xóa fanpage', 'error');
+                    console.log(error);
+                    removeLoading();
+                }
+            });
+        }
+        
+
+    </script>
+}
+
+

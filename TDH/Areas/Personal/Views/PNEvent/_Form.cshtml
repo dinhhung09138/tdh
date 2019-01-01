@@ -1,0 +1,103 @@
+﻿@model TDH.Model.Personal.EventModel
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.Insert)
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Loại sự kiện <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.DropDownListFor(m => m.TypeCode, new SelectList(ViewBag.type, "Code", "Name"), "Chọn loại sự kiện", new { @class = "form-control", @required = true, @focus = true, @tabindex = "1" })
+        @Html.ValidationMessageFor(m => m.TypeCode)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Tên sự kiện <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @maxlength = 100, @required = true, @focus = true, @tabindex = "2" })
+        @Html.ValidationMessageFor(m => m.Title)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Thời gian <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Duration, new { @class = "form-control", @maxlength = 100, @required = true, @tabindex = "3" })
+        @Html.ValidationMessageFor(m => m.Duration)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Mô tả <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @maxlength = 255, @required = true, @tabindex = "4" })
+        @Html.ValidationMessageFor(m => m.Description)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Ngày <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.DateString, new { @class = "form-control datePicker", @maxlength = 10, @required = true, @tabindex = "5" })
+        @Html.ValidationMessageFor(m => m.DateString)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Trạng thái hủy
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.CheckBoxFor(m => m.IsCancel, new { @class = "form-control", @tabindex = "6" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hoàn thành
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.CheckBoxFor(m => m.IsFinish, new { @class = "form-control", @tabindex = "7" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Đang lên kế hoạch
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.CheckBoxFor(m => m.IsPlan, new { @class = "form-control", @tabindex = "8" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hiển thị
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "9" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Nội dung khóa học
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @rows = 2, @tabindex = "10" })
+        @Html.ValidationMessageFor(m => m.Content)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (ViewBag.Add == true || ViewBag.Edit == true)
+            {
+                <a href="/personal/pnevent/index" class="btn btn-default" tabindex="11">Quay lại</a>
+                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="12">Lưu</button>
+            }
+        }
+    </div>
+</div>

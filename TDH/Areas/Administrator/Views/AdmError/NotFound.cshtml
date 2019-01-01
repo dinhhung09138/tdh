@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Không tìm thấy liên kết";
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "error" })
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">Không tìm thấy liên kết</h3>
+        <div class="card-tools pull-right">
+        </div>
+    </div>
+    <div class="card-body" style="text-align:center;">
+        <br />
+        <h4 style="color: #B33A38;">Trang bạn đang cố gắng truy cập vào không được tìm thấy!</h4>
+        <br /><br /><br />
+    </div>
+</div>
+@section script {}
+

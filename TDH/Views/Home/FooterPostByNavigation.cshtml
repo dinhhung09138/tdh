@@ -1,5 +1,5 @@
 ﻿@using Utils;
-@using TDH.ViewModel;
+@using TDH.Model.ViewModel.WebSite;
 @model IEnumerable<NavigationViewModel>
 @{
     foreach (var item in Model)
@@ -14,7 +14,7 @@
                     </div>
                     <div class="col-md-9 item-details">
                         <h5 class="inner"><a href="@p.Alias">@p.Title</a></h5>
-                        <div class="td-post-date">@p.CreateDate.DateToString()</div>
+                        <div class="td-post-date">@p.CreateDate</div>
                     </div>
                     <div class="clearfix"></div>
                 </div>

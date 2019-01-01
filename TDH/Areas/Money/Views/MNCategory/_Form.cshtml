@@ -1,0 +1,87 @@
+﻿@model TDH.Model.Money.CategoryModel
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.Insert)
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Nhóm <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.DropDownListFor(m => m.GroupID, new SelectList(ViewBag.group, "ID", "Name"), "Chọn nhóm tài khoản", new { @class = "form-control", @required = true, @focus = true, @tabindex = "1" })
+        @Html.ValidationMessageFor(m => m.GroupID)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Tên danh mục <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @maxlength = 50, @required = true, @tabindex = "2" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Ghi chú <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextAreaFor(m => m.Notes, new { @class = "form-control", @rows = 3, @required = true, @maxlength = 255, @tabindex = "3" })
+        @Html.ValidationMessageFor(m => m.Notes)
+    </div>
+</div>
+@{
+    if (!Model.Insert)
+    {
+        <div class="row form-group">
+            <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+                Lịch sử giao dịch trong năm
+            </div>
+            <div class="col-md-9 col-sm-8 col-xs-12">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Tháng</th>
+                            <th colspan="2">Tổng tiền</th>
+                            <td rowspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th>Thiết lập</th>
+                            <th>Thực tế</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            string _cls = "";
+                            foreach (var item in Model.Setting)
+                            {
+                                <tr>
+                                    <td class="@_cls">@item.Month</td>
+                                    <td class="text-right">@item.MoneySetting.ToString("#,##0.##")</td>
+                                    <td class="text-right">@item.MoneyCurrent.ToString("#,##0.##")</td>
+                                    <td class="ctn-center">
+                                        <a href="/money/mncategory/history/@Model.ID?year=@item.YearMonthString" title="Lịch sử giao dịch" class="mg-lr-2"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (ViewBag.Add == true || ViewBag.Edit == true)
+            {
+                <a href="/money/mncategory/index" class="btn btn-default" tabindex="4">Quay lại</a>
+                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="5">Lưu</button>
+            }
+        }
+    </div>
+</div>
+
+

@@ -1,0 +1,212 @@
+﻿@model TDH.Model.Website.CategoryModel
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.Insert)
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Danh mục <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (Model.Insert == true)
+            {
+                @Html.DropDownListFor(m => m.NavigationID, new SelectList(ViewBag.navigation, "ID", "Title"), "Chọn danh mục", new { @class = "form-control", @required = true, @focus = true, @tabindex = "1" })
+                @Html.ValidationMessageFor(m => m.NavigationID)
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.NavigationID)
+                @Html.TextBoxFor(m => m.NavigationTitle, new { @class = "form-control", @maxlength = 70, @required = true, @readonly = true, @focus = true, @tabindex = "1" })
+            }
+        }
+
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Tiêu đề <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @maxlength = 70, @required = true, @focus = true, @tabindex = "2" })
+        @Html.ValidationMessageFor(m => m.Title)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Mô tả  <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = 2, @maxlength = 250, @tabindex = "3" })
+        @Html.ValidationMessageFor(m => m.Description)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hiển thị ở navbar <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.CheckBoxFor(m => m.ShowOnNav, new { @class = "form-control", @tabindex = "4" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hình ảnh <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        <div class="row form-group">
+            <div class="col-md-12 col-xs-12">
+                <a href="javascript:;" id="selectImg" tabindex="4">Chọn ảnh (352x230)</a>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-12 col-xs-12">
+                @Html.HiddenFor(m => m.Image)
+                <div class="row" style="padding:10px;">
+                    <img id="imgImage" src="@Model.Image" width="352" height="230" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Thứ tự <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Ordering, new { @class = "form-control", @maxlength = 2, @required = true, @tabindex = "5" })
+        @Html.ValidationMessageFor(m => m.Ordering)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hiển thị <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "6" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        [SEO] Tiêu đề <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.MetaTitle, new { @class = "form-control", @maxlength = 100, @required = true, @tabindex = "7" })
+        @Html.ValidationMessageFor(m => m.MetaTitle)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        [SEO] Mô tả <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextAreaFor(m => m.MetaDescription, new { @class = "form-control", @rows = 2, @required = true, @maxlength = 160, @tabindex = "8" })
+        @Html.ValidationMessageFor(m => m.MetaDescription)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        [SEO] Từ khóa <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.MetaKeywords, new { @class = "form-control", @maxlength = 250, @required = true, @tabindex = "9" })
+        @Html.ValidationMessageFor(m => m.MetaKeywords)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        [SEO] Trang kế
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.MetaNext, new { @class = "form-control", @maxlength = 170, @tabindex = "10" })
+        @Html.ValidationMessageFor(m => m.MetaNext)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        [SEO] Site name
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.MetaOgSiteName, new { @class = "form-control", @maxlength = 100, @tabindex = "11" })
+        @Html.ValidationMessageFor(m => m.MetaOgSiteName)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        [SEO] Ảnh minh họa <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="row form-group">
+                    <div class="col-md-12 col-xs-12">
+                        <a href="javascript:;" id="selectImgG" tabindex="12">Chọn ảnh G+/Facebook (1200 x 630)</a>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12 col-xs-12">
+                        @Html.HiddenFor(m => m.MetaOgImage)
+                        <div class="row" style="padding:10px;">
+                            <img id="imgMetaOgImage" src="@Model.MetaOgImage" width="300" height="160" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="row form-group">
+                    <div class="col-md-12 col-xs-12">
+                        <a href="javascript:;" id="selectImgTwitter" tabindex="13">Chọn ảnh Twitter (1200 x 630)</a>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-12 col-xs-12">
+                        @Html.HiddenFor(m => m.MetaTwitterImage)
+                        <div class="row" style="padding:10px;">
+                            <img id="imgMetaTwitterImage" src="@Model.MetaTwitterImage" width="300" height="160" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        [SEO] Article
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.MetaArticleName, new { @class = "form-control", @maxlength = 200, @tabindex = "14" })
+        @Html.ValidationMessageFor(m => m.MetaArticleName)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        [SEO] Section
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.MetaArticleSection, new { @class = "form-control", @maxlength = 200, @tabindex = "15" })
+        @Html.ValidationMessageFor(m => m.MetaArticleSection)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        [SEO] Tags
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.MetaArticleTag, new { @class = "form-control", @maxlength = 255, @tabindex = "16" })
+        @Html.ValidationMessageFor(m => m.MetaArticleTag)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (ViewBag.Add == true || ViewBag.Edit == true)
+            {
+                <a href="/website/wcategory/index" class="btn btn-default" tabindex="17">Quay lại</a>
+                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="18">Lưu</button>
+            }
+        }
+    </div>
+</div>
+

@@ -1,0 +1,336 @@
+﻿@using TDH.Areas.Common.Utils;
+@using TDH.Model.Common;
+@model IEnumerable<SkillGroupModel>
+@{
+    ViewBag.Title = Message.Skill.INDEX;
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+    List<SkillModel> skills = ViewBag.skills as List<SkillModel>;
+}
+@section header{
+    <style>
+        .ml-5 {
+            margin-left: 5px !important;
+        }
+        .bg-header {
+            background-color: #a77328 !important;
+        }
+    </style>
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "common" })
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">@Message.Skill.INDEX</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.Add == true)
+                {
+                    <a class="btn btn-box-tool" title="@Message.Skill.CREATE" onclick="addSkill();">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Nhóm</h3>
+                        <div class="card-tools">
+                            @{
+                                if (ViewBag.Add == true)
+                                {
+                                    <button type="button" class="btn btn-tool" onclick="addGroup();">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                }
+                            }
+                            <button type="button" class="btn btn-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <input type="hidden" id="selectedGroupID" value="@ViewBag.groupID" />
+                        <ul class="nav nav-pills flex-column mt-2" id="list_group_display">
+                            @{
+                                int _count = 0;
+                                foreach (var item in Model)
+                                {
+                                    <li class="nav-item group_item">
+                                        <a href="javascript:;" class="nav-link @(_count == 0 ? "active" : "") " data-id="@item.ID" data-name="@item.Name">
+                                            <i class="fa fa-file-text-o"></i> @item.Name
+                                            <i class="fa fa-trash-o float-right ml-5" onclick="confirmDeleteGroup('@item.ID');"></i>
+                                            <i class="fa fa-pencil-square-o float-right" onclick="editGroup('@item.ID');"></i>
+                                            <span class="badge bg-warning">@item.CountSkill</span>
+                                        </a>
+                                    </li>
+                                    _count++;
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row" id="list_skill_display">
+                    @{
+                        foreach (var item in skills)
+                        {
+                            <div class="col-md-6 col-xs-12">
+                                <div class="card">
+                                    <div class="card-header bg-header">
+                                        <h3 class="card-title">@item.Name</h3>
+                                        <div class="card-tools">
+                                            <span data-toggle="tooltip" title="@item.Defined.Count()" class="badge badge-primary">@item.Defined.Count()</span>
+                                            <button type="button" class="btn btn-tool" onclick="addDefined('@item.ID','@item.Name');">
+                                                <i class="fa fa-cog"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" onclick="editSkill('@item.ID');">
+                                                <i class="fa fa-pencil-square-o"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-widget="collapse">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" onclick="confirmDeleteSkill('@item.ID');">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body direct-chat-messages">
+                                        <ul class="todo-list">
+                                            @{
+                                                foreach (var d in item.Defined)
+                                                {
+                                                    <li>
+                                                        <span class="text">@d.Name</span>
+                                                        <div class="tools">
+                                                            <i class="fa fa-edit" onclick="editDefined('@d.ID', '@item.ID','@item.Name');"></i>
+                                                            <i class="fa fa-trash-o" onclick="confirmDeleteDefined('@d.ID');"></i>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="groupModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h3 class="card-title">Nhóm kỹ năng</h3>
+                        <div class="card-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="frmGroup" class="form">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Tên nhóm
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="hidden" id="hdGroupID" value="" />
+                                    <input id="txtGroupName" type="text" class="form-control" maxlength="100" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="1" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Thứ tự
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtGroupOrdering" type="text" class="form-control" maxlength="2" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Mô tả
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtGroupNotes" type="text" class="form-control" maxlength="255" data-parsley-maxlength="255" data-parsley-maxlength-message="Nội dung tối đa 255 ký tự" tabindex="3" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="4">Hủy</button>
+                <button type="button" id="btnSaveGroup" class="btn btn-primary" onclick="saveGroup();" tabindex="5">Lưu</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" role="dialog" data-backdrop="static" data-keyboard="false" style="z-index: 1040; display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="margin-top: 229px;">
+            <div class="modal-header">
+                <h4 class="modal-title">Xác nhận</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h5>Bạn có muốn xóa dòng dữ liệu đang chọn</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="deleteItem();">Đồng ý</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="skillModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h3 class="card-title">Kỹ năng</h3>
+                        <div class="card-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="frmSkill" class="form">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Nhóm
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label id="lblSkillGroupName"></label>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Tên kỹ năng
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="hidden" id="hdSkillID" value="" />
+                                    <input id="txtSkillName" type="text" class="form-control" maxlength="200" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="1" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Thứ tự
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtSkillOrdering" type="text" class="form-control" maxlength="2" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="2" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Mô tả
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtSkillNotes" type="text" class="form-control" maxlength="255" data-parsley-maxlength="255" data-parsley-maxlength-message="Nội dung tối đa 255 ký tự" tabindex="3" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="4">Hủy</button>
+                <button type="button" id="btnSaveSkill" class="btn btn-primary" onclick="saveSkill();" tabindex="5">Lưu</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="skillDefinedModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h3 class="card-title">Tiêu chí đánh giá</h3>
+                        <div class="card-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="frmDefined" class="form">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Kỹ năng
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label id="lblSkillName"></label>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Tiêu chí
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="hidden" id="hdDefinedID" value="" />
+                                    <input id="txtDefinedName" type="text" class="form-control" maxlength="200" data-parsley-required="true" data-parsley-required-message="Nội dung không được rỗng" tabindex="1" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Mô tả
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtDefinedDescription" type="text" class="form-control" maxlength="400" data-parsley-maxlength="400" data-parsley-maxlength-message="Nội dung tối đa 400 ký tự" tabindex="2" />
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Trọng số
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input id="txtDefinedPoint" type="text" class="form-control" value="100" maxlength="3" readonly tabindex="3" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="4">Hủy</button>
+                <button type="button" id="btnSaveSkillDefined" class="btn btn-primary" onclick="saveDefined();" tabindex="5">Lưu</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/autoNumeric/autoNumeric.min.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/parsleyjs/dist/parsley.min.js"></script>
+    <script src="~/Areas/Common/Content/Skill/index.js"></script>
+}

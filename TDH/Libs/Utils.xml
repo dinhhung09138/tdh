@@ -1346,6 +1346,25 @@
             English
             </summary>
         </member>
+        <member name="T:Utils.RequestHelpers">
+            <summary>
+            Request helper
+            </summary>
+        </member>
+        <member name="M:Utils.RequestHelpers.GetClientIpAddress(System.Web.HttpRequestBase)">
+            <summary>
+            Get client ip address
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Utils.RequestHelpers.IsPrivateIpAddress(System.String)">
+            <summary>
+            Check is private ip address
+            </summary>
+            <param name="ipAddress"></param>
+            <returns></returns>
+        </member>
         <member name="T:Utils.ResponseStatusCodeHelper">
             <summary>
             Response status code

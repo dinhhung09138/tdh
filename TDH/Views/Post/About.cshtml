@@ -1,4 +1,4 @@
-﻿@using TDH.ViewModel;
+﻿@using TDH.Model.ViewModel.WebSite;
 @model PostViewModel
 @{
     ViewBag.Title = Model.MetaTitle;
@@ -11,8 +11,14 @@
 }
 
 <div class="mag-inner">
-    <div class="col-12 mag-innert-left">
+    <div class="col-md-8 mag-innert-left">
         @Html.Raw(Model.Content)
+    </div>
+    <div class="col-md-4 mag-inner-right">
+        @Html.Action("ConnectedToMe", "Home")
+        @Html.Action("NewsLetter", "Home")
+        @Html.Action("LastedNews", "Home")
+        @Html.Action("TopView", "Home")
     </div>
     <div class="clearfix"></div>
 </div>

@@ -1,0 +1,68 @@
+﻿@using TDH.Areas.Money.Utils;
+@{
+    ViewBag.Title = Message.Account.HISTORY + ": " + ViewBag.name;
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.css">
+    <link href="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/Areas/Administrator/Content/plugins/datatables/dataTables.custom.css">
+    <link href="/Areas/Administrator/Content/plugins/datepicker/datepicker3.css" rel="stylesheet" />
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "money" })
+<input type="hidden" id="id" value="@ViewBag.accID" />
+<div id="toolbarSearch" class="row">
+    <div class="col-md-6">
+        <select id="ddlSelect" class="form-control form-control-sm">
+            <option value="" selected>Tất cả</option>
+            <option value="1">Thu nhập</option>
+            <option value="-1">Chi tiêu</option>
+        </select>
+    </div>
+    <div class="col-md-6">
+    </div>
+</div>
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">@Message.Account.HISTORY: @ViewBag.name</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.listAccount == "1")
+                {
+                    <a title="@Message.Account.LIST" class="btn btn-box-tool" href="/money/mnaccount/index">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-box-tool" href="/money/mnaccount/edit/@ViewBag.accID" title="@Message.Account.EDIT">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
+                }
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        <table id="tbList" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th></th>
+                    <th>Ngày</th>
+                    <th>Số tiền</th>
+                    <th>Nội dung chi</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/Areas/Administrator/Content/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="/Areas/Administrator/Content/plugins/datepicker/locales/bootstrap-datepicker.vi.js"></script>
+    <script src="/Areas/Money/Content/account/history.js"></script>
+}
+

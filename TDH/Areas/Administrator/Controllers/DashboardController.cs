@@ -8,7 +8,6 @@ using TDH.Common.UserException;
 
 namespace TDH.Areas.Administrator.Controllers
 {
-    [AllowAnonymous]
     public class DashboardController : TDH.Common.BaseController
     {
         #region " [ Properties ] "
@@ -24,6 +23,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// Main dashboard form
         /// </summary>
         /// <returns>View</returns>
+        
         [HttpGet]
         public ActionResult Index()
         {

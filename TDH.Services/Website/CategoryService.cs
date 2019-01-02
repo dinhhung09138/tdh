@@ -8,6 +8,7 @@ using TDH.Model.Website;
 using Utils;
 using Utils.JqueryDatatable;
 using TDH.Common.UserException;
+using System.Reflection;
 
 namespace TDH.Services.Website
 {
@@ -121,7 +122,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "List", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
             return _return;
         }
@@ -156,7 +157,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -174,7 +175,7 @@ namespace TDH.Services.Website
                     WEB_CATEGORY _md = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     var _nav = _context.WEB_NAVIGATION.FirstOrDefault(m => m.id == _md.navigation_id);
                     return new CategoryModel()
@@ -209,7 +210,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
         }
 
@@ -234,7 +235,7 @@ namespace TDH.Services.Website
                         _md = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                         if (_md == null)
                         {
-                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
+                            throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                         }
                     }
 
@@ -282,7 +283,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -309,7 +310,7 @@ namespace TDH.Services.Website
                     WEB_CATEGORY _md = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _md.publish = model.Publish;
                     _md.update_by = model.UpdateBy;
@@ -325,7 +326,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Publish", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -345,7 +346,7 @@ namespace TDH.Services.Website
                     WEB_CATEGORY _md = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "OnNavigation", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _md.show_on_nav = model.ShowOnNav;
                     _md.update_by = model.UpdateBy;
@@ -361,7 +362,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "OnNavigation", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -381,7 +382,7 @@ namespace TDH.Services.Website
                     WEB_CATEGORY _md = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _md.deleted = true;
                     _md.delete_by = model.DeleteBy;
@@ -397,7 +398,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -418,7 +419,7 @@ namespace TDH.Services.Website
                     WEB_CATEGORY _md = _context.WEB_CATEGORY.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "CheckDelete", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     var _product = _context.WEB_POST.FirstOrDefault(m => m.category_id == model.ID && !m.deleted);
                     if (_product != null)
@@ -434,7 +435,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "CheckDelete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             return ResponseStatusCodeHelper.OK;
         }

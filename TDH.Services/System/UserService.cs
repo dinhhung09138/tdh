@@ -132,7 +132,7 @@ namespace TDH.Services.System
                     var _md = _context.PROC_SYS_USER_ById(model.ID, this.SessionID, model.CreateBy).FirstOrDefault();
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     return new UserModel()
                     {

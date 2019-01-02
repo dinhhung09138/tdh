@@ -14,12 +14,7 @@ namespace TDH.Areas.Administrator.Controllers
         /// File name
         /// </summary>
         private readonly string FILE_NAME = "Administrator.Controllers/BaseController.cs";
-
-        /// <summary>
-        /// Current session
-        /// </summary>
-        private string SessionID = "";
-
+        
         #endregion
 
         /// <summary>

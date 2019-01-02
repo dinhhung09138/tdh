@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
@@ -35,7 +36,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Home", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -79,7 +80,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -112,7 +113,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "GetGroup", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -145,7 +146,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "GetGroupItem", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -183,7 +184,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "ActionResult", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -221,7 +222,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "EditGroup", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
         
@@ -255,7 +256,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "CheckDeleteGroup", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
         
@@ -291,7 +292,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "DeleteGroup", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -326,7 +327,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "GetSkillByGroup", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
         
@@ -359,7 +360,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "GetSkillItem", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -397,7 +398,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "CreateSkill", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -435,7 +436,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "EditSkill", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -469,7 +470,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "CheckDeleteSkill", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
         
@@ -505,7 +506,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "DeleteSkill", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -542,7 +543,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "GetSkillDefinedItem", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -580,7 +581,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "CreateSkillDefined", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -618,7 +619,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "EditSkillDefined", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -654,7 +655,7 @@ namespace TDH.Areas.Common.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "DeleteSkillDefined", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using TDH.DataAccess;
 using TDH.Model.Personal;
 using TDH.Common.UserException;
+using System.Reflection;
 
 namespace TDH.Services.Personal
 {
@@ -44,7 +45,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 

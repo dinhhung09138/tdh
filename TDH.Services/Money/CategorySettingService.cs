@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using TDH.Common;
 using TDH.Common.UserException;
 using TDH.DataAccess;
@@ -84,7 +85,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -130,7 +131,7 @@ namespace TDH.Services.Money
                         catch (Exception ex)
                         {
                             trans.Rollback();
-                            throw new ServiceException(FILE_NAME, "Create", userID, ex);
+                            throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
                         }
                     }
                 }
@@ -141,7 +142,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Create", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
             return ResponseStatusCodeHelper.Success;
         }
@@ -175,7 +176,7 @@ namespace TDH.Services.Money
                         catch (Exception ex)
                         {
                             trans.Rollback();
-                            throw new ServiceException(FILE_NAME, "Save", userID, ex);
+                            throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
                         }
                     }
                 }
@@ -186,7 +187,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
             Notifier.Notification(userID, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

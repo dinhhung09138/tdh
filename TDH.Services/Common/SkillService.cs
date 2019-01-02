@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using TDH.Common;
 using TDH.Common.UserException;
 using TDH.DataAccess;
@@ -35,7 +36,7 @@ namespace TDH.Services.Common
                     CM_SKILL _md = _context.CM_SKILL.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     var _return = new SkillModel()
                     {
@@ -53,7 +54,7 @@ namespace TDH.Services.Common
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
         }
 
@@ -93,7 +94,7 @@ namespace TDH.Services.Common
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -118,7 +119,7 @@ namespace TDH.Services.Common
                         _md = _context.CM_SKILL.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                         if (_md == null)
                         {
-                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
+                            throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                         }
                     }
                     _md.group_id = model.GroupID;
@@ -150,7 +151,7 @@ namespace TDH.Services.Common
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -177,7 +178,7 @@ namespace TDH.Services.Common
                     CM_SKILL _md = _context.CM_SKILL.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _md.deleted = true;
                     _md.deleted_by = model.DeleteBy;
@@ -200,7 +201,7 @@ namespace TDH.Services.Common
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -220,7 +221,7 @@ namespace TDH.Services.Common
                     CM_SKILL _md = _context.CM_SKILL.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "CheckDelete", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     var _skills = _context.PN_SKILL.FirstOrDefault(m => m.skill_id == model.ID && !m.deleted);
                     if (_skills != null)
@@ -236,7 +237,7 @@ namespace TDH.Services.Common
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "CheckDelete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             return ResponseStatusCodeHelper.OK;
         }

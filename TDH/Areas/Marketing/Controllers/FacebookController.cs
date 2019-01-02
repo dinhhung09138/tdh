@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
@@ -51,7 +52,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -81,7 +82,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "GetUser", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -119,7 +120,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "SaveUser", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -157,7 +158,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "DeleteUser", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -189,7 +190,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "GetFanpage", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -227,7 +228,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "SaveFanpage", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -265,7 +266,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "DeleteFanpage", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -297,7 +298,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "GetGroup", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -335,7 +336,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "SaveGroup", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -373,7 +374,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "DeleteGroup", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -396,7 +397,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Fanpage", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -416,7 +417,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Group", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -436,7 +437,7 @@ namespace TDH.Areas.Marketing.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "PostType", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 

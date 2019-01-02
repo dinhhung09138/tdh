@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using TDH.Common;
 using TDH.Common.UserException;
 using TDH.DataAccess;
@@ -51,7 +52,7 @@ namespace TDH.Services.Marketing.Facebook
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -69,7 +70,7 @@ namespace TDH.Services.Marketing.Facebook
                     FB_FANPAGE _md = context.FB_FANPAGE.FirstOrDefault(m => m.uid == model.UID && m.created_by == model.CreateBy && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     return new FanpageModel()
                     {
@@ -86,7 +87,7 @@ namespace TDH.Services.Marketing.Facebook
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
         }
 
@@ -104,7 +105,7 @@ namespace TDH.Services.Marketing.Facebook
                     FB_FANPAGE _md = context.FB_FANPAGE.FirstOrDefault(m => m.uid == model.UID && m.created_by == model.CreateBy && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "GetTokenByItem", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     if (_md.expires_on <= DateTime.Now || _md.start_on >= DateTime.Now)
                         return "";
@@ -117,7 +118,7 @@ namespace TDH.Services.Marketing.Facebook
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetTokenByItem", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
         }
 
@@ -171,7 +172,7 @@ namespace TDH.Services.Marketing.Facebook
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -198,7 +199,7 @@ namespace TDH.Services.Marketing.Facebook
                     FB_FANPAGE _md = context.FB_FANPAGE.FirstOrDefault(m => m.uid == model.UID && !m.deleted && m.created_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "UpdateToken", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _md.auth_token = model.AuthToken;
                     _md.start_on = model.StartOn;
@@ -217,7 +218,7 @@ namespace TDH.Services.Marketing.Facebook
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "UpdateToken", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -244,7 +245,7 @@ namespace TDH.Services.Marketing.Facebook
                     FB_FANPAGE _md = context.FB_FANPAGE.FirstOrDefault(m => m.uid == model.UID && !m.deleted && m.created_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "LastExecute", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _md.last_execute = model.LastExecute;
                     _md.updated_by = model.UpdateBy;
@@ -260,7 +261,7 @@ namespace TDH.Services.Marketing.Facebook
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "LastExecute", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -287,7 +288,7 @@ namespace TDH.Services.Marketing.Facebook
                     FB_FANPAGE _md = context.FB_FANPAGE.FirstOrDefault(m => m.uid == model.UID && m.created_by == model.CreateBy && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     context.FB_FANPAGE.Remove(_md);
                     context.Entry(_md).State = EntityState.Deleted;
@@ -300,7 +301,7 @@ namespace TDH.Services.Marketing.Facebook
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

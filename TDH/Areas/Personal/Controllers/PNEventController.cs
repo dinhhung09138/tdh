@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
@@ -49,7 +50,7 @@ namespace TDH.Areas.Personal.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -99,7 +100,7 @@ namespace TDH.Areas.Personal.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Index", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -139,7 +140,7 @@ namespace TDH.Areas.Personal.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Create", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -186,7 +187,7 @@ namespace TDH.Areas.Personal.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Create", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -225,7 +226,7 @@ namespace TDH.Areas.Personal.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Edit", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -272,7 +273,7 @@ namespace TDH.Areas.Personal.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Edit", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 
@@ -313,7 +314,7 @@ namespace TDH.Areas.Personal.Controllers
             }
             catch (Exception ex)
             {
-                throw new ControllerException(FILE_NAME, "Delete", UserID, ex);
+                throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
 

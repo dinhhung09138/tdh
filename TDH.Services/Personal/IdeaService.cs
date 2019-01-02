@@ -8,6 +8,7 @@ using TDH.Common;
 using TDH.Model.Personal;
 using TDH.DataAccess;
 using TDH.Common.UserException;
+using System.Reflection;
 
 namespace TDH.Services.Personal
 {
@@ -104,7 +105,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "List", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
 
             return _return;
@@ -129,7 +130,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -147,7 +148,7 @@ namespace TDH.Services.Personal
                     PN_IDEA _md = context.PN_IDEA.FirstOrDefault(m => m.id == model.ID && m.created_by == model.CreateBy && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     return new IdeaModel()
                     {
@@ -163,7 +164,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
         }
 
@@ -188,7 +189,7 @@ namespace TDH.Services.Personal
                         _md = context.PN_IDEA.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                         if (_md == null)
                         {
-                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
+                            throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                         }
                     }
                     _md.title = model.Title;
@@ -216,7 +217,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -243,7 +244,7 @@ namespace TDH.Services.Personal
                     PN_IDEA _md = context.PN_IDEA.FirstOrDefault(m => m.id == model.ID && m.created_by == model.CreateBy && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _md.deleted = true;
                     _md.deleted_by = model.DeleteBy;
@@ -259,7 +260,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -285,7 +286,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "CheckDelete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             return ResponseStatusCodeHelper.NG;
         }

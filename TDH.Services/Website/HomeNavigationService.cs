@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using TDH.Common;
 using TDH.Common.UserException;
 using TDH.DataAccess;
@@ -108,7 +109,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "List", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
             return _return;
         }
@@ -151,7 +152,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -171,7 +172,7 @@ namespace TDH.Services.Website
                     WEB_HOME_NAVIGATION _md = _context.WEB_HOME_NAVIGATION.FirstOrDefault(m => m.navigation_id == model.NavigationID);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _context.WEB_HOME_NAVIGATION.Remove(_md);
                     _context.Entry(_md).State = EntityState.Deleted;
@@ -184,7 +185,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

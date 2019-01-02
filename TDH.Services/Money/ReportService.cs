@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using TDH.Model.Money.Report;
 using TDH.DataAccess;
 using TDH.Common.UserException;
+using System.Reflection;
 
 namespace TDH.Services.Money
 {
@@ -50,7 +51,7 @@ namespace TDH.Services.Money
                 }
                 catch (Exception ex)
                 {
-                    throw new ServiceException(FILE_NAME, "Summary", userID, ex);
+                    throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
                 }
             });
             await _return;
@@ -85,7 +86,7 @@ namespace TDH.Services.Money
                 }
                 catch (Exception ex)
                 {
-                    throw new ServiceException(FILE_NAME, "SummaryByYear", userID, ex);
+                    throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
                 }
             });
             await _return;
@@ -135,7 +136,7 @@ namespace TDH.Services.Money
                 }
                 catch (Exception ex)
                 {
-                    throw new ServiceException(FILE_NAME, "SummaryIncomeByYear", userID, ex);
+                    throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
                 }
             });
             await _return;
@@ -185,7 +186,7 @@ namespace TDH.Services.Money
                 }
                 catch (Exception ex)
                 {
-                    throw new ServiceException(FILE_NAME, "SummaryPaymentByYear", userID, ex);
+                    throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
                 }
             });
 
@@ -220,7 +221,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "BorrowAccountStatus", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -252,7 +253,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Top10", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -284,7 +285,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Top10", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -315,7 +316,7 @@ namespace TDH.Services.Money
                 }
                 catch (Exception ex)
                 {
-                    throw new ServiceException(FILE_NAME, "GroupPercent", userID, ex);
+                    throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
                 }
             });
             await _return;
@@ -348,7 +349,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "CategorySettingByMonth", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 

@@ -6,6 +6,7 @@ using TDH.DataAccess;
 using TDH.Common;
 using Utils;
 using TDH.Common.UserException;
+using System.Reflection;
 
 namespace TDH.Services.Website
 {
@@ -110,7 +111,7 @@ namespace TDH.Services.Website
                         _md = _context.WEB_ABOUT.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                         if (_md == null)
                         {
-                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
+                            throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                         }
                     }
                     _md.content = model.Content;
@@ -149,7 +150,7 @@ namespace TDH.Services.Website
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             if (model.Insert)
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using TDH.Common;
 using TDH.Common.UserException;
 using TDH.DataAccess;
@@ -119,7 +120,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "List", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
             return _return;
         }
@@ -149,7 +150,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -167,7 +168,7 @@ namespace TDH.Services.Personal
                     PN_EDUCATION _md = _context.PN_EDUCATION.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     return new EducationModel()
                     {
@@ -194,7 +195,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
         }
 
@@ -219,7 +220,7 @@ namespace TDH.Services.Personal
                         _md = _context.PN_EDUCATION.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                         if (_md == null)
                         {
-                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
+                            throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                         }
                     }
                     _md.name = model.Name;
@@ -258,7 +259,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -285,7 +286,7 @@ namespace TDH.Services.Personal
                     PN_EDUCATION _md = _context.PN_EDUCATION.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "Publish", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _md.publish = model.Publish;
                     _md.updated_by = model.UpdateBy;
@@ -301,7 +302,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Publish", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -321,7 +322,7 @@ namespace TDH.Services.Personal
                     PN_EDUCATION _md = _context.PN_EDUCATION.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.created_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _md.deleted = true;
                     _md.deleted_by = model.DeleteBy;
@@ -337,7 +338,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;

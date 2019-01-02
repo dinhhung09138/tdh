@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using TDH.Common;
 using TDH.Common.UserException;
 using TDH.DataAccess;
@@ -113,7 +114,7 @@ namespace TDH.Services.PersonalWorking
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "List", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
             return _return;
         }
@@ -139,7 +140,7 @@ namespace TDH.Services.PersonalWorking
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -157,7 +158,7 @@ namespace TDH.Services.PersonalWorking
                     WK_CHECKLIST_ITEM _md = context.WK_CHECKLIST_ITEM.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     return new CheckListItemModel()
                     {
@@ -174,7 +175,7 @@ namespace TDH.Services.PersonalWorking
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
         }
 
@@ -199,7 +200,7 @@ namespace TDH.Services.PersonalWorking
                         _md = context.WK_CHECKLIST_ITEM.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                         if (_md == null)
                         {
-                            throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
+                            throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                         }
                     }
                     _md.title = model.title;
@@ -229,7 +230,7 @@ namespace TDH.Services.PersonalWorking
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -256,7 +257,7 @@ namespace TDH.Services.PersonalWorking
                     WK_CHECKLIST_ITEM _md = context.WK_CHECKLIST_ITEM.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "Delete", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     _md.deleted = true;
                     _md.delete_by = model.DeleteBy;
@@ -273,7 +274,7 @@ namespace TDH.Services.PersonalWorking
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Delete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             Notifier.Notification(model.CreateBy, Message.DeleteSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -299,7 +300,7 @@ namespace TDH.Services.PersonalWorking
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "CheckDelete", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             return ResponseStatusCodeHelper.NG;
         }

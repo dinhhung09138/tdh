@@ -218,7 +218,7 @@ namespace TDH.Services.System
                                 _md = context.SYS_ROLE.FirstOrDefault(m => m.id == model.ID && !m.deleted);
                                 if (_md == null)
                                 {
-                                    throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
+                                    throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                                 }
                             }
                             _md.name = model.Name;

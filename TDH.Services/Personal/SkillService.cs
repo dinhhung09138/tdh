@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
 using TDH.Common;
 using TDH.Common.UserException;
 using TDH.DataAccess;
@@ -76,7 +77,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -94,7 +95,7 @@ namespace TDH.Services.Personal
                     var _skill = _context.CM_SKILL.FirstOrDefault(m => m.id == model.SkillID);
                     if(_skill == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "Save", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     var _pnSkill = _context.PN_SKILL.FirstOrDefault(m => m.skill_id == model.SkillID && m.created_by == model.CreateBy);
                     if(_pnSkill == null)
@@ -139,7 +140,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "SaveSkillDefined", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
             if (model.Insert)
             {
@@ -187,7 +188,7 @@ namespace TDH.Services.Personal
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 

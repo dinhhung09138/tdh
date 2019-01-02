@@ -7,6 +7,7 @@ using TDH.DataAccess;
 using TDH.Model.Money;
 using System.Data.Entity;
 using TDH.Common.UserException;
+using System.Reflection;
 
 namespace TDH.Services.Money
 {
@@ -69,7 +70,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -119,7 +120,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -170,7 +171,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -227,7 +228,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
         }
 
@@ -245,7 +246,7 @@ namespace TDH.Services.Money
                     MN_GROUP_SETTING _md = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.id == model.ID && !m.deleted && m.create_by == model.CreateBy);
                     if (_md == null)
                     {
-                        throw new DataAccessException(FILE_NAME, "GetItemByID", model.CreateBy);
+                        throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy);
                     }
                     var _group = _context.MN_GROUP.FirstOrDefault(m => m.id == _md.group_id);
                     return new GroupSettingModel()
@@ -269,7 +270,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "GetItemByID", model.CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model.CreateBy, ex);
             }
         }
 
@@ -293,7 +294,7 @@ namespace TDH.Services.Money
                                 MN_GROUP_SETTING _md = _context.MN_GROUP_SETTING.FirstOrDefault(m => m.id == item.ID && !m.deleted);
                                 if (_md == null)
                                 {
-                                    throw new DataAccessException(FILE_NAME, "Save", item.CreateBy);
+                                    throw new DataAccessException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, item.CreateBy);
                                 }
                                 _md.percent_setting = item.PercentSetting;
                                 _md.update_by = item.UpdateBy;
@@ -331,7 +332,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", model[0].CreateBy, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, model[0].CreateBy, ex);
             }
             Notifier.Notification(model[0].CreateBy, Message.UpdateSuccess, Notifier.TYPE.Success);
             return ResponseStatusCodeHelper.Success;
@@ -391,7 +392,7 @@ namespace TDH.Services.Money
             }
             catch (Exception ex)
             {
-                throw new ServiceException(FILE_NAME, "Save", userID, ex);
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, userID, ex);
             }
             return ResponseStatusCodeHelper.Success;
         }

@@ -120,6 +120,12 @@ namespace TDH.Areas.Administrator.Controllers
                 throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
+
+        [HttpPost]
+        public ActionResult KeepAlive()
+        {
+            return new EmptyResult();
+        }
         
     }
 }

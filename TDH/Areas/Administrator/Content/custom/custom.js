@@ -29,6 +29,14 @@
 var dom = '<"top"<"row"<"col-md-3 col-sm-4 col-xs-12"l><"col-md-6 col-sm-4 col-xs-12"<"toolbar">><"col-md-3 col-sm-4 col-xs-12 text-right"f>>>rt<"bottom"<"row"<"col-md-5 col-sm-6 col-xs-12"i><"col-md-7 col-sm-6 col-xs-12"p>>><"clear">';
 
 $(document).ready(function () {
+    setInterval(function () {
+        $.ajax({
+            url: '/administrator/base/keepalive',
+            type: 'post',
+            data: {},
+            cache: false
+        });
+    }, 100000);
     //------------------------------------------------------
     //Set modal center screen
     //-----------------

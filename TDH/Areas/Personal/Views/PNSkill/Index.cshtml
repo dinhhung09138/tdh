@@ -1,4 +1,4 @@
-﻿@using TDH.Model.Common;
+﻿@using TDH.Model.Personal;
 @using TDH.Areas.Personal.Utils;
 @{
     ViewBag.Title = Message.Skill.LIST;
@@ -74,20 +74,14 @@
                                                 foreach (var d in item.Defined)
                                                 {
                                                     <li>
-                                                        <span class="text">@d.Name</span>
-                                                        <div class="tools">
-                                                            <i class="fa fa-edit" onclick="editDefined('@d.ID', '@item.ID','@item.Name');"></i>
-                                                        </div>
-                                                    </li>
-                                                    <li>
                                                         <div class="progress-group">
                                                             <span class="progress-text">@d.Name</span>
-                                                            <span class="progress-number"><b>160</b>/100</span>
+                                                            <span class="progress-number"><b>@d.Level</b>/100</span>
+                                                            <a class="tools">
+                                                                <i class="fa fa-edit" style="float: right;" onclick="editLevel('@d.ID', '@item.ID','@item.Name', '@d.Name', @d.Level);"></i>
+                                                            </a>
                                                             <div class="progress sm">
-                                                                <div class="progress-bar progress-bar-aqua" style="width: 80%"></div>
-                                                                <div class="tools">
-                                                                    <i class="fa fa-edit" style="float: right;" onclick="editDefined('@d.ID', '@item.ID','@item.Name');"></i>
-                                                                </div>
+                                                                <div class="progress-bar progress-bar-aqua" style="width: @d.Level;"></div>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -105,11 +99,78 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="skillDefinedModel" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="card card-success">
+                    <div class="card-header with-border no-bg">
+                        <h3 class="card-title">Tiêu chí đánh giá</h3>
+                        <div class="card-tools pull-right">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form id="frmDefined" class="form">
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Kỹ năng
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <label id="lblSkillName"></label>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Tiêu chí
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <input type="hidden" id="hdDefinedID" value="" />
+                                    <input type="hidden" id="hdSkillID" value="" />
+                                    <label id="lblDefinedName"></label>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    Level
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <select class="form-control" id="cbLevel">
+                                        <option value="0">0</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="40">40</option>
+                                        <option value="50">50</option>
+                                        <option value="60">60</option>
+                                        <option value="70">70</option>
+                                        <option value="80">80</option>
+                                        <option value="90">90</option>
+                                        <option value="100">100</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" tabindex="4">Hủy</button>
+                <button type="button" id="btnSaveSkillDefined" class="btn btn-primary" onclick="saveLevel();" tabindex="5">Lưu</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 @section script {
     <script src="/Areas/Administrator/Content/plugins/autoNumeric/autoNumeric.min.js"></script>
     <script src="/Areas/Administrator/Content/plugins/parsleyjs/dist/parsley.min.js"></script>
     <script src="/Areas/Personal/Content/skill/index.js"></script>
-
 }
 
 

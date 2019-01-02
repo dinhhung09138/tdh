@@ -14,8 +14,10 @@ namespace TDH.Model.Personal
         /// Get from CM_SKILL table
         /// </summary>
         [Required(ErrorMessage = "Nội dung không được rỗng")]
-        public Guid SkillID { get; set; }
-        
+        public Guid ID { get; set; }
+
+        public string Name { get; set; } = "";
+
         /// <summary>
         /// Ordering
         /// </summary>

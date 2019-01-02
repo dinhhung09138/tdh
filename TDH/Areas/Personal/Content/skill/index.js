@@ -7,14 +7,6 @@ var skillId;
 $(document).ready(function () {
     var allowEdit = $('#edit').val();
     var allowDelete = $('#delete').val();
-
-    //groupOrder = new AutoNumeric('#txtGroupOrdering', {
-    //    minimumValue: '0',
-    //    maximumValue: '99',
-    //    selectNumberOnly: true,
-    //    decimalPlaces: 0
-    //});
-    
 });
 
 $(document).on('click', 'li.group_item > a', function (e) {
@@ -23,10 +15,6 @@ $(document).on('click', 'li.group_item > a', function (e) {
     $('#selectedGroupID').val($(this).attr('data-id'));
     skillId = $(this).attr('data-id');
     UpdateSkillDisplay(skillId);
-});
-
-$('#groupModel').on('shown.bs.modal', function (e) {
-    $('#txtGroupName').focus();
 });
 
 function UpdateGroupDisplay() {
@@ -59,13 +47,13 @@ function UpdateGroupDisplay() {
 }
 
 
-$('#skillModel').on('shown.bs.modal', function (e) {
-    $('#txtSkillName').focus();
+$('#skillDefinedModel').on('shown.bs.modal', function (e) {
+    $('#cbLevel').focus();
 });
 
 function UpdateSkillDisplay(groupID) {
     $.ajax({
-        url: '/common/cmskill/getskillbygroup',
+        url: '/personal/pnskill/getskillbygroup',
         type: 'GET',
         contentType: 'application/json',
         dataType: 'json',
@@ -86,9 +74,15 @@ function UpdateSkillDisplay(groupID) {
                 div += '            <ul class="todo-list">';
                 $.each(item.Defined, function (id, it) {
                     div += '            <li>';
-                    div += '                <span class="text">' + it.Name + '</span>';
-                    div += '                <div class="tools">';
-                    div += '                    <i class="fa fa-edit" onclick="editDefined(\'' + it.ID + '\', \'' + item.ID + '\',\'' + item.Name + '\');"></i>';
+                    div += '                <div class="progress-group">';
+                    div += '                    <span class="progress-text">' + it.Name + '</span>';
+                    div += '                    <span class="progress-number"><b>' + it.Level + '</b>/100</span>';
+                    div += '                    <a class="tools">';
+                    div += '                        <i class="fa fa-edit" style="float: right;" onclick="editLevel(\'' + it.ID + '\', \'' + item.ID + '\',\'' + item.Name + '\', \'' + it.Name + '\', ' + it.Level + ');"></i>';
+                    div += '                    </a>';
+                    div += '                    <div class="progress sm">';
+                    div += '                        <div class="progress-bar progress-bar-aqua" style="width: ' + it.Level + '%"></div>';
+                    div += '                    </div>';
                     div += '                </div>';
                     div += '            </li>';
                 });
@@ -105,63 +99,39 @@ function UpdateSkillDisplay(groupID) {
     });
 }
 
-function editDefined(definedID, skillID, skillName) {
+function editLevel(definedID, skillID, skillName, definedName, level) {
+    $('#hdDefinedID').val(definedID);
+    $('#lblSkillName').html(skillName);
+    $('#lblDefinedName').html(definedName);
+    $('#hdSkillID').val(skillID);
+    $('#cbLevel').val(level);
+    $('#skillDefinedModel').modal('show');
+}
+
+function saveLevel() {
+    var url = '/personal/pnskill/saveskilldefined';
+    loading($('#btnSaveSkillDefined'), 'show');
+    $('#frmDefined').parsley().validate();
     $.ajax({
-        url: '/common/cmskill/getskilldefineditem',
-        type: 'GET',
+        url: url,
+        type: 'POST',
         contentType: 'application/json',
         dataType: 'json',
-        data: { id: definedID },
+        data: JSON.stringify({
+            id: $('#hdDefinedID').val(),
+            skillId: $('#hdSkillID').val(),
+            level: $('#cbLevel').val()
+        }),
         success: function (response) {
-            $('#hdDefinedID').val(definedID);
-            $('#lblSkillName').html(skillName);
-            $('#hdSkillID').val(skillID);
-            $('#txtDefinedName').val(response.Name);
-            skillOrder.set(response.Ordering);
-            $('#txtDefinedDescription').val(response.Description);
-            $('#skillDefinedModel').modal('show');
+            UpdateSkillDisplay(skillId);
+            loading($('#btnSaveSkillDefined'), 'hide');
+            $('#skillDefinedModel').modal('hide');
         },
         error: function (xhr, status, error) {
             console.log(error);
+            loading($('#btnSaveSkillDefined'), 'hide');
         }
     });
 }
 
-function saveDefined() {
-    var url = '/common/cmskill/createskilldefined';
-    if ($('#hdDefinedID').val() !== '') {
-        url = '/common/cmskill/editskilldefined';
-    }
-    loading($('#btnSaveSkillDefined'), 'show');
-    $('#frmDefined').parsley().validate();
-    if ($('#frmDefined').parsley().isValid() === true) {
-        $.ajax({
-            url: url,
-            type: 'POST',
-            contentType: 'application/json',
-            dataType: 'json',
-            data: JSON.stringify({
-                ID: $('#hdDefinedID').val(),
-                SkillID: $('#hdSkillID').val(),
-                Name: $('#txtDefinedName').val(),
-                Description: $('#txtDefinedDescription').val()
-            }),
-            success: function (response) {
-                UpdateSkillDisplay(skillId);
-                loading($('#btnSaveSkillDefined'), 'hide');
-                $('#skillDefinedModel').modal('hide');
-            },
-            error: function (xhr, status, error) {
-                console.log(error);
-                loading($('#btnSaveSkillDefined'), 'hide');
-            }
-        });
-    } else {
-        loading($('#btnSaveSkillDefined'), 'hide');
-    }
-}
-
-$('#skillDefinedModel').on('shown.bs.modal', function (e) {
-    $('#txtDefinedName').focus();
-});
 

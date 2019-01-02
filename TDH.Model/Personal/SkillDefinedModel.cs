@@ -13,7 +13,9 @@ namespace TDH.Model.Personal
         /// Get from CM_SKILL_DEFINED
         /// </summary>
         [Required(ErrorMessage = "Nội dung không được rỗng")]
-        public Guid DefinedID { get; set; }
+        public Guid ID { get; set; }
+
+        public string Name { get; set; } = "";
 
         /// <summary>
         /// The skill identifier
@@ -25,7 +27,7 @@ namespace TDH.Model.Personal
         /// Point
         /// </summary>
         [Required(ErrorMessage = "Nội dung không được rỗng")]
-        public short Point { get; set; } = 100;
+        public short Level { get; set; } = 0;
         
     }
 }

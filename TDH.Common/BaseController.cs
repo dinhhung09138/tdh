@@ -536,6 +536,8 @@ namespace TDH.Common
                                 case "edit":
                                 case "publish":
                                 case "delete":
+                                case "getskillbygroup":
+                                case "saveskilldefined":
                                     return "personal_skill";
                                 default:
                                     return "";
@@ -1001,11 +1003,13 @@ namespace TDH.Common
                             switch (actionName)
                             {
                                 case "index":
+                                case "getskillbygroup":
                                     return ActionType.View;
                                 case "create":
                                     return ActionType.Create;
                                 case "edit":
                                 case "publish":
+                                case "saveskilldefined":
                                     return ActionType.Edit;
                                 case "delete":
                                     return ActionType.Delete;

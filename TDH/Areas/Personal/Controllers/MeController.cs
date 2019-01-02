@@ -33,9 +33,11 @@ namespace TDH.Areas.Personal.Controllers
 
                 TimelineService _timelineService = new TimelineService();
                 CetificateService _cetificateService = new CetificateService();
-                
+                SkillService _service = new SkillService();
+
                 ViewBag.timeline = _timelineService.GetAll(UserID);
                 ViewBag.cetificate = _cetificateService.GetAll(UserID);
+                ViewBag.mySkill = _service.MySkill(UserID);
 
                 #endregion
 

@@ -152,6 +152,45 @@ namespace TDH.Services.Personal
             return ResponseStatusCodeHelper.Success;
         }
 
+        /// <summary>
+        /// Get all skill item by user
+        /// </summary>
+        /// <param name="userID">The user identifier</param>
+        /// <returns></returns>
+        public List<SkillDefinedModel> MySkill(Guid userID)
+        {
+            try
+            {
+                short _level = 0;
+                List<SkillDefinedModel> _return = new List<SkillDefinedModel>();
+                using (var _context = new TDHEntities())
+                {
+                    var _list = (from pd in _context.PN_SKILL_DEFINDED
+                                 join ps in _context.PN_SKILL on pd.skill_id equals ps.skill_id
+                                 join cd in _context.CM_SKILL_DEFINDED on pd.defined_id equals cd.id
+                                 join cs in _context.CM_SKILL on cd.skill_id equals cs.id
+                                 where !cs.deleted && cs.publish && ps.created_by == userID && pd.point > 0
+                                 orderby ps.skill_id, cs.ordering descending
+                                 select new
+                                 {
+                                    pd.defined_id,
+                                    pd.skill_id,
+                                    cd.name,
+                                    pd.point
+                                 }).ToList();
+                    foreach (var item in _list)
+                    {
+                        _return.Add(new SkillDefinedModel() { ID = item.defined_id, SkillID = item.skill_id, Name = item.name, Level = item.point });
+                    }
+                }
+                return _return;
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(FILE_NAME, "GetAll", userID, ex);
+            }
+        }
+
 
     }
 }

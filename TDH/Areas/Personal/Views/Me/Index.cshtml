@@ -33,16 +33,16 @@ Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
                         <p class="text-muted text-center">@Configuration.SettingValue("portfolio_job")</p>
                         <ul class="list-group list-group-unbordered mb-3">
                             <li class="list-group-item">
-                                <b><a href="@Configuration.SettingValue("social_youtube")" target="_blank">Youtube</a> </b> <a class="float-right">1,322</a>
+                                <b><a href="@Configuration.SettingValue("social_youtube")" target="_blank">Youtube</a> </b> <a class="float-right">0</a>
                             </li>
                             <li class="list-group-item">
-                                <b><a href="@Configuration.SettingValue("social_linkedin")" target="_blank">LinkedIn</a> </b> <a class="float-right">1,322</a>
+                                <b><a href="@Configuration.SettingValue("social_linkedin")" target="_blank">LinkedIn</a> </b> <a class="float-right">0</a>
                             </li>
                             <li class="list-group-item">
-                                <b><a href="@Configuration.SettingValue("social_twitter")" target="_blank">Twitter</a> </b> <a class="float-right">1,322</a>
+                                <b><a href="@Configuration.SettingValue("social_twitter")" target="_blank">Twitter</a> </b> <a class="float-right">0</a>
                             </li>
                             <li class="list-group-item">
-                                <b><a href="@Configuration.SettingValue("social_facebook")" target="_blank">Facebook</a> </b> <a class="float-right">1,322</a>
+                                <b><a href="@Configuration.SettingValue("social_facebook")" target="_blank">Facebook</a> </b> <a class="float-right">0</a>
                             </li>
                         </ul>
                     </div>
@@ -68,11 +68,41 @@ Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
                         <hr>
                         <strong><i class="fa fa-pencil mr-1"></i> Skills</strong>
                         <p class="text-muted">
-                            <span class="tag tag-danger">UI Design</span>
-                            <span class="tag tag-success">Coding</span>
-                            <span class="tag tag-info">Javascript</span>
-                            <span class="tag tag-warning">PHP</span>
-                            <span class="tag tag-primary">Node.js</span>
+                            @{
+                                var _listMySkill = ViewBag.mySkill as List<SkillDefinedModel>;
+                                foreach (var item in _listMySkill)
+                                {
+                                    if (item.Level >= 80)
+                                    {
+                                        <span class="label label-success">@item.Name</span>
+                                    }
+                                    else
+                                    {
+                                        if (item.Level >= 60)
+                                        {
+                                            <span class="label label-primary">@item.Name</span>
+                                        }
+                                        else
+                                        {
+                                            if (item.Level >= 40)
+                                            {
+                                                <span class="label label-info">@item.Name</span>
+                                            }
+                                            else
+                                            {
+                                                if (item.Level >= 20)
+                                                {
+                                                    <span class="label label-warning">@item.Name</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="label label-danger">@item.Name</span>
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         </p>
                         <hr>
                     </div>

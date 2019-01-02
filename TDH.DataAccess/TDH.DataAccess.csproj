@@ -308,6 +308,9 @@
     <Compile Include="SYS_USER_ROLE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="SYS_USER_TOKEN.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="V_MN_ACCOUNT_HISTORY.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

@@ -112,6 +112,8 @@
         <EntityTypeShape EntityType="TDHModel.V_PN_TIMELINE" Width="1.5" PointX="3" PointY="51.5" />
         <EntityTypeShape EntityType="TDHModel.V_SYS_RENDER_NAVIGATION" Width="1.5" PointX="0.5" PointY="51" />
         <EntityTypeShape EntityType="TDHModel.V_MN_REPORT_BORROW_ACCOUNT_STATUS" Width="1.5" PointX="1.5" PointY="43.125" />
+        <EntityTypeShape EntityType="TDHModel.SYS_USER_TOKEN" Width="1.5" PointX="7.625" PointY="0.75" />
+        <AssociationConnector Association="TDHModel.FK_SYS_USER_TOKEN_SYS_USER_user_id" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

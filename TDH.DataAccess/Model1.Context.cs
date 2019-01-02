@@ -89,6 +89,7 @@ namespace TDH.DataAccess
         public virtual DbSet<V_PN_TIMELINE> V_PN_TIMELINE { get; set; }
         public virtual DbSet<V_SYS_RENDER_NAVIGATION> V_SYS_RENDER_NAVIGATION { get; set; }
         public virtual DbSet<V_MN_REPORT_BORROW_ACCOUNT_STATUS> V_MN_REPORT_BORROW_ACCOUNT_STATUS { get; set; }
+        public virtual DbSet<SYS_USER_TOKEN> SYS_USER_TOKEN { get; set; }
     
         [DbFunction("TDHEntities", "FNC_MN_GROUP_SETTING_GET_BY_GROUP")]
         public virtual IQueryable<FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result> FNC_MN_GROUP_SETTING_GET_BY_GROUP(Nullable<System.Guid> i_GroupID, Nullable<int> i_Year, Nullable<System.Guid> i_UserID)

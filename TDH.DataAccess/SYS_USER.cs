@@ -21,6 +21,7 @@ namespace TDH.DataAccess
             this.FB_FANPAGE = new HashSet<FB_FANPAGE>();
             this.FB_GROUP = new HashSet<FB_GROUP>();
             this.FB_USER = new HashSet<FB_USER>();
+            this.SYS_USER_TOKEN = new HashSet<SYS_USER_TOKEN>();
         }
     
         public System.Guid id { get; set; }
@@ -46,5 +47,7 @@ namespace TDH.DataAccess
         public virtual ICollection<FB_GROUP> FB_GROUP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FB_USER> FB_USER { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SYS_USER_TOKEN> SYS_USER_TOKEN { get; set; }
     }
 }

@@ -305,6 +305,43 @@ namespace TDH.Services.System
         }
 
         /// <summary>
+        /// Log out function
+        /// </summary>
+        /// <param name="token">Token</param>
+        /// <returns></returns>
+        public ResponseStatusCodeHelper Logout(string token)
+        {
+            try
+            {
+                using (var _context = new TDHEntities())
+                {
+                    var _md = _context.SYS_USER_TOKEN.FirstOrDefault(m => m.session_id == this.SessionID && m.token == token);
+                    if(_md == null)
+                    {
+                        throw new ServiceException();
+                    }
+                    _md.state = false;
+                    _context.SYS_USER_TOKEN.Attach(_md);
+                    _context.Entry(_md).State = EntityState.Modified;
+                    _context.SaveChanges();
+                }
+            }
+            catch (DataAccessException fieldEx)
+            {
+                throw fieldEx;
+            }
+            catch (ServiceException serviceEx)
+            {
+                throw serviceEx;
+            }
+            catch (Exception ex)
+            {
+                throw new ServiceException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, new Guid(), ex);
+            }
+            return ResponseStatusCodeHelper.Success;
+        }
+
+        /// <summary>
         /// Get sidebar data, permission based on user identifier
         /// </summary>
         /// <param name="userID">The user identifier</param>

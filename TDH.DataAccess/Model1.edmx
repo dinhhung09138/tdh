@@ -803,6 +803,24 @@
           <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
           <Property Name="role_id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
+        <EntityType Name="SYS_USER_TOKEN">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="user_id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="is_mobile" Type="bit" Nullable="false" />
+          <Property Name="platform" Type="varchar" MaxLength="255" />
+          <Property Name="version" Type="varchar" MaxLength="255" />
+          <Property Name="user_agent" Type="varchar" MaxLength="255" />
+          <Property Name="host_name" Type="varchar" MaxLength="255" />
+          <Property Name="host_address" Type="varchar" MaxLength="255" />
+          <Property Name="start_time" Type="datetime" Nullable="false" />
+          <Property Name="expire_time" Type="datetime" Nullable="false" />
+          <Property Name="state" Type="bit" />
+          <Property Name="token" Type="nvarchar" MaxLength="255" />
+          <Property Name="session_id" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="WEB_ABOUT">
           <Key>
             <PropertyRef Name="id" />
@@ -1659,6 +1677,20 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SYS_USER_TOKEN_SYS_USER_user_id">
+          <End Role="SYS_USER" Type="Self.SYS_USER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SYS_USER_TOKEN" Type="Self.SYS_USER_TOKEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SYS_USER_TOKEN">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WEB_CATEGORY_WEB_NAVIGATION">
           <End Role="WEB_NAVIGATION" Type="Self.WEB_NAVIGATION" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -2031,6 +2063,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <EntitySet Name="SYS_ROLE_DETAIL" EntityType="Self.SYS_ROLE_DETAIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_USER" EntityType="Self.SYS_USER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_USER_ROLE" EntityType="Self.SYS_USER_ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_USER_TOKEN" EntityType="Self.SYS_USER_TOKEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEB_ABOUT" EntityType="Self.WEB_ABOUT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEB_CATEGORY" EntityType="Self.WEB_CATEGORY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WEB_CONFIGURATION" EntityType="Self.WEB_CONFIGURATION" Schema="dbo" store:Type="Tables" />
@@ -2294,6 +2327,10 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <AssociationSet Name="FK_SYS_USER_ROLE_user_id" Association="Self.FK_SYS_USER_ROLE_user_id">
             <End Role="SYS_USER" EntitySet="SYS_USER" />
             <End Role="SYS_USER_ROLE" EntitySet="SYS_USER_ROLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SYS_USER_TOKEN_SYS_USER_user_id" Association="Self.FK_SYS_USER_TOKEN_SYS_USER_user_id">
+            <End Role="SYS_USER" EntitySet="SYS_USER" />
+            <End Role="SYS_USER_TOKEN" EntitySet="SYS_USER_TOKEN" />
           </AssociationSet>
           <AssociationSet Name="FK_WEB_CATEGORY_WEB_NAVIGATION" Association="Self.FK_WEB_CATEGORY_WEB_NAVIGATION">
             <End Role="WEB_NAVIGATION" EntitySet="WEB_NAVIGATION" />
@@ -2727,8 +2764,13 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             <Parameter Name="page" Mode="In" Type="Int16" />
           </FunctionImport>
           <FunctionImport Name="PROC_WEB_VIEW_PROGRAMMING_topview" ReturnType="Collection(TDHModel.PROC_WEB_VIEW_PROGRAMMING_topview_Result)">
-            <Parameter Name="navigation_alias" Mode="In" Type="String" />
+          <Parameter Name="navigation_alias" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="SYS_USER_TOKEN" EntityType="TDHModel.SYS_USER_TOKEN" />
+          <AssociationSet Name="FK_SYS_USER_TOKEN_SYS_USER_user_id" Association="TDHModel.FK_SYS_USER_TOKEN_SYS_USER_user_id">
+            <End Role="SYS_USER" EntitySet="SYS_USER" />
+            <End Role="SYS_USER_TOKEN" EntitySet="SYS_USER_TOKEN" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -3512,6 +3554,7 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <NavigationProperty Name="FB_FANPAGE" Relationship="TDHModel.FK_FB_FANPAGE_SYS_USER" FromRole="SYS_USER" ToRole="FB_FANPAGE" />
           <NavigationProperty Name="FB_GROUP" Relationship="TDHModel.FK_FB_GROUP_SYS_USER" FromRole="SYS_USER" ToRole="FB_GROUP" />
           <NavigationProperty Name="FB_USER" Relationship="TDHModel.FK_FB_USER_SYS_USER" FromRole="SYS_USER" ToRole="FB_USER" />
+          <NavigationProperty Name="SYS_USER_TOKEN" Relationship="TDHModel.FK_SYS_USER_TOKEN_SYS_USER_user_id" FromRole="SYS_USER" ToRole="SYS_USER_TOKEN" />
         </EntityType>
         <EntityType Name="SYS_USER_ROLE">
           <Key>
@@ -4856,6 +4899,39 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Property Type="String" Name="create_date" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="view" Nullable="false" />
         </ComplexType>
+        <EntityType Name="SYS_USER_TOKEN">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="user_id" Type="Guid" Nullable="false" />
+          <Property Name="is_mobile" Type="Boolean" Nullable="false" />
+          <Property Name="platform" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="version" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_agent" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="host_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="host_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="start_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="expire_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="state" Type="Boolean" />
+          <Property Name="token" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="session_id" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SYS_USER" Relationship="TDHModel.FK_SYS_USER_TOKEN_SYS_USER_user_id" FromRole="SYS_USER_TOKEN" ToRole="SYS_USER" />
+        </EntityType>
+        <Association Name="FK_SYS_USER_TOKEN_SYS_USER_user_id">
+          <End Type="TDHModel.SYS_USER" Role="SYS_USER" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TDHModel.SYS_USER_TOKEN" Role="SYS_USER_TOKEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SYS_USER">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="SYS_USER_TOKEN">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6470,6 +6546,25 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="SYS_USER_TOKEN">
+            <EntityTypeMapping TypeName="TDHModel.SYS_USER_TOKEN">
+              <MappingFragment StoreEntitySet="SYS_USER_TOKEN">
+                <ScalarProperty Name="session_id" ColumnName="session_id" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="expire_time" ColumnName="expire_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="host_address" ColumnName="host_address" />
+                <ScalarProperty Name="host_name" ColumnName="host_name" />
+                <ScalarProperty Name="user_agent" ColumnName="user_agent" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="platform" ColumnName="platform" />
+                <ScalarProperty Name="is_mobile" ColumnName="is_mobile" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

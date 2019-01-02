@@ -107,5 +107,22 @@ namespace TDH.Areas.Administrator.Controllers
                 throw new ControllerException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, UserID, ex);
             }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult LogOut()
+        {
+            if (Session[Utils.CommonHelper.SESSION_LOGIN_NAME] != null)
+            {
+                Utils.CommonModel.UserLoginModel userModel = Session[Utils.CommonHelper.SESSION_LOGIN_NAME] as Utils.CommonModel.UserLoginModel;
+                //
+                UserService _services = new UserService(userModel.SessionID);
+                _services.Logout(userModel.Token);
+            }
+            Session.Remove(Utils.CommonHelper.SESSION_LOGIN_NAME);
+            Session.Clear();
+            Session.Abandon();
+            return RedirectToAction("index");
+        }
     }
 }

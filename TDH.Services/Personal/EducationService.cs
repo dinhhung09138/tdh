@@ -142,6 +142,7 @@ namespace TDH.Services.Personal
                             {
                                 ID = m.id,
                                 Name = m.name,
+                                School = m.school,
                                 Description = m.description
                             }).ToList();
                 }

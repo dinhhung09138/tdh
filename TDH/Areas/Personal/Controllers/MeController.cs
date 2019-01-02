@@ -31,10 +31,12 @@ namespace TDH.Areas.Personal.Controllers
             {
                 #region " [ Declaration ] "
 
+                EducationService _educationService = new EducationService();
                 TimelineService _timelineService = new TimelineService();
                 CetificateService _cetificateService = new CetificateService();
                 SkillService _service = new SkillService();
 
+                ViewBag.education = _educationService.GetAll(UserID);
                 ViewBag.timeline = _timelineService.GetAll(UserID);
                 ViewBag.cetificate = _cetificateService.GetAll(UserID);
                 ViewBag.mySkill = _service.MySkill(UserID);

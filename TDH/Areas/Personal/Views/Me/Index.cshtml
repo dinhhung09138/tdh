@@ -54,6 +54,13 @@ Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
                     <div class="card-body">
                         <strong><i class="fa fa-book mr-1"></i> Education</strong>
                         @{
+                            List<EducationModel> _lEducation = ViewBag.education as List<EducationModel>;
+                            foreach (var item in _lEducation)
+                            {
+                                <p class="text-muted">
+                                    @item.Name  @Html.Raw(" - ") <span style="font-weight:bold;">@item.School</span>
+                                </p>
+                            }
                             List<CetificateModel> _lCetificate = ViewBag.cetificate as List<CetificateModel>;
                             foreach (var item in _lCetificate)
                             {

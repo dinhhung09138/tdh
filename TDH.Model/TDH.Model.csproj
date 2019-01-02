@@ -107,6 +107,7 @@
     <Compile Include="ViewModel\WebSite\CategoryViewModel.cs" />
     <Compile Include="ViewModel\WebSite\MetaViewModel.cs" />
     <Compile Include="ViewModel\WebSite\NavigationViewModel.cs" />
+    <Compile Include="ViewModel\WebSite\PortfolioViewModel.cs" />
     <Compile Include="ViewModel\WebSite\PostViewModel.cs" />
     <Compile Include="Website\AboutModel.cs" />
     <Compile Include="Website\CategoryModel.cs" />

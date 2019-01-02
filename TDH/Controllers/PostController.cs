@@ -42,7 +42,7 @@ namespace TDH.Controllers
 
                 if (navigationAlias == PORTFOLIO)
                 {
-                    return View("Portfolio");
+                    return View("Portfolio", PageService.PortfolioInfo());
                 }
 
                 #endregion

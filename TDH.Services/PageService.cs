@@ -77,7 +77,7 @@ namespace TDH.Services
                     foreach (var item in _listNav)
                     {
                         var _nav = _list.FirstOrDefault(m => m.id == item);
-                        if(_nav.title.Length == 0)
+                        if (_nav.title.Length == 0)
                         {
                             continue;
                         }
@@ -492,7 +492,7 @@ namespace TDH.Services
                                                  Title = m.title,
                                                  Image = m.image,
                                                  CreateDate = m.create_date,
-                                                 View  = m.view
+                                                 View = m.view
                                              }).ToList();
                 }
             }
@@ -872,7 +872,7 @@ namespace TDH.Services
                     var _item = _context.PROC_WEB_VIEW_ABOUT().FirstOrDefault();
                     if (_item == null)
                     {
-                        throw new UserException(FILE_NAME, "About", 204, "", new Exception());
+                        throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 204, "", new Exception());
                     }
                     return new PostViewModel()
                     {
@@ -901,5 +901,35 @@ namespace TDH.Services
         }
 
         #endregion
+
+        #region " [ Portfolio ] "
+
+        /// <summary>
+        /// Get portfolio infor
+        /// </summary>
+        /// <returns></returns>
+        public static List<PortfolioViewModel> PortfolioInfo()
+        {
+            try
+            {
+                using (var _context = new TDHEntities())
+                {
+                    return _context.WEB_CONFIGURATION.Where(m => m.key.Contains("portfolio_") || m.key.Contains("social_") || m.key == "name")
+                        .Select(m => new PortfolioViewModel() { Key = m.key, Value = m.value }).ToList();
+
+                }
+            }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
+            catch (Exception ex)
+            {
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
+            }
+        }
+
+        #endregion
+
     }
 }

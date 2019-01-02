@@ -405,7 +405,7 @@ function deleteItem() {
                     UpdateSkillDisplay(skillId);
                 }
                 if (type === 'defined') {
-                    UpdateGroupDisplay();
+                    UpdateSkillDisplay(skillId);
                 }
             }
             deletedID = '';

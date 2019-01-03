@@ -162,7 +162,6 @@ namespace TDH.Services.Personal
         {
             try
             {
-                short _level = 0;
                 List<SkillDefinedModel> _return = new List<SkillDefinedModel>();
                 using (var _context = new TDHEntities())
                 {

@@ -17,12 +17,17 @@
         color: #555;
         font-weight: bold;
     }
+
     .pd-5 {
         padding: 5px;
     }
+
     .pd-5 img {
         width: 100%;
         height: auto;
+    }
+    p.text {
+        margin: 0.1em 0 1.2em 0;
     }
     .mag-innert-left {
         background-color: #fff;
@@ -36,22 +41,18 @@
             <h3 class="tittle"><a href="@_cate.Alias">@_cate.Title</a></h3>
         </div>
         <div class="row">
-            @{
-                foreach (var item in Model)
-                {
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                @{ foreach (var item in Model)
+                    {
                         <div class="row">
-                            <div class="col-md-2 col-sm-3 col-xs-12 pd-5">
-                                <img src="@item.Image" />
-                            </div>
-                            <div class="col-md-10 col-sm-9 col-xs-12">
+                            <div class="col-md-12 col-sm-2 col-xs-12">
                                 <a href="@item.Alias" class="title">@item.Title</a>
-                                <p>@item.Description</p>
+                                <p class="text">@item.Description</p>
                             </div>
                         </div>
-                    </div>
+                    }
                 }
-            }
+            </div>
         </div>
     </div>
     <div class="col-md-4 mag-inner-right">

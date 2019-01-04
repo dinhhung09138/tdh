@@ -17,6 +17,7 @@
         _max = _lNavigation.Count();
     }
 }
+<style>.mt-6em {margin-top: 6.5em;}</style>
 <div class="mag-inner">
     <div class="col-md-8 mag-innert-left">
         @for (int i = 0; i < _max; i++)
@@ -58,7 +59,7 @@
             }
             if (i < _lNavigation.Count() && _lNavigation[i].Posts.Count() > 0)
             {
-                <div class="business">
+                <div class="business @Html.Raw(i > 0 ? " mt-6em" : "")">
                     <h3 class="tittle"><a href="@_lNavigation[i].Alias">@_lNavigation[i].Title</a></h3>
                     @if (_lNavigation[i].Posts.Count() > 0)
                     {

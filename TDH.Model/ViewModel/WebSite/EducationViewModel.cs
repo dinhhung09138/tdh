@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace TDH.Model.ViewModel.WebSite
 {
     /// <summary>
-    /// Skill info view model
+    /// Education and shortẻn certificated information
     /// </summary>
-    public class SkillViewModel
+    public class EducationViewModel
     {
         /// <summary>
         /// 
@@ -19,11 +19,11 @@ namespace TDH.Model.ViewModel.WebSite
         /// <summary>
         /// 
         /// </summary>
-        public string Type { get; set; }
+        public string School { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public short Level { get; set; }
+        public string Time { get; set; }
     }
 }

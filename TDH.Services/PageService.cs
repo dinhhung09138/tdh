@@ -961,6 +961,56 @@ namespace TDH.Services
             }
         }
 
+        /// <summary>
+        /// Get list education, certifacted
+        /// </summary>
+        /// <returns></returns>
+        public static List<EducationViewModel> GetEducation()
+        {
+            try
+            {
+                List<EducationViewModel> _return = new List<EducationViewModel>();
+                using (var _context = new TDHEntities())
+                {
+                    var _lEdu = (from m in _context.PN_EDUCATION
+                                 where m.publish && !m.deleted
+                                 orderby m.ordering descending
+                                 select new
+                                 {
+                                     m.name,
+                                     m.school,
+                                     m.duration
+                                 }).ToList();
+                    foreach (var item in _lEdu)
+                    {
+                        _return.Add(new EducationViewModel() { Name = item.name, School = item.school, Time = item.duration });
+                    }
+                    var _lCer = (from m in _context.PN_CETIFICATE
+                                 where m.publish && !m.deleted
+                                 orderby m.ordering descending
+                                 select new
+                                 {
+                                     m.name,
+                                     m.school,
+                                     m.time
+                                 }).ToList();
+                    foreach (var item in _lCer)
+                    {
+                        _return.Add(new EducationViewModel() { Name = item.name, School = item.school, Time = item.time });
+                    }
+                    return _return;
+                }
+            }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
+            catch (Exception ex)
+            {
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
+            }
+        }
+
         #endregion
 
     }

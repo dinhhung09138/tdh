@@ -929,6 +929,38 @@ namespace TDH.Services
             }
         }
 
+        /// <summary>
+        /// Get list of skill by user
+        /// </summary>
+        /// <returns></returns>
+        public static List<SkillViewModel> GetListSkill()
+        {
+            try
+            {
+                using (var _context = new TDHEntities())
+                {
+                    return (from m in _context.PN_SKILL_DEFINDED
+                            join s in _context.CM_SKILL_DEFINDED on m.defined_id equals s.id
+                            where m.point > 0
+                            orderby m.skill_id descending
+                            select new SkillViewModel()
+                            {
+                                Type = m.point >= 90 ? "Expert" : m.point >= 70 ? "Advanced" : m.point >= 50 ? "Intermediate" : "Beginner",
+                                Name = s.name,
+                                Level = m.point
+                            }).ToList();
+                }
+            }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
+            catch (Exception ex)
+            {
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
+            }
+        }
+
         #endregion
 
     }

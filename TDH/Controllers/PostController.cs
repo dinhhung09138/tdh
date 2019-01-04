@@ -42,6 +42,7 @@ namespace TDH.Controllers
 
                 if (navigationAlias == PORTFOLIO)
                 {
+                    ViewBag.skills = PageService.GetListSkill();
                     return View("Portfolio", PageService.PortfolioInfo());
                 }
 

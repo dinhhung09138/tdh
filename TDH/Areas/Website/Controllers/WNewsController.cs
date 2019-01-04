@@ -34,6 +34,16 @@ namespace TDH.Areas.Website.Controllers
         {
             try
             {
+                #region " [ Declaration ] "
+
+                NavigationService _nServices = new NavigationService();
+                CategoryService _cServices = new CategoryService();
+                
+                ViewBag.navigation = _nServices.GetAll(UserID);
+                ViewBag.cate = _cServices.GetAll(UserID);
+
+                #endregion
+
                 return View();
             }
             catch (ServiceException serviceEx)
@@ -68,6 +78,15 @@ namespace TDH.Areas.Website.Controllers
                 #endregion
 
                 #region " [ Main processing ] "
+
+                if(requestData.Parameter1 == null)
+                {
+                    requestData.Parameter1 = "";
+                }
+                if (requestData.Parameter2 == null)
+                {
+                    requestData.Parameter2 = "";
+                }
 
                 // Process sorting column
                 requestData = requestData.SetOrderingColumnName();

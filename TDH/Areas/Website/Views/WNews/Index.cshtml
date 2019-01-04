@@ -11,6 +11,30 @@
 @Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "website" })
 <input type="hidden" id="edit" value="@Html.Raw(ViewBag.Edit)" />
 <input type="hidden" id="delete" value="@Html.Raw(ViewBag.Delete)" />
+<div id="toolbarSearch" class="row">
+    <div class="col-md-6">
+        <select id="ddlNavigationSelect" class="form-control form-control-sm">
+            <option value="" selected>Tất cả chủ đề</option>
+            @{
+                foreach (var item in ViewBag.navigation)
+                {
+                    <option value="@item.ID">@item.Title</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="col-md-6">
+        <select id="ddlCategorySelect" class="form-control form-control-sm">
+            <option value="" selected>Tất cả danh mục</option>
+            @{
+                foreach (var item in ViewBag.cate)
+                {
+                    <option value="@item.ID">@item.Title</option>
+                }
+            }
+        </select>
+    </div>
+</div>
 <div class="card card-success">
     <div class="card-header with-border no-bg">
         <h3 class="card-title">@Message.News.LIST</h3>

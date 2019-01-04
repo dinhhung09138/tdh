@@ -26,7 +26,8 @@ $(document).ready(function () {
             url: '/website/wnews/index',
             type: 'post',
             data: function (d) {
-                //d.ModuleCode = ""
+                d.Parameter1 = $('#ddlNavigationSelect').val();
+                d.Parameter2 = $('#ddlCategorySelect').val();
             }
         },
         columns: [
@@ -131,6 +132,8 @@ $(document).ready(function () {
 
         }
     });
+
+    $(".dataTables_wrapper .toolbar").append(toolbarSearch);
 });
 
 function savePublish(id, publish) {
@@ -177,3 +180,12 @@ function deleteItem() {
         }
     });
 }
+
+$(document).on('change', '#ddlNavigationSelect', function (e) {
+    $('#ddlCategorySelect').val('');
+    table.ajax.reload();
+});
+$(document).on('change', '#ddlCategorySelect', function (e) {
+    $('#ddlNavigationSelect').val('');
+    table.ajax.reload();
+});

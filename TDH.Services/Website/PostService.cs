@@ -44,7 +44,9 @@ namespace TDH.Services.Website
                 using (var _context = new TDHEntities())
                 {
                     var _lData = (from m in _context.WEB_POST
-                                  where !m.deleted
+                                  where !m.deleted 
+                                        && request.Parameter1 == (request.Parameter1.Length == 0 ? request.Parameter1 : m.navigation_id.ToString())
+                                        && request.Parameter2 == (request.Parameter2.Length == 0 ? request.Parameter2 : m.category_id.ToString())
                                   orderby m.create_date descending
                                   select new
                                   {

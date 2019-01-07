@@ -1,12 +1,9 @@
-﻿@using TDH.Model.ViewModel.WebSite;
-@{ 
-    var listCate = ViewBag.cate as List<CategoryViewModel>;
-}
+﻿@model IEnumerable<TDH.Model.ViewModel.WebSite.CategoryViewModel>
 <div class="">
     <h4 class="side">Danh mục</h4>
     <div class="list-group-alternate">
         @{
-            foreach (var item in listCate)
+            foreach (var item in Model)
             {
                 <a href="@item.Alias" class="list-group-item"><span class="badge">@item.Count</span> @item.Title </a>
             }

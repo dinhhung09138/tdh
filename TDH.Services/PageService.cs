@@ -487,11 +487,10 @@ namespace TDH.Services
         /// Get top 4 lasted news
         /// </summary>
         /// <returns>List<PostViewModel></returns>
-        public static async Task<List<PostViewModel>> GetTop4LastedNews()
+        public static  List<PostViewModel> GetTop4LastedNews()
         {
             try
             {
-                await Task.Yield();
                 using (var _context = new TDHEntities())
                 {
                     return _context.PROC_WEB_VIEW_POST_Top4Lasted()
@@ -515,11 +514,10 @@ namespace TDH.Services
         /// Get 2 news has largest view
         /// </summary>
         /// <returns>List<PostViewModel></returns>
-        public static async Task<List<PostViewModel>> GetTop2Views()
+        public static List<PostViewModel> GetTop2Views()
         {
             try
             {
-                await Task.Yield();
                 using (var _context = new TDHEntities())
                 {
                     return _context.PROC_WEB_VIEW_POST_Top2View()

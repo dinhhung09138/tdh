@@ -16,7 +16,7 @@ namespace TDH.Common.Caching
         /// <param name="t">object data</param>
         /// <param name="key">key name</param>
         /// <param name="expiry">expiry time</param>
-        public static void Add<T>(T t, string key, DateTime expiry) where T : class
+        public static void Set<T>(T t, string key, DateTime expiry) where T : class
         {
             HttpContext.Current.Cache.Insert(key, t, null, expiry, System.Web.Caching.Cache.NoSlidingExpiration);
         }
@@ -28,7 +28,7 @@ namespace TDH.Common.Caching
         /// <param name="t">object data</param>
         /// <param name="key">key name</param>
         /// <param name="hour">default = 1</param>
-        public static void Add<T>(T t, string key, int hour = 1) where T : class
+        public static void Set<T>(T t, string key, int hour = 1) where T : class
         {
             HttpContext.Current.Cache.Insert(key, t, null, DateTime.Now.AddHours(hour), System.Web.Caching.Cache.NoSlidingExpiration);
         }

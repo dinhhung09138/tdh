@@ -62,7 +62,7 @@ namespace TDH.Controllers
                 else
                 {
                     _navInfo = await PageService.GetNavigationInfor(navigationAlias);
-                    CacheExtension.Add<NavigationViewModel>(_navInfo, navigationAlias, 168);
+                    CacheExtension.Set(_navInfo, navigationAlias, 168);
                 }
 
                 #endregion
@@ -135,7 +135,7 @@ namespace TDH.Controllers
                     else
                     {
                         _navInfo = await PageService.GetNavigationInfor(navigationAlias);
-                        CacheExtension.Add(_navInfo, navigationAlias, 168);
+                        CacheExtension.Set(_navInfo, navigationAlias, 168);
                     }
                     ViewBag.navInfor = _navInfo;
                     //
@@ -160,7 +160,7 @@ namespace TDH.Controllers
                     else
                     {
                         _cateInfo = await PageService.GetCategoryInfor(navigationAlias, categoryAlias);
-                        CacheExtension.Add<CategoryViewModel>(_cateInfo, navigationAlias + categoryAlias, 168);
+                        CacheExtension.Set(_cateInfo, navigationAlias + categoryAlias, 168);
                     }
                     ViewBag.cateInfo = _cateInfo;
 
@@ -173,7 +173,7 @@ namespace TDH.Controllers
                     else
                     {
                         _catePosts = await PageService.GetListPostDataByCategory(navigationAlias, categoryAlias);
-                        CacheExtension.Add(_catePosts, "ListPostByCate" + categoryAlias, 72);
+                        CacheExtension.Set(_catePosts, "ListPostByCate" + categoryAlias, 72);
                     }
                     return View(_catePosts);
                 }
@@ -186,7 +186,7 @@ namespace TDH.Controllers
                 else
                 {
                     _model = await PageService.GetPostInfor(navigationAlias, categoryAlias);
-                    CacheExtension.Add(_model, "Post" + navigationAlias, 48);
+                    CacheExtension.Set(_model, "Post" + navigationAlias, 48);
                 }
                 ViewBag.related = await PageService.Top6LastedPostByNavigationID(_model.CategoryID);
                 return View("Post", _model);
@@ -222,7 +222,7 @@ namespace TDH.Controllers
                 else
                 {
                     _navInfo = await PageService.GetNavigationInfor(navigationAlias);
-                    CacheExtension.Add<NavigationViewModel>(_navInfo, navigationAlias, 168);
+                    CacheExtension.Set(_navInfo, navigationAlias, 168);
                 }
                 ViewBag.navInfor = _navInfo;
 
@@ -238,7 +238,7 @@ namespace TDH.Controllers
                 else
                 {
                     _model = await PageService.GetPostInfor(navigationAlias, categoryAlias, postAlias);
-                    CacheExtension.Add(_model, postAlias, 48);
+                    CacheExtension.Set(_model, postAlias, 48);
                 }
 
                 #endregion
@@ -340,8 +340,18 @@ namespace TDH.Controllers
         {
             try
             {
-                ViewBag.cate = PageService.ProgrammingCategory(navAlias);
-                return PartialView();
+                string key = "partial_programming_" + navAlias;
+                var model = new List<CategoryViewModel>();
+                if (CacheExtension.Exists(key))
+                {
+                    model = CacheExtension.Get<List<CategoryViewModel>>(key);
+                }
+                else
+                {
+                    model = PageService.ProgrammingCategory(navAlias);
+                    CacheExtension.Set(model, key, DateTime.Now.AddDays(3));
+                }
+                return PartialView(model);
             }
             catch(UserException uEx)
             {
@@ -377,8 +387,18 @@ namespace TDH.Controllers
         {
             try
             {
-                ViewBag.post = PageService.ProgrammingGetTop6View(navAlias);
-                return PartialView();
+                string key = "partial_programming_post_" + navAlias;
+                var model = new List<PostViewModel>();
+                if (CacheExtension.Exists(key))
+                {
+                    model = CacheExtension.Get<List<PostViewModel>>(key);
+                }
+                else
+                {
+                    model = PageService.ProgrammingGetTop6View(navAlias);
+                    CacheExtension.Set(model, key, DateTime.Now.AddDays(3));
+                }
+                return PartialView(model);
             }
             catch (UserException uEx)
             {

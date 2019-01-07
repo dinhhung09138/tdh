@@ -1,12 +1,9 @@
-﻿@using TDH.Model.ViewModel.WebSite;
-@{
-    var listPost = ViewBag.post as List<PostViewModel>;
-}
+﻿@model IEnumerable<TDH.Model.ViewModel.WebSite.PostViewModel>
 <div class="top-news">
     <h4 class="side">Xem nhiều</h4>
     <div class="top-inner">
         @{
-            foreach (var item in listPost)
+            foreach (var item in Model)
             {
                 <div class="top-text">
                     <a href="@item.Alias"><img src="@item.Image" class="img-responsive" alt="@item.Title" /></a>

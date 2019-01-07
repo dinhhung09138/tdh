@@ -37,7 +37,7 @@
 <body>
     <header class="header">
         <div class="container clearfix">
-            <img class="profile-image img-fluid float-left" style="width: 180px; height: 180px; border-radius: 50%;" src="@Model.FirstOrDefault(m => m.Key == "portfolio_image").Value" alt="@Model.FirstOrDefault(m => m.Key == "name").Value" />
+            <img class="profile-image img-fluid float-left" style="width: 180px; height: 180px; border-radius: 50%;" src="@Model.FirstOrDefault(m => m.Key == "portfolio_image").Value" alt="@Model.FirstOrDefault(m => m.Key == "name").Value" title="@Model.FirstOrDefault(m => m.Key == "name").Value" />
             <div class="profile-content float-left">
                 <h1 class="name">@Model.FirstOrDefault(m => m.Key == "name").Value</h1>
                 <h2 class="desc">@Model.FirstOrDefault(m => m.Key == "portfolio_job").Value</h2>

@@ -32,7 +32,7 @@
                             _lost = "lost";
                         }
                         <div class="world-news-grid @_lost">
-                            <img src="@item.Image" alt="@item.Title" />
+                            <img src="@item.Image" alt="@item.Title" title="@item.Title" class="lazy"/>
                             <a href="@item.Alias" class="wd">@item.Title</a>
                             <p>@item.Description</p>
                             <a class="read" href="@item.Alias">Xem thêm</a>
@@ -64,7 +64,7 @@
                         <div class="technology">
                             <h2 class="tittle"><a href="@item.Alias" title="@item.Title">@item.Title</a></h2>
                             <div class="col-md-6 tech-img">
-                                <a href="@item.Posts[0].Alias"><img src="@item.Posts[0].Image" class="img-responsive" alt="@item.Posts[0].Title" /></a>
+                                <a href="@item.Posts[0].Alias"><img src="@item.Posts[0].Image" class="lazy img-responsive" alt="@item.Posts[0].Title" title="@item.Posts[0].Title" /></a>
                                 <h5 class="inner two">
                                     <a href="@item.Posts[0].Alias">@item.Posts[0].Title</a>
                                 </h5>
@@ -81,7 +81,7 @@
                                     }
                                     <div class="editor-pics">
                                         <div class="col-md-3 item-pic">
-                                            <img src="@item.Posts[i].Image" class="img-responsive" alt="@item.Posts[i].Title" />
+                                            <img src="@item.Posts[i].Image" class="lazy img-responsive" alt="@item.Posts[i].Title" title="@item.Posts[i].Title" />
                                         </div>
                                         <div class="col-md-9 item-details">
                                             <h5 class="inner two"><a href="@item.Posts[i].Alias">@item.Posts[i].Title</a></h5>
@@ -101,7 +101,7 @@
                         <div class="business">
                             <h3 class="tittle"><a href="@item.Alias" title="@item.Title">@item.Title</a></h3>
                             <div class="business-inner">
-                                <div class="col-md-6 b-img"><a href="@item.Posts[0].Alias"><img class="img-responsive" src="@item.Posts[0].Image" alt="@item.Posts[0].Title" /></a></div>
+                                <div class="col-md-6 b-img"><a href="@item.Posts[0].Alias"><img class="lazy img-responsive" src="@item.Posts[0].Image" alt="@item.Posts[0].Title" title="@item.Posts[0].Title" /></a></div>
                                 <div class="col-md-6 b-text">
                                     <h5><a href="@item.Posts[0].Alias">@item.Posts[0].Title</a></h5>
                                     <h6><i class="glyphicon glyphicon-time"></i>@item.Posts[0].CreateDate</h6>
@@ -121,7 +121,7 @@
                                 {
                                     <div class="col-md-6 business-bottom">
                                         <div class="col-md-3 b-bottom-pic">
-                                            <a href="@item.Posts[1].Alias"><img class="img-responsive" src="@item.Posts[1].Image" alt="@item.Posts[1].Title" /></a>
+                                            <a href="@item.Posts[1].Alias"><img class="lazy img-responsive" src="@item.Posts[1].Image" alt="@item.Posts[1].Title" title="@item.Posts[1].Title" /></a>
                                         </div>
                                         <div class="col-md-9 b-bottom-text">
                                             <h5><a href="@item.Posts[1].Alias"> @item.Posts[1].Title</a></h5>
@@ -142,7 +142,7 @@
                                     <div class="col-md-6 business-bottom">
                                         <div class="col-md-3 b-bottom-pic">
                                             <a href="@item.Posts[2].Alias">
-                                                <img class="img-responsive" src="@item.Posts[2].Image" alt="@item.Posts[2].Title" />
+                                                <img class="lazy img-responsive" src="@item.Posts[2].Image" alt="@item.Posts[2].Title" title="@item.Posts[2].Title" />
                                             </a>
                                         </div>
                                         <div class="col-md-9 b-bottom-text">
@@ -167,7 +167,7 @@
                             {
                                 <div class="business-inner two">
                                     <div class="col-md-6 b-img">
-                                        <a href="@item.Posts[3].Alias"><img class="img-responsive" src="@item.Posts[3].Image" alt="@item.Posts[3].Title" /></a>
+                                        <a href="@item.Posts[3].Alias"><img class="lazy img-responsive" src="@item.Posts[3].Image" alt="@item.Posts[3].Title" title="@item.Posts[3].Title" /></a>
                                     </div>
                                     <div class="col-md-6 b-text">
                                         <h5><a href="@item.Posts[3].Alias">@item.Posts[3].Title</a></h5>
@@ -188,7 +188,7 @@
                                         {
                                             <div class="col-md-6 business-bottom">
                                                 <div class="col-md-3 b-bottom-pic">
-                                                    <a href="@item.Posts[4].Alias"><img class="img-responsive" src="@item.Posts[4].Image" alt="@item.Posts[4].Title" /></a>
+                                                    <a href="@item.Posts[4].Alias"><img class="lazy img-responsive" src="@item.Posts[4].Image" alt="@item.Posts[4].Title" title="@item.Posts[4].Title" /></a>
                                                 </div>
                                                 <div class="col-md-9 b-bottom-text">
                                                     <h5><a href="@item.Posts[4].Alias"> @item.Posts[4].Title</a></h5>
@@ -208,7 +208,7 @@
                                         {
                                             <div class="col-md-6 business-bottom">
                                                 <div class="col-md-3 b-bottom-pic">
-                                                    <a href="@item.Posts[5].Alias"><img class="img-responsive" src="@item.Posts[5].Image" alt="@item.Posts[5].Title" /></a>
+                                                    <a href="@item.Posts[5].Alias"><img class="lazy img-responsive" src="@item.Posts[5].Image" alt="@item.Posts[5].Title" title="@item.Posts[5].Title" /></a>
                                                 </div>
                                                 <div class="col-md-9 b-bottom-text">
                                                     <h5><a href="@item.Posts[5].Alias"> @item.Posts[5].Title</a></h5>

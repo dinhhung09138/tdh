@@ -29,7 +29,7 @@
                     @if (_lcategory[i].Posts.Count() > 0)
                     {
                         <div class="col-md-6 tech-img">
-                            <a href="@_lcategory[i].Posts[0].Alias"><img src="@_lcategory[i].Posts[0].Image" class="img-responsive" alt="@_lcategory[i].Posts[0].Title" /></a>
+                            <a href="@_lcategory[i].Posts[0].Alias"><img src="@_lcategory[i].Posts[0].Image" class="lazy img-responsive" alt="@_lcategory[i].Posts[0].Title" title="@_lcategory[i].Posts[0].Title" /></a>
                             <h5 class="inner two">
                                 <a href="@_lcategory[i].Posts[0].Alias">@_lcategory[i].Posts[0].Title</a>
                             </h5>
@@ -42,7 +42,7 @@
                                 {
                                     <div class="editor-pics">
                                         <div class="col-md-3 item-pic">
-                                            <img src="@_lcategory[i].Posts[j].Image" class="img-responsive" alt="@_lcategory[i].Posts[j].Title" />
+                                            <img src="@_lcategory[i].Posts[j].Image" class="lazy img-responsive" alt="@_lcategory[i].Posts[j].Title" title="@_lcategory[i].Posts[j].Title" />
                                         </div>
                                         <div class="col-md-9 item-details">
                                             <h5 class="inner two"><a href="@_lcategory[i].Posts[j].Alias">@_lcategory[i].Posts[j].Title</a></h5>
@@ -64,7 +64,7 @@
                     @if (_lNavigation[i].Posts.Count() > 0)
                     {
                         <div class="business-inner">
-                            <div class="col-md-6 b-img"><a href="@_lNavigation[i].Posts[0].Alias"><img class="img-responsive" src="@_lNavigation[i].Posts[0].Image" alt="@_lNavigation[i].Posts[0].Title" /></a></div>
+                            <div class="col-md-6 b-img"><a href="@_lNavigation[i].Posts[0].Alias"><img class="lazy img-responsive" src="@_lNavigation[i].Posts[0].Image" alt="@_lNavigation[i].Posts[0].Title" title="@_lNavigation[i].Posts[0].Title" /></a></div>
                             <div class="col-md-6 b-text">
                                 <h5><a href="@_lNavigation[i].Posts[0].Alias">@_lNavigation[i].Posts[0].Title</a></h5>
                                 <h6><i class="glyphicon glyphicon-time"></i>@_lNavigation[i].Posts[0].CreateDate</h6>
@@ -85,7 +85,7 @@
                                 {
                                     <div class="col-md-6 business-bottom">
                                         <div class="col-md-3 b-bottom-pic">
-                                            <a href="@_lNavigation[i].Posts[1].Alias"><img class="img-responsive" src="@_lNavigation[i].Posts[1].Image" alt="@_lNavigation[i].Posts[1].Title" /></a>
+                                            <a href="@_lNavigation[i].Posts[1].Alias"><img class="lazy img-responsive" src="@_lNavigation[i].Posts[1].Image" alt="@_lNavigation[i].Posts[1].Title" title="@_lNavigation[i].Posts[1].Title" /></a>
                                         </div>
                                         <div class="col-md-9 b-bottom-text">
                                             <h5><a href="@_lNavigation[i].Posts[1].Alias"> @_lNavigation[i].Posts[1].Title</a></h5>
@@ -106,7 +106,7 @@
                                     <div class="col-md-6 business-bottom">
                                         <div class="col-md-3 b-bottom-pic">
                                             <a href="@_lNavigation[i].Posts[2].Alias">
-                                                <img class="img-responsive" src="@_lNavigation[i].Posts[2].Image" alt="@_lNavigation[i].Posts[2].Title" />
+                                                <img class="lazy img-responsive" src="@_lNavigation[i].Posts[2].Image" alt="@_lNavigation[i].Posts[2].Title" title="@_lNavigation[i].Posts[2].Title" />
                                             </a>
                                         </div>
                                         <div class="col-md-9 b-bottom-text">
@@ -132,7 +132,7 @@
                     {
                         <div class="business-inner two">
                             <div class="col-md-6 b-img">
-                                <a href="@_lNavigation[i].Posts[3].Alias"><img class="img-responsive" src="@_lNavigation[i].Posts[3].Image" alt="@_lNavigation[i].Posts[3].Title" /></a>
+                                <a href="@_lNavigation[i].Posts[3].Alias"><img class="lazy img-responsive" src="@_lNavigation[i].Posts[3].Image" alt="@_lNavigation[i].Posts[3].Title" title="@_lNavigation[i].Posts[3].Title" /></a>
                             </div>
                             <div class="col-md-6 b-text">
                                 <h5><a href="@_lNavigation[i].Posts[3].Alias">@_lNavigation[i].Posts[3].Title</a></h5>
@@ -153,7 +153,7 @@
                                 {
                                     <div class="col-md-6 business-bottom">
                                         <div class="col-md-3 b-bottom-pic">
-                                            <a href="@_lNavigation[i].Posts[4].Alias"><img class="img-responsive" src="@_lNavigation[i].Posts[4].Image" alt="@_lNavigation[i].Posts[4].Title"/></a>
+                                            <a href="@_lNavigation[i].Posts[4].Alias"><img class="lazy img-responsive" src="@_lNavigation[i].Posts[4].Image" alt="@_lNavigation[i].Posts[4].Title" title="@_lNavigation[i].Posts[4].Title"/></a>
                                         </div>
                                         <div class="col-md-9 b-bottom-text">
                                             <h5><a href="@_lNavigation[i].Posts[4].Alias"> @_lNavigation[i].Posts[4].Title</a></h5>
@@ -173,7 +173,7 @@
                                 {
                                     <div class="col-md-6 business-bottom">
                                         <div class="col-md-3 b-bottom-pic">
-                                            <a href="@_lNavigation[i].Posts[5].Alias"><img class="img-responsive" src="@_lNavigation[i].Posts[5].Image" alt="@_lNavigation[i].Posts[5].Title" /></a>
+                                            <a href="@_lNavigation[i].Posts[5].Alias"><img class="lazy img-responsive" src="@_lNavigation[i].Posts[5].Image" alt="@_lNavigation[i].Posts[5].Title" title="@_lNavigation[i].Posts[5].Title" /></a>
                                         </div>
                                         <div class="col-md-9 b-bottom-text">
                                             <h5><a href="@_lNavigation[i].Posts[5].Alias"> @_lNavigation[i].Posts[5].Title</a></h5>

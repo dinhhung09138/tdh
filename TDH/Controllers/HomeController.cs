@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
@@ -26,14 +27,13 @@ namespace TDH.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             try
             {
-                var _metaModel = PageService.getHomeMetaContent();
-                ViewBag.category = PageService.GetListCategoryShowOnHomePage();
-                ViewBag.navigation = PageService.GetListNavigationShowOnHomePage();
-                return View(_metaModel);
+                ViewBag.category = await PageService.GetListCategoryShowOnHomePage();
+                ViewBag.navigation = await PageService.GetListNavigationShowOnHomePage();
+                return View(await PageService.GetHomeMetaContent());
             }
             catch (UserException uEx)
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using TDH.Common;
 using TDH.Common.UserException;
 using TDH.DataAccess;
@@ -30,8 +31,9 @@ namespace TDH.Services
         /// Get home page meta content
         /// </summary>
         /// <returns>MetaViewModel</returns>
-        public static MetaViewModel getHomeMetaContent()
+        public static async Task<MetaViewModel> GetHomeMetaContent()
         {
+            await Task.Yield();
             MetaViewModel _meta = new MetaViewModel();
             try
             {
@@ -107,8 +109,9 @@ namespace TDH.Services
         /// Get top 6 post for each navigation
         /// </summary>
         /// <returns>List<NavigationViewModel></returns>
-        public static List<NavigationViewModel> GetListNavigationShowOnHomePage()
+        public static async Task<List<NavigationViewModel>> GetListNavigationShowOnHomePage()
         {
+            await Task.Yield();
             List<NavigationViewModel> _return = new List<NavigationViewModel>();
             try
             {
@@ -157,8 +160,9 @@ namespace TDH.Services
         /// Get list of top 5 of post for each category
         /// </summary>
         /// <returns>List<CategoryViewModel></returns>
-        public static List<CategoryViewModel> GetListCategoryShowOnHomePage()
+        public static async Task<List<CategoryViewModel>> GetListCategoryShowOnHomePage()
         {
+            await Task.Yield();
             List<CategoryViewModel> _return = new List<CategoryViewModel>();
             try
             {

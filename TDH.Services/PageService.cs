@@ -93,7 +93,7 @@ namespace TDH.Services
                                               .ToList()
                         });
                     }
-
+                    
                     //Return list
                     return _returnList;
                 }
@@ -310,10 +310,11 @@ namespace TDH.Services
         /// </summary>
         /// <param name="navAlias">Navigation alias</param>
         /// <returns>NavigationViewModel</returns>
-        public static NavigationViewModel GetNavigationInfor(string navAlias)
+        public static async Task<NavigationViewModel> GetNavigationInfor(string navAlias)
         {
             try
             {
+                await Task.Yield();
                 using (var context = new TDHEntities())
                 {
                     var _item = context.PROC_WEB_VIEW_NAVIGATION_Info(navAlias).FirstOrDefault();
@@ -351,10 +352,11 @@ namespace TDH.Services
         /// <param name="navigationAlias">Navigation alias</param>
         /// <param name="cateAlias">Category alias</param>
         /// <returns>CategoryViewModel</returns>
-        public static CategoryViewModel GetCategoryInfor(string navigationAlias, string cateAlias)
+        public static async Task<CategoryViewModel> GetCategoryInfor(string navigationAlias, string cateAlias)
         {
             try
             {
+                await Task.Yield();
                 using (var context = new TDHEntities())
                 {
                     var _item = context.PROC_WEB_VIEW_CATEGORY_Info(navigationAlias + "/" + cateAlias).FirstOrDefault();
@@ -393,10 +395,11 @@ namespace TDH.Services
         /// <param name="navAlias">Navigation alias</param>
         /// <param name="postAlias">Post alias</param>
         /// <returns>PostViewModel</returns>
-        public static PostViewModel GetPostInfor(string navAlias, string postAlias)
+        public static async Task<PostViewModel> GetPostInfor(string navAlias, string postAlias)
         {
             try
             {
+                await Task.Yield();
                 var _nav = GetNavigationInfor(navAlias);
                 using (var context = new TDHEntities())
                 {
@@ -440,10 +443,11 @@ namespace TDH.Services
         /// <param name="cateAlias">Category alias</param>
         /// <param name="postAlias">Post alias</param>
         /// <returns>PostViewModel</returns>
-        public static PostViewModel GetPostInfor(string navAlias, string cateAlias, string postAlias)
+        public static async Task<PostViewModel> GetPostInfor(string navAlias, string cateAlias, string postAlias)
         {
             try
             {
+                await Task.Yield();
                 using (var context = new TDHEntities())
                 {
                     var _item = context.PROC_WEB_VIEW_POST_Info(navAlias, cateAlias, postAlias).FirstOrDefault();
@@ -483,10 +487,11 @@ namespace TDH.Services
         /// Get top 4 lasted news
         /// </summary>
         /// <returns>List<PostViewModel></returns>
-        public static List<PostViewModel> GetTop4LastedNews()
+        public static async Task<List<PostViewModel>> GetTop4LastedNews()
         {
             try
             {
+                await Task.Yield();
                 using (var _context = new TDHEntities())
                 {
                     return _context.PROC_WEB_VIEW_POST_Top4Lasted()
@@ -510,10 +515,11 @@ namespace TDH.Services
         /// Get 2 news has largest view
         /// </summary>
         /// <returns>List<PostViewModel></returns>
-        public static List<PostViewModel> GetTop2Views()
+        public static async Task<List<PostViewModel>> GetTop2Views()
         {
             try
             {
+                await Task.Yield();
                 using (var _context = new TDHEntities())
                 {
                     return _context.PROC_WEB_VIEW_POST_Top2View()
@@ -542,10 +548,11 @@ namespace TDH.Services
         /// </summary>
         /// <param name="navigationAlias"></param>
         /// <returns>List<CategoryViewModel></returns>
-        public static List<CategoryViewModel> GetListCategoryDataByNavigation(string navigationAlias)
+        public static async Task<List<CategoryViewModel>> GetListCategoryDataByNavigation(string navigationAlias)
         {
             try
             {
+                await Task.Yield();
                 using (var context = new TDHEntities())
                 {
                     //Return list
@@ -595,11 +602,12 @@ namespace TDH.Services
         /// <param name="navigationAlias"></param>
         /// <param name="categoryAlias"></param>
         /// <returns>true: category page, false: post page</returns>
-        public static bool CheckIsCategoryPage(string navigationAlias, string categoryAlias)
+        public static async Task<bool> CheckIsCategoryPage(string navigationAlias, string categoryAlias)
         {
             try
             {
-                NavigationViewModel _nav = GetNavigationInfor(navigationAlias);
+                await Task.Yield();
+                NavigationViewModel _nav = await GetNavigationInfor(navigationAlias);
                 using (var context = new TDHEntities())
                 {
                     //Get this is post which parent is navigation
@@ -638,10 +646,11 @@ namespace TDH.Services
         /// <param name="categoryAlias">Category alias</param>
         /// <param name="page">Current page</param>
         /// <returns>List<PostViewModel></returns>
-        public static List<PostViewModel> GetListPostDataByCategory(string navigationAlias, string categoryAlias, short page = 1)
+        public static async Task<List<PostViewModel>> GetListPostDataByCategory(string navigationAlias, string categoryAlias, short page = 1)
         {
             try
             {
+                await Task.Yield();
                 List<PostViewModel> _return = new List<PostViewModel>();
                 using (var context = new TDHEntities())
                 {
@@ -675,10 +684,11 @@ namespace TDH.Services
         /// </summary>
         /// <param name="navID">Navigation identifier</param>
         /// <returns>List<PostViewModel></returns>
-        public static List<PostViewModel> Top6LastedPostByNavigationID(Guid navID)
+        public static async Task<List<PostViewModel>> Top6LastedPostByNavigationID(Guid navID)
         {
             try
             {
+                await Task.Yield();
                 using (var _context = new TDHEntities())
                 {
                     return _context.PROC_WEB_VIEW_POST_Top6ByNavigation(navID)
@@ -703,10 +713,11 @@ namespace TDH.Services
         /// </summary>
         /// <param name="cateID">Category identifier</param>
         /// <returns>List<PostViewModel></returns>
-        public static List<PostViewModel> Top6LastedPostByCategoryID(Guid cateID)
+        public static async Task<List<PostViewModel>> Top6LastedPostByCategoryID(Guid cateID)
         {
             try
             {
+                await Task.Yield();
                 List<PostViewModel> _return = new List<PostViewModel>();
                 using (var _context = new TDHEntities())
                 {
@@ -737,10 +748,11 @@ namespace TDH.Services
         /// <param name="navAlias">Navigation alias</param>
         /// <param name="page">currrent page, default: 1</param>
         /// <returns>List<PostViewModel></returns>
-        public static List<PostViewModel> ProgrammingGetTop20(string navAlias, short page = 1)
+        public static async Task<List<PostViewModel>> ProgrammingGetTop20(string navAlias, short page = 1)
         {
             try
             {
+                await Task.Yield();
                 List<PostViewModel> _return = new List<PostViewModel>();
                 using (var context = new TDHEntities())
                 {
@@ -867,10 +879,11 @@ namespace TDH.Services
         /// About infor
         /// </summary>
         /// <returns>PostViewModel</returns>
-        public static PostViewModel About()
+        public static async Task<PostViewModel> About()
         {
             try
             {
+                await Task.Yield();
                 using (var _context = new TDHEntities())
                 {
                     var _item = _context.PROC_WEB_VIEW_ABOUT().FirstOrDefault();
@@ -912,10 +925,11 @@ namespace TDH.Services
         /// Get portfolio infor
         /// </summary>
         /// <returns></returns>
-        public static List<PortfolioViewModel> PortfolioInfo()
+        public static async Task<List<PortfolioViewModel>> PortfolioInfo()
         {
             try
             {
+                await Task.Yield();
                 using (var _context = new TDHEntities())
                 {
                     return _context.WEB_CONFIGURATION.Where(m => m.key.Contains("portfolio_") || m.key.Contains("social_") || m.key == "name")
@@ -937,8 +951,9 @@ namespace TDH.Services
         /// Get list of skill by user
         /// </summary>
         /// <returns></returns>
-        public static List<SkillViewModel> GetListSkill()
+        public static async Task<List<SkillViewModel>> GetListSkill()
         {
+            await Task.Yield();
             try
             {
                 using (var _context = new TDHEntities())
@@ -969,10 +984,11 @@ namespace TDH.Services
         /// Get list education, certifacted
         /// </summary>
         /// <returns></returns>
-        public static List<EducationViewModel> GetEducation()
+        public static async Task<List<EducationViewModel>> GetEducation()
         {
             try
             {
+                await Task.Yield();
                 List<EducationViewModel> _return = new List<EducationViewModel>();
                 using (var _context = new TDHEntities())
                 {

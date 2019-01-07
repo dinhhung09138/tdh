@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
@@ -32,7 +33,7 @@ namespace TDH.Controllers
         [Route("{navigationAlias}")]
         [HttpGet]
         //[OutputCache(Duration = 604800, VaryByParam = "postAlias", Location = System.Web.UI.OutputCacheLocation.ServerAndClient)]
-        public ActionResult Navigation(string navigationAlias)
+        public async Task<ActionResult> Navigation(string navigationAlias)
         {
             try
             {
@@ -42,14 +43,14 @@ namespace TDH.Controllers
 
                 if (navigationAlias == PORTFOLIO)
                 {
-                    ViewBag.skills = PageService.GetListSkill();
-                    ViewBag.education = PageService.GetEducation();
-                    return View("Portfolio", PageService.PortfolioInfo());
+                    ViewBag.skills = await PageService.GetListSkill();
+                    ViewBag.education = await PageService.GetEducation();
+                    return View("Portfolio", await PageService.PortfolioInfo());
                 }
 
                 #endregion
 
-                var _navInfo = PageService.GetNavigationInfor(navigationAlias);
+                var _navInfo = await PageService.GetNavigationInfor(navigationAlias);
                 ViewBag.navInfor = _navInfo;
                 //
 
@@ -57,7 +58,7 @@ namespace TDH.Controllers
 
                 if (navigationAlias == PROGRAMMING)
                 {
-                    ViewBag.post = PageService.ProgrammingGetTop20(navigationAlias);
+                    ViewBag.post = await PageService.ProgrammingGetTop20(navigationAlias);
 
                     return View("Programming", _navInfo);
                 }
@@ -68,14 +69,14 @@ namespace TDH.Controllers
 
                 if (navigationAlias == "gioi-thieu")
                 {
-                    return View("About", PageService.About());
+                    return View("About", await PageService.About());
                 }
 
                 #endregion
 
                 #region " [ Post Page ] "
 
-                var _lPost = PageService.Top6LastedPostByNavigationID(_navInfo.ID);
+                var _lPost = await PageService.Top6LastedPostByNavigationID(_navInfo.ID);
                 if (_lPost.Count() > 0)
                 {
                     //Post conneted to navigation
@@ -84,7 +85,7 @@ namespace TDH.Controllers
                     return View(_navInfo);
                 }
                 ViewBag.post = 0;
-                ViewBag.data = PageService.GetListCategoryDataByNavigation(navigationAlias);
+                ViewBag.data = await PageService.GetListCategoryDataByNavigation(navigationAlias);
                 return View(_navInfo);
 
                 #endregion
@@ -103,7 +104,7 @@ namespace TDH.Controllers
         [Route("{navigationAlias}/{categoryAlias}")]
         [HttpGet]
         //[OutputCache(Duration = 86400, VaryByParam = "postAlias", Location = System.Web.UI.OutputCacheLocation.Server)]
-        public ActionResult Category(string navigationAlias, string categoryAlias)
+        public async Task<ActionResult> Category(string navigationAlias, string categoryAlias)
         {
             try
             {
@@ -113,26 +114,26 @@ namespace TDH.Controllers
 
                 if (navigationAlias == PROGRAMMING)
                 {
-                    var _navInfo = PageService.GetNavigationInfor(navigationAlias);
+                    var _navInfo = await PageService.GetNavigationInfor(navigationAlias);
                     ViewBag.navInfor = _navInfo;
                     //
-                    ViewBag.cateInfo = PageService.GetCategoryInfor(navigationAlias, categoryAlias);
+                    ViewBag.cateInfo = await PageService.GetCategoryInfor(navigationAlias, categoryAlias);
 
-                    return View("ProgrammingCategory", PageService.GetListPostDataByCategory(navigationAlias, categoryAlias));
+                    return View("ProgrammingCategory", await PageService.GetListPostDataByCategory(navigationAlias, categoryAlias));
                 }
 
                 #endregion
 
                 #region " [ Post ] "
 
-                bool _isCategory = PageService.CheckIsCategoryPage(navigationAlias, categoryAlias);
+                bool _isCategory = await PageService.CheckIsCategoryPage(navigationAlias, categoryAlias);
                 if (_isCategory)
                 {
-                    ViewBag.cateInfo = PageService.GetCategoryInfor(navigationAlias, categoryAlias);
-                    return View(PageService.GetListPostDataByCategory(navigationAlias, categoryAlias));
+                    ViewBag.cateInfo = await PageService.GetCategoryInfor(navigationAlias, categoryAlias);
+                    return View(await PageService.GetListPostDataByCategory(navigationAlias, categoryAlias));
                 }
-                var _model = PageService.GetPostInfor(navigationAlias, categoryAlias);
-                ViewBag.related = PageService.Top6LastedPostByNavigationID(_model.CategoryID);
+                var _model = await PageService.GetPostInfor(navigationAlias, categoryAlias);
+                ViewBag.related = await PageService.Top6LastedPostByNavigationID(_model.CategoryID);
                 return View("Post", _model);
                 
                 #endregion
@@ -151,17 +152,17 @@ namespace TDH.Controllers
         [Route("{navigationAlias}/{categoryAlias}/{postAlias}")]
         [HttpGet]
         //[OutputCache(Duration = 604800, VaryByParam = "postAlias", Location = System.Web.UI.OutputCacheLocation.ServerAndClient)]
-        public ActionResult Post(string navigationAlias, string categoryAlias, string postAlias)
+        public async Task<ActionResult> Post(string navigationAlias, string categoryAlias, string postAlias)
         {
             try
             {
                 navigationAlias = navigationAlias.ToLower();
 
-                var _navInfo = PageService.GetNavigationInfor(navigationAlias);
+                var _navInfo = await PageService.GetNavigationInfor(navigationAlias);
                 ViewBag.navInfor = _navInfo;
                 //
-                var _model = PageService.GetPostInfor(navigationAlias, categoryAlias, postAlias);
-                ViewBag.related = PageService.Top6LastedPostByCategoryID(_model.CategoryID);
+                var _model = await PageService.GetPostInfor(navigationAlias, categoryAlias, postAlias);
+                ViewBag.related = await PageService.Top6LastedPostByCategoryID(_model.CategoryID);
 
                 #region " [ Programming Page ] "
 

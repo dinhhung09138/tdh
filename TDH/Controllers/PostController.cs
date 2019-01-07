@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using TDH.Common;
 using TDH.Common.UserException;
+using TDH.Common.Caching;
 using TDH.Services;
+using TDH.Model.ViewModel.WebSite;
+using System.Collections.Generic;
 
 namespace TDH.Controllers
 {
@@ -32,7 +35,6 @@ namespace TDH.Controllers
 
         [Route("{navigationAlias}")]
         [HttpGet]
-        //[OutputCache(Duration = 604800, VaryByParam = "postAlias", Location = System.Web.UI.OutputCacheLocation.ServerAndClient)]
         public async Task<ActionResult> Navigation(string navigationAlias)
         {
             try
@@ -50,9 +52,20 @@ namespace TDH.Controllers
 
                 #endregion
 
-                var _navInfo = await PageService.GetNavigationInfor(navigationAlias);
-                ViewBag.navInfor = _navInfo;
-                //
+                #region " [ Get navigation info ] "
+
+                var _navInfo = new NavigationViewModel();
+                if (CacheExtension.Exists(navigationAlias))
+                {
+                    _navInfo = CacheExtension.Get<NavigationViewModel>(navigationAlias);
+                }
+                else
+                {
+                    _navInfo = await PageService.GetNavigationInfor(navigationAlias);
+                    CacheExtension.Add<NavigationViewModel>(_navInfo, navigationAlias, 168);
+                }
+
+                #endregion
 
                 #region " [ Programming Page ] "
 
@@ -114,7 +127,16 @@ namespace TDH.Controllers
 
                 if (navigationAlias == PROGRAMMING)
                 {
-                    var _navInfo = await PageService.GetNavigationInfor(navigationAlias);
+                    var _navInfo = new NavigationViewModel();
+                    if (CacheExtension.Exists(navigationAlias))
+                    {
+                        _navInfo = CacheExtension.Get<NavigationViewModel>(navigationAlias);
+                    }
+                    else
+                    {
+                        _navInfo = await PageService.GetNavigationInfor(navigationAlias);
+                        CacheExtension.Add(_navInfo, navigationAlias, 168);
+                    }
                     ViewBag.navInfor = _navInfo;
                     //
                     ViewBag.cateInfo = await PageService.GetCategoryInfor(navigationAlias, categoryAlias);
@@ -129,10 +151,43 @@ namespace TDH.Controllers
                 bool _isCategory = await PageService.CheckIsCategoryPage(navigationAlias, categoryAlias);
                 if (_isCategory)
                 {
-                    ViewBag.cateInfo = await PageService.GetCategoryInfor(navigationAlias, categoryAlias);
-                    return View(await PageService.GetListPostDataByCategory(navigationAlias, categoryAlias));
+                    //Get category info
+                    var _cateInfo = new CategoryViewModel();
+                    if (CacheExtension.Exists(navigationAlias + categoryAlias))
+                    {
+                        _cateInfo = CacheExtension.Get<CategoryViewModel>(navigationAlias + categoryAlias);
+                    }
+                    else
+                    {
+                        _cateInfo = await PageService.GetCategoryInfor(navigationAlias, categoryAlias);
+                        CacheExtension.Add<CategoryViewModel>(_cateInfo, navigationAlias + categoryAlias, 168);
+                    }
+                    ViewBag.cateInfo = _cateInfo;
+
+                    //List post by category
+                    var _catePosts = new List<PostViewModel>();
+                    if(CacheExtension.Exists("ListPostByCate" + categoryAlias))
+                    {
+                        _catePosts = CacheExtension.Get<List<PostViewModel>>("ListPostByCate" + categoryAlias);
+                    }
+                    else
+                    {
+                        _catePosts = await PageService.GetListPostDataByCategory(navigationAlias, categoryAlias);
+                        CacheExtension.Add(_catePosts, "ListPostByCate" + categoryAlias, 72);
+                    }
+                    return View(_catePosts);
                 }
-                var _model = await PageService.GetPostInfor(navigationAlias, categoryAlias);
+                //Post info
+                var _model = new PostViewModel();
+                if (CacheExtension.Exists("Post" + navigationAlias))
+                {
+                    _model = CacheExtension.Get<PostViewModel>("Post" + navigationAlias);
+                }
+                else
+                {
+                    _model = await PageService.GetPostInfor(navigationAlias, categoryAlias);
+                    CacheExtension.Add(_model, "Post" + navigationAlias, 48);
+                }
                 ViewBag.related = await PageService.Top6LastedPostByNavigationID(_model.CategoryID);
                 return View("Post", _model);
                 
@@ -151,17 +206,43 @@ namespace TDH.Controllers
 
         [Route("{navigationAlias}/{categoryAlias}/{postAlias}")]
         [HttpGet]
-        //[OutputCache(Duration = 604800, VaryByParam = "postAlias", Location = System.Web.UI.OutputCacheLocation.ServerAndClient)]
         public async Task<ActionResult> Post(string navigationAlias, string categoryAlias, string postAlias)
         {
             try
             {
                 navigationAlias = navigationAlias.ToLower();
 
-                var _navInfo = await PageService.GetNavigationInfor(navigationAlias);
+                #region " [ Get navigation info ] "
+
+                var _navInfo = new NavigationViewModel();
+                if (CacheExtension.Exists(navigationAlias))
+                {
+                    _navInfo = CacheExtension.Get<NavigationViewModel>(navigationAlias);
+                }
+                else
+                {
+                    _navInfo = await PageService.GetNavigationInfor(navigationAlias);
+                    CacheExtension.Add<NavigationViewModel>(_navInfo, navigationAlias, 168);
+                }
                 ViewBag.navInfor = _navInfo;
-                //
-                var _model = await PageService.GetPostInfor(navigationAlias, categoryAlias, postAlias);
+
+                #endregion
+
+                #region " [ Get post info ] "
+
+                var _model = new PostViewModel();
+                if (CacheExtension.Exists(postAlias))
+                {
+                    _model = CacheExtension.Get<PostViewModel>(postAlias);
+                }
+                else
+                {
+                    _model = await PageService.GetPostInfor(navigationAlias, categoryAlias, postAlias);
+                    CacheExtension.Add(_model, postAlias, 48);
+                }
+
+                #endregion
+
                 ViewBag.related = await PageService.Top6LastedPostByCategoryID(_model.CategoryID);
 
                 #region " [ Programming Page ] "

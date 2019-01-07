@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="ActionType.cs" />
     <Compile Include="BaseController.cs" />
+    <Compile Include="Caching\CacheExtension.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="UserException\ControllerException.cs" />
     <Compile Include="Fillters\AuthorizationFilterAttribute.cs" />

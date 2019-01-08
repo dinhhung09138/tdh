@@ -93,7 +93,7 @@ namespace TDH.Services
                                               .ToList()
                         });
                     }
-                    
+
                     //Return list
                     return _returnList;
                 }
@@ -487,7 +487,7 @@ namespace TDH.Services
         /// Get top 4 lasted news
         /// </summary>
         /// <returns>List<PostViewModel></returns>
-        public static  List<PostViewModel> GetTop4LastedNews()
+        public static List<PostViewModel> GetTop4LastedNews()
         {
             try
             {
@@ -1017,6 +1017,72 @@ namespace TDH.Services
                         _return.Add(new EducationViewModel() { Name = item.name, School = item.school, Time = item.time });
                     }
                     return _return;
+                }
+            }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
+            catch (Exception ex)
+            {
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
+            }
+        }
+
+        /// <summary>
+        /// Get list project
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<List<ProjectViewModel>> GetProject()
+        {
+            try
+            {
+                await Task.Yield();
+                using (var _context = new TDHEntities())
+                {
+                    return (from m in _context.PN_WORKING_PROJECT
+                            where m.publish && !m.deleted
+                            orderby m.ordering descending
+                            select new ProjectViewModel()
+                            {
+                                Name = m.name,
+                                Duration = m.during_time,
+                                Description = m.description,
+                                Image = m.image
+                            }).ToList();
+                }
+            }
+            catch (UserException uEx)
+            {
+                throw uEx;
+            }
+            catch (Exception ex)
+            {
+                throw new UserException(FILE_NAME, MethodInfo.GetCurrentMethod().Name, 500, ErrorMessage.ErrorService, ex);
+            }
+        }
+
+        /// <summary>
+        /// Get list experience
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<List<ExperienceViewModel>> GetExperience()
+        {
+            try
+            {
+                await Task.Yield();
+                using (var _context = new TDHEntities())
+                {
+                    return (from m in _context.PN_WORKING_EXPERIENCE
+                            where m.publish && !m.deleted
+                            orderby m.ordering descending
+                            select new ExperienceViewModel()
+                            {
+                                Company = m.company_name,
+                                Duration = m.during_time,
+                                Description = m.description,
+                                Position = m.position
+                            }).ToList();
                 }
             }
             catch (UserException uEx)

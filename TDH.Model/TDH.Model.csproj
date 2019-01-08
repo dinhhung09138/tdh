@@ -108,10 +108,12 @@
     <Compile Include="System\UserModel.cs" />
     <Compile Include="ViewModel\WebSite\CategoryViewModel.cs" />
     <Compile Include="ViewModel\WebSite\EducationViewModel.cs" />
+    <Compile Include="ViewModel\WebSite\ExperienceViewModel.cs" />
     <Compile Include="ViewModel\WebSite\MetaViewModel.cs" />
     <Compile Include="ViewModel\WebSite\NavigationViewModel.cs" />
     <Compile Include="ViewModel\WebSite\PortfolioViewModel.cs" />
     <Compile Include="ViewModel\WebSite\PostViewModel.cs" />
+    <Compile Include="ViewModel\WebSite\ProjectViewModel.cs" />
     <Compile Include="ViewModel\WebSite\SkillViewModel.cs" />
     <Compile Include="Website\AboutModel.cs" />
     <Compile Include="Website\CategoryModel.cs" />

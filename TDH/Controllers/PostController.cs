@@ -47,6 +47,8 @@ namespace TDH.Controllers
                 {
                     ViewBag.skills = await PageService.GetListSkill();
                     ViewBag.education = await PageService.GetEducation();
+                    ViewBag.project = await PageService.GetProject();
+                    ViewBag.experience = await PageService.GetExperience();
                     return View("Portfolio", await PageService.PortfolioInfo());
                 }
 

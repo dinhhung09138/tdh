@@ -246,6 +246,7 @@
     <Compile Include="Areas\Personal\Controllers\PNEventController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNIdeaController.cs" />
     <Compile Include="Areas\Personal\Controllers\PNSkillController.cs" />
+    <Compile Include="Areas\Personal\Controllers\PNWorkingController.cs" />
     <Compile Include="Areas\Personal\PersonalAreaRegistration.cs" />
     <Compile Include="Areas\Personal\Utils\Message.cs" />
     <Compile Include="Areas\System\Controllers\STErrorLogController.cs" />
@@ -6054,6 +6055,10 @@
     <Content Include="Areas\Personal\Content\Idea\action.js" />
     <Content Include="Areas\Personal\Content\Idea\index.js" />
     <Content Include="Areas\Personal\Content\skill\index.js" />
+    <Content Include="Areas\Personal\Content\Working\experience_action.js" />
+    <Content Include="Areas\Personal\Content\Working\project.js" />
+    <Content Include="Areas\Personal\Content\Working\project_action.js" />
+    <Content Include="Areas\Personal\Content\Working\experience.js" />
     <Content Include="Areas\System\Content\Log\index.js" />
     <Content Include="Areas\System\Content\Role\action.js" />
     <Content Include="Areas\System\Content\Role\index.js" />
@@ -6755,6 +6760,14 @@
     <Content Include="Content\portfolio\plugins\github-calendar\package-lock.json" />
     <Content Include="Content\portfolio\plugins\github-calendar\package.json" />
     <Content Include="Content\portfolio\plugins\github-calendar\README.md" />
+    <Content Include="Areas\Personal\Views\PNWorking\Project.cshtml" />
+    <Content Include="Areas\Personal\Views\PNWorking\Experience.cshtml" />
+    <Content Include="Areas\Personal\Views\PNWorking\CreateExperience.cshtml" />
+    <Content Include="Areas\Personal\Views\PNWorking\CreateProject.cshtml" />
+    <Content Include="Areas\Personal\Views\PNWorking\_ProjectForm.cshtml" />
+    <Content Include="Areas\Personal\Views\PNWorking\_ExperienceForm.cshtml" />
+    <Content Include="Areas\Personal\Views\PNWorking\EditExperience.cshtml" />
+    <Content Include="Areas\Personal\Views\PNWorking\EditProject.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

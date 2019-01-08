@@ -79,6 +79,7 @@
     <Compile Include="Personal\IdeaService.cs" />
     <Compile Include="Personal\SkillService.cs" />
     <Compile Include="Personal\TimelineService.cs" />
+    <Compile Include="Personal\WorkingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\ErrorLogService.cs" />
     <Compile Include="System\RoleService.cs" />

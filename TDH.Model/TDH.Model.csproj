@@ -93,7 +93,9 @@
     <Compile Include="Personal\EducationTypeModel.cs" />
     <Compile Include="Personal\EventModel.cs" />
     <Compile Include="Personal\EventTypeModel.cs" />
+    <Compile Include="Personal\ExperienceModel.cs" />
     <Compile Include="Personal\IdeaModel.cs" />
+    <Compile Include="Personal\ProjectModel.cs" />
     <Compile Include="Personal\SkillDefinedModel.cs" />
     <Compile Include="Personal\SkillModel.cs" />
     <Compile Include="Personal\TimelineModel.cs" />

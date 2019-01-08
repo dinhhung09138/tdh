@@ -481,6 +481,26 @@ namespace TDH.Common
                                 default:
                                     return "";
                             }
+                        case "pnworking":
+                            switch (actionName)
+                            {
+                                case "project":
+                                case "createproject":
+                                case "editproject":
+                                case "publishproject":
+                                case "checkdeleteproject":
+                                case "deleteproject":
+                                    return "personal_work_project";
+                                case "experience":
+                                case "createexperience":
+                                case "editexperience":
+                                case "publishexperience":
+                                case "checkdeleteexperience":
+                                case "deleteexperience":
+                                    return "personal_work_exprience";
+                                default:
+                                    return "";
+                            }
                         case "pndream":
                             switch (actionName)
                             {
@@ -950,6 +970,24 @@ namespace TDH.Common
                                 case "edit":
                                     return ActionType.Edit;
                                 case "delete":
+                                    return ActionType.Delete;
+                                default:
+                                    return ActionType.None;
+                            }
+                        case "pnworking":
+                            switch (actionName)
+                            {
+                                case "experience":
+                                case "project":
+                                    return ActionType.View;
+                                case "createproject":
+                                case "createexperience":
+                                    return ActionType.Create;
+                                case "editproject":
+                                case "editexperience":
+                                    return ActionType.Edit;
+                                case "deleteproject":
+                                case "deleteexperience":
                                     return ActionType.Delete;
                                 default:
                                     return ActionType.None;

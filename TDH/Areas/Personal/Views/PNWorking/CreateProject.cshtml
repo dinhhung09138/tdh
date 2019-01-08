@@ -1,0 +1,43 @@
+﻿@using TDH.Areas.Personal.Utils;
+@model TDH.Model.Personal.ProjectModel
+@{
+    ViewBag.Title = Message.Experience.CREATE;
+    Layout = "~/Areas/Administrator/Views/Shared/_AdminLayout.cshtml";
+}
+@section header{
+}
+@Html.Action("modulenavigation", "base", new { @area = "administrator", @moduleCode = "user_info" })
+<div class="card card-success">
+    <div class="card-header with-border no-bg">
+        <h3 class="card-title">@Message.Project.CREATE</h3>
+        <div class="card-tools pull-right">
+            @{
+                if (ViewBag.View == true)
+                {
+                    <a class="btn btn-box-tool" href="/personal/pnworking/experience" title="@Message.Project.LIST">
+                        <i class="fa fa-long-arrow-left"></i>
+                    </a>
+                }
+                <a class="btn btn-box-tool" href="/personal/pnworking/createexperience" title="@Message.Project.CREATE">
+                    <i class="fa fa-refresh"></i>
+                </a>
+            }
+        </div>
+    </div>
+    <div class="card-body">
+        @using (Ajax.BeginForm("createproject", "pnworking", new AjaxOptions { HttpMethod = "POST", OnSuccess = "onSuccess", OnFailure = "OnFailure", OnBegin = "beginSubmit" }, new { @id = "form" }))
+        {
+            @Html.Partial("_ProjectForm", Model)
+        }
+    </div>
+</div>
+@section script {
+    <script src="/Areas/Administrator/Content/plugins/datepicker/bootstrap-datepicker.js"></script>
+    <script src="/Areas/Administrator/Content/ckeditor/ckeditor.js"></script>
+    <script src="/Areas/Administrator/Content/ckfinder/ckfinder.js"></script>
+    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="/Areas/Personal/Content/Working/project_action.js"></script>
+}
+

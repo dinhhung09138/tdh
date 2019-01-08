@@ -39,5 +39,17 @@ namespace TDH.Areas.Personal.Utils
             public static readonly string CREATE = "Thêm chứng chỉ đào tạo";
             public static readonly string EDIT = "Cập nhật chứng chỉ đào tạo";
         }
+        public static class Project
+        {
+            public static readonly string LIST = "Danh sách dự án";
+            public static readonly string CREATE = "Thêm dự án";
+            public static readonly string EDIT = "Cập nhật dự án";
+        }
+        public static class Experience
+        {
+            public static readonly string LIST = "Kinh nghiệm làm việc";
+            public static readonly string CREATE = "Thêm kinh nghiệm làm việc";
+            public static readonly string EDIT = "Cập nhật kinh nghiệm làm việc";
+        }
     }
 }

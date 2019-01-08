@@ -1,0 +1,81 @@
+﻿@model TDH.Model.Personal.ProjectModel
+@Html.AntiForgeryToken()
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.Insert)
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Tên dự án <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @maxlength = 250, @required = true, @focus = true, @tabindex = "1" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Thời gian <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.DuringTime, new { @class = "form-control", @maxlength = 100, @required = true, @tabindex = "2" })
+        @Html.ValidationMessageFor(m => m.DuringTime)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Mô tả <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control", @maxlength = 500, @required = true, @tabindex = "4" })
+        @Html.ValidationMessageFor(m => m.Description)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Thứ tự <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextBoxFor(m => m.Ordering, new { @class = "form-control", @maxlength = 2, @required = true, @tabindex = "5" })
+        @Html.ValidationMessageFor(m => m.Ordering)
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Chi tiết<span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @tabindex = "6" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hình ảnh <span style="color:red; font-weight:bold;">*</span>
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        <div class="row form-group">
+            <div class="col-md-12 col-xs-12">
+                <a href="javascript:;" id="selectImg" tabindex="7">Chọn ảnh (252x189)</a>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-12 col-xs-12">
+                @Html.HiddenFor(m => m.Image)
+                <div class="row" style="padding:10px;">
+                    <img id="imgImage" src="@Model.Image" width="252" height="189" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12">
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @{
+            if (ViewBag.Add == true || ViewBag.Edit == true)
+            {
+                <a href="/personal/pnworking/project" class="btn btn-default" tabindex="11">Quay lại</a>
+                <button type="submit" id="submitForm" class="btn btn-primary" tabindex="12">Lưu</button>
+            }
+        }
+    </div>
+</div>

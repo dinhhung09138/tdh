@@ -725,6 +725,45 @@
           <Property Name="deleted_by" Type="uniqueidentifier" />
           <Property Name="deleted_date" Type="datetime" />
         </EntityType>
+        <EntityType Name="PN_WORKING_EXPERIENCE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="position" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="company_name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="during_time" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="500" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PN_WORKING_PROJECT">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="description" Type="nvarchar" MaxLength="500" />
+          <Property Name="during_time" Type="nvarchar" MaxLength="100" />
+          <Property Name="image" Type="nvarchar" MaxLength="150" />
+          <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="ordering" Type="smallint" Nullable="false" />
+          <Property Name="publish" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="created_date" Type="datetime" Nullable="false" />
+          <Property Name="updated_by" Type="uniqueidentifier" />
+          <Property Name="updated_date" Type="datetime" />
+          <Property Name="deleted" Type="bit" Nullable="false" />
+          <Property Name="deleted_by" Type="uniqueidentifier" />
+          <Property Name="deleted_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="SYS_FUNCTION">
           <Key>
             <PropertyRef Name="code" />
@@ -2057,6 +2096,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <EntitySet Name="PN_TASK" EntityType="Self.PN_TASK" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_TASK_STATUS" EntityType="Self.PN_TASK_STATUS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PN_TASK_TYPE" EntityType="Self.PN_TASK_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PN_WORKING_EXPERIENCE" EntityType="Self.PN_WORKING_EXPERIENCE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PN_WORKING_PROJECT" EntityType="Self.PN_WORKING_PROJECT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_FUNCTION" EntityType="Self.SYS_FUNCTION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_MODULE" EntityType="Self.SYS_MODULE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SYS_ROLE" EntityType="Self.SYS_ROLE" Schema="dbo" store:Type="Tables" />
@@ -2771,6 +2812,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             <End Role="SYS_USER" EntitySet="SYS_USER" />
             <End Role="SYS_USER_TOKEN" EntitySet="SYS_USER_TOKEN" />
           </AssociationSet>
+          <EntitySet Name="PN_WORKING_EXPERIENCE" EntityType="TDHModel.PN_WORKING_EXPERIENCE" />
+          <EntitySet Name="PN_WORKING_PROJECT" EntityType="TDHModel.PN_WORKING_PROJECT" />
           </EntityContainer>
         <ComplexType Name="FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result">
           <Property Type="Guid" Name="id" Nullable="false" />
@@ -4932,6 +4975,45 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PN_WORKING_EXPERIENCE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="position" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="company_name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="during_time" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PN_WORKING_PROJECT">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="during_time" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ordering" Type="Int16" Nullable="false" />
+          <Property Name="publish" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="Guid" Nullable="false" />
+          <Property Name="created_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated_by" Type="Guid" />
+          <Property Name="updated_date" Type="DateTime" Precision="3" />
+          <Property Name="deleted" Type="Boolean" Nullable="false" />
+          <Property Name="deleted_by" Type="Guid" />
+          <Property Name="deleted_date" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6561,6 +6643,47 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
                 <ScalarProperty Name="platform" ColumnName="platform" />
                 <ScalarProperty Name="is_mobile" ColumnName="is_mobile" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PN_WORKING_EXPERIENCE">
+            <EntityTypeMapping TypeName="TDHModel.PN_WORKING_EXPERIENCE">
+              <MappingFragment StoreEntitySet="PN_WORKING_EXPERIENCE">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="during_time" ColumnName="during_time" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PN_WORKING_PROJECT">
+            <EntityTypeMapping TypeName="TDHModel.PN_WORKING_PROJECT">
+              <MappingFragment StoreEntitySet="PN_WORKING_PROJECT">
+                <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
+                <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="updated_date" ColumnName="updated_date" />
+                <ScalarProperty Name="updated_by" ColumnName="updated_by" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="publish" ColumnName="publish" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="during_time" ColumnName="during_time" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

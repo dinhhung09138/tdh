@@ -90,6 +90,8 @@ namespace TDH.DataAccess
         public virtual DbSet<V_SYS_RENDER_NAVIGATION> V_SYS_RENDER_NAVIGATION { get; set; }
         public virtual DbSet<V_MN_REPORT_BORROW_ACCOUNT_STATUS> V_MN_REPORT_BORROW_ACCOUNT_STATUS { get; set; }
         public virtual DbSet<SYS_USER_TOKEN> SYS_USER_TOKEN { get; set; }
+        public virtual DbSet<PN_WORKING_EXPERIENCE> PN_WORKING_EXPERIENCE { get; set; }
+        public virtual DbSet<PN_WORKING_PROJECT> PN_WORKING_PROJECT { get; set; }
     
         [DbFunction("TDHEntities", "FNC_MN_GROUP_SETTING_GET_BY_GROUP")]
         public virtual IQueryable<FNC_MN_GROUP_SETTING_GET_BY_GROUP_Result> FNC_MN_GROUP_SETTING_GET_BY_GROUP(Nullable<System.Guid> i_GroupID, Nullable<int> i_Year, Nullable<System.Guid> i_UserID)

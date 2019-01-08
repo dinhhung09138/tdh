@@ -6,7 +6,7 @@
             foreach (var item in Model)
             {
                 <div class="top-text">
-                    <a href="@item.Alias"><img src="@item.Image" class="lazy img-responsive" alt="@item.Title" title="@item.Title" /></a>
+                    <a href="@item.Alias"><img src="@item.Image" data-src="@item.Image" class="lazy img-responsive" alt="@item.Title" title="@item.Title" /></a>
                     <h5 class="top"><a href="@item.Alias">@item.Title</a></h5>
                     <div class="td-post-date two"><i class="glyphicon glyphicon-time"></i>@item.CreateDate</div>
                 </div>

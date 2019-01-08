@@ -52,6 +52,15 @@ namespace TDH.Controllers
 
                 #endregion
 
+                #region " [ Intro page ] "
+
+                if (navigationAlias == "gioi-thieu")
+                {
+                    return View("About", PageService.About());
+                }
+
+                #endregion
+
                 #region " [ Get navigation info ] "
 
                 var _navInfo = new NavigationViewModel();
@@ -74,15 +83,6 @@ namespace TDH.Controllers
                     ViewBag.post = await PageService.ProgrammingGetTop20(navigationAlias);
 
                     return View("Programming", _navInfo);
-                }
-
-                #endregion
-
-                #region " [ Intro page ] "
-
-                if (navigationAlias == "gioi-thieu")
-                {
-                    return View("About", await PageService.About());
                 }
 
                 #endregion

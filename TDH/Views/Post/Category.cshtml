@@ -3,7 +3,7 @@
 @model IEnumerable<PostViewModel>
 @{
     CategoryViewModel _cate = ViewBag.cateInfo as CategoryViewModel;
-    ViewBag.Title = _cate.MetaTitle;
+    ViewBag.Title = _cate.MetaTitle + " | Trần Đình Hưng";
     ViewBag.Description = _cate.MetaDescription;
     ViewBag.Keywords = _cate.MetaKeywords;
     ViewBag.Url = ViewBag.Url;

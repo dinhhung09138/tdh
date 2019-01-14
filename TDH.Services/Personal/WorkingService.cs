@@ -53,7 +53,8 @@ namespace TDH.Services.Personal
                                       m.description,
                                       m.during_time,
                                       m.image,
-                                      m.ordering
+                                      m.ordering,
+                                      m.publish
                                   }).ToList();
 
                     _itemResponse.draw = request.draw;
@@ -76,7 +77,8 @@ namespace TDH.Services.Personal
                             DuringTime = item.during_time,
                             Image = item.image,
                             Description = item.description,
-                            Ordering = item.ordering
+                            Ordering = item.ordering,
+                            Publish = item.publish
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -172,7 +174,8 @@ namespace TDH.Services.Personal
                         Image = _md.image,
                         Description = _md.description,
                         Content = _md.content,
-                        Ordering = _md.ordering
+                        Ordering = _md.ordering,
+                        Publish = _md.publish
                     };
                 }
             }

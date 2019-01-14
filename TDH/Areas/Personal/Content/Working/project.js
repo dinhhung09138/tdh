@@ -61,6 +61,32 @@ $(document).ready(function () {
                 searchable: true
             },
             {
+                data: 'Publish',
+                orderable: false,
+                searchable: false,
+                className: 'ctn-center',
+                width: '60px',
+                render: function (obj, type, data, meta) {
+                    if (data.Publish === true) {
+                        return '<div class="icheckbox_flat-green checked" style="position: relative;">\
+                                        <input type="checkbox" class="flat" name="table_records" checked="" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        <ins class="iCheck-helper" \
+                                                style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        </ins>\
+                                    </div>';
+                    } else {
+                        return '<div class="icheckbox_flat-green" style="position: relative;">\
+                                        <input type="checkbox" class="flat" name="table_records" value="14" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        <ins class="iCheck-helper" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        </ins>\
+                                    </div>';
+                    }
+                }
+            },
+            {
                 data: 'Ordering',
                 orderable: false,
                 searchable: true,

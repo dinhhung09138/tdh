@@ -61,6 +61,58 @@ $(document).ready(function () {
                 searchable: true
             },
             {
+                data: 'IsOther',
+                orderable: false,
+                searchable: false,
+                className: 'ctn-center',
+                width: '60px',
+                render: function (obj, type, data, meta) {
+                    if (data.IsOther === true) {
+                        return '<div class="icheckbox_flat-green checked" style="position: relative;">\
+                                        <input type="checkbox" class="flat" name="table_records" checked="" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        <ins class="iCheck-helper" \
+                                                style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        </ins>\
+                                    </div>';
+                    } else {
+                        return '<div class="icheckbox_flat-green" style="position: relative;">\
+                                        <input type="checkbox" class="flat" name="table_records" value="14" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        <ins class="iCheck-helper" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        </ins>\
+                                    </div>';
+                    }
+                }
+            },
+            {
+                data: 'IsHot',
+                orderable: false,
+                searchable: false,
+                className: 'ctn-center',
+                width: '60px',
+                render: function (obj, type, data, meta) {
+                    if (data.IsHot === true) {
+                        return '<div class="icheckbox_flat-green checked" style="position: relative;">\
+                                        <input type="checkbox" class="flat" name="table_records" checked="" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        <ins class="iCheck-helper" \
+                                                style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        </ins>\
+                                    </div>';
+                    } else {
+                        return '<div class="icheckbox_flat-green" style="position: relative;">\
+                                        <input type="checkbox" class="flat" name="table_records" value="14" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        <ins class="iCheck-helper" \
+                                               style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;">\
+                                        </ins>\
+                                    </div>';
+                    }
+                }
+            },
+            {
                 data: 'Publish',
                 orderable: false,
                 searchable: false,

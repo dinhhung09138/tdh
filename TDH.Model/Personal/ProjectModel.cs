@@ -47,5 +47,15 @@ namespace TDH.Model.Personal
         /// Ordering
         /// </summary>
         public short Ordering { get; set; } = 1;
+
+        /// <summary>
+        /// Is hot project
+        /// </summary>
+        public bool IsHot { get; set; } = false;
+
+        /// <summary>
+        /// Project from company or frelancer
+        /// </summary>
+        public bool IsOther { get; set; } = false;
     }
 }

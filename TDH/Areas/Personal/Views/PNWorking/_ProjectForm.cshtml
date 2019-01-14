@@ -40,10 +40,26 @@
 </div>
 <div class="row form-group">
     <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Dự án công ty
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.CheckBoxFor(m => m.IsOther, new { @class = "form-control", @tabindex = "6" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
+        Hot
+    </div>
+    <div class="col-md-9 col-sm-8 col-xs-12">
+        @Html.CheckBoxFor(m => m.IsHot, new { @class = "form-control", @tabindex = "7" })
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-md-3 col-sm-4 col-xs-12 text-right">
         Hiển thị
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "6" })
+        @Html.CheckBoxFor(m => m.Publish, new { @class = "form-control", @tabindex = "8" })
     </div>
 </div>
 <div class="row form-group">
@@ -51,7 +67,7 @@
         Chi tiết<span style="color:red; font-weight:bold;">*</span>
     </div>
     <div class="col-md-9 col-sm-8 col-xs-12">
-        @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @tabindex = "7" })
+        @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @tabindex = "9" })
     </div>
 </div>
 <div class="row form-group">
@@ -61,7 +77,7 @@
     <div class="col-md-9 col-sm-8 col-xs-12">
         <div class="row form-group">
             <div class="col-md-12 col-xs-12">
-                <a href="javascript:;" id="selectImg" tabindex="8">Chọn ảnh (252x189)</a>
+                <a href="javascript:;" id="selectImg" tabindex="10">Chọn ảnh (252x189)</a>
             </div>
         </div>
         <div class="row form-group">

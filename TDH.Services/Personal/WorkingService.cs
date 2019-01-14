@@ -54,7 +54,9 @@ namespace TDH.Services.Personal
                                       m.during_time,
                                       m.image,
                                       m.ordering,
-                                      m.publish
+                                      m.publish,
+                                      m.is_hot,
+                                      m.is_other
                                   }).ToList();
 
                     _itemResponse.draw = request.draw;
@@ -78,7 +80,9 @@ namespace TDH.Services.Personal
                             Image = item.image,
                             Description = item.description,
                             Ordering = item.ordering,
-                            Publish = item.publish
+                            Publish = item.publish,
+                            IsHot = item.is_hot,
+                            IsOther = item.is_other
                         });
                     }
                     _itemResponse.recordsFiltered = _list.Count;
@@ -175,7 +179,9 @@ namespace TDH.Services.Personal
                         Description = _md.description,
                         Content = _md.content,
                         Ordering = _md.ordering,
-                        Publish = _md.publish
+                        Publish = _md.publish,
+                        IsHot = _md.is_hot,
+                        IsOther = _md.is_other
                     };
                 }
             }
@@ -220,6 +226,8 @@ namespace TDH.Services.Personal
                     _md.image = model.Image;
                     _md.publish = model.Publish;
                     _md.ordering = model.Ordering;
+                    _md.is_hot = model.IsHot;
+                    _md.is_other = model.IsOther;
                     //Setting value don't allow change when create or edit
                     if (model.Insert)
                     {

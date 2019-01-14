@@ -763,6 +763,8 @@
           <Property Name="deleted" Type="bit" Nullable="false" />
           <Property Name="deleted_by" Type="uniqueidentifier" />
           <Property Name="deleted_date" Type="datetime" />
+          <Property Name="is_other" Type="bit" Nullable="false" />
+          <Property Name="is_hot" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SYS_FUNCTION">
           <Key>
@@ -5013,6 +5015,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <Property Name="deleted" Type="Boolean" Nullable="false" />
           <Property Name="deleted_by" Type="Guid" />
           <Property Name="deleted_date" Type="DateTime" Precision="3" />
+          <Property Name="is_other" Type="Boolean" Nullable="false" />
+          <Property Name="is_hot" Type="Boolean" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -6670,6 +6674,8 @@ warning 6002: The table/view 'chacd26d_trandinhhung.dbo.V_SYS_RENDER_NAVIGATION'
           <EntitySetMapping Name="PN_WORKING_PROJECT">
             <EntityTypeMapping TypeName="TDHModel.PN_WORKING_PROJECT">
               <MappingFragment StoreEntitySet="PN_WORKING_PROJECT">
+                <ScalarProperty Name="is_hot" ColumnName="is_hot" />
+                <ScalarProperty Name="is_other" ColumnName="is_other" />
                 <ScalarProperty Name="deleted_date" ColumnName="deleted_date" />
                 <ScalarProperty Name="deleted_by" ColumnName="deleted_by" />
                 <ScalarProperty Name="deleted" ColumnName="deleted" />

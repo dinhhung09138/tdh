@@ -29,5 +29,7 @@ namespace TDH.DataAccess
         public bool deleted { get; set; }
         public Nullable<System.Guid> deleted_by { get; set; }
         public Nullable<System.DateTime> deleted_date { get; set; }
+        public bool is_other { get; set; }
+        public bool is_hot { get; set; }
     }
 }

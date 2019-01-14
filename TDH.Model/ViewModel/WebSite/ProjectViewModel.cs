@@ -30,5 +30,15 @@ namespace TDH.Model.ViewModel.WebSite
         /// Description
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Project hot
+        /// </summary>
+        public bool IsHot { get; set; } = false;
+
+        /// <summary>
+        /// Project freelancer
+        /// </summary>
+        public bool IsOther { get; set; } = false;
     }
 }

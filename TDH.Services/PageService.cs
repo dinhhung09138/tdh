@@ -1048,7 +1048,9 @@ namespace TDH.Services
                                 Name = m.name,
                                 Duration = m.during_time,
                                 Description = m.description,
-                                Image = m.image
+                                Image = m.image,
+                                IsHot = m.is_hot,
+                                IsOther = m.is_other
                             }).ToList();
                 }
             }

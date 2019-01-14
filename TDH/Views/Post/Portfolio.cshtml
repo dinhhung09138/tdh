@@ -1,4 +1,5 @@
-﻿@model IEnumerable<TDH.Model.ViewModel.WebSite.PortfolioViewModel>
+﻿@using TDH.Model.ViewModel.WebSite;
+@model IEnumerable<PortfolioViewModel>
 @{
     Layout = null;
     var domain = "http://trandinhhung.com";
@@ -32,9 +33,25 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/octicons/2.0.2/octicons.min.css">
     <link rel="stylesheet" href="/Content/portfolio/plugins/github-activity/github-activity-0.1.5.min.css">
     <link id="theme-style" rel="stylesheet" href="/Content/portfolio/css/styles.css">
-
+    <!-- Google Tag Manager -->
+    <script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-T57XZ46');</script>
+    <!-- End Google Tag Manager -->
 </head>
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T57XZ46"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <header class="header">
         <div class="container clearfix">
             <img class="profile-image img-fluid float-left" style="width: 180px; height: 180px; border-radius: 50%;" src="@Model.FirstOrDefault(m => m.Key == "portfolio_image").Value" alt="@Model.FirstOrDefault(m => m.Key == "name").Value" title="@Model.FirstOrDefault(m => m.Key == "name").Value" />
@@ -66,20 +83,42 @@
                         </div>
                     </div>
                 </section>
-
                 <section class="latest section">
                     <div class="section-inner">
                         <h2 class="heading">Latest Projects</h2>
                         <div class="content">
                             @{
-                                foreach (var item in ViewBag.project)
+                                var project = ViewBag.project as List<ProjectViewModel>;
+                                var hot = project.FirstOrDefault(m => m.IsHot);
+                                if (hot != null)
+                                {
+                                    <div class="item featured text-center">
+                                        <h3 class="title"><a href="javascript:;">@hot.Name</a></h3>
+                                        <div class="featured-image has-ribbon">
+                                            <a href="javascript:;" target="_blank">
+                                                <img class="img-fluid project-image" src="@hot.Image" alt="@hot.Name">
+                                            </a>
+                                            <div class="ribbon">
+                                                <div class="text">New</div>
+                                            </div>
+                                        </div>
+                                        <div class="desc text-left">
+                                            <p>@hot.Description</p>
+                                        </div>
+                                        <a class="btn btn-cta-secondary" href="javascript:;">
+                                            View more
+                                        </a>
+                                    </div>
+                                }
+                                var lPrCompany = project.Where(m => !m.IsOther && !m.IsHot).ToList();
+                                foreach (var item in lPrCompany)
                                 {
                                     <div class="item row">
-                                        <a class="col-md-4 col-12" href="javascript:;" target="_blank">
+                                        <a class="col-md-4 col-12" href="javascript:;">
                                             <img class="img-fluid project-image" src="@item.Image" alt="@item.Name" title="@item.Name" />
                                         </a>
                                         <div class="desc col-md-8 col-12">
-                                            <h3 class="title"><a href="javascript:;" target="_blank">@item.Name</a></h3>
+                                            <h3 class="title"><a href="javascript:;">@item.Name</a></h3>
                                             <p class="mb-2">@item.Description</p>
                                             <p><a class="more-link" href="javascript:;" target="_blank"><i class="fas fa-external-link-alt"></i>View more</a></p>
                                         </div>
@@ -89,33 +128,24 @@
                         </div>
                     </div>
                 </section>
-
                 <section class="projects section">
                     <div class="section-inner">
                         <h2 class="heading">Other Projects</h2>
                         <div class="content">
-                            <div class="item">
-                                <h3 class="title"><a href="https://themes.3rdwavemedia.com/bootstrap-templates/resume/free-bootstrap4-resume-cv-template-for-developers-pillar/">Pillar - Free Bootstrap 4 Resume/CV Template for Developers</a> <span class="badge badge-theme">Free</span></h3>
-                                <p class="summary">Provide a brief description of your project. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatu.</p>
-                                <p><a class="more-link" href="https://themes.3rdwavemedia.com/bootstrap-templates/resume/free-bootstrap4-resume-cv-template-for-developers-pillar/" target="_blank"><i class="fas fa-external-link-alt"></i>Find out more</a></p>
-                            </div><!--//item-->
-                            <div class="item">
-                                <h3 class="title"><a href="#">Project Title Cras eget lacus</a> <span class="badge badge-theme">Open Source</span></h3>
-                                <p class="summary">Provide a brief description of your project. Maecenas ornare ultricies risus, in fermentum augue consectetur in. Vestibulum vitae mauris iaculis, sollicitudin velit in, molestie nulla. </p>
-                                <p><a class="more-link" href="#" target="_blank"><i class="fas fa-external-link-alt"></i>View on GitHub</a></p>
-                            </div><!--//item-->
-                            <div class="item">
-                                <h3 class="title"><a href="#">Project Title Maecenas Ornare</a> <span class="badge badge-theme">Open Source</span></h3>
-                                <p class="summary">Provide a brief description of your project. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vel purus enim. Etiam tortor felis, fermentum ac ultrices sed.</p>
-                                <p><a class="more-link" href="#" target="_blank"><i class="fas fa-external-link-alt"></i>View on GitHub</a></p>
-                            </div><!--//item-->
-
-                            <a class="btn btn-cta-secondary" href="#">More on CoderWall <i class="fas fa-chevron-right"></i></a>
-
-                        </div><!--//content-->
-                    </div><!--//section-inner-->
-                </section><!--//section-->
-
+                            @{
+                                var lPrFreelancer = project.Where(m => m.IsOther && !m.IsHot).ToList();
+                                foreach (var item in lPrFreelancer)
+                                {
+                                    <div class="item">
+                                        <h3 class="title"><a href="javascript:;">@item.Name</a> <span class="badge badge-theme">Freelancer</span></h3>
+                                        <p class="summary">@item.Description</p>
+                                        <p><a class="more-link" href="javascript:;"><i class="fas fa-external-link-alt"></i>View more</a></p>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </section>
                 <section class="experience section">
                     <div class="section-inner">
                         <h2 class="heading">Work Experience</h2>
@@ -147,7 +177,6 @@
                         </div>
                     </div>
                 </aside>
-
                 <aside class="skills aside section">
                     <div class="section-inner">
                         <h2 class="heading">Skills</h2>
@@ -214,7 +243,7 @@
                             <ul class="list-unstyled">
                                 <li class="item">
                                     <span class="title"><strong>English:</strong></span>
-                                    <span class="level">Daily communication<br class="visible-sm visible-xs" /><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half"></i></span>
+                                    <span class="level">Daily communication<br class="visible-sm visible-xs" /><i class="fas fa-star"></i> <i class="fas fa-star"></i> <i class="fas fa-star-half"></i></span>
                                 </li>
                             </ul>
                         </div>
